@@ -1,7 +1,9 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { View, StyleSheet, StatusBar, Text } from "react-native";
 import { colors } from "../styles/colors";
 import { HelloWorldComponent } from "../components/HelloWorldComponent";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ProductStackType } from "../navigation/ProductStack";
 
 const styles = StyleSheet.create(
     {
@@ -25,17 +27,19 @@ const styles = StyleSheet.create(
     }
 )
 
+type ProductListScreenPropType = NativeStackScreenProps<ProductStackType,"PRODUCT_LIST_SCREEN">
 
-export const ProductListScreen = (): ReactElement=>{
+
+export const ProductListScreen = ({navigation}:ProductListScreenPropType): JSX.Element=>{
+
+    const onPress = ():void=>{
+       navigation.navigate("PRODUCT_SCREEN", {productId:"123"});
+    }
+
     return (
         <>
             <View style={styles.container}>
-                <HelloWorldComponent sectionMessage="Lista de productos"/>
-                <View style={styles.orderNowContainer}>
-                    <Text style={styles.textStyles}>
-                        Ordena ya
-                    </Text>
-                </View>
+                <HelloWorldComponent sectionMessage="Lista de productos" onPress={onPress}/>
             </View>
         </>
     )

@@ -1,7 +1,8 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { shadows } from "../styles/shadow"; 
 import { colors } from "../styles/colors";
+import { PrincipalButton } from "./buttons/PrincipalButton";
 
 
 const styles = StyleSheet.create(
@@ -69,16 +70,21 @@ const styles = StyleSheet.create(
             color:colors.black,
             fontSize:30,
             fontWeight:"700"
+        },
+
+        buttonContainer:{
+            marginTop:8
         }
     }
 )
 
 type props = {
     sectionMessage: string,
+    onPress: ()=>void
 }
 
 
-export const HelloWorldComponent = ({sectionMessage}: props): ReactElement=>{
+export const HelloWorldComponent = ({sectionMessage, onPress}: props): JSX.Element=>{
     return (
         <View style={styles.container}>
             <View style={styles.circleContainer}>
@@ -95,6 +101,13 @@ export const HelloWorldComponent = ({sectionMessage}: props): ReactElement=>{
                 <Text style={styles.textSecondary}>
                     Tu pizzeria siempre
                 </Text>
+            </View>
+            <View style={styles.buttonContainer}>
+                <PrincipalButton onPress={onPress}>
+                    <Text>
+                        Siguiente
+                    </Text>
+                </PrincipalButton>
             </View>
         </View>
     )
