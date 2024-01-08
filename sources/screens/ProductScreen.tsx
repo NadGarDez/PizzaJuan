@@ -4,6 +4,8 @@ import { colors } from "../styles/colors";
 import { HelloWorldComponent } from "../components/HelloWorldComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../navigation/ProductStack";
+import { useQuery } from "@apollo/client";
+import { GET_PRODUCTS } from "../constants/querys";
 
 const styles = StyleSheet.create(
     {
@@ -17,6 +19,10 @@ const styles = StyleSheet.create(
 type ProductScreenPropTypes = NativeStackScreenProps<ProductStackType,"PRODUCT_SCREEN">
 
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
+
+    const {loading, error, data} = useQuery(GET_PRODUCTS);
+
+    console.log(loading, error, data);
 
     const onPress =()=>{
         navigation.navigate("PRODUCT_SELLER_SCREEN", {sellerId:"123"});

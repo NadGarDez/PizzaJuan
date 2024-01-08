@@ -10,7 +10,6 @@ export type CarStackProp = {
     TRANSC_VALIDATION_SCREEN:{
         transactionCode:string
     },
-
 };
 const Stack = createNativeStackNavigator<CarStackProp>()
 
