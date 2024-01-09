@@ -6,6 +6,7 @@ import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/clie
 import { store } from "./sources/redux/Store";
 import { Provider } from "react-redux";
 import { RootNavigation } from "./sources/navigation/RootNavigation";
+import { Auth0Provider } from "react-native-auth0";
 
 const styles = StyleSheet.create(
     {
@@ -36,11 +37,13 @@ export const App = (): JSX.Element=>{
     return (
         <View style={{flex:1}}>
             <StatusBar barStyle={STYLES[0]} backgroundColor={colors.principal}/>
-            <Provider store={store}>
-                <NavigationContainer>
-                    <RootNavigation client={GrapqlClient}/>
-                </NavigationContainer>
-            </Provider>
+            <Auth0Provider domain="https://dev-2cvrxuuk3gmg1ihr.us.auth0.com" clientId="jATdHDLzYCMrzlPSkUnCegU6Q54qjblH">
+                <Provider store={store}>
+                    <NavigationContainer>
+                        <RootNavigation client={GrapqlClient}/>
+                    </NavigationContainer>
+                </Provider>
+            </Auth0Provider>
         </View>
     )
 }

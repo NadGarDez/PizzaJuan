@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { HelloWorldComponent } from "../../components/HelloWorldComponent";
@@ -6,6 +6,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 import { useQuery } from "@apollo/client";
 import { GET_PRODUCTS } from "../../constants/querys";
+import { useAuth0 } from "react-native-auth0";
 
 const styles = StyleSheet.create(
     {
@@ -20,9 +21,32 @@ type ProductScreenPropTypes = NativeStackScreenProps<ProductStackType,"PRODUCT_S
 
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
-    const {loading, error, data} = useQuery(GET_PRODUCTS);
+    const {authorize, clearSession, user, error:authError, isLoading} = useAuth0();
 
-    console.log(loading, error, data);
+    const letsAuth = async ()=>{    
+        try {
+            await authorize();
+        } catch (e) {
+            console.log("error", e)
+            console.log(e);
+        }
+    }
+
+    useEffect(
+        ()=>{
+            console.log("user", user, authError)
+        },
+        [user,authError]
+    )
+
+    useEffect(
+        ()=>{
+            letsAuth()
+        },
+        []
+    )
+
+    const {loading, error, data} = useQuery(GET_PRODUCTS);
 
     const onPress =()=>{
         navigation.navigate("PRODUCT_SELLER_SCREEN", {sellerId:"123"});
