@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import React   from "react"
-import { CarScreen } from "../screens/CarScreen";
-import { PayScreen } from "../screens/PayScreen";
-import { TranscValidationScreen } from "../screens/TranscValidationScreen";
+import { CarScreen } from "../../screens/shoppingGroup/CarScreen";
+import { PayScreen } from "../../screens/shoppingGroup/PayScreen";
+import { TranscValidationScreen } from "../../screens/shoppingGroup/TranscValidationScreen";
 
 export type CarStackProp = {
     CAR_SCREEN: undefined,

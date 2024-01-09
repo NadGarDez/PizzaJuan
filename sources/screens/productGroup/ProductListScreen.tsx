@@ -1,9 +1,9 @@
 import React from "react";
 import { View, StyleSheet, StatusBar, Text } from "react-native";
-import { colors } from "../styles/colors";
-import { HelloWorldComponent } from "../components/HelloWorldComponent";
+import { colors } from "../../styles/colors";
+import { HelloWorldComponent } from "../../components/HelloWorldComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ProductStackType } from "../navigation/ProductStack";
+import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 
 const styles = StyleSheet.create(
     {

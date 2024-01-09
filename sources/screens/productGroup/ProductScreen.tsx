@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { colors } from "../styles/colors";
-import { HelloWorldComponent } from "../components/HelloWorldComponent";
+import { colors } from "../../styles/colors";
+import { HelloWorldComponent } from "../../components/HelloWorldComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ProductStackType } from "../navigation/ProductStack";
+import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 import { useQuery } from "@apollo/client";
-import { GET_PRODUCTS } from "../constants/querys";
+import { GET_PRODUCTS } from "../../constants/querys";
 
 const styles = StyleSheet.create(
     {

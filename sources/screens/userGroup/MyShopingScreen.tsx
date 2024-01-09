@@ -1,8 +1,8 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
-import { HelloWorldComponent } from "../components/HelloWorldComponent"
+import { HelloWorldComponent } from "../../components/HelloWorldComponent"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { MyShoppingStackProps } from "../navigation/MyShopingStack"
+import { MyShoppingStackProps } from "../../navigation/Stacks/MyShopingStack"
 
 const styles = StyleSheet.create(
     {

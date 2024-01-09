@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
-import { HelloWorldComponent } from "../components/HelloWorldComponent"
+import { HelloWorldComponent } from "../../components/HelloWorldComponent"
 
 const styles = StyleSheet.create(
     {

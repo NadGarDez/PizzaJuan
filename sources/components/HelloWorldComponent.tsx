@@ -19,6 +19,7 @@ const styles = StyleSheet.create(
             color:colors.black,
             fontWeight:"700",
             fontSize:25,
+            textAlign:"center",
         },
         textContainer:{
             paddingVertical:16,

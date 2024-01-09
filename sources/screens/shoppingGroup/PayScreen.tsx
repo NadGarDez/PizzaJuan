@@ -1,7 +1,7 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
-import { HelloWorldComponent } from "../components/HelloWorldComponent"
-import { CarStackProp } from "../navigation/CarStack"
+import { HelloWorldComponent } from "../../components/HelloWorldComponent"
+import { CarStackProp } from "../../navigation/Stacks/CarStack"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useNavigation } from "@react-navigation/native"
 

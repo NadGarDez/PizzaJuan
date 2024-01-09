@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import React   from "react"
-import { MyShoppingScreen } from "../screens/MyShopingScreen";
+import { MyShoppingScreen } from "../../screens/userGroup/MyShopingScreen";
 
 export type MyShoppingStackProps = {
     MY_SHOPING_SCREEN: undefined,

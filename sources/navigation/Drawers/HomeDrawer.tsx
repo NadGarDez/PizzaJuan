@@ -1,9 +1,9 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React from "react";
-import { ProductStack } from "./ProductStack";
-import { UserScreen } from "../screens/UserScreen";
-import { CarStack } from "./CarStack";
-import { MyShoppingStack } from "./MyShopingStack";
+import { ProductStack } from "../Stacks/ProductStack";
+import { CarStack } from "../Stacks/CarStack";
+import { MyShoppingStack } from "../Stacks/MyShopingStack";
+import { UserScreen } from "../../screens/myShoppingGroup/UserScreen";
 
 type HomeDrawerType = {
     PRODUCT_STACK: undefined

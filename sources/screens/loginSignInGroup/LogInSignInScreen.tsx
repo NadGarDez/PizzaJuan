@@ -1,9 +1,9 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
-import { HelloWorldComponent } from "../components/HelloWorldComponent"
+import { HelloWorldComponent } from "../../components/HelloWorldComponent"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { CarStackProp } from "../navigation/CarStack"
-import { LogInSignInStackPropType } from "../navigation/LogInSignInStack"
+import { CarStackProp } from "../../navigation/Stacks/CarStack"
+import { LogInSignInStackPropType } from "../../navigation/Stacks/LogInSignInStack"
 
 const styles = StyleSheet.create(
     {

@@ -1,8 +1,8 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
-import { HelloWorldComponent } from "../components/HelloWorldComponent"
+import { HelloWorldComponent } from "../../components/HelloWorldComponent"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { CarStackProp } from "../navigation/CarStack"
+import { CarStackProp } from "../../navigation/Stacks/CarStack"
 import { useNavigation } from "@react-navigation/native"
 
 const styles = StyleSheet.create(

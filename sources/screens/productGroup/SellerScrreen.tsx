@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { HelloWorldComponent } from "../components/HelloWorldComponent";
+import { HelloWorldComponent } from "../../components/HelloWorldComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ProductStackType } from "../navigation/ProductStack";
+import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 
 const styles = StyleSheet.create({
     container: {

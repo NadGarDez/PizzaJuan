@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import React   from "react"
-import { LogInSignInScreen } from "../screens/LogInSignInScreen";
+import { LogInSignInScreen } from "../../screens/loginSignInGroup/LogInSignInScreen";
 
 export type LogInSignInStackPropType = {
     LOG_IN_SIGN_IN_SCREEN: undefined;
