@@ -81,11 +81,12 @@ const styles = StyleSheet.create(
 
 type props = {
     sectionMessage: string,
-    onPress: ()=>void
+    onPress: ()=>void,
+    buttonText?:string
 }
 
 
-export const HelloWorldComponent = ({sectionMessage, onPress}: props): JSX.Element=>{
+export const HelloWorldComponent = ({sectionMessage, onPress, buttonText="Siguiente"}: props): JSX.Element=>{
     return (
         <View style={styles.container}>
             <View style={styles.circleContainer}>
@@ -106,7 +107,7 @@ export const HelloWorldComponent = ({sectionMessage, onPress}: props): JSX.Eleme
             <View style={styles.buttonContainer}>
                 <PrincipalButton onPress={onPress}>
                     <Text>
-                        Siguiente
+                        {buttonText}
                     </Text>
                 </PrincipalButton>
             </View>

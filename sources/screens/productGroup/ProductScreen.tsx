@@ -21,31 +21,6 @@ type ProductScreenPropTypes = NativeStackScreenProps<ProductStackType,"PRODUCT_S
 
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
-    const {authorize, clearSession, user, error:authError, isLoading} = useAuth0();
-
-    const letsAuth = async ()=>{    
-        try {
-            await authorize();
-        } catch (e) {
-            console.log("error", e)
-            console.log(e);
-        }
-    }
-
-    useEffect(
-        ()=>{
-            console.log("user", user, authError)
-        },
-        [user,authError]
-    )
-
-    useEffect(
-        ()=>{
-            letsAuth()
-        },
-        []
-    )
-
     const {loading, error, data} = useQuery(GET_PRODUCTS);
 
     const onPress =()=>{

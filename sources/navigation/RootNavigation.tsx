@@ -3,7 +3,7 @@ import { HomeDrawer } from "./Drawers/HomeDrawer";
 import { ApolloClient, ApolloProvider, NormalizedCacheObject } from "@apollo/client";
 import { LogInSignInStack } from "./Stacks/LogInSignInStack";
 import { useAppSelector } from "../redux/hooks";
-import {  sessionTokenSelector } from "../redux/SessionReducer";
+import {  sessionObjectSelector, sessionTokenSelector } from "../redux/SessionReducer";
 
 type props = {
     client:ApolloClient<NormalizedCacheObject>

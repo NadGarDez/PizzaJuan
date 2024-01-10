@@ -16,7 +16,7 @@ export const LogInSignInStack = ():JSX.Element=>{
                 headerShown: false
             }}
         >
-            <Stack.Screen component={LogInSignInScreen} name="LOG_IN_SIGN_IN_SCREEN"/>
+            <Stack.Screen component={LogInSignInScreen} name="LOG_IN_SIGN_IN_SCREEN" />
         </Stack.Navigator>
     )
 }
