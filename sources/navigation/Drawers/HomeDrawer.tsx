@@ -16,7 +16,11 @@ const Drawer = createDrawerNavigator<HomeDrawerType>()
 
 export const HomeDrawer = ():JSX.Element=> {
     return (
-        <Drawer.Navigator >
+        <Drawer.Navigator 
+            screenOptions={{
+                headerShown: false
+            }}
+        >
             <Drawer.Screen name="PRODUCT_STACK" component={ProductStack}/>
             <Drawer.Screen name="CAR_STACK" component={CarStack}/>
             <Drawer.Screen name="MY_SHOPPING" component={MyShoppingStack}/>
