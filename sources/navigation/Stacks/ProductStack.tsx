@@ -4,6 +4,7 @@ import { ProductListScreen } from "../../screens/productGroup/ProductListScreen"
 import { ProductScreen } from "../../screens/productGroup/ProductScreen"
 import { SellerScreen } from "../../screens/productGroup/SellerScrreen";
 import { InitialStackScreenHeader } from "../../components/headers/InitialStackScreenHeader";
+import { NormalStackScreenHeart } from "../../components/headers/NormalStackScreenHeader";
 
 export type ProductStackType = {
     PRODUCT_LIST_SCREEN: undefined;
@@ -31,13 +32,33 @@ export const ProductStack = ():JSX.Element=>{
                 options={
                     {
                         header: props =>(
-                            <InitialStackScreenHeader {...props}/>
+                            <InitialStackScreenHeader {...props} displayRightContent/>
                         )
                     }
                 }
             />
-            <Stack.Screen component={ProductScreen} name="PRODUCT_SCREEN"/>
-            <Stack.Screen component={SellerScreen} name="PRODUCT_SELLER_SCREEN"/> 
+            <Stack.Screen 
+                component={ProductScreen} 
+                name="PRODUCT_SCREEN"
+                options={
+                    {
+                        header: props =>(
+                            <NormalStackScreenHeart {...props} displayRightContent/>
+                        )
+                    }
+                }
+            />
+            <Stack.Screen 
+                component={SellerScreen} 
+                name="PRODUCT_SELLER_SCREEN"
+                options={
+                    {
+                        header: props =>(
+                            <NormalStackScreenHeart {...props} displayRightContent/>
+                        )
+                    }
+                }
+            /> 
         </Stack.Navigator>
     )
 }

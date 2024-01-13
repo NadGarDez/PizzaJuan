@@ -1,10 +1,8 @@
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import React from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 import { colors } from "../../styles/colors";
 import { IconButton } from "../buttons/IconButton";
-import { BackIcon } from "../icons/BackIcon";
 import { MenuIcon } from "../icons/MenuIcon";
 import { WhiteButton } from "../buttons/WhiteButton";
 import { LocationIcon } from "../icons/LocationIcon";
@@ -58,8 +56,14 @@ const styles  = StyleSheet.create(
     }
 )
 
+type headerProps = {
+    displayRightContent:boolean, // this parameters should be able to render differents types of right header content
+    rightContentType?:string // maybe for a component switch
+    actionReceipt?:string // me be for the reciber o a certain action 
+}
 
-export const InitialStackScreenHeader = (props:NativeStackHeaderProps):JSX.Element=> {
+export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProps):JSX.Element=> {
+    const {displayRightContent}= props;
     return (
         <View style={styles.container}>
             <View style={styles.leftContainer}>
@@ -69,14 +73,19 @@ export const InitialStackScreenHeader = (props:NativeStackHeaderProps):JSX.Eleme
             </View>
             <View style={styles.centerContainer}/>
             <View style={styles.righContainer}>
-                <WhiteButton onPress={()=>{}} deepShadow={false}>
-                    <View style={styles.ubicationContainer}>
-                        <Text style={styles.textLocationStyles}>
-                            Tu Ubicacion
-                        </Text>
-                        <LocationIcon size={20}/>
-                    </View>
-                </WhiteButton>
+                {
+                    displayRightContent ? (
+                        <WhiteButton onPress={()=>{}} deepShadow={false}>
+                            <View style={styles.ubicationContainer}>
+                                <Text style={styles.textLocationStyles}>
+                                    Tu Ubicacion
+                                </Text>
+                                <LocationIcon size={20}/>
+                            </View>
+                        </WhiteButton>
+                    ): null
+                }
+                
             </View>
         </View>
     )

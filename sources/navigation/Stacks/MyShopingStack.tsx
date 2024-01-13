@@ -15,7 +15,10 @@ export const MyShoppingStack = ():JSX.Element=>{
                 headerShown: false
             }}
         >
-            <Stack.Screen component={MyShoppingScreen} name="MY_SHOPING_SCREEN"/>
+            <Stack.Screen 
+                component={MyShoppingScreen} 
+                name="MY_SHOPING_SCREEN"
+            />
         </Stack.Navigator>
     )
 }

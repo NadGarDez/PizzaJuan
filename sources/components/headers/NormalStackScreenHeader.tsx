@@ -4,6 +4,7 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { IconButton } from "../buttons/IconButton";
 import { BackIcon } from "../icons/BackIcon";
+import { HeartButton } from "../buttons/HeartButton";
 
 
 const styles  = StyleSheet.create(
@@ -47,17 +48,32 @@ const styles  = StyleSheet.create(
     }
 )
 
+type rightContent = {
+    displayRightContent:boolean, // this parameters should be able to render differents types of right header content
+    rightContentType?:string // maybe for a component switch
+    actionReceipt?:string // me be for the reciber o a certain action 
+}
 
-export const StackScreenNormalHeader = (props:NativeStackHeaderProps):JSX.Element=> {
+export const NormalStackScreenHeart = ({navigation, displayRightContent}:NativeStackHeaderProps&rightContent):JSX.Element=> {
+
+    const back = ()=> {
+        navigation.goBack()
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.leftContainer}>
-                <IconButton onPress={()=>{}}>
+                <IconButton onPress={back}>
                    <BackIcon />
                 </IconButton>
             </View>
             <View style={styles.centerContainer}/>
             <View style={styles.righContainer}>
+                    {
+                        displayRightContent ? (
+                            <HeartButton onPress={()=>{}} pressed={false}/>
+                        ) : null
+                    }
             </View>
         </View>
     )
