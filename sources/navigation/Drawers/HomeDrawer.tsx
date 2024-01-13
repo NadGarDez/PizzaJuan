@@ -3,7 +3,7 @@ import React from "react";
 import { ProductStack } from "../Stacks/ProductStack";
 import { CarStack } from "../Stacks/CarStack";
 import { MyShoppingStack } from "../Stacks/MyShopingStack";
-import { UserScreen } from "../../screens/myShoppingGroup/UserScreen";
+import { UserStack } from "../Stacks/UserStack";
 
 type HomeDrawerType = {
     PRODUCT_STACK: undefined
@@ -24,7 +24,7 @@ export const HomeDrawer = ():JSX.Element=> {
             <Drawer.Screen name="PRODUCT_STACK" component={ProductStack}/>
             <Drawer.Screen name="CAR_STACK" component={CarStack}/>
             <Drawer.Screen name="MY_SHOPPING" component={MyShoppingStack}/>
-            <Drawer.Screen name="USER_STACK" component={UserScreen}/>
+            <Drawer.Screen name="USER_STACK" component={UserStack}/>
         </Drawer.Navigator>
     )
 }

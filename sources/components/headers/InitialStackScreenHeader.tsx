@@ -63,7 +63,11 @@ type headerProps = {
 }
 
 export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProps):JSX.Element=> {
-    const {displayRightContent}= props;
+    const {displayRightContent, navigation}= props;
+
+    const openDrawer = ()=> {
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.leftContainer}>
