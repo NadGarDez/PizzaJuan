@@ -6,6 +6,7 @@ import { IconButton } from "../buttons/IconButton";
 import { MenuIcon } from "../icons/MenuIcon";
 import { WhiteButton } from "../buttons/WhiteButton";
 import { LocationIcon } from "../icons/LocationIcon";
+import { DrawerActions } from "@react-navigation/native";
 
 
 const styles  = StyleSheet.create(
@@ -63,15 +64,23 @@ type headerProps = {
 }
 
 export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProps):JSX.Element=> {
-    const {displayRightContent, navigation}= props;
+    const {displayRightContent,navigation }= props;
 
     const openDrawer = ()=> {
+        navigation.dispatch(DrawerActions.openDrawer())
+    }
+
+    const jumpToUser = ()=> {
+        navigation.dispatch(DrawerActions.openDrawer())
+        setTimeout(() => {
+            navigation.dispatch(DrawerActions.jumpTo("USER_STACK"))
+        }, 500);
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.leftContainer}>
-                <IconButton onPress={()=>{}}>
+                <IconButton onPress={openDrawer}>
                    <MenuIcon />
                 </IconButton>
             </View>
@@ -79,7 +88,7 @@ export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProp
             <View style={styles.righContainer}>
                 {
                     displayRightContent ? (
-                        <WhiteButton onPress={()=>{}} deepShadow={false}>
+                        <WhiteButton onPress={jumpToUser} deepShadow={false}>
                             <View style={styles.ubicationContainer}>
                                 <Text style={styles.textLocationStyles}>
                                     Tu Ubicacion

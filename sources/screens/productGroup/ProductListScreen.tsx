@@ -27,6 +27,7 @@ const styles = StyleSheet.create(
     }
 )
 
+
 type ProductListScreenPropType = NativeStackScreenProps<ProductStackType,"PRODUCT_LIST_SCREEN">
 
 

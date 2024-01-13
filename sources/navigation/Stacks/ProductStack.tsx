@@ -1,13 +1,15 @@
 import {  NativeStackScreenProps, createNativeStackNavigator } from "@react-navigation/native-stack"
-import React   from "react"
+import React, { useEffect }   from "react"
 import { ProductListScreen } from "../../screens/productGroup/ProductListScreen"
 import { ProductScreen } from "../../screens/productGroup/ProductScreen"
 import { SellerScreen } from "../../screens/productGroup/SellerScrreen";
 import { InitialStackScreenHeader } from "../../components/headers/InitialStackScreenHeader";
 import { NormalStackScreenHeart } from "../../components/headers/NormalStackScreenHeader";
+import { createDrawerNavigator, DrawerScreenProps } from "@react-navigation/drawer";
+import { HomeDrawerType } from "../Drawers/HomeDrawer";
 
 export type ProductStackType = {
-    PRODUCT_LIST_SCREEN: undefined;
+    PRODUCT_LIST_SCREEN: undefined,
     PRODUCT_SCREEN: {
         productId:string
     },
@@ -16,15 +18,25 @@ export type ProductStackType = {
     }
 };
 const Stack = createNativeStackNavigator<ProductStackType>()
+type ProductStackProps =  DrawerScreenProps<HomeDrawerType, "PRODUCT_STACK">
 
+export const ProductStack = ({navigation}:ProductStackProps):JSX.Element=>{
 
-export const ProductStack = ():JSX.Element=>{
+    useEffect(
+        ()=> {
+            setTimeout(() => {
+                navigation.navigate("USER_STACK")
+            }, 5000);
+        }, 
+        []
+    )
 
     return (
         <Stack.Navigator
             screenOptions={{
                 headerShown: true
             }}
+
         >
             <Stack.Screen 
                 component={ProductListScreen} 
@@ -32,7 +44,7 @@ export const ProductStack = ():JSX.Element=>{
                 options={
                     {
                         header: props =>(
-                            <InitialStackScreenHeader {...props} displayRightContent/>
+                            <InitialStackScreenHeader {...props} displayRightContent />
                         )
                     }
                 }

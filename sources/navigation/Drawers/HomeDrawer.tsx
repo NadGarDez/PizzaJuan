@@ -5,7 +5,7 @@ import { CarStack } from "../Stacks/CarStack";
 import { MyShoppingStack } from "../Stacks/MyShopingStack";
 import { UserStack } from "../Stacks/UserStack";
 
-type HomeDrawerType = {
+export type HomeDrawerType = {
     PRODUCT_STACK: undefined
     CAR_STACK:undefined,
     USER_STACK:undefined,
