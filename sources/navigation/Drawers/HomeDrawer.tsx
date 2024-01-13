@@ -21,10 +21,26 @@ export const HomeDrawer = ():JSX.Element=> {
                 headerShown: false
             }}
         >
-            <Drawer.Screen name="PRODUCT_STACK" component={ProductStack}/>
-            <Drawer.Screen name="CAR_STACK" component={CarStack}/>
-            <Drawer.Screen name="MY_SHOPPING" component={MyShoppingStack}/>
-            <Drawer.Screen name="USER_STACK" component={UserStack}/>
+            <Drawer.Screen name="PRODUCT_STACK" component={ProductStack}
+                options={{
+                    title:"Tienda"
+                }}
+            />
+            <Drawer.Screen name="CAR_STACK" component={CarStack}
+                options={{
+                    title:"Carrito"
+                }}
+            />
+            <Drawer.Screen name="MY_SHOPPING" component={MyShoppingStack}
+                options={ {
+                    title: "Mis compras"
+                }}
+            />
+            <Drawer.Screen name="USER_STACK" component={UserStack}
+                options={{
+                    title: "Usuario"
+                }}
+            />
         </Drawer.Navigator>
     )
 }
