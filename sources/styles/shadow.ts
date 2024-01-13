@@ -1,6 +1,7 @@
 
 type shadowType ={
-    principalShadow:any
+    principalShadow:any,
+    lightShadow:any
 }
 
 export const shadows: shadowType = {
@@ -13,5 +14,16 @@ export const shadows: shadowType = {
         shadowOpacity:  0.19,
         shadowRadius: 5.62,
         elevation: 6
+    },
+
+    lightShadow: {
+        shadowColor: "#706262",
+        shadowOffset: {
+        width: 0,
+        height: 1,
+        },
+        shadowOpacity:  0.16,
+        shadowRadius: 1.51,
+        elevation: 2
     }
 }
