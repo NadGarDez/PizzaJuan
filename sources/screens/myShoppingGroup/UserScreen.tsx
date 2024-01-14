@@ -33,7 +33,7 @@ export const UserScreen = ():JSX.Element=>{
     
     return (
         <View style={styles.container}>
-            <HelloWorldComponent sectionMessage="User screen" onPress={onPress} buttonText="Log Out"/>
+            <HelloWorldComponent sectionMessage="User screen" onPress={()=>{}} buttonText="Log Out"/>
         </View>
     )
 }

@@ -22,15 +22,6 @@ type ProductStackProps =  DrawerScreenProps<HomeDrawerType, "PRODUCT_STACK">
 
 export const ProductStack = ({navigation}:ProductStackProps):JSX.Element=>{
 
-    useEffect(
-        ()=> {
-            setTimeout(() => {
-                navigation.navigate("USER_STACK")
-            }, 5000);
-        }, 
-        []
-    )
-
     return (
         <Stack.Navigator
             screenOptions={{

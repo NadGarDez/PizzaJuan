@@ -21,6 +21,7 @@ export const HomeDrawer = ():JSX.Element=> {
             screenOptions={{
                 headerShown: false
             }}
+            initialRouteName="PRODUCT_STACK"
             drawerContent={CustomDrawer}
         >
             <Drawer.Screen name="PRODUCT_STACK" component={ProductStack}

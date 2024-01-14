@@ -1,10 +1,13 @@
 import { DrawerContentScrollView,DrawerContentComponentProps, DrawerItemList, DrawerItem } from "@react-navigation/drawer";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text , View} from "react-native";
 import { colors } from "../styles/colors";
 import { IconButton } from "./buttons/IconButton";
 import { CloseIcon } from "./icons/CloseIcons";
 import { AvatarImage } from "./surfaces/AvatarImage";
+import { useAuth0 } from "react-native-auth0";
+import { useDispatch } from "react-redux";
+import { resetSession } from "../redux/SessionReducer";
 
 
 const styles = StyleSheet.create({
@@ -54,7 +57,22 @@ const styles = StyleSheet.create({
 })
 
 export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
-    console.log(props)
+    const {clearSession, user} = useAuth0()
+    const dispatch = useDispatch()
+
+    const logout = async ():Promise<void>=> {
+        await clearSession()
+    }
+
+    useEffect(
+        ()=> {
+            if(user === null){
+                dispatch(resetSession());
+            }
+        },
+        [user]
+    )
+    
     return (
        <View style={styles.contaner}>
            <DrawerContentScrollView>
@@ -81,7 +99,7 @@ export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
                     <DrawerItemList {...props}/>
                     <DrawerItem
                         label="Cerrar Session"
-                        onPress={() => {}}
+                        onPress={logout}
                     />
                </View>
            </DrawerContentScrollView>
