@@ -4,6 +4,7 @@ import { ProductStack } from "../Stacks/ProductStack";
 import { CarStack } from "../Stacks/CarStack";
 import { MyShoppingStack } from "../Stacks/MyShopingStack";
 import { UserStack } from "../Stacks/UserStack";
+import { CustomDrawer } from "../../components/CustomDrawer";
 
 export type HomeDrawerType = {
     PRODUCT_STACK: undefined
@@ -20,6 +21,7 @@ export const HomeDrawer = ():JSX.Element=> {
             screenOptions={{
                 headerShown: false
             }}
+            drawerContent={CustomDrawer}
         >
             <Drawer.Screen name="PRODUCT_STACK" component={ProductStack}
                 options={{
