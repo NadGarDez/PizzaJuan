@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { drawerScreens } from "../../constants/screenNames";
+import { drawerItemsText } from "../../constants/drawerItems";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { colors } from "../../styles/colors";
 import { HeartIconOutlined } from "../icons/HeartIconOutlined";
@@ -45,22 +45,29 @@ const styles = StyleSheet.create({
         fontWeight:"700"
     },
     textStylesUnselected : {
-        fontSize:16,
+        fontSize:18,
+        fontWeight:"400",
         color:colors.white_card,
     }
 })
 
+type iconProps = {
+    color:string,
+    size:number,
+
+}
 
 type props = {
     label:string,
     selected:boolean,
     onPress?:(item:string)=>void,
-    onPressAsync?: ()=>Promise<void>
+    onPressAsync?: ()=>Promise<void>,
+    icon?:(props:iconProps)=>JSX.Element
 }
 
 export const DrawerItem = (props:props):JSX.Element=> {
 
-    const {label, onPress, selected, onPressAsync} = props;
+    const {label, onPress, selected, onPressAsync, icon} = props;
 
     const jumpTo = async ()=>{
         if(onPress) {
@@ -70,19 +77,24 @@ export const DrawerItem = (props:props):JSX.Element=> {
         else if(onPressAsync) {
             await onPressAsync()
         }
-        
     }
 
     return (
         <TouchableOpacity onPress={jumpTo}>  
             <View style={selected? styles.itemContainerSelected: styles.itemContainerUnselected}>
                 <View style={styles.iconContainer}>
-                    <HeartIconOutlined color={selected ? colors.principal: "white"}/>
+                    {
+                        !!icon ? icon({
+                            color:selected ? colors.principal: "white",
+                            size:25
+                        }):<HeartIconOutlined color={selected ? colors.principal: "white"}/>
+                    }
+                    
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={selected ? styles.textStylesSelected : styles.textStylesUnselected}>
                         {
-                            drawerScreens[label]
+                            drawerItemsText[label]
                         }
                     </Text>
                     

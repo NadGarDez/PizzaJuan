@@ -1,9 +1,9 @@
-type drawer_screens = {
+type drawerItemsText = {
     [key: string]:string
 }
 
 
-export const drawerScreens:drawer_screens={
+export const drawerItemsText:drawerItemsText={
     PRODUCT_STACK:"Tienda",
     CAR_STACK:"Carrito",
     MY_SHOPPING:"Mis Compras",

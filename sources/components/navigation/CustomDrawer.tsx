@@ -10,7 +10,8 @@ import { useDispatch } from "react-redux";
 import { resetSession } from "../../redux/SessionReducer";
 import { CustomDrawerItemList } from "./CustomDrawerItemList";
 import { DrawerItem } from "../buttons/DrawerItem";
-import { drawerScreens } from "../../constants/screenNames";
+import { drawerScreens } from "../../constants/drawerItems";
+import { drawerIconSelector } from "../../utils/drawerIconSelector";
 
 
 const styles = StyleSheet.create({
@@ -101,7 +102,7 @@ export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
                             Buenas Tardes,
                         </Text>
                         <Text style={styles.nameText}>
-                            Nad
+                            Juan
                         </Text>
                     </View>
                </View>
@@ -114,6 +115,9 @@ export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
                     label="LOG_OUT" 
                     onPressAsync={logout}
                     selected={false}
+                    icon={
+                        drawerIconSelector("LOG_OUT")
+                    }
                />
            </View>
        </View>
