@@ -4,7 +4,7 @@ import { ProductStack } from "../Stacks/ProductStack";
 import { CarStack } from "../Stacks/CarStack";
 import { MyShoppingStack } from "../Stacks/MyShopingStack";
 import { UserStack } from "../Stacks/UserStack";
-import { CustomDrawer } from "../../components/CustomDrawer";
+import { CustomDrawer } from "../../components/navigation/CustomDrawer";
 
 export type HomeDrawerType = {
     PRODUCT_STACK: undefined

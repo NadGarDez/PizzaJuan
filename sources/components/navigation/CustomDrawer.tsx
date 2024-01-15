@@ -1,13 +1,16 @@
-import { DrawerContentScrollView,DrawerContentComponentProps, DrawerItemList, DrawerItem } from "@react-navigation/drawer";
+import { DrawerContentScrollView,DrawerContentComponentProps, DrawerItemList } from "@react-navigation/drawer";
 import React, { useEffect } from "react";
 import { StyleSheet, Text , View} from "react-native";
-import { colors } from "../styles/colors";
-import { IconButton } from "./buttons/IconButton";
-import { CloseIcon } from "./icons/CloseIcons";
-import { AvatarImage } from "./surfaces/AvatarImage";
+import { colors } from "../../styles/colors";
+import { IconButton } from "../buttons/IconButton";
+import { CloseIcon } from "../icons/CloseIcons";
+import { AvatarImage } from "../surfaces/AvatarImage";
 import { useAuth0 } from "react-native-auth0";
 import { useDispatch } from "react-redux";
-import { resetSession } from "../redux/SessionReducer";
+import { resetSession } from "../../redux/SessionReducer";
+import { CustomDrawerItemList } from "./CustomDrawerItemList";
+import { DrawerItem } from "../buttons/DrawerItem";
+import { drawerScreens } from "../../constants/screenNames";
 
 
 const styles = StyleSheet.create({
@@ -31,7 +34,8 @@ const styles = StyleSheet.create({
         marginTop:8
     },
     itemContainers:{
-        flex:1
+        flex:1,
+        paddingHorizontal:8
     },
     avatarImage: {
         marginRight:8
@@ -53,6 +57,10 @@ const styles = StyleSheet.create({
         fontSize:34,
         color: colors.black,
         fontWeight: "700"
+    },
+    logoutContainer:{
+        marginBottom:32,
+        paddingLeft:16
     }
 })
 
@@ -72,6 +80,8 @@ export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
         },
         [user]
     )
+
+    
     
     return (
        <View style={styles.contaner}>
@@ -96,13 +106,16 @@ export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
                     </View>
                </View>
                <View style={styles.itemContainers}>
-                    <DrawerItemList {...props}/>
-                    <DrawerItem
-                        label="Cerrar Session"
-                        onPress={logout}
-                    />
+                    <CustomDrawerItemList {...props}/>
                </View>
            </DrawerContentScrollView>
+           <View style={styles.logoutContainer}>
+               <DrawerItem 
+                    label="LOG_OUT" 
+                    onPressAsync={logout}
+                    selected={false}
+               />
+           </View>
        </View>
     )
 }
