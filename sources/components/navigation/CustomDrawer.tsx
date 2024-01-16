@@ -1,17 +1,15 @@
-import { DrawerContentScrollView,DrawerContentComponentProps, DrawerItemList } from "@react-navigation/drawer";
+import { DrawerContentScrollView,DrawerContentComponentProps, } from "@react-navigation/drawer";
 import React, { useEffect } from "react";
 import { StyleSheet, Text , View} from "react-native";
 import { colors } from "../../styles/colors";
-import { IconButton } from "../buttons/IconButton";
-import { CloseIcon } from "../icons/CloseIcons";
 import { AvatarImage } from "../surfaces/AvatarImage";
 import { useAuth0 } from "react-native-auth0";
 import { useDispatch } from "react-redux";
-import { resetSession } from "../../redux/SessionReducer";
+import { resetSession, sessionObjectSelector } from "../../redux/SessionReducer";
 import { CustomDrawerItemList } from "./CustomDrawerItemList";
 import { DrawerItem } from "../buttons/DrawerItem";
-import { drawerScreens } from "../../constants/drawerItems";
 import { drawerIconSelector } from "../../utils/drawerIconSelector";
+import { useAppSelector } from "../../redux/hooks";
 
 
 const styles = StyleSheet.create({
@@ -68,6 +66,7 @@ const styles = StyleSheet.create({
 export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
     const {clearSession, user} = useAuth0()
     const dispatch = useDispatch()
+    const {givenName} = useAppSelector(sessionObjectSelector)
 
     const logout = async ():Promise<void>=> {
         await clearSession()
@@ -87,12 +86,6 @@ export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
     return (
        <View style={styles.contaner}>
            <DrawerContentScrollView>
-               {/* <View style={styles.closeContainer}>
-                    <IconButton onPress={()=>{}}>
-                        <CloseIcon />
-                    </IconButton>
-               </View> */}
-
                <View style={styles.avatarContainer}>
                     <View style={styles.avatarImage}>
                         <AvatarImage />
@@ -102,7 +95,7 @@ export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
                             Buenas Tardes,
                         </Text>
                         <Text style={styles.nameText}>
-                            Juan
+                            {givenName}
                         </Text>
                     </View>
                </View>

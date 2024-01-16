@@ -4,12 +4,14 @@ import { colors } from "../../styles/colors";
 import { HelloWorldComponent } from "../../components/HelloWorldComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../../navigation/Stacks/ProductStack";
+import { TitleStoreText } from "../../components/surfaces/TitleStoreText";
+import { SearchAndSettingsBanner } from "../../components/surfaces/SearchAndSettingsBanner";
 
 const styles = StyleSheet.create(
     {
         container:{
             flex:1,
-            backgroundColor:colors.black_thin,
+            backgroundColor:colors.background_white,
         },
         orderNowContainer:{
             height:50,
@@ -40,7 +42,9 @@ export const ProductListScreen = ({navigation}:ProductListScreenPropType): JSX.E
     return (
         <>
             <View style={styles.container}>
-                <HelloWorldComponent sectionMessage="Lista de productos" onPress={onPress}/>
+                <TitleStoreText />
+
+                <SearchAndSettingsBanner/>
             </View>
         </>
     )
