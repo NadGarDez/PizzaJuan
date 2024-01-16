@@ -6,6 +6,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 import { TitleStoreText } from "../../components/surfaces/TitleStoreText";
 import { SearchAndSettingsBanner } from "../../components/surfaces/SearchAndSettingsBanner";
+import { CategoryList } from "../../components/lists/CategoryList";
 
 const styles = StyleSheet.create(
     {
@@ -43,8 +44,8 @@ export const ProductListScreen = ({navigation}:ProductListScreenPropType): JSX.E
         <>
             <View style={styles.container}>
                 <TitleStoreText />
-
                 <SearchAndSettingsBanner/>
+                <CategoryList />
             </View>
         </>
     )
