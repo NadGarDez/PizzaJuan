@@ -12,8 +12,8 @@ const styles = StyleSheet.create(
             flexDirection:"row",
             backgroundColor:colors.white_card,
             width:"100%",
-            paddingVertical:8,
-            paddingHorizontal:8,
+            paddingVertical:6,
+            paddingHorizontal:6,
             borderRadius:8,
             ...shadows.lightShadow
         
@@ -27,6 +27,8 @@ const styles = StyleSheet.create(
         },
         textInputStyles: {
             width:"100%",
+            height:25,
+            padding:0
         }
     }
 )

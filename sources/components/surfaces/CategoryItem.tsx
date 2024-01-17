@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet,Text,View } from "react-native";
+import { Image, Pressable, StyleSheet,Text,View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
 
@@ -16,8 +16,8 @@ const styles = StyleSheet.create(
             marginRight:12,
             marginBottom:16,
             padding:8,
-            ...shadows.principalShadow
         },
+
         activeContainer: {
             backgroundColor:colors.principal
         },
@@ -53,30 +53,47 @@ type props = {
     active:boolean,
     image:string,
     categoryName:string,
-    index:number
+    index:number,
+    onPressItem: (index:number)=>void
 }
 
-export const CategoryItem = ({active, image, categoryName, index}:props):JSX.Element=>{
+export const CategoryItem = ({active, image, categoryName, index, onPressItem}:props):JSX.Element=>{
 
     const restContainerStyles =  active ? styles.activeContainer : styles.unactiveContainer;
     return (
-        <View style={{...styles.baseContainer, ...restContainerStyles, marginLeft: index===0 ? 16:0}}>
-            <View style={styles.imageContainer}>
+        <Pressable style={{marginLeft: index===0 ? 16:0}}
+        
+            onPress={()=>onPressItem(index)}
+        >
+            {
+                ({pressed})=>(
+                    <View style={
+                        pressed ? {
+                            ...shadows.lightShadow,...styles.baseContainer, backgroundColor: "#f4dcae"
+                        } : {
+                            ...shadows.principalShadow, ...styles.baseContainer, ...restContainerStyles
+                        }
+                    }>
+                        <View style={styles.imageContainer}>
 
-                 <Image 
-                
-                    source={{
-                        uri:image
-                    }}
-                    style={styles.imageStyles}
-                    resizeMethod="scale"
-                /> 
-            </View>
-            <View style={styles.textContainer}>
-                    <Text style={styles.textStyles}>
-                        {categoryName}
-                    </Text>
-            </View>
-        </View>
+                            <Image 
+                            
+                                source={{
+                                    uri:image
+                                }}
+                                style={styles.imageStyles}
+                                resizeMethod="scale"
+                            /> 
+                        </View>
+                        <View style={styles.textContainer}>
+                                <Text style={styles.textStyles}>
+                                    {categoryName}
+                                </Text>
+                        </View>
+                    </View>
+                )
+            }
+        </Pressable>
+        
     )
 }

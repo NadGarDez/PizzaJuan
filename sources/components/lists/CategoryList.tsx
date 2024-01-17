@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, StyleSheet, Text , FlatListProps, View} from "react-native";
 import { CategoryItem } from "../surfaces/CategoryItem";
 import { colors } from "../../styles/colors";
@@ -9,15 +9,18 @@ const styles = StyleSheet.create(
             marginTop:16
         },
         titleListContainer: {
+            display:"flex",
+            flexDirection:"column",
+            justifyContent: "center",
             paddingLeft:16
         },
         titleListTextStles: {
-            fontSize:20,
+            fontSize:25,
             fontWeight: "700",
             color:colors.seconday_text
         },
         listContainer: {
-            marginTop:8
+            marginTop:16
         }
 
     }
@@ -50,9 +53,14 @@ export const CategoryList = ():JSX.Element=> {
         }
     ]
 
-    const Item = (props:{categoryName:string, active:boolean, image:string, index:number}) =>{
+
+    const [selectedItem, setSelectedItem] = useState<number>(0);
+
+    const onPressItem = (index:number)=>setSelectedItem(index);
+
+    const Item = (props:{categoryName:string,  image:string, index:number}) =>{
         return (
-            <CategoryItem {...props}/>
+            <CategoryItem {...props} onPressItem={onPressItem} active={selectedItem===props.index}/>
         )
     }
 
