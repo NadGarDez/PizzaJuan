@@ -7,6 +7,7 @@ import { InitialStackScreenHeader } from "../../components/headers/InitialStackS
 import { NormalStackScreenHeart } from "../../components/headers/NormalStackScreenHeader";
 import { createDrawerNavigator, DrawerScreenProps } from "@react-navigation/drawer";
 import { HomeDrawerType } from "../Drawers/HomeDrawer";
+import { FloatingProductHeader } from "../../components/headers/FloatingProductHeader";
 
 export type ProductStackType = {
     PRODUCT_LIST_SCREEN: undefined,
@@ -46,7 +47,7 @@ export const ProductStack = ({navigation}:ProductStackProps):JSX.Element=>{
                 options={
                     {
                         header: props =>(
-                            <NormalStackScreenHeart {...props} displayRightContent/>
+                            <FloatingProductHeader {...props} />
                         )
                     }
                 }

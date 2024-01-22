@@ -50,7 +50,8 @@ const styles = StyleSheet.create(
         },
         priceContainer: {
             display:"flex",
-            flexDirection: "row"
+            flexDirection: "row",
+            alignItems:"baseline"
         },
         priceAndFavoriteContainer: {
             flex:1,
@@ -64,17 +65,17 @@ const styles = StyleSheet.create(
         dolarPrice: {
             marginRight:4,
             fontSize:14,
-            fontWeight: "800",
+            fontWeight: "600",
             color:colors.seconday_text
         },
         bsPrice: {
             fontSize:12,
-            fontWeight: "400",
+            fontWeight: "300",
             color:colors.seconday_text
         },
         likeNumberContainer: {
             fontSize:12,
-            fontWeight: "400",
+            fontWeight: "200",
             color:colors.seconday_text,
             marginRight:4
         },
@@ -83,7 +84,7 @@ const styles = StyleSheet.create(
         },
         descriptionTextStyles: {
             fontSize:14,
-            fontWeight: "500",
+            fontWeight: "200",
             color:colors.seconday_text
         }
     }

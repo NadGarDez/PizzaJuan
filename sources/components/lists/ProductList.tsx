@@ -30,7 +30,7 @@ export const ProductList = ():JSX.Element=> {
 
     const staticData = [
         {
-            productName:"Pizza 1",
+            productName:"Pizza numero 1",
             price:12,
             favorite:true,
             image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
@@ -38,7 +38,7 @@ export const ProductList = ():JSX.Element=> {
             description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!"
         },
         {
-            productName:"Pizza 2",
+            productName:"Pizza numero 2",
             price:12,
             favorite:false,
             image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
@@ -46,7 +46,7 @@ export const ProductList = ():JSX.Element=> {
             description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!"
         },
         {
-            productName:"Pizza 3",
+            productName:"Pizza numero 3",
             price:12,
             favorite:false,
             image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
@@ -54,7 +54,7 @@ export const ProductList = ():JSX.Element=> {
             description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!"
         },
         {
-            productName:"Pizzas 4",
+            productName:"Pizza numero 4",
             price:12,
             favorite:false,
             image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
@@ -62,7 +62,7 @@ export const ProductList = ():JSX.Element=> {
             description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!"
         },
         {
-            productName:"Pizzas 5",
+            productName:"Pizza numero 5",
             price:12,
             favorite:false,
             image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
