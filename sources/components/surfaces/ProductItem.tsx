@@ -7,6 +7,7 @@ import { HeartIconOutlined } from "../icons/HeartIconOutlined";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../../navigation/Stacks/ProductStack";
+import { ThreDotsIcon } from "../icons/ThreDotsIcon";
 
 const styles = StyleSheet.create(
     {
@@ -16,10 +17,11 @@ const styles = StyleSheet.create(
             marginBottom:8,
             borderRadius:10,
             minHeight:140,
-            padding:8,
+            paddingTop:8,
+            paddingHorizontal:8,
             marginHorizontal:16,
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
         },
         imageContainer: {
             flex:1,
@@ -28,6 +30,7 @@ const styles = StyleSheet.create(
         },
         informationContainer: {
             flex:2,
+            paddingRight:4
         },
         imageStyles: {
            height:110
@@ -37,7 +40,6 @@ const styles = StyleSheet.create(
             flexDirection:"row",
             justifyContent:"flex-end",
             alignItems:"center",
-            flexGrow: 1
         },
         titleContainerAndFavorite: {
             display: "flex",
@@ -46,7 +48,7 @@ const styles = StyleSheet.create(
             marginBottom:8
         },  
         titleContainer: {
-            flex:3
+            flex:8
         },
         priceContainer: {
             display:"flex",
@@ -86,6 +88,35 @@ const styles = StyleSheet.create(
             fontSize:14,
             fontWeight: "200",
             color:colors.seconday_text
+        },
+        line: {
+            borderStyle:"solid",
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderTopWidth:1,
+            borderTopColor: colors.seconday_text + "30",
+            width: "100%",
+            marginTop:8,
+        },
+        flexRowStyles: {
+            flex:1,
+            flexDirection: "row",
+        },
+        creator: {
+            display: "flex",
+            width: "100%",
+            flexDirection: "row",
+            height:30,
+            alignItems: "center",
+            paddingHorizontal:2
+        },
+        firstPartOfCreator: {
+            flex:1
+        },
+        secondPartOfCreator: {
+            flex:1,
+            flexDirection:"row",
+            justifyContent: "flex-end"
         }
     }
 )
@@ -97,12 +128,13 @@ type props = {
     image:string,
     likes:number,
     description:string,
+    creator:string,
     onPressItem: (index:number)=>void
 }
 
 type ProductListScreenPropType = NativeStackScreenProps<ProductStackType,"PRODUCT_LIST_SCREEN">
 
-export const ProductItem = ({image, likes,productName, price, favorite,description,onPressItem}:props):JSX.Element=>{
+export const ProductItem = ({image, likes,productName, price, favorite,description,onPressItem, creator}:props):JSX.Element=>{
 
     const {navigate} = useNavigation<ProductListScreenPropType['navigation']>()
 
@@ -119,6 +151,7 @@ export const ProductItem = ({image, likes,productName, price, favorite,descripti
                     <View style={
                        pressed ? {...styles.container, ...shadows.lightShadow} : {...styles.container, ...shadows.principalShadow}
                     }>
+                    <View style={styles.flexRowStyles}>
                         <View style={styles.imageContainer}>
                             <Image source={{uri:image}} style={styles.imageStyles}/>
                         </View>
@@ -155,6 +188,21 @@ export const ProductItem = ({image, likes,productName, price, favorite,descripti
                                     </Text>
                                 </View>
                             </View>
+                            
+                        </View>
+                        
+                        </View>
+                        <View style={styles.line}/>
+                        <View style={styles.creator}>
+                            <View style={styles.firstPartOfCreator}>
+                                <Text style={styles.likeNumberContainer}>
+                                    {creator}
+                                </Text>    
+                            </View>
+                            <View style={styles.secondPartOfCreator}>
+                                <ThreDotsIcon size={12} color={colors.seconday_text+50}/>
+                            </View>
+                            
                         </View>
                     </View>
                 )

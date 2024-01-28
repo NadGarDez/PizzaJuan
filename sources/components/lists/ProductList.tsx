@@ -35,7 +35,8 @@ export const ProductList = ():JSX.Element=> {
             favorite:true,
             image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
             likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!"
+            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+            creator: "PizzaJuan"
         },
         {
             productName:"Pizza numero 2",
@@ -43,7 +44,8 @@ export const ProductList = ():JSX.Element=> {
             favorite:false,
             image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
             likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!"
+            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+            creator: "PizzaJuan"
         },
         {
             productName:"Pizza numero 3",
@@ -51,7 +53,8 @@ export const ProductList = ():JSX.Element=> {
             favorite:false,
             image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
             likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!"
+            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+            creator: "PizzaJuan"
         },
         {
             productName:"Pizza numero 4",
@@ -59,7 +62,8 @@ export const ProductList = ():JSX.Element=> {
             favorite:false,
             image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
             likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!"
+            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+            creator: "PizzaJuan"
         },
         {
             productName:"Pizza numero 5",
@@ -67,7 +71,8 @@ export const ProductList = ():JSX.Element=> {
             favorite:false,
             image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
             likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan! fdasfdsafdsafdsafdsafdsafdsafsafdsafdsafdsafdsafdsafafdsas"
+            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+            creator: "PizzaJuan"
         },
     ]
 

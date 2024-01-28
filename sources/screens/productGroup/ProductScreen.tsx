@@ -19,17 +19,17 @@ const styles = StyleSheet.create(
     {
         container: {
             flex:1,
-            backgroundColor: colors.background_white,
+            backgroundColor: "#f6f6f6",
         },
         productInformationContainer: {
-            backgroundColor:colors.background_white + "10",
+            backgroundColor:"#f6f6f6",//colors.background_white,
             position: "relative",
             top:0,
             zIndex:2,
         },
         informationContainer: {
             flex:1,
-            backgroundColor:colors.white_card+"90",
+            backgroundColor:colors.white_card,
             borderRadius:30,
             paddingVertical:16,
             marginBottom:100,
