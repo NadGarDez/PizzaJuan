@@ -9,7 +9,7 @@ type props = {
 export const BackIcon = ({size=25}:props):JSX.Element => {
     return (
         <>
-            <Icon name="chevron-back-outline" size={size} color={colors.black_thin}/>
+            <Icon name="return-up-back" size={size} color={colors.black_thin}/>
         </>
     )
 }

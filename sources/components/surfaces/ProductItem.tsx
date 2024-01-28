@@ -91,7 +91,6 @@ const styles = StyleSheet.create(
         },
         line: {
             borderStyle:"solid",
-            borderColor: "transparent",
             borderWidth: 0,
             borderTopWidth:1,
             borderTopColor: colors.seconday_text + "30",
@@ -141,6 +140,7 @@ export const ProductItem = ({image, likes,productName, price, favorite,descripti
     const nav = ()=> {
         navigate("PRODUCT_SCREEN", {productId:"123"})
     }
+    
 
     return (
         <Pressable 

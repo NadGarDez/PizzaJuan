@@ -6,13 +6,15 @@ type colors_type = {
     black_thin:string,
     pink:string,
     seconday_text:string,
-    text_contrast:string
+    text_contrast:string,
+    hightLightPrincipal:string
 }
 
 
 export const colors : colors_type= {
     background_white:"#fcfcfc",
     principal:"#f2bc57",
+    hightLightPrincipal:"#f9d95f",
     black:"#07090d",
     white_card:"#ffffff",
     black_thin:"#15130d",

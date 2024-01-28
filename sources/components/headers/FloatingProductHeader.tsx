@@ -16,7 +16,7 @@ const styles  = StyleSheet.create(
             }),
             paddingBottom:16,
             width:"100%",
-            backgroundColor:"transparent",
+            backgroundColor:"#FFFFFF00",
             display:"flex",
             flexDirection:"row",
             position: "absolute",
@@ -43,6 +43,16 @@ const styles  = StyleSheet.create(
             flexDirection:"row",
             justifyContent:"flex-end",
             paddingRight:16
+        },
+        semiTransparentCircle: {
+            width: 40,
+            height: 40,
+            borderRadius: 20,
+            backgroundColor: "#FFFFFF90",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center"
         }
 
     }
@@ -58,13 +68,18 @@ export const FloatingProductHeader = ({navigation}:NativeStackHeaderProps):JSX.E
     return (
         <View style={styles.container}>
             <View style={styles.leftContainer}>
-                <IconButton onPress={back}>
-                   <BackIcon />
-                </IconButton>
+                <View style={styles.semiTransparentCircle}>
+                    <IconButton onPress={back}>
+                    <BackIcon />
+                    </IconButton>
+                </View>
+                
             </View>
             <View style={styles.centerContainer}/>
             <View style={styles.righContainer}>
-                <HeartButton onPress={()=>{}} pressed={false}/>
+                <View style={styles.semiTransparentCircle}>
+                    <HeartButton onPress={()=>{}} pressed={false}/>
+                </View>
             </View>
         </View>
     )

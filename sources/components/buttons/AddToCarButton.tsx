@@ -29,7 +29,7 @@ type props = {
     onPress: ()=>void,
 }
 
-const pressedStyles= (pressed:boolean)=>pressed ? {...styles.buttonContainer, ...shadows.lightShadow, backgroundColor: colors.principal + "80"} : {...styles.buttonContainer, ...shadows.principalShadow}
+const pressedStyles= (pressed:boolean)=>pressed ? {...styles.buttonContainer, ...shadows.lightShadow, backgroundColor: colors.hightLightPrincipal } : {...styles.buttonContainer, ...shadows.principalShadow}
 
 export const AddToCarButton = (props:props):JSX.Element=>{
     const {onPress}=props;
