@@ -10,6 +10,7 @@ import { HeartIconFilled } from "../../components/icons/HeartIconFilled";
 import { PlusLessButton } from "../../components/buttons/PlusLessButton";
 import { AddToCarButton } from "../../components/buttons/AddToCarButton";
 import { ImageCarousel } from "../../components/surfaces/ImageCarousel";
+import { FloatingCarouselButtons } from "../../components/buttons/FloatingCarouselButtons";
 
 const styles = StyleSheet.create(
     {
@@ -147,9 +148,20 @@ const styles = StyleSheet.create(
             backgroundColor: "transparent",
         },
         floatingItemsContainer: {
-            height:Dimensions.get("screen").height * 0.6 - 32
+            height:Dimensions.get("screen").height * 0.6 - 32,
+            display: "flex",
+            flexDirection: "column"
         },
         scroll: {
+        },
+        topFloatingItem: {
+            flex:1,
+        },
+        centerFloatingItem: {
+            flex:3,
+        },
+        bottomFloatingItem: {
+            paddingVertical:16
         }
 
     }
@@ -178,13 +190,23 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
 
     const [focusImage, setFocusImage] = useState<number>(0);
 
+    const changeFocus = (index:number)=>setFocusImage(index);
+
     return (
         <View style={styles.container}>
             <View style={styles.scrollContainer}>
             <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
                 <View style={styles.scrollChildren}>
                     <View style={styles.floatingItemsContainer}>
+                        <View style={styles.topFloatingItem}>
 
+                        </View>
+                        <View style={styles.centerFloatingItem}>
+
+                        </View>
+                        <View style={styles.bottomFloatingItem}>
+                            <FloatingCarouselButtons numberOfItems={4} onPressItem={changeFocus} focused={focusImage} />
+                        </View>
                     </View>
                     <View style={styles.informationContainer}>
                                 <View style={styles.titleLikesContainer}>
@@ -238,12 +260,6 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
             </View>
             <View style={styles.productInformationContainer}>
                 <View style={styles.imageContainer}>
-                    {/* <Image
-                        source={{
-                            uri: staticData.image
-                        }}
-                        style={styles.imageStyles}
-                    /> */}
                    <ImageCarousel 
                         focused={focusImage}
                         data={
