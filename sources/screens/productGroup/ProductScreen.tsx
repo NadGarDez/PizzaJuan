@@ -236,8 +236,11 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                         </View>
                         <View style={styles.centerFloatingItem}>
                                 <VariantSelector 
-                                
+                                    visible={showCarouselButtons}
                                     variants={staticData.variant}
+                                    onChangeVariant={
+                                        (index)=>{}
+                                    }
                                 />
                         </View>
                         <View style={styles.bottomFloatingItem}>
