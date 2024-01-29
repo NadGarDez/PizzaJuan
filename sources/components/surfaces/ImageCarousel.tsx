@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 
 import {Animated, Dimensions, StyleSheet, Image} from "react-native"
 import { ProductStackType } from "../../navigation/Stacks/ProductStack"
+import LinearGradient from "react-native-linear-gradient"
 
 type props = {
     data: string[],
@@ -64,19 +65,9 @@ export const ImageCarousel = ({data, focused}:props):JSX.Element=> {
         ).start()
     }
 
-    const gotToInitial= (func:(obj:{finished:boolean})=>void)=> {
-        Animated.timing(
-            animation,
-            {
-                toValue:0,
-                duration:100,
-                useNativeDriver:false
-            }
-        ).start(func)
-    }
-
     return (
-        <Animated.View style={
+        <>
+            <Animated.View style={
                 {
                     ...styles.container,
                     left: negativeInt
@@ -98,6 +89,7 @@ export const ImageCarousel = ({data, focused}:props):JSX.Element=> {
                         )
                     }
 
-        </Animated.View>
+            </Animated.View>
+        </>
     )
 }

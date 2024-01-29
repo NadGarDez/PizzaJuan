@@ -12,6 +12,8 @@ import { AddToCarButton } from "../../components/buttons/AddToCarButton";
 import { ImageCarousel } from "../../components/surfaces/ImageCarousel";
 import { FloatingCarouselButtons } from "../../components/buttons/FloatingCarouselButtons";
 import { VariantSelector } from "../../components/buttons/VariantSelector";
+import { ProductInformationCard } from "../../components/surfaces/ProductInformationCard";
+import LinearGradient from "react-native-linear-gradient";
 
 const styles = StyleSheet.create(
     {
@@ -27,117 +29,10 @@ const styles = StyleSheet.create(
             backgroundColor:"red",//"#f6f6f6",//colors.background_white,
             zIndex:-2,
         },
-        informationContainer: {
-            display:"flex",
-            backgroundColor:colors.white_card,
-            borderRadius:30,
-            paddingVertical:16,
-            paddingBottom:50,
-        },
         imageContainer: {
             display:"flex",
             backgroundColor:colors.white_card,
             overflow:"hidden"
-        },
-        partialInformationContainer: {
-            display:"flex",
-        },
-        variantContainer:{
-            paddingVertical:16,
-            width: "100%",
-            position:"relative",
-            top:-30
-        },
-        imageStyles: {
-            width:"100%",
-            height: Dimensions.get("screen").height * 0.6
-        },
-       
-        titleContainer: {
-            paddingLeft:16,
-            display:"flex",
-            flexGrow:3
-        },
-        likeButtonContainer: {
-            paddingRight: 18,
-            display: "flex",
-            flexDirection: "row",
-            flexGrow:1,
-            paddingLeft:16,
-            paddingTop:8
-        },
-        priceContainer: {
-            paddingLeft:16,
-            display: "flex",
-            flexDirection: "row",
-            alignItems:"baseline",
-            flexGrow:1
-        },
-        amountButtonContainerAndPrice: {
-            marginTop:24,
-            display: "flex",
-            alignItems:"center",
-            flexDirection: "row",
-        },
-        titleStyles: {
-            fontSize:25,
-            fontWeight: "700",
-            color:colors.principal
-        },
-        likeNumberContainer:{
-            fontSize:16,
-            fontWeight: "200",
-            color:colors.seconday_text,
-            marginRight:4,
-        },
-        dolarPrice: {
-            marginRight:4,
-            fontSize:20,
-            fontWeight: "600",
-            color:colors.seconday_text
-        },
-        bsPrice: {
-            fontSize:14,
-            fontWeight: "300",
-            color:colors.seconday_text
-        },
-
-        titleLikesContainer: {
-            display:"flex",
-            flexDirection: "column"
-        },
-        descriptionContainer: {
-            marginTop:16,
-            paddingLeft:16,
-            paddingRight:18
-        },
-        descriptionTitleStyles: {
-            color:colors.seconday_text,
-            fontSize:16,
-            fontWeight:"600"
-        },
-        descriptionTextStyles: {
-            fontSize:14,
-            fontWeight: "200",
-            marginTop:8,
-            color:colors.seconday_text,
-        },
-        line: {
-            borderStyle:"solid",
-            borderWidth: 0,
-            borderTopWidth:1,
-            borderTopColor: colors.seconday_text + "30",
-            width: "100%",
-            marginTop:4,
-        },
-        orderContiner: {
-            paddingRight:18,
-            display: "flex",
-            justifyContent:"flex-end",
-        },
-        buttonAddContainer: {
-            paddingHorizontal:16,
-            marginTop:16,
         },
         scrollContainer:{
             flex:1, 
@@ -166,6 +61,28 @@ const styles = StyleSheet.create(
         },
         bottomFloatingItem: {
             paddingVertical:16
+        },
+        gradient:{
+            display: "flex",
+            flexDirection: "row",
+            position: "absolute",
+            zIndex:-1,
+            top:0,
+            left:0,
+            height: Dimensions.get("screen").height ,
+            width: Dimensions.get("screen").width
+        },
+        colorLimit:{
+            display: "flex",
+            flexDirection: "row",
+            position: "absolute",
+            zIndex:-2,
+            bottom:29 ,
+            borderRadius:30,
+            left:0,
+            height: Dimensions.get("screen").height * 0.4,
+            width: Dimensions.get("screen").width,
+            backgroundColor: colors.white_card
         }
 
     }
@@ -175,10 +92,15 @@ const staticData = {
     productName:"Pizza Cuatro Quesos",
     price:12,
     favorite:true,
-    image:"https://img.freepik.com/foto-gratis/persona-recibiendo-pedazo-deliciosa-pizza-pepperoni-queso_181624-18235.jpg",
+    images:[
+        "https://img.freepik.com/foto-gratis/persona-recibiendo-pedazo-deliciosa-pizza-pepperoni-queso_181624-18235.jpg",
+        "https://img.freepik.com/foto-gratis/vista-lateral-pizza-pimiento-tomate-rebanadas-pizza-utensilios-cocina_176474-3184.jpg",
+        "https://img.freepik.com/fotos-premium/pizza-pepperoni-italiana-clasica-plato-vacio-vista-superior-foto-vertical-foto-alta-calidad_275899-621.jpg",
+        "https://media.istockphoto.com/id/184921098/photo/pizza.jpg?s=612x612&w=0&k=20&c=qY8nQ9g-gc1dN5lJPnp84cq5M_8dA6JI4UGHyokkOCc="
+    ],
     likes:12,
     description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-    variant: [
+    variants: [
         {
             name: "Individual",
             image: "https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg"
@@ -237,7 +159,7 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                         <View style={styles.centerFloatingItem}>
                                 <VariantSelector 
                                     visible={showCarouselButtons}
-                                    variants={staticData.variant}
+                                    variants={staticData.variants}
                                     onChangeVariant={
                                         (index)=>{}
                                     }
@@ -247,52 +169,8 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                             <FloatingCarouselButtons numberOfItems={4} onPressItem={changeFocus} focused={focusImage} visible={showCarouselButtons} /> 
                         </View>
                     </View>
-                    <View style={styles.informationContainer}>
-                                <View style={styles.titleLikesContainer}>
-                                        <View style={styles.titleContainer}>
-                                                <Text style={styles.titleStyles}>
-                                                    {staticData.productName}
-                                                </Text>
-                                        </View>
 
-
-                                        <View style={styles.likeButtonContainer}>
-                                            <Text style={styles.likeNumberContainer}>
-                                                {staticData.likes} han reaccionado con
-                                            </Text>
-                                            <HeartIconFilled color={colors.pink}/>
-                                        </View>
-                                </View>
-                                <View style={styles.descriptionContainer}>
-                                    <Text style={styles.descriptionTitleStyles}>
-                                        Descripcion
-                                    </Text>
-                                    <View  style={styles.line}>
-                                    </View>
-                                    <Text style={styles.descriptionTextStyles}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a dolor augue. Mauris quam sapien, commodo ac consequat a, gravida ut erat. Aliquam fermentum consequat neque sit amet ultricies. Proin urna ligula, efficitur non nulla sit amet, commodo condimentum enim. Maecenas mattis ultricies porttitor. Nunc consequat lorem ut nulla porta molestie. Donec tristique consequat mi nec bibendum. Nunc sagittis justo ex, sit amet hendrerit felis maximus sed. Sed volutpat ligula sit amet egestas bibendum. Suspendisse molestie, quam id tristique commodo, ligula nulla vehicula felis, in fringilla ipsum ex ut eros. Nullam tincidunt ante a porta sollicitudin. Duis viverra nisi ut justo consequat pharetra. Curabitur porttitor tellus sit amet aliquam pharetra. Quisque commodo leo a mauris sodales, at egestas leo vestibulum.
-                                    </Text>
-                                </View>
-
-                                <View style={styles.amountButtonContainerAndPrice}>
-                                    <View style={styles.priceContainer}>
-                                            <Text style={styles.dolarPrice}>
-                                                {staticData.price + "$"}
-                                            </Text>
-                                            <Text style={styles.bsPrice}>
-                                                referencia {(staticData.price * 36) + "bs"}
-                                            </Text>
-                                    </View>
-                                    <View style={styles.orderContiner}>
-                                        <PlusLessButton onChange={()=>{}} />
-                                    </View>
-                                </View>
-                                <View style={styles.buttonAddContainer}>
-                                    <AddToCarButton onPress={()=> {
-                                        setFocusImage(focusImage+1)
-                                    }} />
-                                </View>
-                    </View>
+                    <ProductInformationCard {...staticData}/>
                    
                 </View>
             </ScrollView>
@@ -302,15 +180,18 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                    <ImageCarousel 
                         focused={focusImage}
                         data={
-                            [
-                                "https://img.freepik.com/foto-gratis/persona-recibiendo-pedazo-deliciosa-pizza-pepperoni-queso_181624-18235.jpg",
-                                "https://img.freepik.com/foto-gratis/vista-lateral-pizza-pimiento-tomate-rebanadas-pizza-utensilios-cocina_176474-3184.jpg",
-                                "https://img.freepik.com/fotos-premium/pizza-pepperoni-italiana-clasica-plato-vacio-vista-superior-foto-vertical-foto-alta-calidad_275899-621.jpg",
-                                "https://media.istockphoto.com/id/184921098/photo/pizza.jpg?s=612x612&w=0&k=20&c=qY8nQ9g-gc1dN5lJPnp84cq5M_8dA6JI4UGHyokkOCc="
-                            ]
+                           staticData.images
                         }
                    />
                 </View>
+            </View>
+            {/* <LinearGradient
+                style={styles.gradient}
+                colors={['transparent',"transparent", '#FFFFFF90']} 
+                locations={[0,0.8,1]}
+            /> */}
+            <View style={styles.colorLimit}>
+
             </View>
         </View>
     )
