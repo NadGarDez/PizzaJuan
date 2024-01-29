@@ -1,5 +1,5 @@
-import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 
 
@@ -15,7 +15,7 @@ const styles = StyleSheet.create(
         buttonsContainer: {
             paddingVertical:8,
             width: "30%",
-            backgroundColor: colors.black_thin + "98",
+            backgroundColor: colors.white_card + "98",
             borderRadius:12,
             display: "flex",
             flexDirection: "row",
@@ -26,7 +26,7 @@ const styles = StyleSheet.create(
             height: 10,
             borderStyle: "solid",
             borderWidth: 1,
-            borderColor: colors.white_card + "90",
+            borderColor: colors.black_thin,
             borderRadius:5,
             flexDirection: "row",
             display: "flex",
@@ -45,7 +45,8 @@ const styles = StyleSheet.create(
 type props = {
     numberOfItems: number,
     onPressItem: (index:number)=>void ,
-    focused: number
+    focused: number,
+    visible:boolean
 }
 
 const Item = ({focused, onPress}:{focused:boolean, onPress:()=>void}):JSX.Element=> {
@@ -58,7 +59,7 @@ const Item = ({focused, onPress}:{focused:boolean, onPress:()=>void}):JSX.Elemen
             }>
                 <View style={{
                     ...styles.fillStyles,
-                    backgroundColor: focused ? colors.white_card+"90"  : "transparent"
+                    backgroundColor: focused ? colors.black_thin  : "transparent"
                     }}>
 
                 </View>
@@ -68,14 +69,54 @@ const Item = ({focused, onPress}:{focused:boolean, onPress:()=>void}):JSX.Elemen
     )
 }
 
-export const FloatingCarouselButtons = ({numberOfItems,focused, onPressItem}:props):JSX.Element=> {
+export const FloatingCarouselButtons = ({numberOfItems,focused, onPressItem, visible}:props):JSX.Element=> {
     const items = Array(numberOfItems).fill(0);
+    const animation = useRef(new Animated.Value(0)).current;
+    
 
+    useEffect(
+        ()=> {
+            if(visible){
+                fadeIn();
+            }
+            else {
+                fadeOut()
+            }
+        },
+        [visible]
+    )
+
+    const fadeIn = ()=> {
+        Animated.timing(
+            animation,
+            {
+                toValue:1,
+                useNativeDriver:false,
+                duration:500
+            }
+        ).start()
+    }
+
+    const fadeOut = ()=> {
+        Animated.timing(
+            animation,
+            {
+                toValue:0,
+                useNativeDriver:false,
+                duration:500
+            }
+        ).start()
+    }
 
 
     return (
         <View style={styles.container}>
-            <View style={styles.buttonsContainer}>
+            <Animated.View style={
+                {
+                    ...styles.buttonsContainer,
+                    opacity:animation,
+                }
+            }>
                 {
                     items.map(
                         (item, index) => (
@@ -90,7 +131,7 @@ export const FloatingCarouselButtons = ({numberOfItems,focused, onPressItem}:pro
                         )
                     )
                 }
-            </View>    
+            </Animated.View>    
         </View>
     )
 }

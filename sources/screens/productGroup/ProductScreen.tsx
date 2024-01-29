@@ -11,6 +11,7 @@ import { PlusLessButton } from "../../components/buttons/PlusLessButton";
 import { AddToCarButton } from "../../components/buttons/AddToCarButton";
 import { ImageCarousel } from "../../components/surfaces/ImageCarousel";
 import { FloatingCarouselButtons } from "../../components/buttons/FloatingCarouselButtons";
+import { VariantSelector } from "../../components/buttons/VariantSelector";
 
 const styles = StyleSheet.create(
     {
@@ -159,6 +160,9 @@ const styles = StyleSheet.create(
         },
         centerFloatingItem: {
             flex:3,
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            paddingHorizontal:16
         },
         bottomFloatingItem: {
             paddingVertical:16
@@ -173,8 +177,24 @@ const staticData = {
     favorite:true,
     image:"https://img.freepik.com/foto-gratis/persona-recibiendo-pedazo-deliciosa-pizza-pepperoni-queso_181624-18235.jpg",
     likes:12,
-    description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!"
+    description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+    variant: [
+        {
+            name: "Individual",
+            image: "https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg"
+        },
+        {
+            name: "Mediana",
+            image: "https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg"
+        },
+        {
+            name: "Familiar",
+            image: "https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg"
+        }
+    ]
 }
+
+
 
 type ProductScreenPropTypes = NativeStackScreenProps<ProductStackType,"PRODUCT_SCREEN">
 
@@ -189,23 +209,39 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
     }
 
     const [focusImage, setFocusImage] = useState<number>(0);
+    const [showCarouselButtons, setShowCarouselButtons] = useState<boolean>(true);
 
     const changeFocus = (index:number)=>setFocusImage(index);
 
     return (
         <View style={styles.container}>
             <View style={styles.scrollContainer}>
-            <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
+            <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} 
+                onScroll={
+                    ({nativeEvent:{contentOffset:{y}}})=>{
+                        if(y >= 30 && showCarouselButtons){
+                            setShowCarouselButtons(false);
+                        } 
+                        else if (y < 30 && !showCarouselButtons) {
+                            setShowCarouselButtons(true);
+                        }
+                    }
+                }
+                scrollEventThrottle={100}
+            >
                 <View style={styles.scrollChildren}>
                     <View style={styles.floatingItemsContainer}>
                         <View style={styles.topFloatingItem}>
 
                         </View>
                         <View style={styles.centerFloatingItem}>
-
+                                <VariantSelector 
+                                
+                                    variants={staticData.variant}
+                                />
                         </View>
                         <View style={styles.bottomFloatingItem}>
-                            <FloatingCarouselButtons numberOfItems={4} onPressItem={changeFocus} focused={focusImage} />
+                            <FloatingCarouselButtons numberOfItems={4} onPressItem={changeFocus} focused={focusImage} visible={showCarouselButtons} /> 
                         </View>
                     </View>
                     <View style={styles.informationContainer}>
