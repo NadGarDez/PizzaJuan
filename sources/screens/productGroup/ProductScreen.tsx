@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View, Image, Platform, Dimensions, ScrollView } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { StyleSheet, Text, View, Image, Platform, Dimensions, ScrollView, PanResponder } from "react-native";
 import { colors } from "../../styles/colors";
 import { HelloWorldComponent } from "../../components/HelloWorldComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -80,7 +80,10 @@ const styles = StyleSheet.create(
             bottom:29 ,
             borderRadius:30,
             left:0,
-            height: Dimensions.get("screen").height * 0.4,
+            height: Platform.select({
+                ios:Dimensions.get("screen").height * 0.4,
+                android:Dimensions.get("screen").height * 0.3,
+            }),
             width: Dimensions.get("screen").width,
             backgroundColor: colors.white_card
         }
@@ -116,9 +119,35 @@ const staticData = {
     ]
 }
 
+const screenWidth = Dimensions.get("screen").width;
 
 
 type ProductScreenPropTypes = NativeStackScreenProps<ProductStackType,"PRODUCT_SCREEN">
+
+type xAxisLimitType = {
+    rightLimit:number,
+    leftLimit:number
+}
+
+const getBreackPointNext = (index:number):xAxisLimitType=> {
+    const rightLimit = (-1)*((index + 1) * screenWidth);
+    const leftLimit = rightLimit + (screenWidth * 0.2);
+
+    return {
+        rightLimit,
+        leftLimit
+    }
+} 
+const getBreackPointBack = (index:number):xAxisLimitType=> {
+    const rightLimit = (-1)*((index * screenWidth)-1);
+    const leftLimit = rightLimit + (screenWidth * 0.6);
+
+    return {
+        rightLimit,
+        leftLimit
+    }
+}
+
 
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
@@ -132,13 +161,53 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
 
     const [focusImage, setFocusImage] = useState<number>(0);
     const [showCarouselButtons, setShowCarouselButtons] = useState<boolean>(true);
+    const [dx, setDx] =  useState<number>(0);
+    const [released, setReleased] = useState<boolean>(false);
 
     const changeFocus = (index:number)=>setFocusImage(index);
 
+    const panResponder = useRef(
+        PanResponder.create({
+            // Ask to be the responder.
+            onStartShouldSetPanResponder: (evt, gestureState) => showCarouselButtons,
+            onMoveShouldSetPanResponder: (evt, gestureState) => showCarouselButtons,
+      
+            /**
+             * When we start the pan tell the machine that we're
+             * seeking. This stops it from updating the seekbar
+             * position in the onProgress listener.
+             */
+            onPanResponderGrant: (evt, gestureState) => {
+            },
+      
+            /**
+             * When panning, update the seekbar position, duh.
+             */
+            onPanResponderMove: (evt, gestureState) => {
+             setReleased(false);
+             setDx(gestureState.dx);
+            },
+      
+            /**
+             * On release we update the time and seek to it in the video.
+             * If you seek to the end of the video we fire the
+             * onEnd callback
+             */
+            onPanResponderRelease: (evt, gestureState) => {
+                setReleased(true);
+            },  
+          })
+    ).current;
+
     return (
-        <View style={styles.container}>
-            <View style={styles.scrollContainer}>
+        <View style={styles.container}
+            // {...panResponder.panHandlers}
+        >
+            <View style={styles.scrollContainer}
+                {...panResponder.panHandlers}
+            >
             <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} 
+                 
                 onScroll={
                     ({nativeEvent:{contentOffset:{y}}})=>{
                         if(y >= 30 && showCarouselButtons){
@@ -182,14 +251,13 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                         data={
                            staticData.images
                         }
+                        dx={dx}
+                        released={released}
+                        setFocus={changeFocus}
                    />
                 </View>
             </View>
-            {/* <LinearGradient
-                style={styles.gradient}
-                colors={['transparent',"transparent", '#FFFFFF90']} 
-                locations={[0,0.8,1]}
-            /> */}
+          
             <View style={styles.colorLimit}>
 
             </View>
