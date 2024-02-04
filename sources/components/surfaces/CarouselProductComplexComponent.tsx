@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
-import { View, Dimensions, StyleSheet, PanResponder, Platform } from "react-native";
+import { View, Dimensions, StyleSheet, PanResponder, Platform, Text } from "react-native";
 import { ProductInformationCard } from "./ProductInformationCard";
 import { VariantSelector } from "../buttons/VariantSelector";
 import { FloatingCarouselButtons } from "../buttons/FloatingCarouselButtons";
 import { ImageCarousel } from "./ImageCarousel";
 import { colors } from "../../styles/colors";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const styles = StyleSheet.create(
     {
@@ -77,6 +78,28 @@ const styles = StyleSheet.create(
             }),
             width: Dimensions.get("screen").width,
             backgroundColor: colors.white_card
+        },
+        absoluteRight: {
+            position: "absolute",
+            right: 16,
+            display:"flex",
+            flexDirection:"column",
+            marginVertical: Dimensions.get("screen").height * 0.15,
+            backgroundColor: "red",
+            height: 16
+        },
+
+        absoluteRight2: {
+            position: "absolute",
+            right: 16,
+            display:"flex",
+            flexDirection:"column",
+            marginVertical: Dimensions.get("screen").height * 0.3,
+            backgroundColor: "red",
+            height: 16
+        },
+        box: {
+
         }
 
     }
@@ -161,10 +184,51 @@ export const CarouselProductComplexComponent = ({availablePan}:props):JSX.Elemen
 
     return (
         <>
-        <View style={styles.container}
-            {...panResponder.panHandlers}
-        >
-            <View style={styles.scrollChildren}>
+            <View style={styles.container}
+                {...panResponder.panHandlers}
+            >
+                <View style={styles.productInformationContainer}
+                >
+                    <View style={styles.imageContainer}>
+                    <ImageCarousel 
+                            focused={focusImage}
+                            data={
+                            staticData.images
+                            }
+                            dx={dx}
+                            released={released}
+                            setFocus={changeFocus}
+                    />
+                    </View>
+                </View>
+        
+                <View style={styles.colorLimit}>
+
+                </View>
+            </View>
+            {/* <View style={styles.absoluteRight}>
+                        
+                        <TouchableOpacity>
+                            <Text>
+                                box 1
+                            </Text>
+                        </TouchableOpacity>
+            </View> */}
+
+            <VariantSelector 
+                                visible={availablePan}
+                                variants={staticData.variants}
+                                onChangeVariant={
+                                    (index)=>{}
+                                }
+                            />
+
+            
+        </>
+    )
+}
+
+{/* <View style={styles.scrollChildren}>
                 <View style={styles.floatingItemsContainer}>
                     <View style={styles.topFloatingItem}>
 
@@ -183,27 +247,4 @@ export const CarouselProductComplexComponent = ({availablePan}:props):JSX.Elemen
                     </View>
                 </View>
 
-            </View>
-            <View style={styles.productInformationContainer}
-            >
-                <View style={styles.imageContainer}>
-                <ImageCarousel 
-                        focused={focusImage}
-                        data={
-                        staticData.images
-                        }
-                        dx={dx}
-                        released={released}
-                        setFocus={changeFocus}
-                />
-                </View>
-            </View>
-      
-            <View style={styles.colorLimit}>
-
-            </View>
-        </View>
-       
-        </>
-    )
-}
+            </View> */}

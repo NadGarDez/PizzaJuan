@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Animated, Dimensions, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { PizzaIcon } from "../icons/PizzaIcon";
 import { shadows } from "../../styles/shadow";
@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     container: {
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-around"
+        justifyContent: "space-around",
+        height: "100%"
     },
     variantContainer: {
         display: "flex",
@@ -18,9 +19,10 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         minWidth: 50,
+        maxWidth:70,
         minHeight:50,
         borderRadius:14,
-        padding: 8
+        padding:8
     },
     imageStyles: {
         width: 30,
@@ -52,26 +54,38 @@ type props = {
 }
 
 
-const Item = ({name, selected, onPress}:{name:string, selected:boolean, onPress:()=>void})=> {
+const segmentsStart = Dimensions.get("screen").height * 0.10;
+const availableHeightForItems = Dimensions.get("screen").height * 0.4
 
+const getTopMargin = (index:number, segmentHeight:number):number=> {
+    const startSegment = segmentsStart + (index * segmentHeight)
+    const centerValue =  (segmentHeight - 60) / 2;
+    return startSegment + centerValue;
+}
 
-    const containerStyles = selected ? {...styles.variantContainer, ...styles.selectedStyles} : {...styles.variantContainer, ...styles.unselectedStyles}
+const Item = ({name, selected, onPress, index, segmentHeight}:{name:string, selected:boolean, onPress:()=>void, index:number, segmentHeight:number})=> {
+
+    const containerStyles = selected ? {...styles.variantContainer, ...styles.selectedStyles} : {...styles.variantContainer, ...styles.unselectedStyles, }
 
     return (
-        <Pressable
-            onPress={
-               onPress
-            }
+       
+        <View style={{position: "absolute", right:16, marginTop:getTopMargin(index, segmentHeight) }} key={index}
         >
-            <View 
-                style={containerStyles} 
+            <Pressable
+                onPress={
+                    onPress
+                }
             >
-                <PizzaIcon />
-                <Text style={styles.variantText}>
-                    {name}
-                </Text>
-            </View>
-        </Pressable>
+             <View 
+                 style={containerStyles} 
+             >
+             <PizzaIcon />
+                 <Text style={styles.variantText} numberOfLines={2}>
+                     {name}
+                 </Text>
+             </View>
+         </Pressable>
+        </View>
         
     )
 }
@@ -81,6 +95,17 @@ export const VariantSelector = ({variants, visible, onChangeVariant}:props):JSX.
     const animation = useRef(new Animated.Value(1)).current;
 
     const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
+
+    const [segmentHeight, setSegmentHeight]= useState<number>(0)
+
+    useEffect(
+        ()=> {
+            setSegmentHeight(availableHeightForItems / variants.length)
+        },
+        []
+    )
+
 
     useEffect(
         ()=> {
@@ -127,26 +152,41 @@ export const VariantSelector = ({variants, visible, onChangeVariant}:props):JSX.
         [selectedIndex]
     )
 
-
     return (
-       <Animated.View style={
-            {
-                ...styles.container,
-                opacity: animation
-            }
-        }>
+       <>
+       
             {
                 variants.map(
                     (item, index) => (
-                       <Item name={item.name} selected={index === selectedIndex} key={`variant-item-${item.name}-${index}`}
+                        <Item name={item.name} selected={index === selectedIndex} key={`variant-item-${item.name}-${index}`} index={index} segmentHeight={segmentHeight}
                             onPress={
                                 ()=>onPressItem(index)
                             }
-                       />
+                        />
                     )
                 )
-            }
+            } 
 
-       </Animated.View>
+       </>
     )
 }
+
+// <Animated.View style={
+//             {
+//                 ...styles.container,
+//                 opacity: animation
+//             }
+//         }>
+//             {
+//                 variants.map(
+//                     (item, index) => (
+//                        <Item name={item.name} selected={index === selectedIndex} key={`variant-item-${item.name}-${index}`}
+//                             onPress={
+//                                 ()=>onPressItem(index)
+//                             }
+//                        />
+//                     )
+//                 )
+//             }
+
+//        </Animated.View>
