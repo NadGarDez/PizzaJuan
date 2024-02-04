@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
+import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 
 
@@ -7,14 +7,17 @@ import { colors } from "../../styles/colors";
 const styles = StyleSheet.create(
     {
         container : {
-            width: "100%",
+            margin:"auto",
             display: "flex",
             flexDirection: "row",
-            justifyContent: "center"
+            justifyContent: "center",
+            position:"absolute",
+            top:Dimensions.get("screen").height*0.52,
+            left:Dimensions.get("screen").width*0.35
         },
         buttonsContainer: {
             paddingVertical:8,
-            width: "30%",
+            width: Dimensions.get("screen").width*0.3,
             backgroundColor: colors.white_card + "98",
             borderRadius:12,
             display: "flex",

@@ -151,18 +151,18 @@ export const VariantSelector = ({variants, visible, onChangeVariant}:props):JSX.
         },
         [selectedIndex]
     )
-
+        console.log(animation)
     return (
        <>
        
             {
                 variants.map(
                     (item, index) => (
-                        <Item name={item.name} selected={index === selectedIndex} key={`variant-item-${item.name}-${index}`} index={index} segmentHeight={segmentHeight}
-                            onPress={
-                                ()=>onPressItem(index)
-                            }
-                        />
+                            <Item name={item.name} selected={index === selectedIndex} key={`variant-item-${item.name}-${index}`} index={index} segmentHeight={segmentHeight}
+                                onPress={
+                                    ()=>onPressItem(index)
+                                }
+                            />
                     )
                 )
             } 

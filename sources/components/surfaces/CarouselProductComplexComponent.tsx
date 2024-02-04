@@ -206,23 +206,14 @@ export const CarouselProductComplexComponent = ({availablePan}:props):JSX.Elemen
 
                 </View>
             </View>
-            {/* <View style={styles.absoluteRight}>
-                        
-                        <TouchableOpacity>
-                            <Text>
-                                box 1
-                            </Text>
-                        </TouchableOpacity>
-            </View> */}
-
             <VariantSelector 
-                                visible={availablePan}
-                                variants={staticData.variants}
-                                onChangeVariant={
-                                    (index)=>{}
-                                }
-                            />
-
+                visible={availablePan}
+                variants={staticData.variants}
+                onChangeVariant={
+                    (index)=>{}
+                }
+            />
+            <FloatingCarouselButtons numberOfItems={4} onPressItem={changeFocus} focused={focusImage} visible={availablePan} /> 
             
         </>
     )
