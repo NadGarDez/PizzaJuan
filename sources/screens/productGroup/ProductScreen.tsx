@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View, Image, Platform, Dimensions, ScrollView, PanResponder } from "react-native";
+import { StyleSheet, Text, View, Image, Platform, Dimensions, ScrollView, PanResponder, Animated, Pressable, TouchableOpacity } from "react-native";
 import { colors } from "../../styles/colors";
 import { HelloWorldComponent } from "../../components/HelloWorldComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -14,6 +14,7 @@ import { FloatingCarouselButtons } from "../../components/buttons/FloatingCarous
 import { VariantSelector } from "../../components/buttons/VariantSelector";
 import { ProductInformationCard } from "../../components/surfaces/ProductInformationCard";
 import LinearGradient from "react-native-linear-gradient";
+import { CarouselProductComplexComponent } from "../../components/surfaces/CarouselProductComplexComponent";
 
 const styles = StyleSheet.create(
     {
@@ -72,20 +73,18 @@ const styles = StyleSheet.create(
             height: Dimensions.get("screen").height ,
             width: Dimensions.get("screen").width
         },
-        colorLimit:{
+        floatingContainer:{
             display: "flex",
             flexDirection: "row",
             position: "absolute",
-            zIndex:-2,
+            zIndex:50,
             bottom:29 ,
             borderRadius:30,
             left:0,
-            height: Platform.select({
-                ios:Dimensions.get("screen").height * 0.4,
-                android:Dimensions.get("screen").height * 0.3,
-            }),
             width: Dimensions.get("screen").width,
-            backgroundColor: colors.white_card
+            backgroundColor: colors.white_card,
+            overflow:"hidden",
+
         }
 
     }
@@ -148,6 +147,8 @@ const getBreackPointBack = (index:number):xAxisLimitType=> {
     }
 }
 
+const defaultAnimationValue = Platform.OS === "ios" ? Dimensions.get("screen").height * 0.4 : Dimensions.get("screen").height * 0.34;
+const expandedAnimatedValue = Dimensions.get("screen").height * 0.65;
 
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
@@ -155,112 +156,187 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
 
     const {loading, error, data} = useQuery(GET_PRODUCTS);
 
+    const animation = useRef(new Animated.Value(defaultAnimationValue)).current;
+
+    const [expanded, setExpand] = useState<boolean>(false);
+
+    // const [dy, setDy]= useState<number>(0);
+
     const onPress =()=>{
         navigation.navigate("PRODUCT_SELLER_SCREEN", {sellerId:"123"});
     }
 
-    const [focusImage, setFocusImage] = useState<number>(0);
-    const [showCarouselButtons, setShowCarouselButtons] = useState<boolean>(true);
-    const [dx, setDx] =  useState<number>(0);
-    const [released, setReleased] = useState<boolean>(false);
 
-    const changeFocus = (index:number)=>setFocusImage(index);
+    
 
-    const panResponder = useRef(
-        PanResponder.create({
-            // Ask to be the responder.
-            onStartShouldSetPanResponder: (evt, gestureState) => showCarouselButtons,
-            onMoveShouldSetPanResponder: (evt, gestureState) => showCarouselButtons,
+    const expand = ()=> {
+        setExpand(true)
+        Animated.spring(
+            animation,
+            {
+                toValue:expandedAnimatedValue,
+                friction:5,
+                tension:25,
+                useNativeDriver:false
+            }
+        ).start()
+    }
+
+    const contract = ()=> {
+        setExpand(false);
+        Animated.spring(
+            animation,
+            {
+                toValue:defaultAnimationValue,
+                friction:5,
+                tension:25,
+                useNativeDriver:false
+            }
+        ).start()
+    }
+
+    // useEffect(
+    //     ()=> {
+    //         const baseHeight = expanded ? expandedAnimatedValue : defaultAnimationValue;
+    //         animation.setValue(baseHeight+(dy*-1))
+    //     },
+    //     [dy]
+    // )
+
+    // const panResponder = useRef(
+    //     PanResponder.create({
+    //         // Ask to be the responder.
+    //         onStartShouldSetPanResponder: (evt, gestureState) => true,
+    //         onMoveShouldSetPanResponder: (evt, gestureState) => true,
+    //         /**
+    //          * When we start the pan tell the machine that we're
+    //          * seeking. This stops it from updating the seekbar
+    //          * position in the onProgress listener.
+    //          */
+    //         onPanResponderGrant: (evt, gestureState) => {
+    //         },
       
-            /**
-             * When we start the pan tell the machine that we're
-             * seeking. This stops it from updating the seekbar
-             * position in the onProgress listener.
-             */
-            onPanResponderGrant: (evt, gestureState) => {
-            },
+    //         /**
+    //          * When panning, update the seekbar position, duh.
+    //          */
+    //         onPanResponderMove: (evt, gestureState) => {
+    //             if(gestureState.dy > -300 && gestureState.dy < 300 ){
+    //                 setDy(gestureState.dy)
+    //             }
+               
+    //         },
       
-            /**
-             * When panning, update the seekbar position, duh.
-             */
-            onPanResponderMove: (evt, gestureState) => {
-             setReleased(false);
-             setDx(gestureState.dx);
-            },
-      
-            /**
-             * On release we update the time and seek to it in the video.
-             * If you seek to the end of the video we fire the
-             * onEnd callback
-             */
-            onPanResponderRelease: (evt, gestureState) => {
-                setReleased(true);
-            },  
-          })
-    ).current;
+    //         /**
+    //          * On release we update the time and seek to it in the video.
+    //          * If you seek to the end of the video we fire the
+    //          * onEnd callback
+    //          */
+    //         onPanResponderRelease: (evt, gestureState) => {
+    //             if(gestureState.dy < 1){
+    //                 console.log(gestureState.dy)
+    //                 expand()
+    //             }
+    //             else {
+    //                 contract()
+    //             }
+    //         },  
+    //       })
+    // ).current;
+
+    const onPressInformation = () => {
+        console.log("on press")
+        if(expanded){
+            contract()
+        }
+        else {
+            expand()
+        }
+    }
 
     return (
-        <View style={styles.container}
-            // {...panResponder.panHandlers}
-        >
-            <View style={styles.scrollContainer}
-                {...panResponder.panHandlers}
+        <>
+            <CarouselProductComplexComponent 
+                availablePan={!expanded}
+            />
+            <View>
+            <Pressable
+                onPress={onPressInformation}
+                style={styles.floatingContainer}
             >
-            <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} 
-                 
-                onScroll={
-                    ({nativeEvent:{contentOffset:{y}}})=>{
-                        if(y >= 30 && showCarouselButtons){
-                            setShowCarouselButtons(false);
-                        } 
-                        else if (y < 30 && !showCarouselButtons) {
-                            setShowCarouselButtons(true);
+                <Animated.View 
+                    style={
+                        {
+                           
+                            height: animation
                         }
                     }
-                }
-                scrollEventThrottle={100}
-            >
-                <View style={styles.scrollChildren}>
-                    <View style={styles.floatingItemsContainer}>
-                        <View style={styles.topFloatingItem}>
-
-                        </View>
-                        <View style={styles.centerFloatingItem}>
-                                <VariantSelector 
-                                    visible={showCarouselButtons}
-                                    variants={staticData.variants}
-                                    onChangeVariant={
-                                        (index)=>{}
-                                    }
-                                />
-                        </View>
-                        <View style={styles.bottomFloatingItem}>
-                            <FloatingCarouselButtons numberOfItems={4} onPressItem={changeFocus} focused={focusImage} visible={showCarouselButtons} /> 
-                        </View>
-                    </View>
-
+                >
                     <ProductInformationCard {...staticData}/>
-                   
-                </View>
-            </ScrollView>
+                </Animated.View>
+            </Pressable>
             </View>
-            <View style={styles.productInformationContainer}>
-                <View style={styles.imageContainer}>
-                   <ImageCarousel 
-                        focused={focusImage}
-                        data={
-                           staticData.images
-                        }
-                        dx={dx}
-                        released={released}
-                        setFocus={changeFocus}
-                   />
-                </View>
-            </View>
-          
-            <View style={styles.colorLimit}>
+            
+        </>
+        // <View style={styles.container}
+        //     // {...panResponder.panHandlers}
+        // >
+        //     <View style={styles.scrollContainer}
+        //     >
+        //     <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} 
+        //           {...panResponder.panHandlers}
+        //         onScroll={
+        //             ({nativeEvent:{contentOffset:{y}}})=>{
+        //                 if(y >= 30 && showCarouselButtons){
+        //                     setShowCarouselButtons(false);
+        //                 } 
+        //                 else if (y < 30 && !showCarouselButtons) {
+        //                     setShowCarouselButtons(true);
+        //                 }
+        //             }
+        //         }
+        //         scrollEventThrottle={100}
+        //     >
+        //         <View style={styles.scrollChildren}>
+        //             <View style={styles.floatingItemsContainer}>
+        //                 <View style={styles.topFloatingItem}>
 
-            </View>
-        </View>
+        //                 </View>
+        //                 <View style={styles.centerFloatingItem}>
+        //                         <VariantSelector 
+        //                             visible={showCarouselButtons}
+        //                             variants={staticData.variants}
+        //                             onChangeVariant={
+        //                                 (index)=>{}
+        //                             }
+        //                         />
+        //                 </View>
+        //                 <View style={styles.bottomFloatingItem}>
+        //                     <FloatingCarouselButtons numberOfItems={4} onPressItem={changeFocus} focused={focusImage} visible={showCarouselButtons} /> 
+        //                 </View>
+        //             </View>
+
+        //             <ProductInformationCard {...staticData}/>
+                   
+        //         </View>
+        //     </ScrollView>
+        //     </View>
+        //     <View style={styles.productInformationContainer}>
+        //         <View style={styles.imageContainer}>
+        //            <ImageCarousel 
+        //                 focused={focusImage}
+        //                 data={
+        //                    staticData.images
+        //                 }
+        //                 dx={dx}
+        //                 released={released}
+        //                 setFocus={changeFocus}
+        //            />
+        //         </View>
+        //     </View>
+          
+        //     <View style={styles.colorLimit}>
+
+        //     </View>
+        // </View>
     )
 }

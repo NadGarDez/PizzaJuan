@@ -22,22 +22,21 @@ const styles = StyleSheet.create(
             justifyContent: "space-around"
         },
         itemStyles : {
-            width: 10,
-            height: 10,
+            width: 10,//10,
+            height: 10,//10,
             borderStyle: "solid",
             borderWidth: 1,
             borderColor: colors.black_thin,
-            borderRadius:5,
+            borderRadius:5,//5,
             flexDirection: "row",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            padding:2
         },
         fillStyles: {
-            width:6,
-            height: 6,
-            borderRadius:3,
+            width:5,
+            height: 5,
+            borderRadius:2.5,//3,
         }
     }
 )
