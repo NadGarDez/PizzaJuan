@@ -74,7 +74,7 @@ const styles = StyleSheet.create(
             left:0,
             height: Platform.select({
                 ios:Dimensions.get("screen").height * 0.4,
-                android:Dimensions.get("screen").height * 0.3,
+                android:Dimensions.get("screen").height * 0.36,
             }),
             width: Dimensions.get("screen").width,
             backgroundColor: colors.white_card
@@ -218,24 +218,3 @@ export const CarouselProductComplexComponent = ({availablePan}:props):JSX.Elemen
         </>
     )
 }
-
-{/* <View style={styles.scrollChildren}>
-                <View style={styles.floatingItemsContainer}>
-                    <View style={styles.topFloatingItem}>
-
-                    </View>
-                    <View style={styles.centerFloatingItem}>
-                            <VariantSelector 
-                                visible={availablePan}
-                                variants={staticData.variants}
-                                onChangeVariant={
-                                    (index)=>{}
-                                }
-                            />
-                    </View>
-                    <View style={styles.bottomFloatingItem}>
-                        <FloatingCarouselButtons numberOfItems={4} onPressItem={changeFocus} focused={focusImage} visible={availablePan} /> 
-                    </View>
-                </View>
-
-            </View> */}

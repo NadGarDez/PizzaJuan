@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     },
     selectedStyles: {
         backgroundColor:colors.white_card,
-        ...shadows.principalShadow
     },
     unselectedStyles: {
         backgroundColor:colors.white_card + 90,

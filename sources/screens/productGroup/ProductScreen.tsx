@@ -78,13 +78,25 @@ const styles = StyleSheet.create(
             flexDirection: "row",
             position: "absolute",
             zIndex:50,
-            bottom:29 ,
             borderRadius:30,
             left:0,
             width: Dimensions.get("screen").width,
             backgroundColor: colors.white_card,
             overflow:"hidden",
 
+        },
+        colorLimit: {
+            display: "flex",
+            flexDirection: "row",
+            position: "absolute",
+            zIndex:49,
+            borderRadius:30,
+            left:0,
+            bottom:0,
+            width: Dimensions.get("screen").width,
+            backgroundColor: colors.white_card,
+            overflow:"hidden",
+            height:Dimensions.get("screen").height * 0.4
         }
 
     }
@@ -147,8 +159,8 @@ const getBreackPointBack = (index:number):xAxisLimitType=> {
     }
 }
 
-const defaultAnimationValue = Platform.OS === "ios" ? Dimensions.get("screen").height * 0.4 : Dimensions.get("screen").height * 0.34;
-const expandedAnimatedValue = Dimensions.get("screen").height * 0.65;
+const defaultAnimationValue = ((Platform.OS === "ios" ? Dimensions.get("screen").height * 0.25: Dimensions.get("screen").height * 0.34 ) ) * (-1) //Platform.OS === "ios" ? Dimensions.get("screen").height * 0.4 : Dimensions.get("screen").height * 0.34;
+const expandedAnimatedValue = 0;// Dimensions.get("screen").height * 0.65;
 
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
@@ -211,20 +223,20 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                 availablePan={!expanded}
             />
             <View>
-            <Pressable
-                onPress={onPressInformation}
-                style={styles.floatingContainer}
-            >
                 <Animated.View 
-                    style={
-                        {
-                            height: animation
-                        }
-                    }
+                        style={{
+                            ...styles.floatingContainer,
+                            bottom:animation
+                        }}
                 >
-                    <ProductInformationCard {...staticData}/>
+                    <Pressable
+                        onPress={onPressInformation}
+                        
+                    >
+                        
+                            <ProductInformationCard {...staticData}/>
+                    </Pressable>
                 </Animated.View>
-            </Pressable>
             </View>
             
         </>
