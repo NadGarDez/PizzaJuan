@@ -68,9 +68,6 @@ const Item = ({name, selected, onPress, index, segmentHeight}:{name:string, sele
     const containerStyles = selected ? {...styles.variantContainer, ...styles.selectedStyles} : {...styles.variantContainer, ...styles.unselectedStyles, }
 
     return (
-       
-        <View style={{position: "absolute", right:16, marginTop:getTopMargin(index, segmentHeight) }} key={index}
-        >
             <Pressable
                 onPress={
                     onPress
@@ -85,8 +82,6 @@ const Item = ({name, selected, onPress, index, segmentHeight}:{name:string, sele
                  </Text>
              </View>
          </Pressable>
-        </View>
-        
     )
 }
 
@@ -99,9 +94,23 @@ export const VariantSelector = ({variants, visible, onChangeVariant}:props):JSX.
 
     const [segmentHeight, setSegmentHeight]= useState<number>(0)
 
+    const [displayButtons, setDisplayButtons] = useState<boolean>(true)
+
     useEffect(
         ()=> {
             setSegmentHeight(availableHeightForItems / variants.length)
+            const listener = animation.addListener(
+                ({value})=> {
+                    if (value > 0) setDisplayButtons(true)
+                    else setDisplayButtons(false) 
+                }
+            )
+
+            return ()=> {
+                animation.removeAllListeners()
+            }
+        
+            
         },
         []
     )
@@ -151,18 +160,28 @@ export const VariantSelector = ({variants, visible, onChangeVariant}:props):JSX.
         },
         [selectedIndex]
     )
-        console.log(animation)
     return (
        <>
        
             {
                 variants.map(
                     (item, index) => (
-                            <Item name={item.name} selected={index === selectedIndex} key={`variant-item-${item.name}-${index}`} index={index} segmentHeight={segmentHeight}
-                                onPress={
-                                    ()=>onPressItem(index)
+                            <Animated.View
+                                style={
+                                    {
+                                        opacity:animation,
+                                        position: "absolute", right:16, marginTop:getTopMargin(index, segmentHeight), 
+                                        display: displayButtons ? "flex" : "none"
+                                    }
                                 }
-                            />
+                                key={`variant-item-${item.name}-${index}`}
+                            >
+                                <Item name={item.name} selected={index === selectedIndex} index={index} segmentHeight={segmentHeight}
+                                    onPress={
+                                        ()=>onPressItem(index)
+                                    }
+                                />
+                            </Animated.View>
                     )
                 )
             } 

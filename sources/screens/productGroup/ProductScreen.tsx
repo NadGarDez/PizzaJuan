@@ -195,54 +195,6 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
         ).start()
     }
 
-    // useEffect(
-    //     ()=> {
-    //         const baseHeight = expanded ? expandedAnimatedValue : defaultAnimationValue;
-    //         animation.setValue(baseHeight+(dy*-1))
-    //     },
-    //     [dy]
-    // )
-
-    // const panResponder = useRef(
-    //     PanResponder.create({
-    //         // Ask to be the responder.
-    //         onStartShouldSetPanResponder: (evt, gestureState) => true,
-    //         onMoveShouldSetPanResponder: (evt, gestureState) => true,
-    //         /**
-    //          * When we start the pan tell the machine that we're
-    //          * seeking. This stops it from updating the seekbar
-    //          * position in the onProgress listener.
-    //          */
-    //         onPanResponderGrant: (evt, gestureState) => {
-    //         },
-      
-    //         /**
-    //          * When panning, update the seekbar position, duh.
-    //          */
-    //         onPanResponderMove: (evt, gestureState) => {
-    //             if(gestureState.dy > -300 && gestureState.dy < 300 ){
-    //                 setDy(gestureState.dy)
-    //             }
-               
-    //         },
-      
-    //         /**
-    //          * On release we update the time and seek to it in the video.
-    //          * If you seek to the end of the video we fire the
-    //          * onEnd callback
-    //          */
-    //         onPanResponderRelease: (evt, gestureState) => {
-    //             if(gestureState.dy < 1){
-    //                 console.log(gestureState.dy)
-    //                 expand()
-    //             }
-    //             else {
-    //                 contract()
-    //             }
-    //         },  
-    //       })
-    // ).current;
-
     const onPressInformation = () => {
         console.log("on press")
         if(expanded){
@@ -266,7 +218,6 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                 <Animated.View 
                     style={
                         {
-                           
                             height: animation
                         }
                     }
@@ -277,66 +228,6 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
             </View>
             
         </>
-        // <View style={styles.container}
-        //     // {...panResponder.panHandlers}
-        // >
-        //     <View style={styles.scrollContainer}
-        //     >
-        //     <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} 
-        //           {...panResponder.panHandlers}
-        //         onScroll={
-        //             ({nativeEvent:{contentOffset:{y}}})=>{
-        //                 if(y >= 30 && showCarouselButtons){
-        //                     setShowCarouselButtons(false);
-        //                 } 
-        //                 else if (y < 30 && !showCarouselButtons) {
-        //                     setShowCarouselButtons(true);
-        //                 }
-        //             }
-        //         }
-        //         scrollEventThrottle={100}
-        //     >
-        //         <View style={styles.scrollChildren}>
-        //             <View style={styles.floatingItemsContainer}>
-        //                 <View style={styles.topFloatingItem}>
-
-        //                 </View>
-        //                 <View style={styles.centerFloatingItem}>
-        //                         <VariantSelector 
-        //                             visible={showCarouselButtons}
-        //                             variants={staticData.variants}
-        //                             onChangeVariant={
-        //                                 (index)=>{}
-        //                             }
-        //                         />
-        //                 </View>
-        //                 <View style={styles.bottomFloatingItem}>
-        //                     <FloatingCarouselButtons numberOfItems={4} onPressItem={changeFocus} focused={focusImage} visible={showCarouselButtons} /> 
-        //                 </View>
-        //             </View>
-
-        //             <ProductInformationCard {...staticData}/>
-                   
-        //         </View>
-        //     </ScrollView>
-        //     </View>
-        //     <View style={styles.productInformationContainer}>
-        //         <View style={styles.imageContainer}>
-        //            <ImageCarousel 
-        //                 focused={focusImage}
-        //                 data={
-        //                    staticData.images
-        //                 }
-        //                 dx={dx}
-        //                 released={released}
-        //                 setFocus={changeFocus}
-        //            />
-        //         </View>
-        //     </View>
-          
-        //     <View style={styles.colorLimit}>
-
-        //     </View>
-        // </View>
+     
     )
 }
