@@ -208,7 +208,6 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
     }
 
     const onPressInformation = () => {
-        console.log("on press")
         if(expanded){
             contract()
         }

@@ -45,6 +45,11 @@ const styles = StyleSheet.create(
             padding:6,
             borderTopRightRadius:12,
             borderBottomRightRadius:12
+        },
+        textStyles: {
+            fontSize:14,
+            fontWeight: "400",
+            color:colors.black_thin,
         }
     }
 )
@@ -72,7 +77,7 @@ export const PlusLessButton = (props:props):JSX.Element=>{
                 {
                     ({pressed})=>(
                         <View style={{...styles.leftButton, backgroundColor: pressed ? colors.seconday_text + "30" : colors.white_card}}>
-                            <Text>
+                            <Text style={styles.textStyles}>
                                 -
                             </Text>
                         </View>
@@ -81,7 +86,7 @@ export const PlusLessButton = (props:props):JSX.Element=>{
             </Pressable>
             
             <View style={styles.centerNumber}>
-                <Text>
+                <Text style={styles.textStyles}>
                     {counter}
                 </Text>
             </View>
@@ -91,7 +96,7 @@ export const PlusLessButton = (props:props):JSX.Element=>{
                 {
                     ({pressed})=>(
                         <View style={{...styles.rightButton, backgroundColor: pressed ? colors.seconday_text + "30" : colors.white_card}}>
-                            <Text>
+                            <Text style={styles.textStyles}>
                                 +
                             </Text>
                         </View>
