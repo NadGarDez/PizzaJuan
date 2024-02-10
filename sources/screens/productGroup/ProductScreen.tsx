@@ -133,8 +133,8 @@ const staticData = {
 
 type ProductScreenPropTypes = NativeStackScreenProps<ProductStackType,"PRODUCT_SCREEN">
 
-const defaultAnimationValue =Dimensions.get("window").height * 0.4 + 33//Platform.OS === "ios" ? Dimensions.get("screen").height * 0.4 : Dimensions.get("screen").height * 0.34;
-const expandedAnimatedValue = Dimensions.get("window").height * 0.65;// Dimensions.get("screen").height * 0.65;
+const defaultAnimationValue =Dimensions.get("window").height * 0.4 + 33;
+const expandedAnimatedValue = Dimensions.get("window").height * 0.65; // small devices 0.80
 
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
@@ -145,8 +145,6 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
     const animation = useRef(new Animated.Value(defaultAnimationValue)).current;
 
     const [expanded, setExpand] = useState<boolean>(false);
-
-    // const [dy, setDy]= useState<number>(0);
 
     const onPress =()=>{
         navigation.navigate("PRODUCT_SELLER_SCREEN", {sellerId:"123"});
@@ -162,7 +160,8 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                 tension:25,
                 useNativeDriver:false
             }
-        ).start()
+        ).start(
+)
     }
 
     const contract = ()=> {
@@ -202,7 +201,6 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                 >
                     <Pressable
                         onPress={onPressInformation}
-                        
                     >
                         
                             <ProductInformationCard {...staticData} compressed={!expanded}/>
