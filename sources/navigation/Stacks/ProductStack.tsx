@@ -1,11 +1,11 @@
-import {  NativeStackScreenProps, createNativeStackNavigator } from "@react-navigation/native-stack"
-import React, { useEffect }   from "react"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import React from "react"
 import { ProductListScreen } from "../../screens/productGroup/ProductListScreen"
 import { ProductScreen } from "../../screens/productGroup/ProductScreen"
 import { SellerScreen } from "../../screens/productGroup/SellerScrreen";
 import { InitialStackScreenHeader } from "../../components/headers/InitialStackScreenHeader";
 import { NormalStackScreenHeart } from "../../components/headers/NormalStackScreenHeader";
-import { createDrawerNavigator, DrawerScreenProps } from "@react-navigation/drawer";
+import { DrawerScreenProps } from "@react-navigation/drawer";
 import { HomeDrawerType } from "../Drawers/HomeDrawer";
 import { FloatingProductHeader } from "../../components/headers/FloatingProductHeader";
 

@@ -56,8 +56,10 @@ const staticData = {
 
 type ProductScreenPropTypes = NativeStackScreenProps<ProductStackType,"PRODUCT_SCREEN">
 
+const ScreenHeight = Dimensions.get("screen").height;
+
 const defaultAnimationValue =Dimensions.get("window").height * 0.4 + 33;
-const expandedAnimatedValue = Dimensions.get("window").height * 0.65; // small devices 0.80
+const expandedAnimatedValue = Dimensions.get("window").height * (ScreenHeight>700 ? 0.65 : 0.83); // small devices 0.80
 
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
