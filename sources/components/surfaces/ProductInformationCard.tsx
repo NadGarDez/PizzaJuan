@@ -4,14 +4,15 @@ import { HeartIconFilled } from "../icons/HeartIconFilled"
 import { PlusLessButton } from "../buttons/PlusLessButton"
 import { AddToCarButton } from "../buttons/AddToCarButton"
 import { colors } from "../../styles/colors"
+import { ScrollView } from "react-native-gesture-handler"
 
 const styles = StyleSheet.create({
     informationContainer: {
-        display:"flex",
         backgroundColor:colors.white_card,
         borderRadius:30,
         paddingVertical:16,
         paddingBottom:50,
+        flex:1
     },
    
     titleContainer: {
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
         flexDirection: "column"
     },
     descriptionContainer: {
+        display:"flex",
         marginTop:16,
         paddingLeft:16,
         paddingRight:18
@@ -80,6 +82,12 @@ const styles = StyleSheet.create({
     descriptionTextStyles: {
         fontSize:14,
         fontWeight: "200",
+        marginTop:8,
+        color:colors.seconday_text,
+    },
+    descriptionTextStylesTap: {
+        fontSize:14,
+        fontWeight: "600",
         marginTop:8,
         color:colors.seconday_text,
     },
@@ -100,6 +108,13 @@ const styles = StyleSheet.create({
         paddingHorizontal:16,
         marginTop:16,
     },
+    buttonAndOrderContainer: {
+        display: "flex",
+        justifyContent: "flex-end",
+        flexDirection:"column",
+        flexGrow:1
+    }
+
 
 })
 
@@ -110,11 +125,13 @@ type props = {
     favorite:boolean,
     image?:any,
     likes:number,
-    description:string,
-    variants?:any
+    description?:string,
+    longDescription: string,
+    variants?:any,
+    compressed:boolean
 }
 
-export const ProductInformationCard = ({productName, price, favorite,likes, description }:props)=> {
+export const ProductInformationCard = ({productName, price, favorite,likes, longDescription, compressed }:props)=> {
     return (
         <View style={styles.informationContainer}>
         <View style={styles.titleLikesContainer}>
@@ -138,28 +155,42 @@ export const ProductInformationCard = ({productName, price, favorite,likes, desc
             </Text>
             <View  style={styles.line}>
             </View>
-            <Text style={styles.descriptionTextStyles}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a dolor augue. Mauris quam sapien, commodo ac consequat a, gravida ut erat. Aliquam fermentum consequat neque sit amet ultricies. Proin urna ligula, efficitur non nulla sit amet, commodo condimentum enim. Maecenas mattis ultricies porttitor. Nunc consequat lorem ut nulla porta molestie. Donec tristique consequat mi nec bibendum. Nunc sagittis justo ex, sit amet hendrerit felis maximus sed. Sed volutpat ligula sit amet egestas bibendum. Suspendisse molestie, quam id tristique commodo, ligula nulla vehicula felis, in fringilla ipsum ex ut eros. Nullam tincidunt ante a porta sollicitudin. Duis viverra nisi ut justo consequat pharetra. Curabitur porttitor tellus sit amet aliquam pharetra. Quisque commodo leo a mauris sodales, at egestas leo vestibulum.
-            </Text>
+
+            {
+                compressed ? (
+                    <Text style={styles.descriptionTextStyles}>
+                        {longDescription.substring(0,200)}... Ver mas
+                    </Text>
+                ) : (
+                    <Text style={styles.descriptionTextStyles}>
+                        {longDescription}
+                    </Text>
+                )
+            }
+            
         </View>
 
-        <View style={styles.amountButtonContainerAndPrice}>
-            <View style={styles.priceContainer}>
-                    <Text style={styles.dolarPrice}>
-                        {price + "$"}
-                    </Text>
-                    <Text style={styles.bsPrice}>
-                        referencia {(price * 36) + "bs"}
-                    </Text>
+        <View style={styles.buttonAndOrderContainer}>
+            <View style={styles.amountButtonContainerAndPrice}>
+                <View style={styles.priceContainer}>
+                        <Text style={styles.dolarPrice}>
+                            {price + "$"}
+                        </Text>
+                        <Text style={styles.bsPrice}>
+                            referencia {(price * 36) + "bs"}
+                        </Text>
+                </View>
+                <View style={styles.orderContiner}>
+                    <PlusLessButton onChange={()=>{}} />
+                </View>
             </View>
-            <View style={styles.orderContiner}>
-                <PlusLessButton onChange={()=>{}} />
+            <View style={styles.buttonAddContainer}>
+                <AddToCarButton onPress={()=> {
+                }} />
             </View>
         </View>
-        <View style={styles.buttonAddContainer}>
-            <AddToCarButton onPress={()=> {
-            }} />
-        </View>
+       
+
 </View>
     )
 }

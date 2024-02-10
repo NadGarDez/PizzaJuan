@@ -12,12 +12,13 @@ const styles = StyleSheet.create(
             flexDirection: "row",
             justifyContent: "center",
             position:"absolute",
-            top:Dimensions.get("screen").height*0.52,
+            top:Dimensions.get("window").height*0.6 - (41 + 27),
             left:Dimensions.get("screen").width*0.35
         },
         buttonsContainer: {
             paddingVertical:8,
             width: Dimensions.get("screen").width*0.3,
+            maxHeight:27,
             backgroundColor: colors.white_card + "98",
             borderRadius:12,
             display: "flex",

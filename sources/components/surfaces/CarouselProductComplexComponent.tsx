@@ -69,13 +69,10 @@ const styles = StyleSheet.create(
             flexDirection: "row",
             position: "absolute",
             zIndex:-2,
-            bottom:29 ,
+            bottom:0 ,
             borderRadius:30,
             left:0,
-            height: Platform.select({
-                ios:Dimensions.get("screen").height * 0.4,
-                android:Dimensions.get("screen").height * 0.36,
-            }),
+            height:Dimensions.get("window").height * 0.4 + 33,
             width: Dimensions.get("screen").width,
             backgroundColor: colors.white_card
         },
@@ -84,17 +81,7 @@ const styles = StyleSheet.create(
             right: 16,
             display:"flex",
             flexDirection:"column",
-            marginVertical: Dimensions.get("screen").height * 0.15,
-            backgroundColor: "red",
-            height: 16
-        },
-
-        absoluteRight2: {
-            position: "absolute",
-            right: 16,
-            display:"flex",
-            flexDirection:"column",
-            marginVertical: Dimensions.get("screen").height * 0.3,
+            marginVertical: Dimensions.get("window").height * 0.15,
             backgroundColor: "red",
             height: 16
         },

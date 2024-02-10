@@ -114,6 +114,7 @@ const staticData = {
     ],
     likes:12,
     description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+    longDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a dolor augue. Mauris quam sapien, commodo ac consequat a, gravida ut erat. Aliquam fermentum consequat neque sit amet ultricies. Proin urna ligula, efficitur non nulla sit amet, commodo condimentum enim. Maecenas mattis ultricies porttitor. Nunc consequat lorem ut nulla porta molestie. Donec tristique consequat mi nec bibendum. Nunc sagittis justo ex, sit amet hendrerit felis maximus sed. Sed volutpat ligula sit amet egestas bibendum. Suspendisse molestie, quam id tristique commodo, ligula nulla vehicula felis, in fringilla ipsum ex ut eros. Nullam tincidunt ante a porta sollicitudin. Duis viverra nisi ut justo consequat pharetra. Curabitur porttitor tellus sit amet aliquam pharetra. Quisque commodo leo a mauris sodales, at egestas leo vestibulum.",
     variants: [
         {
             name: "Individual",
@@ -130,37 +131,10 @@ const staticData = {
     ]
 }
 
-const screenWidth = Dimensions.get("screen").width;
-
-
 type ProductScreenPropTypes = NativeStackScreenProps<ProductStackType,"PRODUCT_SCREEN">
 
-type xAxisLimitType = {
-    rightLimit:number,
-    leftLimit:number
-}
-
-const getBreackPointNext = (index:number):xAxisLimitType=> {
-    const rightLimit = (-1)*((index + 1) * screenWidth);
-    const leftLimit = rightLimit + (screenWidth * 0.2);
-
-    return {
-        rightLimit,
-        leftLimit
-    }
-} 
-const getBreackPointBack = (index:number):xAxisLimitType=> {
-    const rightLimit = (-1)*((index * screenWidth)-1);
-    const leftLimit = rightLimit + (screenWidth * 0.6);
-
-    return {
-        rightLimit,
-        leftLimit
-    }
-}
-
-const defaultAnimationValue = ((Platform.OS === "ios" ? Dimensions.get("screen").height * 0.25: Dimensions.get("screen").height * 0.34 ) ) * (-1) //Platform.OS === "ios" ? Dimensions.get("screen").height * 0.4 : Dimensions.get("screen").height * 0.34;
-const expandedAnimatedValue = 0;// Dimensions.get("screen").height * 0.65;
+const defaultAnimationValue =Dimensions.get("window").height * 0.4 + 33//Platform.OS === "ios" ? Dimensions.get("screen").height * 0.4 : Dimensions.get("screen").height * 0.34;
+const expandedAnimatedValue = Dimensions.get("window").height * 0.65;// Dimensions.get("screen").height * 0.65;
 
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
@@ -177,9 +151,6 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
     const onPress =()=>{
         navigation.navigate("PRODUCT_SELLER_SCREEN", {sellerId:"123"});
     }
-
-
-    
 
     const expand = ()=> {
         setExpand(true)
@@ -225,7 +196,8 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                 <Animated.View 
                         style={{
                             ...styles.floatingContainer,
-                            bottom:animation
+                            bottom:0,
+                            height: animation
                         }}
                 >
                     <Pressable
@@ -233,7 +205,7 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                         
                     >
                         
-                            <ProductInformationCard {...staticData}/>
+                            <ProductInformationCard {...staticData} compressed={!expanded}/>
                     </Pressable>
                 </Animated.View>
             </View>

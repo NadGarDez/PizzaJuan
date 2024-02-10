@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         position: "relative"
     },
     imageStyles: {
-        height: Dimensions.get("screen").height * 0.6,
+        height: Dimensions.get("window").height * 0.6,
         width: Dimensions.get("screen").width
     },
 })

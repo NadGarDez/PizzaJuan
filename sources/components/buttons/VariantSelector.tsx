@@ -53,8 +53,8 @@ type props = {
 }
 
 
-const segmentsStart = Dimensions.get("screen").height * 0.10;
-const availableHeightForItems = Dimensions.get("screen").height * 0.4
+const segmentsStart = Dimensions.get("window").height * 0.10;
+const availableHeightForItems = Dimensions.get("window").height * 0.4
 
 const getTopMargin = (index:number, segmentHeight:number):number=> {
     const startSegment = segmentsStart + (index * segmentHeight)
