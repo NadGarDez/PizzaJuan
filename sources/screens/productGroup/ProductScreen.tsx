@@ -1,78 +1,15 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View, Image, Platform, Dimensions, ScrollView, PanResponder, Animated, Pressable, TouchableOpacity } from "react-native";
+import React, {  useRef, useState } from "react";
+import { StyleSheet, View, Dimensions, Animated, Pressable } from "react-native";
 import { colors } from "../../styles/colors";
-import { HelloWorldComponent } from "../../components/HelloWorldComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 import { useQuery } from "@apollo/client";
 import { GET_PRODUCTS } from "../../constants/querys";
-import { HeartIconFilled } from "../../components/icons/HeartIconFilled";
-import { PlusLessButton } from "../../components/buttons/PlusLessButton";
-import { AddToCarButton } from "../../components/buttons/AddToCarButton";
-import { ImageCarousel } from "../../components/surfaces/ImageCarousel";
-import { FloatingCarouselButtons } from "../../components/buttons/FloatingCarouselButtons";
-import { VariantSelector } from "../../components/buttons/VariantSelector";
 import { ProductInformationCard } from "../../components/surfaces/ProductInformationCard";
-import LinearGradient from "react-native-linear-gradient";
 import { CarouselProductComplexComponent } from "../../components/surfaces/CarouselProductComplexComponent";
 
 const styles = StyleSheet.create(
     {
-        container: {
-            flex:1,
-            backgroundColor: colors.white_card,
-        },
-        productInformationContainer: {
-            position:"absolute",
-            top:0,
-            left:0,
-            width: "100%",
-            backgroundColor:"red",//"#f6f6f6",//colors.background_white,
-            zIndex:-2,
-        },
-        imageContainer: {
-            display:"flex",
-            backgroundColor:colors.white_card,
-            overflow:"hidden"
-        },
-        scrollContainer:{
-            flex:1, 
-            backgroundColor:"transparent",
-        },
-        scrollChildren: {
-            display:"flex",
-            flexDirection:"column",
-            backgroundColor: "transparent",
-        },
-        floatingItemsContainer: {
-            height:Dimensions.get("screen").height * 0.6 - 32,
-            display: "flex",
-            flexDirection: "column"
-        },
-        scroll: {
-        },
-        topFloatingItem: {
-            flex:1,
-        },
-        centerFloatingItem: {
-            flex:3,
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            paddingHorizontal:16
-        },
-        bottomFloatingItem: {
-            paddingVertical:16
-        },
-        gradient:{
-            display: "flex",
-            flexDirection: "row",
-            position: "absolute",
-            zIndex:-1,
-            top:0,
-            left:0,
-            height: Dimensions.get("screen").height ,
-            width: Dimensions.get("screen").width
-        },
         floatingContainer:{
             display: "flex",
             flexDirection: "row",
@@ -84,21 +21,7 @@ const styles = StyleSheet.create(
             backgroundColor: colors.white_card,
             overflow:"hidden",
 
-        },
-        colorLimit: {
-            display: "flex",
-            flexDirection: "row",
-            position: "absolute",
-            zIndex:49,
-            borderRadius:30,
-            left:0,
-            bottom:0,
-            width: Dimensions.get("screen").width,
-            backgroundColor: colors.white_card,
-            overflow:"hidden",
-            height:Dimensions.get("screen").height * 0.4
         }
-
     }
 )
 
@@ -190,6 +113,7 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
         <>
             <CarouselProductComplexComponent 
                 availablePan={!expanded}
+                data={staticData}
             />
             <View>
                 <Animated.View 

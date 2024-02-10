@@ -1,10 +1,5 @@
-import { useNavigation } from "@react-navigation/native"
-import { NativeStackScreenProps } from "@react-navigation/native-stack"
-import React, { useEffect, useRef, useState } from "react"
-
-import {Animated, Dimensions, StyleSheet, Image, PanResponder, Platform} from "react-native"
-import { ProductStackType } from "../../navigation/Stacks/ProductStack"
-import LinearGradient from "react-native-linear-gradient"
+import React, { useEffect, useRef } from "react"
+import {Animated, Dimensions, StyleSheet, Image, Platform} from "react-native"
 
 type props = {
     data: string[],
@@ -53,8 +48,6 @@ const isNeededBack = (dx:number, index:number):boolean=> {
 
 export const ImageCarousel = ({data, focused,dx, released, setFocus}:props):JSX.Element=> {
 
-    const [currentAnimationValue, setCurrentAnimationValue] = useState<number>(0);
- 
     const animation = useRef(
         new Animated.Value(0)
     ).current;
@@ -74,18 +67,6 @@ export const ImageCarousel = ({data, focused,dx, released, setFocus}:props):JSX.
         goToImage(focused)
         return ;
     }
-
-    useEffect(
-        ()=>{
-            animation.addListener(
-                ({value})=>setCurrentAnimationValue(value)
-            );
-            return ()=> {
-                animation.removeAllListeners()
-            }
-        },
-        []
-    )
 
     useEffect(
         ()=>validations()
