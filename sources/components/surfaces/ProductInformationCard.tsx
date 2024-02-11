@@ -181,7 +181,7 @@ export const ProductInformationCard = ({productName, price, favorite,likes, long
                         </Text>
                 </View>
                 <View style={styles.orderContiner}>
-                    <PlusLessButton onChange={()=>{}} />
+                    <PlusLessButton onChange={()=>{}} initialValue={1}/>
                 </View>
             </View>
             <View style={styles.buttonAddContainer}>

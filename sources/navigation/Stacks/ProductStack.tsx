@@ -18,6 +18,7 @@ export type ProductStackType = {
         sellerId:string
     }
 };
+
 const Stack = createNativeStackNavigator<ProductStackType>()
 type ProductStackProps =  DrawerScreenProps<HomeDrawerType, "PRODUCT_STACK">
 

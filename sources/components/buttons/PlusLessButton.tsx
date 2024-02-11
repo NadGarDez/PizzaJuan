@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
@@ -56,21 +56,31 @@ const styles = StyleSheet.create(
 
 type props = {
     onChange: (value:number)=>void,
+    initialValue:number
 }
 
 export const PlusLessButton = (props:props):JSX.Element=>{
-    const { onChange, }=props;
+    const { onChange, initialValue}=props;
 
-    const [counter, setCounter] = useState<number>(1)
+    const [counter, setCounter] = useState<number>(
+        initialValue
+    )
     
     const addCounter = ()=>setCounter(counter + 1)
     const restCounter = ()=>{
         if (counter > 0) setCounter(counter - 1)
     }
 
+    useEffect(
+        ()=>{
+            onChange(counter)
+        },
+        [counter, onChange]
+    )
+
 
     return (
-        <View style={{...styles.buttonContainer, }}>
+        <View style={styles.buttonContainer}>
             <Pressable
                 onPress={restCounter}
             >
