@@ -9,20 +9,21 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 import { ThreDotsIcon } from "../icons/ThreDotsIcon";
 import { PlusLessButton } from "../buttons/PlusLessButton";
+import { CloseIcon } from "../icons/CloseIcons";
+import { DeleteProductButton } from "../buttons/DeleteProductButton";
 
 const styles = StyleSheet.create(
     {
         container: {
             width:Dimensions.get("screen").width - 32,
-            backgroundColor:colors.white_card,
-            marginBottom:8,
-            borderRadius:10,
-            minHeight:140,
-            paddingTop:8,
+            paddingVertical:16,
             paddingHorizontal:8,
-            marginHorizontal:16,
             display: "flex",
             flexDirection: "column",
+            borderStyle:"solid",
+            borderWidth:1,
+            borderColor:"transparent",
+            borderBottomColor:colors.seconday_text + "30",
         },
         imageContainer: {
             flex:1,
@@ -37,6 +38,10 @@ const styles = StyleSheet.create(
            height:110
         },
         likeContainer: {
+
+            position:"relative",
+            top:-15,
+            right:-10,
             display: "flex",
             flexDirection:"row",
             justifyContent:"flex-end",
@@ -161,7 +166,7 @@ export const CarItem = ({image, likes,productName, price, favorite,description,o
 
     return (
         <View style={
-            {...styles.container, ...shadows.lightShadow}
+            {...styles.container}
         }>
             <View style={styles.flexRowStyles}>
                 <View style={styles.imageContainer}>
@@ -178,12 +183,14 @@ export const CarItem = ({image, likes,productName, price, favorite,description,o
                             </View>
                                     
                             <View style={styles.likeContainer}>
-                                <Text style={styles.likeNumberContainer}>
-                                    {likes}
-                                </Text>
-                                {
-                                    favorite ? <HeartIconFilled  size={14} color={colors.pink} /> : <HeartIconOutlined size={14} />
-                                }
+                                <DeleteProductButton 
+                                
+                                    onPress={
+                                        ()=>{
+
+                                        }
+                                    }
+                                />
                             </View>
                         </View>
                         <View style={styles.ingredientsDescriptionContainer}>
@@ -211,8 +218,8 @@ export const CarItem = ({image, likes,productName, price, favorite,description,o
                 </View>
                         
             </View>
-            <View style={styles.line}/>
-            <View style={styles.creator}>
+
+            {/* <View style={styles.creator}>
                 <View style={styles.firstPartOfCreator}>
                     <Text style={styles.likeNumberContainer}>
                         {creator}
@@ -222,7 +229,7 @@ export const CarItem = ({image, likes,productName, price, favorite,description,o
                     <ThreDotsIcon size={12} color={colors.seconday_text+50}/>
                 </View>
             
-            </View>
+            </View> */}
         </View>
     )
 }

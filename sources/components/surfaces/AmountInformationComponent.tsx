@@ -3,37 +3,46 @@ import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
 import { BuyButton } from "../buttons/BuyButton";
+import { DireactionSelector } from "./DirectionSelector";
 
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        display:"flex",
         backgroundColor:colors.white_card,
-        borderTopLeftRadius:30,
-        borderTopRightRadius:30,
-        paddingHorizontal:16,
+        borderRadius:12,
+        paddingVertical:8,
         ...shadows.principalShadow
     },
     row: {
         display: "flex",
         flexDirection:"row",
-        marginBottom:16
+        height:40,
+    },
+    row2: {
+        display: "flex",
+        flexDirection:"row",
+        height:50,
     },
     column: {
         display: "flex",
         flexDirection: "row",
-        flexGrow:1
+        flexGrow:1,
+        alignItems: "center",
+        paddingLeft:16
     },
     columnRight: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "flex-end",
-        flexGrow:1
+        flexGrow:1,
+        alignItems: "center",
+        paddingRight:16
     },
     subtotalContainers: {
+        paddingHorizontal:16,
         display:"flex",
         flexDirection: "column",
-        marginTop:25
     },
     subtotalTextStyles: {
         fontSize:14,
@@ -44,12 +53,14 @@ const styles = StyleSheet.create({
     line: {
         height:0,
         width:"100%",
-        borderStyle:"dotted",
+        borderStyle:"solid",
         borderWidth:1,
-        borderColor:colors.seconday_text
+        borderColor:"transparent",
+        borderBottomColor:colors.seconday_text + "30",
     },
     totalContainer: {
-        marginTop:8
+        marginTop:8,
+        paddingHorizontal:16,
     },
     dolarPrice: {
         marginRight:4,
@@ -73,10 +84,10 @@ const styles = StyleSheet.create({
 })
 
 
-export const OrderButtonAndInformation = ()=> {
+export const AmountInformationComponent = ()=> {
     return (
         <View style={styles.container}>
-            <View style={styles.subtotalContainers}>
+                <DireactionSelector />
                 <View style={styles.row}>
                     <View style={styles.column}>
                             <Text style={styles.subtotalTextStyles}>
@@ -103,11 +114,21 @@ export const OrderButtonAndInformation = ()=> {
                             </Text>
                     </View>
                 </View>
-                
-            </View>
-            <View style={styles.line} />
-            <View style={styles.totalContainer}>
                 <View style={styles.row}>
+                    <View style={styles.column}>
+                            <Text style={styles.subtotalTextStyles}>
+                                Delivery
+                            </Text>
+                    </View>
+                    <View style={styles.columnRight}>
+                            <Text style={styles.subtotalTextStyles}>
+                               Gratis
+                            </Text>
+                    </View>
+                </View>
+                
+            <View style={styles.line} />
+                <View style={styles.row2}>
                     <View style={styles.column}>
                             <Text style={styles.totalTextStyles}>
                                 Total
@@ -123,12 +144,6 @@ export const OrderButtonAndInformation = ()=> {
                                     </Text>
                     </View>
                 </View>
-            </View>
-            <View style={styles.buttonContainer}>
-                <BuyButton 
-                    onPress={()=>console.log("")}
-                />
-            </View>
         </View>
     )
 }

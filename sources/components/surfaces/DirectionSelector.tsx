@@ -1,15 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { LocationIcon } from "../icons/LocationIcon";
 import { GoFoward } from "../icons/GoFoward";
 import { GoFowardButton } from "../buttons/GoFowardButton";
+import { shadows } from "../../styles/shadow";
 
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal:16,
-        marginTop:16,
+        paddingLeft:12,
+        paddingRight:8,
+        paddingVertical:8
     },
     titleStyles: {
         color:colors.seconday_text,
@@ -20,12 +22,11 @@ const styles = StyleSheet.create({
         width: "100%",
         display: "flex",
         flexDirection: "row",
-        marginTop:8,
         alignItems: "center"
     },
     directionContainer: {
         flex:1,
-        paddingHorizontal:8
+        paddingHorizontal:4
     },
     iconContainer:{
         
@@ -50,42 +51,42 @@ const styles = StyleSheet.create({
         fontSize:14,
         fontWeight: "200",
         color:colors.seconday_text,
-    },
+    }, 
 
 })
 
 export const DireactionSelector = () => {
     return (
-        <View style={styles.container}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.titleStyles}>
-                    Direccion de Envio
-                </Text>
-            </View>
-            <View style={styles.informationContainerAndButton}>
-                <View style={styles.iconContainer}>
-                    <View style={styles.semiTransparentCircle}>
-                        <LocationIcon color={colors.white_card} />
+        <Pressable>
+            {
+                ({pressed})=>(
+                    <View style={{
+                        ...styles.container,
+                        backgroundColor: pressed ? colors.seconday_text + "10" : "transparent"
+                    }}>
+           
+                        <View style={styles.informationContainerAndButton}>
+                            <View style={styles.iconContainer}>
+                                <View style={styles.semiTransparentCircle}>
+                                    <LocationIcon color={colors.white_card} />
+                                </View>
+                            </View>
+                            <View style={styles.directionContainer}>
+                                    <Text style={styles.firstLineDirection}>
+                                        Urbanizacion Guarico Apure, casa #9
+                                    </Text>
+                                    <Text style={styles.secondLineDirection}>
+                                        Calabozo edo Guarico
+                                    </Text>
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                <GoFoward size={30} color={colors.seconday_text}/>
+                            </View>
+                        </View>
                     </View>
-                </View>
-                <View style={styles.directionContainer}>
-                        <Text style={styles.firstLineDirection}>
-                            Urbanizacion Guarico Apure, casa #9
-                        </Text>
-                        <Text style={styles.secondLineDirection}>
-                            Calabozo edo Guarico
-                        </Text>
-                </View>
-                <View style={styles.buttonContainer}>
-                   <GoFowardButton 
-                        onPress={
-                            ()=> {
-
-                            }
-                        }
-                   />
-                </View>
-            </View>
-        </View>
+                )
+            }
+            
+        </Pressable>
     )
 }

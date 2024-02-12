@@ -8,13 +8,15 @@ import { colors } from "../../styles/colors"
 import { CarProductList } from "../../components/lists/CarProductList"
 import { DireactionSelector } from "../../components/surfaces/DirectionSelector"
 import LinearGradient from "react-native-linear-gradient"
-import { CalculatorContainer, OrderButtonAndInformation } from "../../components/surfaces/OrderButtonAndInformation"
+import { AmountInformationComponent, CalculatorContainer, OrderButtonAndInformation } from "../../components/surfaces/AmountInformationComponent"
+import { BuyButton } from "../../components/buttons/BuyButton"
 
 const styles = StyleSheet.create(
     {
         container : {
             flex:1,
-            backgroundColor: colors.background_white
+            backgroundColor: colors.background_white,
+            paddingHorizontal:16
         },
         titleList: {
             color:colors.seconday_text,
@@ -22,13 +24,18 @@ const styles = StyleSheet.create(
             fontWeight:"600"
         },
         productContainer: {
-            flex:3
+            display: "flex"
         },
         directionContainer: {
         },
         calculatorContainer: {
-            flex:2,
-            marginTop:16
+            display:"flex",
+            marginTop:8
+        },
+        buttonContainer: {
+            flex:1,
+            justifyContent:"flex-end",
+            paddingBottom:20
         }
     }
 )
@@ -98,16 +105,16 @@ export const CarScreen = ():JSX.Element=>{
     
     return (
         <View style={styles.container}>
-            <View style={styles.productContainer}>
-                <CarProductList />
-            </View>
-            <View style={styles.directionContainer}>
-                <DireactionSelector />
-            </View>
+            <CarProductList />
             <View style={styles.calculatorContainer}>
-                <OrderButtonAndInformation />
+                <AmountInformationComponent />
             </View>
-          
+            <View style={styles.buttonContainer}>
+                <BuyButton 
+                
+                    onPress={()=> {}}
+                />
+            </View>
         </View>
     )
 }

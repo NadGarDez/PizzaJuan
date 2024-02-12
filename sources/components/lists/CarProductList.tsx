@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, Text , FlatListProps, View} from "react-native";
+import { FlatList, StyleSheet, Text , FlatListProps, View, Dimensions} from "react-native";
 import { CategoryItem } from "../surfaces/CategoryItem";
 import { colors } from "../../styles/colors";
 import { ProductItem } from "../surfaces/ProductItem";
 import { CarItem } from "../surfaces/CarItem";
 import { DireactionSelector } from "../surfaces/DirectionSelector";
+import { shadows } from "../../styles/shadow";
 
 const styles = StyleSheet.create(
     {
         container: {
             marginTop:8,
-            flex:1
+           
+            display:"flex",
+            height:Dimensions.get("window").height * 0.45
         },
         titleListContainer: {
             paddingLeft:16
@@ -21,8 +24,10 @@ const styles = StyleSheet.create(
             fontWeight:"600"
         },
         listContainer: {
-            marginTop:16,
-            flex:1
+            flex:1,
+            borderRadius:12,
+            backgroundColor:colors.white_card,
+            ...shadows.principalShadow
         },
         calculatorContainer: {
             flex:1,
@@ -30,6 +35,7 @@ const styles = StyleSheet.create(
 
     }
 )
+
 
 type ItemProps = {categoryName: string, active:false};
 
@@ -64,11 +70,6 @@ export const CarProductList = ():JSX.Element=> {
 
     return (
         <View style={styles.container}>
-            <View style={styles.titleListContainer}>
-                <Text style={styles.titleListTextStles}>
-                    Mi Carrito
-                </Text>
-            </View>
             <View style={styles.listContainer}>
                 <FlatList
                     data={staticData}
