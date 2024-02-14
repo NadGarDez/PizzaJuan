@@ -1,15 +1,7 @@
 import React, { useState } from "react";
-import { Dimensions, Image, Pressable, StyleSheet,Text,View } from "react-native";
+import { Dimensions, Image, StyleSheet,Text,View } from "react-native";
 import { colors } from "../../styles/colors";
-import { shadows } from "../../styles/shadow";
-import { HeartIconFilled } from "../icons/HeartIconFilled";
-import { HeartIconOutlined } from "../icons/HeartIconOutlined";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ProductStackType } from "../../navigation/Stacks/ProductStack";
-import { ThreDotsIcon } from "../icons/ThreDotsIcon";
 import { PlusLessButton } from "../buttons/PlusLessButton";
-import { CloseIcon } from "../icons/CloseIcons";
 import { DeleteProductButton } from "../buttons/DeleteProductButton";
 
 const styles = StyleSheet.create(
@@ -22,7 +14,9 @@ const styles = StyleSheet.create(
             flexDirection: "column",
             borderStyle:"solid",
             borderWidth:1,
-            borderColor:"transparent",
+            borderTopColor:"transparent",
+            borderLeftColor:"transparent",
+            borderRightColor:"transparent",
             borderBottomColor:colors.seconday_text + "30",
         },
         imageContainer: {

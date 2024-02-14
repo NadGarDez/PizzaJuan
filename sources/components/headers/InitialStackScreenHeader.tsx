@@ -18,7 +18,7 @@ const styles  = StyleSheet.create(
             }),
             paddingBottom:16,
             width:"100%",
-            backgroundColor:colors.background_white,
+            backgroundColor:"transparent",
             display:"flex",
             flexDirection:"row"
         },

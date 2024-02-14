@@ -19,7 +19,7 @@ const styles  = StyleSheet.create(
                 android:48
             }),
             width:"100%",
-            backgroundColor:colors.background_white,
+            backgroundColor:"transparent",
             display:"flex",
             flexDirection:"row"
         },

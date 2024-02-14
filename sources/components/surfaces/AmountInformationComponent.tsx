@@ -55,7 +55,9 @@ const styles = StyleSheet.create({
         width:"100%",
         borderStyle:"solid",
         borderWidth:1,
-        borderColor:"transparent",
+        borderTopColor:"transparent",
+        borderLeftColor:"transparent",
+        borderRightColor:"transparent",
         borderBottomColor:colors.seconday_text + "30",
     },
     totalContainer: {
