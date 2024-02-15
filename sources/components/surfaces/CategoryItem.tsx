@@ -6,16 +6,15 @@ import { shadows } from "../../styles/shadow";
 const styles = StyleSheet.create(
     {
         baseContainer: {
-            width:80,
-            minHeight:120,
             display: "flex",
             flexDirection:"column",
             justifyContent:"center",
             alignItems:"center",
-            borderRadius:60,
+            borderRadius:12,
             marginRight:12,
-            marginBottom:16,
+            marginBottom:8,
             padding:8,
+            ...shadows.lightShadow,
         },
 
         activeContainer: {
@@ -31,9 +30,10 @@ const styles = StyleSheet.create(
             alignItems:"center"
         },
 
-        textStyles: {
-            fontSize:12,
-            color:colors.seconday_text
+        textStyles: {    
+            fontSize:18,
+            fontWeight: "300",
+            marginRight:4,
         },
         imageContainer:{
             width:"100%",
@@ -51,13 +51,12 @@ const styles = StyleSheet.create(
 
 type props = {
     active:boolean,
-    image:string,
     categoryName:string,
     index:number,
     onPressItem: (index:number)=>void
 }
 
-export const CategoryItem = ({active, image, categoryName, index, onPressItem}:props):JSX.Element=>{
+export const CategoryItem = ({active, categoryName, index, onPressItem}:props):JSX.Element=>{
 
     const restContainerStyles =  active ? styles.activeContainer : styles.unactiveContainer;
     return (
@@ -69,12 +68,12 @@ export const CategoryItem = ({active, image, categoryName, index, onPressItem}:p
                 ({pressed})=>(
                     <View style={
                         pressed ? {
-                            ...shadows.lightShadow,...styles.baseContainer, backgroundColor: "#f4dcae"
+                            ...styles.baseContainer, backgroundColor: "#f4dcae"
                         } : {
-                            ...shadows.principalShadow, ...styles.baseContainer, ...restContainerStyles
+                           ...styles.baseContainer, ...restContainerStyles
                         }
                     }>
-                        <View style={styles.imageContainer}>
+                        {/* <View style={styles.imageContainer}>
 
                             <Image 
                             
@@ -84,9 +83,12 @@ export const CategoryItem = ({active, image, categoryName, index, onPressItem}:p
                                 style={styles.imageStyles}
                                 resizeMethod="scale"
                             /> 
-                        </View>
+                        </View> */}
                         <View style={styles.textContainer}>
-                                <Text style={styles.textStyles}>
+                                <Text style={{
+                                    ...styles.textStyles,
+                                    color: active ? colors.white_card : colors.principal
+                                    }}>
                                     {categoryName}
                                 </Text>
                         </View>

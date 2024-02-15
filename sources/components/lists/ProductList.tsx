@@ -9,18 +9,6 @@ const styles = StyleSheet.create(
         container: {
             marginTop:16
         },
-        titleListContainer: {
-            paddingLeft:16
-        },
-        titleListTextStles: {
-            fontSize:25,
-            fontWeight: "700",
-            color:colors.seconday_text
-        },
-        listContainer: {
-            marginTop:16,
-        }
-
     }
 )
 
@@ -82,12 +70,12 @@ export const ProductList = ():JSX.Element=> {
 
     return (
         <View style={styles.container}>
-            <View style={styles.titleListContainer}>
+            {/* <View style={styles.titleListContainer}>
                 <Text style={styles.titleListTextStles}>
                     Productos
                 </Text>
-            </View>
-            <View style={styles.listContainer}>
+            </View> */}
+            <View >
                 <FlatList
                     data={staticData}
                     renderItem={(props)=>(
