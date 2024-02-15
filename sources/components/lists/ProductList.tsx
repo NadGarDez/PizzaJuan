@@ -1,13 +1,11 @@
-import React, { useState } from "react";
-import { FlatList, StyleSheet, Text , FlatListProps, View} from "react-native";
-import { CategoryItem } from "../surfaces/CategoryItem";
-import { colors } from "../../styles/colors";
+import React from "react";
+import { FlatList, StyleSheet , View} from "react-native";
 import { ProductItem } from "../surfaces/ProductItem";
 
 const styles = StyleSheet.create(
     {
         container: {
-            marginTop:16
+            marginTop:8
         },
     }
 )
@@ -70,11 +68,6 @@ export const ProductList = ():JSX.Element=> {
 
     return (
         <View style={styles.container}>
-            {/* <View style={styles.titleListContainer}>
-                <Text style={styles.titleListTextStles}>
-                    Productos
-                </Text>
-            </View> */}
             <View >
                 <FlatList
                     data={staticData}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Pressable, StyleSheet,Text,View } from "react-native";
+import { Pressable, StyleSheet,Text,View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
 
@@ -29,7 +29,6 @@ const styles = StyleSheet.create(
             justifyContent:"center",
             alignItems:"center"
         },
-
         textStyles: {    
             fontSize:18,
             fontWeight: "300",

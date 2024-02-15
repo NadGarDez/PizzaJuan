@@ -8,7 +8,7 @@ import { FilterButton } from "../buttons/FilterButton";
 const styles = StyleSheet.create(
     {
         container : {
-            marginTop:32,
+            marginTop:18,
             paddingHorizontal:16,
             width:"100%",
             display:"flex",
