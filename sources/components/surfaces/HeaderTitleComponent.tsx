@@ -7,18 +7,17 @@ import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 const styles = StyleSheet.create({
     titleStyles: {
         fontSize:25,
-        fontWeight: "700",
+        fontWeight: "500",
         color:colors.background_white,
     },
     titleContainer: {
         flex:1,
-        backgroundColor:colors.white_card + "60",
+        backgroundColor:"transparent",//colors.white_card + "60",
         borderRadius:12,
         marginHorizontal:32,
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
-        paddingVertical:3
     }
 })
 

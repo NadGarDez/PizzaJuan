@@ -26,6 +26,7 @@ const styles  = StyleSheet.create(
             display:"flex",
             flexDirection:"row",
             justifyContent:"flex-start",
+            alignItems:"center",
             paddingLeft:16,
             minWidth:40
         },
@@ -41,6 +42,7 @@ const styles  = StyleSheet.create(
             flexDirection:"row",
             justifyContent:"flex-end",
             paddingRight:16,
+            alignItems:"center",
             minWidth:40
         },
         ubicationContainer : {
