@@ -7,6 +7,7 @@ import { MenuIcon } from "../icons/MenuIcon";
 import { WhiteButton } from "../buttons/WhiteButton";
 import { LocationIcon } from "../icons/LocationIcon";
 import { DrawerActions } from "@react-navigation/native";
+import { HeaderTitleComponent } from "../surfaces/HeaderTitleComponent";
 
 
 const styles  = StyleSheet.create(
@@ -18,30 +19,29 @@ const styles  = StyleSheet.create(
             }),
             paddingBottom:16,
             width:"100%",
-            backgroundColor:"transparent",
             display:"flex",
             flexDirection:"row"
         },
         leftContainer: {
             display:"flex",
-            flexGrow:1,
             flexDirection:"row",
             justifyContent:"flex-start",
-            paddingLeft:16
+            paddingLeft:16,
+            minWidth:40
         },
         centerContainer: {
             display:"flex",
-            flexGrow:1,
+            flexGrow:3,
             flexDirection:"row",
             justifyContent:"center",
             paddingHorizontal:4
         },
         righContainer: {
             display:"flex",
-            flexGrow:1,
             flexDirection:"row",
             justifyContent:"flex-end",
-            paddingRight:16
+            paddingRight:16,
+            minWidth:40
         },
         ubicationContainer : {
             display: "flex",
@@ -61,10 +61,12 @@ type headerProps = {
     displayRightContent:boolean, // this parameters should be able to render differents types of right header content
     rightContentType?:string // maybe for a component switch
     actionReceipt?:string // me be for the reciber o a certain action 
+    transparent?:boolean,
+    headerTitle: boolean
 }
 
 export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProps):JSX.Element=> {
-    const {displayRightContent,navigation }= props;
+    const {displayRightContent,navigation, transparent = false , headerTitle}= props;
 
     const openDrawer = ()=> {
         navigation.dispatch(DrawerActions.openDrawer())
@@ -78,13 +80,18 @@ export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProp
     }
 
     return (
-        <View style={styles.container}>
+        <View style={{
+            ...styles.container,
+            backgroundColor:transparent ? "transparent" : colors.background_white
+        }}>
             <View style={styles.leftContainer}>
                 <IconButton onPress={openDrawer}>
                    <MenuIcon />
                 </IconButton>
             </View>
-            <View style={styles.centerContainer}/>
+            <View style={styles.centerContainer}>
+               <HeaderTitleComponent {...props}/>
+            </View>
             <View style={styles.righContainer}>
                 {
                     displayRightContent ? (

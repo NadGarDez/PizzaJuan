@@ -5,6 +5,9 @@ import { PayScreen } from "../../screens/shoppingGroup/PayScreen";
 import { TranscValidationScreen } from "../../screens/shoppingGroup/TranscValidationScreen";
 import { InitialStackScreenHeader } from "../../components/headers/InitialStackScreenHeader";
 import { NormalStackScreenHeart } from "../../components/headers/NormalStackScreenHeader";
+import { StyleSheet, Text, View } from "react-native";
+import { colors } from "../../styles/colors";
+import { HeaderTitleComponent } from "../../components/surfaces/HeaderTitleComponent";
 
 export type CarStackProp = {
     CAR_SCREEN: undefined,
@@ -13,6 +16,25 @@ export type CarStackProp = {
         transactionCode:string
     },
 };
+
+const styles = StyleSheet.create({
+    titleStyles: {
+        fontSize:25,
+        fontWeight: "700",
+        color:colors.background_white,
+    },
+    titleContainer: {
+        flex:1,
+        backgroundColor:colors.white_card + "60",
+        borderRadius:12,
+        marginHorizontal:32,
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        paddingVertical:3
+    }
+})
+
 const Stack = createNativeStackNavigator<CarStackProp>()
 
 
@@ -24,7 +46,9 @@ export const CarStack = ():JSX.Element=>{
                 name="CAR_SCREEN"
                 options={{
                     header: props =>(
-                        <InitialStackScreenHeader {...props} displayRightContent={false}/>
+                        <InitialStackScreenHeader {...props} displayRightContent={false} transparent 
+                           headerTitle
+                        />
                     )
                 }}
             />
