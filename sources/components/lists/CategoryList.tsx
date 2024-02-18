@@ -17,6 +17,10 @@ export const CategoryList = ():JSX.Element=> {
 
     const staticData = [
         {
+            categoryName:"Todos",
+            active:true,
+        },
+        {
             categoryName:"Pizzas",
             active:false,
         },
@@ -30,7 +34,7 @@ export const CategoryList = ():JSX.Element=> {
         },
         {
             categoryName:"Combos",
-            active:true,
+            active:false,
         }
     ]
 

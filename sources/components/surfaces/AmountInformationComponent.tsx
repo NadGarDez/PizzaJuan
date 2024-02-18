@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
-import { BuyButton } from "../buttons/BuyButton";
 import { DireactionSelector } from "./DirectionSelector";
 
 
@@ -59,6 +58,7 @@ const styles = StyleSheet.create({
         borderLeftColor:"transparent",
         borderRightColor:"transparent",
         borderBottomColor:colors.seconday_text + "30",
+        marginTop:8
     },
     totalContainer: {
         marginTop:8,

@@ -15,14 +15,6 @@ const styles = StyleSheet.create(
             display:"flex",
             height:Dimensions.get("window").height * 0.45
         },
-        titleListContainer: {
-            paddingLeft:16
-        },
-        titleListTextStles: {
-            color:colors.seconday_text,
-            fontSize:16,
-            fontWeight:"600"
-        },
         listContainer: {
             flex:1,
             borderRadius:12,
@@ -31,6 +23,24 @@ const styles = StyleSheet.create(
         },
         calculatorContainer: {
             flex:1,
+        },
+        titleContainer: {
+            display: "flex",
+            width:'100%',
+            paddingVertical: 8,
+            justifyContent: "center",
+            flexDirection: "row",
+            borderStyle:'solid',
+            borderTopColor: "transparent",
+            borderRightColor: "transparent",
+            borderLeftColor: "transparent",
+            borderBottomColor:colors.seconday_text + "30",
+            borderWidth:1
+        },
+        titleFonts: {
+            fontSize:16,
+            fontWeight: "200",
+            color:colors.seconday_text,
         }
 
     }
@@ -71,13 +81,20 @@ export const CarProductList = ():JSX.Element=> {
     return (
         <View style={styles.container}>
             <View style={styles.listContainer}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.titleFonts}>
+                        {staticData.length} Elementos agregados
+                    </Text>
+                </View>
                 <FlatList
                     data={staticData}
+                    showsVerticalScrollIndicator={false}
                     renderItem={(props)=>(
                         <CarItem 
                             {...props.item} onPressItem={onPressItem}
                         />
                     )}
+                    
                     ListFooterComponent={
                         (
                             <View style={{marginBottom:10}}>

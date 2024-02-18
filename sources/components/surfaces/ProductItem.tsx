@@ -18,7 +18,6 @@ const styles = StyleSheet.create(
             borderRadius:10,
             minHeight:140,
             paddingTop:8,
-            paddingHorizontal:8,
             marginHorizontal:16,
             display: "flex",
             flexDirection: "column",
@@ -99,6 +98,7 @@ const styles = StyleSheet.create(
         },
         flexRowStyles: {
             flex:1,
+            paddingHorizontal:8,
             flexDirection: "row",
         },
         creator: {
@@ -107,7 +107,7 @@ const styles = StyleSheet.create(
             flexDirection: "row",
             height:30,
             alignItems: "center",
-            paddingHorizontal:2
+            paddingHorizontal:10
         },
         firstPartOfCreator: {
             flex:1
@@ -191,9 +191,9 @@ export const ProductItem = ({image, likes,productName, price, favorite,descripti
                             
                         </View>
                         
-                        </View>
-                        <View style={styles.line}/>
-                        <View style={styles.creator}>
+                    </View>
+                    <View style={styles.line}/>
+                    <View style={styles.creator}>
                             <View style={styles.firstPartOfCreator}>
                                 <Text style={styles.likeNumberContainer}>
                                     {creator}

@@ -38,7 +38,7 @@ export const WhiteInputWithSearchIcon = ():JSX.Element=> {
         <View style={styles.container}>
             <View style={styles.iconContainer}>
                 <SearchIcon 
-                    color={colors.seconday_text}
+                    color={colors.seconday_text + "60"}
                 />
             </View>
             <View style={styles.inputContainer}>
