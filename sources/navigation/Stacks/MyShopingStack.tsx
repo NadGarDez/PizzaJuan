@@ -16,7 +16,10 @@ export const MyShoppingStack = ():JSX.Element=>{
             <Stack.Screen 
                 options={{
                     header: props =>(
-                        <InitialStackScreenHeader {...props} displayRightContent={false}/>
+                        <InitialStackScreenHeader {...props} displayRightContent={false}
+                            transparent 
+                            headerTitle
+                        />
                     )
                 }}
                 component={MyShoppingScreen} 

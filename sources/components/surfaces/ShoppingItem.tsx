@@ -4,6 +4,8 @@ import { colors } from "../../styles/colors";
 import { PlusLessButton } from "../buttons/PlusLessButton";
 import { DeleteProductButton } from "../buttons/DeleteProductButton";
 import { shadows } from "../../styles/shadow";
+import { IconWithTextElement } from "./IconWithTextElement";
+import { LocationIcon } from "../icons/LocationIcon";
 
 const styles = StyleSheet.create(
     {
@@ -46,7 +48,6 @@ const styles = StyleSheet.create(
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            marginBottom:8
         },  
         titleContainer: {
             flex:8
@@ -62,9 +63,9 @@ const styles = StyleSheet.create(
             justifyContent:"center"
         },
         titleTextStyles: {
-            fontSize:20,
+            fontSize:18,
             fontWeight: "700",
-            color:colors.principal
+            color:colors.principal,
         },
         dolarPrice: {
             marginRight:4,
@@ -88,7 +89,7 @@ const styles = StyleSheet.create(
         },
         descriptionTextStyles: {
             fontSize:14,
-            fontWeight: "200",
+            fontWeight: "300",
             color:colors.seconday_text
         },
         line: {
@@ -120,49 +121,56 @@ const styles = StyleSheet.create(
             justifyContent: "flex-end"
         },
         priceContainer:{
-            flex:1
+            flex:1,
+            flexDirection:"row",
+            alignItems:"baseline"
         },
         countSelector: {
             display: "flex",
             justifyContent:"flex-end",
             flexDirection:"row"
+        },
+        statusTextStyle: {
+            fontSize:12,
+            fontWeight: "400",
+            textAlign:"center",
+            color:colors.seconday_text,
+        },
+        statusContainer: {
+            borderRadius:12,
+            borderWidth:1,
+            borderColor: colors.seconday_text + "30",
+            padding:8
+        },
+        dateStyles: {
+            fontSize:12,
+            fontWeight: "200",
+            color:colors.seconday_text
         }
     }
 )
 
-type props = {
-    productName:string,
-    price:number,
-    favorite:boolean,
+type props =  {
+    pedido:string,
+    amount:number,
+    status:string,
     image:string,
-    likes:number,
-    description:string,
-    creator:string,
-    numberOfItems:number,
-    onPressItem: (index:number)=>void
+    lastAcutalization: string
 }
 
 // type ProductListScreenPropType = NativeStackScreenProps<ProductStackType,"PRODUCT_LIST_SCREEN">
 
-export const CarItem = ({image, likes,productName, price, favorite,description,onPressItem, creator}:props):JSX.Element=>{
+export const ShoppingItem = ({image, amount, pedido, lastAcutalization, status}:props):JSX.Element=>{
 
     // const {navigate} = useNavigation<ProductListScreenPropType['navigation']>()
 
     // const nav = ()=> {
     //     navigate("PRODUCT_SCREEN", {productId:"123"})
     // }
-
-    const [numberOfItems, setNumberOfItems] = useState<number>(1)
-
-    const onChangeItemNumber = (value:number):void=> {
-        setNumberOfItems(value)
-    }
     
     return (
         <Pressable
-            onPress={
-                ()=>onPressItem(1)
-            }
+           
         >
             {
                 ({pressed})=>(
@@ -174,7 +182,7 @@ export const CarItem = ({image, likes,productName, price, favorite,description,o
                     }>
                         <View style={styles.flexRowStyles}>
                             <View style={styles.imageContainer}>
-                                <Image source={{uri:image}} style={styles.imageStyles}/>
+                                <Image source={{uri:image}} style={styles.imageStyles}/> 
                             </View>
                             <View style={styles.informationContainer}>
                                     
@@ -182,41 +190,45 @@ export const CarItem = ({image, likes,productName, price, favorite,description,o
                                     <View style={styles.titleContainerAndFavorite}>
                                         <View style={styles.titleContainer}>
                                             <Text style={styles.titleTextStyles}>
-                                                {productName}
+                                                Pedido {pedido}
                                             </Text>
                                         </View>
-                                                
-                                        <View style={styles.likeContainer}>
-                                            <DeleteProductButton 
-                                            
-                                                onPress={
-                                                    ()=>{
-        
-                                                    }
-                                                }
-                                            />
-                                        </View>
                                     </View>
-                                    <View style={styles.ingredientsDescriptionContainer}>
-                                        <Text style={styles.descriptionTextStyles} numberOfLines={3}>
-                                            {description}
-                                        </Text>
-                                    </View>
+                                    
+                                    <IconWithTextElement
+                                        color="#00000020"
+                                        icon={<LocationIcon color={colors.white_card} size={14}/>}
+                                        text="Urbanizacion Guarico Apure, Calle Guarico, casa #9"
+                                    />
+                                    {/* <IconWithTextElement
+                                        color={colors.hightLightPrincipal}
+                                        icon={<LocationIcon color={colors.white_card} size={14}/>}
+                                        text="Pedido Confirmado"
+                                    />
+
+                                    <IconWithTextElement
+                                        color={colors.pink}
+                                        icon={<LocationIcon color={colors.white_card} size={14}/>}
+                                        text="40$"
+                                    /> */}
                                     <View style={styles.priceContainerAndCount}>
                                         <View style={styles.priceContainer}>
                                             <Text style={styles.dolarPrice}>
-                                                {(price * numberOfItems) + "$"}
+                                                {amount}$
+                                            </Text>
+                                            <Text style={styles.bsPrice}>
+                                                Ref. {amount*36}Bs
                                             </Text>
                                         </View>
                                         <View style={styles.countSelector}>
-                                            <PlusLessButton
-                                                onChange={
-                                                    onChangeItemNumber
-                                                }
-                                                initialValue={numberOfItems}
-                                            /> 
+                                            <View style={styles.statusContainer}>
+                                                <Text style={styles.statusTextStyle}>{status}</Text>
+                                                <Text style={styles.dateStyles}>
+                                                   {lastAcutalization}
+                                                </Text>
+                                            </View>
                                         </View>
-                                    </View>
+                                    </View> 
                                 </View>
                                         
                             </View>

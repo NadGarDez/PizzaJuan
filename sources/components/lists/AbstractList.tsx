@@ -49,7 +49,7 @@ const styles = StyleSheet.create(
 
 type listProps = {onPress:()=>void};
 
-export const CarProductList = ({onPress}:listProps):JSX.Element=> {
+export const AbstractList = ({onPress}:listProps):JSX.Element=> {
 
     const staticData = [
         {
@@ -81,14 +81,7 @@ export const CarProductList = ({onPress}:listProps):JSX.Element=> {
 
 
     return (
-        <View style={styles.container}>
-            <View style={styles.listContainer}>
-                <View style={styles.titleContainer}>
-                    <Text style={styles.titleFonts}>
-                        {staticData.length} Elementos agregados
-                    </Text>
-                </View>
-                <FlatList
+        <FlatList
                     data={staticData}
                     showsVerticalScrollIndicator={false}
                     renderItem={(props)=>(
@@ -103,9 +96,6 @@ export const CarProductList = ({onPress}:listProps):JSX.Element=> {
                             </View>
                         )
                     }
-                />
-            </View>
-            
-        </View>
+        />
     )
 }

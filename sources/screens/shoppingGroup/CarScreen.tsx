@@ -2,7 +2,7 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { CarStackProp } from "../../navigation/Stacks/CarStack"
-import { useNavigation } from "@react-navigation/native"
+import { DrawerActions, useNavigation } from "@react-navigation/native"
 import { colors } from "../../styles/colors"
 import { CarProductList } from "../../components/lists/CarProductList"
 import { AmountInformationComponent } from "../../components/surfaces/AmountInformationComponent"
@@ -95,17 +95,24 @@ type CarScreenPropType = StackNavigationProp<CarStackProp, "CAR_SCREEN">
 
 export const CarScreen = ():JSX.Element=>{
 
-    const {navigate} = useNavigation<CarScreenPropType>()
+    const {navigate, dispatch} = useNavigation<CarScreenPropType>()
     
     const onPress=()=>{
         navigate("PAY_SCREEN");
     }
+
+    const jumpToUser = ()=> {
+       
+    }
+
     
     return (
         <>
             <TransformedSquare />
             <View style={styles.container}>
-                <CarProductList />
+                <CarProductList 
+                    onPress={jumpToUser}
+                />
                 <View style={styles.calculatorContainer}>
                     <AmountInformationComponent />
                 </View>
