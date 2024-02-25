@@ -4,6 +4,10 @@ import { colors } from "../../styles/colors";
 import { LocationIcon } from "../icons/LocationIcon";
 import { GoFoward } from "../icons/GoFoward";
 import { shadows } from "../../styles/shadow";
+import { SECTION_ONE_TITLE, SECTION_THREE_TITLE, SECTION_TWO_TITLE } from "../../constants/configurationItems";
+import { PersonIcon } from "../icons/PersonIcon";
+import { HeartIconOutlined } from "../icons/HeartIconOutlined";
+import { WalletIcon } from "../icons/WalletIcon";
 
 const styles = StyleSheet.create({
     container: {
@@ -61,6 +65,26 @@ type props = {
     subtitle:string
 }
 
+
+const IconSelector = ({title}:{title:string})=> {
+
+    switch (title) {
+        case SECTION_ONE_TITLE:
+            return (
+                <PersonIcon color={colors.white_card}  />
+            )
+
+        case SECTION_TWO_TITLE:
+            return (
+                <LocationIcon color={colors.white_card} />
+            )
+    
+        default:
+            return <WalletIcon color={colors.white_card}/>
+    }
+
+}
+
 export const ConfigurationItem = ({title, subtitle}:props) => {
     return (
         <Pressable>
@@ -74,7 +98,7 @@ export const ConfigurationItem = ({title, subtitle}:props) => {
                         <View style={styles.informationContainerAndButton}>
                             <View style={styles.iconContainer}>
                                 <View style={styles.semiTransparentCircle}>
-                                    <LocationIcon color={colors.white_card} />
+                                    <IconSelector title={title} />
                                 </View>
                             </View>
                             <View style={styles.directionContainer}>
