@@ -3,13 +3,16 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { LocationIcon } from "../icons/LocationIcon";
 import { GoFoward } from "../icons/GoFoward";
-import { GoFowardButton } from "../buttons/GoFowardButton";
 import { shadows } from "../../styles/shadow";
-
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical:12
+        paddingVertical:8,
+        backgroundColor: colors.white_card,
+        paddingHorizontal:16,
+        borderRadius:15,
+        marginBottom:8,
+        ...shadows.principalShadow
     },
     titleStyles: {
         color:colors.seconday_text,
@@ -65,7 +68,7 @@ export const ConfigurationItem = ({title, subtitle}:props) => {
                 ({pressed})=>(
                     <View style={{
                         ...styles.container,
-                        backgroundColor: pressed ? colors.seconday_text + "10" : "transparent"
+                        backgroundColor: pressed ? colors.formBorder  : colors.white_card
                     }}>
            
                         <View style={styles.informationContainerAndButton}>

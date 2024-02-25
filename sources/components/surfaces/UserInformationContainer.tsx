@@ -60,6 +60,7 @@ const styles = StyleSheet.create(
             ...shadows.principalShadow
         },
         imageContainer: {
+            paddingVertical:16,
             display: "flex",
             flexDirection: "row",
             width: "100%",
@@ -99,6 +100,10 @@ const styles = StyleSheet.create(
             marginTop:8,
             color:colors.seconday_text,
         },
+
+        listContainer: {
+            marginTop:16
+        }
 
     }
 )
@@ -166,10 +171,11 @@ export const UserInformationContainer = ()=> {
                             </Text>
                     </View>
                 </View>
-            </View> 
-            <View style={{...styles.informationContainer}}>
-                <ConfigurationList />
             </View>
+            <View style={styles.listContainer}>
+                <ConfigurationList />
+            </View> 
+                
         </View>
     )
 }

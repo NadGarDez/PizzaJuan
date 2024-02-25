@@ -7,7 +7,7 @@ const styles = StyleSheet.create(
     {
         square:{
             width: Dimensions.get("screen").width,
-            height:Dimensions.get("screen").height,
+            height:Dimensions.get("screen").width,
             position: "absolute",
             backgroundColor:colors.principal,
             overflow: "hidden"
