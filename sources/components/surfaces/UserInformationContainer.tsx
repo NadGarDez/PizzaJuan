@@ -1,10 +1,11 @@
 import React from "react"
-import { Dimensions, Image, StyleSheet, Text, View, ScrollView } from "react-native"
+import { Dimensions, Image, StyleSheet, Text, View, ScrollView, Platform } from "react-native"
 import { colors } from "../../styles/colors"
-import { shadows } from "../../styles/shadow"
 import { useAppSelector } from "../../redux/hooks"
 import { sessionObjectSelector } from "../../redux/SessionReducer"
 import { EditableProperty } from "./EditableProperty"
+import { shadows } from "../../styles/shadow"
+import { ConfigurationList } from "../lists/ConfigurationList"
 
 
 
@@ -14,17 +15,19 @@ const styles = StyleSheet.create(
     {
         container: {
             backgroundColor: "transparent",
-            flex:1
+            flex:1,
+            paddingHorizontal:16,
+            paddingBottom:18
         },
         imageAndNameContainer: {
             width: "100%",
-            height:Dimensions.get("screen").width,
+            height:Dimensions.get("window").height * 0.4,
             display: "flex",
             flexDirection:"column",
             justifyContent: "center",
             alignItems:"center"
         },
-        imageContainer: {
+        avatarContainer: {
             width:200,
             height:200,
             borderRadius:100,
@@ -39,22 +42,62 @@ const styles = StyleSheet.create(
             height: "100%"
         },
         textContainer: {
-            marginTop:16
         },
         nameStyles: {
             fontSize:25,
             fontWeight: "500",
-            color:colors.background_white,
+            color:colors.principal,
         },
         informationContainer: {
-            height: (Dimensions.get("window").height - Dimensions.get("screen").width) + 30,
             width:"100%",
             borderRadius:20,
             backgroundColor:colors.white_card,
             position: "relative",
-            top:-30,
             paddingHorizontal:16,
-            paddingVertical:16
+            paddingVertical:16,
+            marginTop:16,
+            maxHeight:Dimensions.get("window").height * 0.4,
+            ...shadows.principalShadow
+        },
+        imageContainer: {
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop:Platform.select({
+                ios:100,
+                android:40
+            })
+        },
+        row: {
+            display: "flex",
+            flexDirection:"row",
+            height:40,
+        },
+        row2: {
+            display: "flex",
+            flexDirection:"row",
+            height:50,
+        },
+        column: {
+            display: "flex",
+            flexDirection: "row",
+            flexGrow:1,
+            alignItems: "center",
+        },
+        columnRight: {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            flexGrow:1,
+            alignItems: "center",
+        },
+        subtotalTextStyles: {
+            fontSize:14,
+            fontWeight: "200",
+            marginTop:8,
+            color:colors.seconday_text,
         },
 
     }
@@ -64,9 +107,10 @@ export const UserInformationContainer = ()=> {
     const {givenName, familyName, email, picture = "https://cdn-icons-png.flaticon.com/512/5556/5556468.png"} = useAppSelector(sessionObjectSelector)
     return (
         <View style={styles.container}>
-            <View style={styles.imageAndNameContainer}>
+            <View style={styles.imageContainer}>
+
                 <View style={{...shadows.principalShadow}}>
-                    <View style={styles.imageContainer}>
+                    <View style={styles.avatarContainer}>
                         <Image 
                             style={styles.imageStyles}
                             source={{
@@ -75,32 +119,56 @@ export const UserInformationContainer = ()=> {
                         />
                     </View>
                 </View>
+
+            </View>
+            
                 
+                
+            <View style={styles.informationContainer}>
                 <View style={styles.textContainer}>
                         <Text style={styles.nameStyles}>
                             {givenName} {familyName}
                         </Text>
+                </View> 
+                <View style={styles.row}>
+                    <View style={styles.column}>
+                            <Text style={styles.subtotalTextStyles}>
+                                Correo
+                            </Text>
+                    </View>
+                    <View style={styles.columnRight}>
+                            <Text style={styles.subtotalTextStyles}>
+                                {email}
+                            </Text>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.informationContainer}>
-                <ScrollView style={{flex:1}}>
-                    <EditableProperty 
-                        value={email as string}
-                        keyName="Email"
-                    />
-                    <EditableProperty 
-                        value="No asignada"
-                        keyName="Direccion"
-                    />
-                    <EditableProperty 
-                        value="Otre"
-                        keyName="Sexo"
-                    />
-                    <EditableProperty 
-                        value="20/11/97"
-                        keyName="Fecha de nacimiento"
-                    />
-                </ScrollView>
+                <View style={styles.row}>
+                    <View style={styles.column}>
+                            <Text style={styles.subtotalTextStyles}>
+                                Telefono
+                            </Text>
+                    </View>
+                    <View style={styles.columnRight}>
+                            <Text style={styles.subtotalTextStyles}>
+                                No asignado
+                            </Text>
+                    </View>
+                </View>
+                <View style={styles.row}>
+                    <View style={styles.column}>
+                            <Text style={styles.subtotalTextStyles}>
+                                Direccion
+                            </Text>
+                    </View>
+                    <View style={styles.columnRight}>
+                            <Text style={styles.subtotalTextStyles}>
+                               Urbanizacion Guarico Apure
+                            </Text>
+                    </View>
+                </View>
+            </View> 
+            <View style={{...styles.informationContainer}}>
+                <ConfigurationList />
             </View>
         </View>
     )
