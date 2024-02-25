@@ -26,6 +26,6 @@ export const configurationItems:configurationItem[] = [
     },
     {
         title:SECTION_THREE_TITLE,
-        subtitle:SECTION_ONE_SUBTITLE,
+        subtitle:SECTION_THREE_SUBTITLE,
     }
 ]
