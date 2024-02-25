@@ -41,6 +41,16 @@ const styles = StyleSheet.create(
             fontSize:16,
             fontWeight: "200",
             color:colors.seconday_text,
+        },
+        bottomSeparator: {
+            height:20,
+            borderStyle:'solid',
+            borderTopColor: colors.seconday_text + "30",
+            borderRightColor: "transparent",
+            borderLeftColor: "transparent",
+            borderBottomColor:"transparent",
+            borderWidth:1
+
         }
 
     }
@@ -93,16 +103,20 @@ export const CarProductList = ({onPress}:listProps):JSX.Element=> {
                     showsVerticalScrollIndicator={false}
                     renderItem={(props)=>(
                         <CarItem 
-                            {...props.item} onPressItem={onPressItem}
+                            {...props.item} onPressItem={onPressItem} last={props.index === (staticData.length - 1 )}
                         />
                     )}
                     
                     ListFooterComponent={
                         (
-                            <View style={{marginBottom:10}}>
+                            <View style={{marginBottom:10,}}>
                             </View>
                         )
                     }
+                />
+                <View
+                
+                    style={styles.bottomSeparator}
                 />
             </View>
             

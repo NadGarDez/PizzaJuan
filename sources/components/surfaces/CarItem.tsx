@@ -13,6 +13,8 @@ const styles = StyleSheet.create(
             paddingHorizontal:8,
             display: "flex",
             flexDirection: "column",
+        },
+        borderStyles: {
             borderStyle:"solid",
             borderWidth:1,
             borderTopColor:"transparent",
@@ -139,19 +141,20 @@ type props = {
     description:string,
     creator:string,
     numberOfItems:number,
-    onPressItem: (index:number)=>void
+    onPressItem: (index:number)=>void,
+    last?:boolean
 }
 
 // type ProductListScreenPropType = NativeStackScreenProps<ProductStackType,"PRODUCT_LIST_SCREEN">
 
-export const CarItem = ({image, likes,productName, price, favorite,description,onPressItem, creator}:props):JSX.Element=>{
+export const CarItem = ({image, likes,productName, price, favorite,description,onPressItem, creator, last}:props):JSX.Element=>{
 
     // const {navigate} = useNavigation<ProductListScreenPropType['navigation']>()
 
     // const nav = ()=> {
     //     navigate("PRODUCT_SCREEN", {productId:"123"})
     // }
-
+    const lastStyles = !!last ? {} : styles.borderStyles;
     const [numberOfItems, setNumberOfItems] = useState<number>(1)
 
     const onChangeItemNumber = (value:number):void=> {
@@ -169,6 +172,7 @@ export const CarItem = ({image, likes,productName, price, favorite,description,o
                     <View style={
                         {
                             ...styles.container,
+                            ...lastStyles,
                             opacity: pressed ? 0.7 : 1
                         }
                     }>
