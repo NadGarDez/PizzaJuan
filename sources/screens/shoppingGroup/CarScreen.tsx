@@ -102,7 +102,10 @@ export const CarScreen = ():JSX.Element=>{
     }
 
     const jumpToUser = ()=> {
-       
+       dispatch(DrawerActions.openDrawer())
+       setTimeout(() => {
+        dispatch(DrawerActions.jumpTo("USER_STACK"))
+       }, 300);
     }
 
     
@@ -114,7 +117,9 @@ export const CarScreen = ():JSX.Element=>{
                     onPress={jumpToUser}
                 />
                 <View style={styles.calculatorContainer}>
-                    <AmountInformationComponent />
+                    <AmountInformationComponent 
+                        onPressLocation={jumpToUser}
+                    />
                 </View>
                 <View style={styles.buttonContainer}>
                     <BuyButton 

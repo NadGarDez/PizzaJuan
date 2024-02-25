@@ -55,9 +55,16 @@ const styles = StyleSheet.create({
 
 })
 
-export const DireactionSelector = () => {
+
+type props= {
+    onPress?: ()=>void | null
+}
+
+export const DireactionSelector = ({onPress}:props) => {
     return (
-        <Pressable>
+        <Pressable
+            onPress={onPress}
+        >
             {
                 ({pressed})=>(
                     <View style={{

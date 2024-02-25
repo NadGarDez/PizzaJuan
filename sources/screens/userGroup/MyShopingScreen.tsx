@@ -84,7 +84,7 @@ export const MyShoppingScreen = ():JSX.Element=>{
 
     return (
         <>
-            <TransformedSquare />
+            <TransformedSquare bottomShape/>
             <View style={styles.container}>
                 <View style={styles.card}>
                     <TabView 
@@ -95,7 +95,7 @@ export const MyShoppingScreen = ():JSX.Element=>{
                         renderTabBar={renderTabBar}
                     />
                 </View>
-            </View>
+            </View> 
         </>
        
     )

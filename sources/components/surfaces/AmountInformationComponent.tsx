@@ -85,11 +85,17 @@ const styles = StyleSheet.create({
     }
 })
 
+type props = {
+    onPressLocation:()=>void
+}
 
-export const AmountInformationComponent = ()=> {
+
+export const AmountInformationComponent = ({onPressLocation}:props)=> {
     return (
         <View style={styles.container}>
-                <DireactionSelector />
+                <DireactionSelector 
+                    onPress={onPressLocation}
+                />
                 <View style={styles.row}>
                     <View style={styles.column}>
                             <Text style={styles.subtotalTextStyles}>

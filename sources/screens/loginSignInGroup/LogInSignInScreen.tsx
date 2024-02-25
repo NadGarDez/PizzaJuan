@@ -32,7 +32,6 @@ export const LogInSignInScreen = ():JSX.Element=>{
 
     const getCre = async ()=>{
         const credentials = await getCredentials();
-        console.log(credentials, "super")
         if(credentials?.accessToken !== undefined || credentials?.accessToken!==null){
             dispatch(setSession(credentials?.accessToken as string))
         }
@@ -42,7 +41,6 @@ export const LogInSignInScreen = ():JSX.Element=>{
         ()=>{
             if (user !== null && user !== undefined){
                 getCre()
-                console.log(user)
                 dispatch(setSessionObject({
                     sub:user.sub ?? null,
                     email:user.email ?? null,
