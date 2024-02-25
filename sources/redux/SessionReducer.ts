@@ -9,6 +9,7 @@ type sessionStateType = {
     nickname?:string|null,
     givenName?:string|null,
     picture?:string|null,
+    familyName:null | string
 }
 
 type objectSessionType ={
@@ -17,6 +18,7 @@ type objectSessionType ={
     nickname:null | string,
     givenName:null | string,
     picture:null | string,
+    familyName:null | string
 }
 
 //initial state
@@ -27,6 +29,7 @@ const initialState: sessionStateType =  {
     nickname:null,
     givenName:null,
     picture:null,
+    familyName:null
 };
 
 
@@ -45,6 +48,7 @@ const sessionSlice = createSlice(
                 state.nickname=action.payload.nickname
                 state.givenName=action.payload.givenName
                 state.picture=action.payload.picture
+                state.familyName = action.payload.familyName
             },
             resetSession: state => {
                 state.sub=null;

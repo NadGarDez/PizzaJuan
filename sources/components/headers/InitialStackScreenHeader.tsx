@@ -64,11 +64,11 @@ type headerProps = {
     rightContentType?:string // maybe for a component switch
     actionReceipt?:string // me be for the reciber o a certain action 
     transparent?:boolean,
-    headerTitle: boolean
+    headerTitle?: boolean
 }
 
 export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProps):JSX.Element=> {
-    const {displayRightContent,navigation, transparent = false , headerTitle}= props;
+    const {displayRightContent,navigation, transparent = false , headerTitle = false}= props;
 
     const openDrawer = ()=> {
         navigation.dispatch(DrawerActions.openDrawer())
@@ -92,7 +92,11 @@ export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProp
                 </IconButton>
             </View>
             <View style={styles.centerContainer}>
-               <HeaderTitleComponent {...props}/>
+                {
+                    !!headerTitle ? (
+                        <HeaderTitleComponent {...props}/>
+                    ) : null
+                }
             </View>
             <View style={styles.righContainer}>
                 {

@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
     const {clearSession, user} = useAuth0()
     const dispatch = useDispatch()
-    const {givenName} = useAppSelector(sessionObjectSelector)
+    const {givenName, picture} = useAppSelector(sessionObjectSelector)
 
     const logout = async ():Promise<void>=> {
         await clearSession()
@@ -80,15 +80,15 @@ export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
         },
         [user]
     )
-
-    
     
     return (
        <View style={styles.contaner}>
            <DrawerContentScrollView>
                <View style={styles.avatarContainer}>
                     <View style={styles.avatarImage}>
-                        <AvatarImage />
+                        <AvatarImage 
+                           
+                        />
                     </View>
                     <View style={styles.avatarGreatings}>
                         <Text style={styles.greetingsText}>

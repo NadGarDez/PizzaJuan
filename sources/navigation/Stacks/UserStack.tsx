@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import React   from "react"
 import { InitialStackScreenHeader } from "../../components/headers/InitialStackScreenHeader";
 import { UserScreen } from "../../screens/myShoppingGroup/UserScreen";
+import { FloatingUserHeader } from "../../components/headers/FloatingUserHeader";
 
 export type UserStackProps = {
     USER_SCREEN: undefined,
@@ -16,7 +17,7 @@ export const UserStack = ():JSX.Element=>{
             <Stack.Screen 
                 options={{
                     header: props =>(
-                        <InitialStackScreenHeader {...props} displayRightContent={false}/>
+                        <FloatingUserHeader {...props}/>
                     )
                 }}
                 component={UserScreen} 

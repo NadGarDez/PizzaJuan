@@ -32,6 +32,7 @@ export const LogInSignInScreen = ():JSX.Element=>{
 
     const getCre = async ()=>{
         const credentials = await getCredentials();
+        console.log(credentials, "super")
         if(credentials?.accessToken !== undefined || credentials?.accessToken!==null){
             dispatch(setSession(credentials?.accessToken as string))
         }
@@ -41,12 +42,14 @@ export const LogInSignInScreen = ():JSX.Element=>{
         ()=>{
             if (user !== null && user !== undefined){
                 getCre()
+                console.log(user)
                 dispatch(setSessionObject({
-                    sub:user.sub ?? "",
-                    email:user.email ?? "",
-                    nickname:user.nickname ?? "",
-                    givenName:user.givenName ?? "",
-                    picture:user.picture?? "",
+                    sub:user.sub ?? null,
+                    email:user.email ?? null,
+                    nickname:user.nickname ?? null,
+                    givenName:user.givenName ?? null,
+                    picture:user.picture?? null,
+                    familyName: user.familyName ?? null
                 }))
             }
         },
