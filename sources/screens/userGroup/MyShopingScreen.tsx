@@ -1,11 +1,12 @@
 import React from "react"
-import { Dimensions, StyleSheet, Text, View } from "react-native"
+import { Dimensions, Platform, StyleSheet, Text, View } from "react-native"
 import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
 import { colors } from "../../styles/colors"
 import { shadows } from "../../styles/shadow"
 import { InProgressShoppingList } from "../../components/lists/InProgressShoppingList"
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { FinishedShoppingList } from "../../components/lists/FinishedShoopingList"
+import { TransformedBottomCircle } from "../../components/surfaces/TransformedBottomCircle"
 
 const renderScene = SceneMap({
   first: InProgressShoppingList,
@@ -17,8 +18,10 @@ const styles = StyleSheet.create(
         container : {
             flex:1,
             paddingHorizontal:16,
-            paddingTop:8,
-            paddingBottom:20,
+            paddingVertical:Platform.select({
+                android: 56,
+                ios: 93
+            }),
         },
         card: {
             flex:1,
@@ -55,6 +58,15 @@ const styles = StyleSheet.create(
             height:40,
             borderTopEndRadius:12,
             borderTopLeftRadius:12
+        },
+        bottomLine: {
+            height:20,
+            borderStyle: "solid",
+            borderBottomColor: "transparent",
+            borderLeftColor:"transparent",
+            borderRightColor: "transparent",
+            borderTopColor: colors.seconday_text + "30",
+            borderWidth: 1,
         }
         
        
@@ -83,8 +95,9 @@ export const MyShoppingScreen = ():JSX.Element=>{
     ]);
 
     return (
-        <>
-            <TransformedSquare bottomShape/>
+        <>  
+            <TransformedSquare/> 
+            <TransformedBottomCircle/>
             <View style={styles.container}>
                 <View style={styles.card}>
                     <TabView 
@@ -94,8 +107,11 @@ export const MyShoppingScreen = ():JSX.Element=>{
                         initialLayout={{ width: Dimensions.get("screen").width - 32 }}
                         renderTabBar={renderTabBar}
                     />
+                    <View style={styles.bottomLine}>
+
+                    </View>
                 </View>
-            </View> 
+            </View>
         </>
        
     )

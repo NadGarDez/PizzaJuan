@@ -10,19 +10,11 @@ const styles = StyleSheet.create(
             height:Dimensions.get("screen").width,
             position: "absolute",
             backgroundColor:colors.principal,
-            borderRadius:30,
+            borderRadius:100,
             overflow: "hidden"
            
         },
-        square2: {
-            width: Dimensions.get("screen").width,
-            height:Dimensions.get("screen").width,
-            position: "absolute",
-            backgroundColor:colors.principal,
-            borderRadius:30,
-            overflow: "hidden",
-            top:Dimensions.get("window").height - Dimensions.get("screen").width
-        },
+
         container: {
             flex:1,
             backgroundColor:colors.background_white,
@@ -30,7 +22,7 @@ const styles = StyleSheet.create(
             top:0,
             height:Dimensions.get("window").height,
             width:Dimensions.get("screen").width,
-            zIndex:-1
+            zIndex:-2
         },
         circle: {
             width: Dimensions.get("screen").width * 2,
@@ -49,78 +41,47 @@ const styles = StyleSheet.create(
 )
 
 type props = {
-    bottomShape?:boolean
+    rotation?:string
 }
 
-export const TransformedSquare = ({bottomShape=false}:props):JSX.Element=> {
+export const TransformedSquare = ({rotation="-45deg"}:props):JSX.Element=> {
     return (
-        <View style={styles.container}>
-            <View style={[
-                styles.square,
-                {
-                    transform:[
-                        {translateY: -(Dimensions.get("screen").width * 0.56)},
-                        {rotate:bottomShape ? "-45deg" : "-35deg"},
-                    ]
-                }
-            ]}>
+        <>
+            <View style={styles.container}>
                 <View style={[
-                    styles.circle2,
-                    {
-                        transform: [
-                            {translateX:-(Dimensions.get("screen").width * 1.3)}
-                        ]
-                    }
-                ]}>
-
-                </View>
-                <View style={[
-                    styles.circle,
+                    styles.square,
                     {
                         transform:[
-                            {translateY: -(Dimensions.get("screen").width * 2)}
+                            {translateY: -(Dimensions.get("screen").width * 0.30)},
+                            {rotate:rotation},
                         ]
                     }
-                
                 ]}>
-
-                </View>
-            </View>
-            {
-                bottomShape ? (
                     <View style={[
-                        styles.square2,
+                        styles.circle2,
                         {
-                            transform:[
-                                {rotate:"45deg"},
+                            transform: [
+                                {translateX:-(Dimensions.get("screen").width * 1.3)}
                             ]
                         }
                     ]}>
-                        <View style={[
-                            styles.circle2,
-                            {
-                                transform: [
-                                    {translateX:-(Dimensions.get("screen").width * 1.3)}
-                                ]
-                            }
-                        ]}>
-        
-                        </View>
-                        <View style={[
-                            styles.circle,
-                            {
-                                transform:[
-                                    {translateY: -(Dimensions.get("screen").width * 2)}
-                                ]
-                            }
-                        
-                        ]}>
-        
-                        </View>
+
                     </View>
-                ): null
-            }
-        </View>
+                    <View style={[
+                        styles.circle,
+                        {
+                            transform:[
+                                {translateY: -(Dimensions.get("screen").width * 2)}
+                            ]
+                        }
+                    
+                    ]}>
+
+                    </View>
+                </View>
+            </View>
+            
+        </>
         
     )
 }

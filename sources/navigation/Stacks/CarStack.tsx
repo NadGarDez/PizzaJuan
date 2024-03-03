@@ -48,6 +48,7 @@ export const CarStack = ():JSX.Element=>{
                     header: props =>(
                         <InitialStackScreenHeader {...props} displayRightContent={false} transparent 
                            headerTitle
+                           floating
                         />
                     )
                 }}

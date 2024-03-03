@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View } from "react-native"
+import { Platform, StyleSheet, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { CarStackProp } from "../../navigation/Stacks/CarStack"
 import { DrawerActions, useNavigation } from "@react-navigation/native"
@@ -14,7 +14,12 @@ const styles = StyleSheet.create(
         container : {
             flex:1,
             backgroundColor: "transparent",
-            paddingHorizontal:16
+            paddingHorizontal:16,
+            paddingVertical:Platform.select({
+                android: 56,
+                ios: 93
+            }),
+
         },
         titleList: {
             color:colors.seconday_text,
@@ -33,7 +38,7 @@ const styles = StyleSheet.create(
         buttonContainer: {
             flex:1,
             justifyContent:"flex-end",
-            paddingBottom:20
+            marginTop:16
         }
     }
 )

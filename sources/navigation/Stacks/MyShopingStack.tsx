@@ -19,6 +19,7 @@ export const MyShoppingStack = ():JSX.Element=>{
                         <InitialStackScreenHeader {...props} displayRightContent={false}
                             transparent 
                             headerTitle
+                            floating
                         />
                     )
                 }}

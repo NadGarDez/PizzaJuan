@@ -22,6 +22,11 @@ const styles  = StyleSheet.create(
             display:"flex",
             flexDirection:"row"
         },
+        floatingStyles: {
+            position: "absolute",
+            top:0,
+            zIndex:25
+        },
         leftContainer: {
             display:"flex",
             flexDirection:"row",
@@ -64,11 +69,12 @@ type headerProps = {
     rightContentType?:string // maybe for a component switch
     actionReceipt?:string // me be for the reciber o a certain action 
     transparent?:boolean,
+    floating?:boolean,
     headerTitle?: boolean
 }
 
 export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProps):JSX.Element=> {
-    const {displayRightContent,navigation, transparent = false , headerTitle = false}= props;
+    const {displayRightContent,navigation, transparent = false , floating = false,headerTitle = false}= props;
 
     const openDrawer = ()=> {
         navigation.dispatch(DrawerActions.openDrawer())
@@ -81,10 +87,13 @@ export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProp
         }, 500);
     }
 
+    const floatingStyles = floating ? styles.floatingStyles : {}
+
     return (
         <View style={{
             ...styles.container,
-            backgroundColor:transparent ? "transparent" : colors.background_white
+            backgroundColor:transparent ? "transparent" : colors.background_white,
+            ...floatingStyles
         }}>
             <View style={styles.leftContainer}>
                 <IconButton onPress={openDrawer}>

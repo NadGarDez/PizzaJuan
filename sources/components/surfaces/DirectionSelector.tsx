@@ -3,8 +3,6 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { LocationIcon } from "../icons/LocationIcon";
 import { GoFoward } from "../icons/GoFoward";
-import { GoFowardButton } from "../buttons/GoFowardButton";
-import { shadows } from "../../styles/shadow";
 
 
 const styles = StyleSheet.create({
