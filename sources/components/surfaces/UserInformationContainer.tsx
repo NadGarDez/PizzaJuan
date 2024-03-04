@@ -3,7 +3,6 @@ import { Dimensions, Image, StyleSheet, Text, View, ScrollView, Platform } from 
 import { colors } from "../../styles/colors"
 import { useAppSelector } from "../../redux/hooks"
 import { sessionObjectSelector } from "../../redux/SessionReducer"
-import { EditableProperty } from "./EditableProperty"
 import { shadows } from "../../styles/shadow"
 import { ConfigurationList } from "../lists/ConfigurationList"
 

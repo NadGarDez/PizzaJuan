@@ -57,12 +57,16 @@ const styles = StyleSheet.create({
         fontWeight: "200",
         color:colors.seconday_text,
     }, 
+    buttonContainer: {
+        
+    }
 
 })
 
 type props = {
     title:string,
-    subtitle:string
+    subtitle:string,
+    onPress:()=>void
 }
 
 
@@ -85,9 +89,11 @@ const IconSelector = ({title}:{title:string})=> {
 
 }
 
-export const ConfigurationItem = ({title, subtitle}:props) => {
+export const ConfigurationItem = ({title, subtitle, onPress}:props) => {
     return (
-        <Pressable>
+        <Pressable
+            onPress={onPress}
+        >
             {
                 ({pressed})=>(
                     <View style={{

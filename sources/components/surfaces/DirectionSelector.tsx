@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
         fontWeight: "200",
         color:colors.seconday_text,
     }, 
+    buttonContainer: {
+        
+    }
 
 })
 

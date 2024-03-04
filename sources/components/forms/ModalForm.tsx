@@ -1,20 +1,17 @@
-import React from "react"
+import React, { useContext, useState } from "react"
 import { Dimensions, StyleSheet, View, Text } from "react-native"
 import { colors } from "../../styles/colors"
 import { IconButton } from "../buttons/IconButton"
+import Modal from "react-native-modal";
+import { ModalContext } from "../../context/modalFormContext";
 
 const styles =  StyleSheet.create(
     {
         container: {
-            position:"absolute",
-            top:0,
-            width: Dimensions.get("screen").width,
-            height:Dimensions.get("window").height,
-            backgroundColor: "#00000080",
-            zIndex:100,
-            display: "flex",
-            flexDirection: "column",
+            flex:1,
             justifyContent: "flex-end",
+            marginHorizontal: -20,
+            marginVertical: -24
         },
         modalCard: {
             height: "90%",
@@ -48,6 +45,7 @@ const styles =  StyleSheet.create(
             fontSize:16,
             fontWeight: "700",
             color:colors.seconday_text,
+            textAlign:"center"
         },
         buttonText: {
             fontSize:16,
@@ -61,34 +59,40 @@ type props = {
     title:string,
 }
 
-export const ModalForm = ({title}:props)=> {
+export const ModalForm = ()=> {
+
+    const {toggleModal, visible, modalObject} = useContext(ModalContext);
+
     return (
-        <View style={styles.container}>
-            <View style={styles.modalCard}>
-                <View style={styles.headerContainer}>
-                    <View style={styles.leftButtonContainer}>
-                        <IconButton onPress={()=>{}}>
-                            <Text style={styles.buttonText}>
-                                Cancelar
+        <Modal isVisible={visible} style={{padding:0}} animationInTiming={400} animationOutTiming={400}>
+            <View style={styles.container}>
+                <View style={styles.modalCard}>
+                    <View style={styles.headerContainer}>
+                        <View style={styles.leftButtonContainer}>
+                            <IconButton onPress={toggleModal}>
+                                <Text style={styles.buttonText}>
+                                    Cancelar
+                                </Text>
+                            </IconButton>
+                        </View>
+                        <View style={styles.centerTitleContainer}>
+                            <Text style={styles.titleFontStyles}>
+                                {
+                                    modalObject.title
+                                }
                             </Text>
-                        </IconButton>
-                    </View>
-                    <View style={styles.centerTitleContainer}>
-                        <Text style={styles.titleFontStyles}>
-                            {
-                                title
-                            }
-                        </Text>
-                    </View>
-                    <View style={styles.rightButtonContainer}>
-                        <IconButton onPress={()=>{}}>
-                            <Text style={styles.buttonText}>
-                                Guardar
-                            </Text>
-                        </IconButton>
+                        </View>
+                        <View style={styles.rightButtonContainer}>
+                            <IconButton onPress={toggleModal}>
+                                <Text style={styles.buttonText}>
+                                    Guardar
+                                </Text>
+                            </IconButton>
+                        </View>
                     </View>
                 </View>
             </View>
-        </View>
+        </Modal>
+       
     )
 }
