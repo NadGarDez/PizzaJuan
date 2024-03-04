@@ -7,7 +7,7 @@ const SECTION_TWO_SUBTITLE = "Configura donde quieres que llegue tu pedido"
 export const SECTION_THREE_TITLE = "Configuracion de pago"
 const SECTION_THREE_SUBTITLE = "Agrega medios de pago o recarga P'taxies"
 
-type configurationItem = {
+export type configurationItem = {
     title:string,
     subtitle: string,
 }

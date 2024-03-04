@@ -1,6 +1,5 @@
 import { createContext } from "react";
 
-
 type item = {
     title:string,
     subtitle:string
