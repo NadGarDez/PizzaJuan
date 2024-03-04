@@ -7,6 +7,7 @@ import { resetSession } from "../../redux/SessionReducer"
 import { colors } from "../../styles/colors"
 import { TransformedSquareWithoutRotation } from "../../components/surfaces/TransformedSquareWithoutRotation"
 import { UserInformationContainer } from "../../components/surfaces/UserInformationContainer"
+import { ModalForm } from "../../components/forms/ModalForm"
 
 const styles = StyleSheet.create(
     {
@@ -42,6 +43,10 @@ export const UserScreen = ():JSX.Element=>{
                 <UserInformationContainer />
                 
             </View>
+            <ModalForm 
+            
+                title="Informacion Personal"
+            />
         </>
     )
 }

@@ -95,8 +95,8 @@ const styles = StyleSheet.create(
             alignItems: "center",
         },
         subtotalTextStyles: {
-            fontSize:14,
-            fontWeight: "200",
+            fontSize:16,
+            fontWeight: "300",
             marginTop:8,
             color:colors.seconday_text,
         },

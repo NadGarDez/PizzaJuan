@@ -23,7 +23,7 @@ const styles  = StyleSheet.create(
             flexDirection:"row",
             position: "absolute",
             top:0,
-            zIndex:25
+            zIndex:2
         },
         leftContainer: {
             display:"flex",
