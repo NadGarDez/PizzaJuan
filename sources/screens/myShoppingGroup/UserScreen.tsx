@@ -1,12 +1,12 @@
 import React, { useState } from "react"
-import { StyleSheet, View } from "react-native"
+import { Alert, Dimensions, StyleSheet, View } from "react-native"
 import { useAppDispatch } from "../../redux/hooks"
 import { colors } from "../../styles/colors"
 import { TransformedSquareWithoutRotation } from "../../components/surfaces/TransformedSquareWithoutRotation"
 import { UserInformationContainer } from "../../components/surfaces/UserInformationContainer"
-import { ModalForm } from "../../components/forms/ModalForm"
+import { ModalForm } from "../../components/modal/ModalForm"
 import { ModalContext } from "../../context/modalFormContext"
-import { configurationItem } from "../../constants/configurationItems"
+import { configurationItem, defaultConfigurationSectionValue } from "../../constants/userConfigurationConstants"
 
 const styles = StyleSheet.create(
     {
@@ -20,11 +20,7 @@ const styles = StyleSheet.create(
 export const UserScreen = ():JSX.Element=>{
 
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const [modalObject, setModalObject] = useState<configurationItem>({
-        title:"",
-        subtitle:""
-    })
-
+    const [modalObject, setModalObject] = useState<configurationItem>(defaultConfigurationSectionValue)
 
     const toggleModal =()=> setModalVisible(!modalVisible);
     const setFormType = (item:configurationItem)=>setModalObject(item)
@@ -36,10 +32,8 @@ export const UserScreen = ():JSX.Element=>{
                 <View style={styles.container}>
                     <TransformedSquareWithoutRotation />
                     <UserInformationContainer />
-                    
                 </View>
-                <ModalForm 
-                />
+                <ModalForm />
             </ModalContext.Provider>
         </>
     )

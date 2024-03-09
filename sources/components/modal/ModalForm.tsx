@@ -4,6 +4,7 @@ import { colors } from "../../styles/colors"
 import { IconButton } from "../buttons/IconButton"
 import Modal from "react-native-modal";
 import { ModalContext } from "../../context/modalFormContext";
+import { modalSwitch, modalSwitchType } from "../../utils/modalContentSelector";
 
 const styles =  StyleSheet.create(
     {
@@ -51,17 +52,17 @@ const styles =  StyleSheet.create(
             fontSize:16,
             fontWeight: "300",
             color:colors.principal,
+        },
+        bodyContainer: {
+            paddingTop:16
         }
     }
 )
 
-type props = {
-    title:string,
-}
 
-export const ModalForm = ()=> {
+export const ModalForm = ():JSX.Element=> {
 
-    const {toggleModal, visible, modalObject} = useContext(ModalContext);
+    const {toggleModal, visible, modalObject:{title, formKey }} = useContext(ModalContext);
 
     return (
         <Modal isVisible={visible} style={{padding:0}} animationInTiming={400} animationOutTiming={400}>
@@ -78,7 +79,7 @@ export const ModalForm = ()=> {
                         <View style={styles.centerTitleContainer}>
                             <Text style={styles.titleFontStyles}>
                                 {
-                                    modalObject.title
+                                    title
                                 }
                             </Text>
                         </View>
@@ -89,6 +90,11 @@ export const ModalForm = ()=> {
                                 </Text>
                             </IconButton>
                         </View>
+                    </View>
+                    <View style={styles.bodyContainer}>
+                        {
+                            modalSwitch[formKey as keyof modalSwitchType]({})
+                        }
                     </View>
                 </View>
             </View>

@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { configurationItem, defaultConfigurationSectionValue } from "../constants/userConfigurationConstants";
 
 type item = {
     title:string,
@@ -8,17 +9,14 @@ type item = {
 type context = {
     visible:boolean,
     toggleModal:()=>void,
-    setFormType:(item:item)=>void,
-    modalObject:item
+    setFormType:(item:configurationItem)=>void,
+    modalObject:configurationItem
 }
 
 const defaultModalValue = {
     visible:false,
     toggleModal:()=>{},
-    setFormType:(item:item)=>{},
-    modalObject:{
-        title:"",
-        subtitle:""
-    }
+    setFormType:(item:configurationItem)=>{},
+    modalObject:defaultConfigurationSectionValue
 }
 export const ModalContext = createContext<context>(defaultModalValue);

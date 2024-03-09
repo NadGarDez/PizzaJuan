@@ -8,6 +8,7 @@ import { NormalStackScreenHeart } from "../../components/headers/NormalStackScre
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { HeaderTitleComponent } from "../../components/surfaces/HeaderTitleComponent";
+import { withScrollView } from "../../HOCs/WithScrollView";
 
 export type CarStackProp = {
     CAR_SCREEN: undefined,
@@ -36,13 +37,14 @@ const styles = StyleSheet.create({
 })
 
 const Stack = createNativeStackNavigator<CarStackProp>()
+const HOCCarScreen = withScrollView(CarScreen)
 
 
 export const CarStack = ():JSX.Element=>{
     return (
         <Stack.Navigator>
             <Stack.Screen 
-                component={CarScreen} 
+                component={HOCCarScreen} 
                 name="CAR_SCREEN"
                 options={{
                     header: props =>(
