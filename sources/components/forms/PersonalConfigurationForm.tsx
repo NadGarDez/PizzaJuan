@@ -1,10 +1,32 @@
 import React from "react";
-import { Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { StandardOutlinedInput } from "../inputs/StandardOutlinedInput";
+
+const styles = StyleSheet.create({
+    container: {
+        flex:1
+    }
+})
 
 export const PersonalConfigurationForm = (): JSX.Element=> {
     return (
-        <Text>
-            Personal Configuration Form
-        </Text>
+        <View style={styles.container}>
+            <StandardOutlinedInput 
+                placeholder="Nombre de usuario"
+                onChangeCallback={
+                    ()=>{
+                        console.log("holix")
+                    }
+                }
+            />
+            {/* <StandardOutlinedInput 
+                placeholder="Email"
+                onChangeCallback={
+                    ()=>{
+                        console.log("holix")
+                    }
+                }
+            /> */}
+        </View>
     )
 }

@@ -28,37 +28,45 @@ const styles =  StyleSheet.create(
             paddingVertical:16
         },
         rightButtonContainer: {
-          flex:1,
+          display: "flex",
           flexDirection: "row",
           justifyContent: "flex-end"
         },
         leftButtonContainer: {
-            flex:1,
+            display:"flex",
             flexDirection: "row",
 
         },
-        centerTitleContainer: {
+        centerheaderContainer: {
             flex:2,
             flexDirection: "row",
             justifyContent: "center"
         },
         titleFontStyles: {
-            fontSize:16,
-            fontWeight: "700",
+            fontSize:30,
+            fontWeight: "300",
             color:colors.seconday_text,
-            textAlign:"center"
+        },
+        buttonTextCancel: {
+            fontSize:16,
+            fontWeight: "500",
+            color:colors.seconday_text + 90,
         },
         buttonText: {
             fontSize:16,
-            fontWeight: "300",
+            fontWeight: "500",
             color:colors.principal,
         },
         bodyContainer: {
-            paddingTop:16
+            flex:1,
+            marginTop:16
+        },
+        titleContainer: {
+            display: "flex",
+            width: "100%"
         }
     }
 )
-
 
 export const ModalForm = ():JSX.Element=> {
 
@@ -71,17 +79,17 @@ export const ModalForm = ():JSX.Element=> {
                     <View style={styles.headerContainer}>
                         <View style={styles.leftButtonContainer}>
                             <IconButton onPress={toggleModal}>
-                                <Text style={styles.buttonText}>
+                                <Text style={styles.buttonTextCancel}>
                                     Cancelar
                                 </Text>
                             </IconButton>
                         </View>
-                        <View style={styles.centerTitleContainer}>
-                            <Text style={styles.titleFontStyles}>
+                        <View style={styles.centerheaderContainer}>
+                            {/* <Text style={styles.titleFontStyles}>
                                 {
                                     title
                                 }
-                            </Text>
+                            </Text> */}
                         </View>
                         <View style={styles.rightButtonContainer}>
                             <IconButton onPress={toggleModal}>
@@ -90,6 +98,13 @@ export const ModalForm = ():JSX.Element=> {
                                 </Text>
                             </IconButton>
                         </View>
+                    </View>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.titleFontStyles}> 
+                            {
+                                title
+                            }
+                        </Text>
                     </View>
                     <View style={styles.bodyContainer}>
                         {
