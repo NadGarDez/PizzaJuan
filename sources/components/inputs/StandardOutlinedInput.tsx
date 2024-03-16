@@ -245,6 +245,7 @@ export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCal
 
     const onChange = (e:NativeSyntheticEvent<TextInputChangeEventData>)=> {
         const inputValue = e.nativeEvent.text;
+        onChangeCallback(inputValue);
         dispatch(
             {
                 actionType:actionTypes.change,

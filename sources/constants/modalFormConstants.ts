@@ -4,20 +4,4 @@ export enum ModalFormNames {
     PAYMENT_CONFIGURATION = "PAYMENT_CONFIGURATION"
 }
 
-
-
 export type valueOfModalFormNames<T> = T[keyof T]
-
-type modalFormNamesType = {
-    [key in ModalFormNames]:string
-}
-
-const FIRST_NAME = "PERSONAL_CONFIGURATION";
-const SECOND_NAME = "DELIVERY_CONFIGURATION";
-const THIRD_NAME = "PAYMENT_CONFIGURATION";
-
-const ModalFormNames2:modalFormNamesType = {
-    PERSONAL_CONFIGURATION:FIRST_NAME,
-    DELIVERY_CONFIGURATION:SECOND_NAME,
-    PAYMENT_CONFIGURATION:THIRD_NAME
-}
