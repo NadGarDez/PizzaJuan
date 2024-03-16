@@ -1,5 +1,5 @@
 import React from "react";
-import { GestureResponderEvent, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useFormik } from "formik";
 import { personalConfigurationSchemaType, personalConfigurationMetadata, personalConfigurationSchema } from "../../constants/formConstants";
 import { colors } from "../../styles/colors";
@@ -14,9 +14,9 @@ const styles = StyleSheet.create({
         width:'100%'
     },
     titleInputStyles: {
-        fontSize:12,
-        fontWeight: "300",
-        color:colors.seconday_text,
+        fontSize:14,
+        fontWeight: "400",
+        color:colors.principal,
     },
     titleContainer: {
         marginBottom:4

@@ -5,6 +5,8 @@ import { IconButton } from "../buttons/IconButton"
 import Modal from "react-native-modal";
 import { ModalContext } from "../../context/modalFormContext";
 import { modalSwitch, modalSwitchType } from "../../utils/modalContentSelector";
+import { ScrollView } from "react-native-gesture-handler";
+import { FormImageHeader } from "../surfaces/FormImageHeader";
 
 const styles =  StyleSheet.create(
     {
@@ -62,6 +64,7 @@ const styles =  StyleSheet.create(
             marginTop:16
         },
         titleContainer: {
+            marginTop:16,
             display: "flex",
             width: "100%"
         }
@@ -99,18 +102,24 @@ export const ModalForm = ():JSX.Element=> {
                             </IconButton>
                         </View>
                     </View>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.titleFontStyles}> 
-                            {
-                                title
-                            }
-                        </Text>
+                    <FormImageHeader form={formKey}/>
+                    <View style={{flex:1}}>
+                        <ScrollView>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.titleFontStyles}> 
+                                    {
+                                        title
+                                    }
+                                </Text>
+                            </View>
+                            <View style={styles.bodyContainer}>
+                                {
+                                    modalSwitch[formKey as keyof modalSwitchType]({})
+                                }
+                            </View>
+                        </ScrollView>
                     </View>
-                    <View style={styles.bodyContainer}>
-                        {
-                            modalSwitch[formKey as keyof modalSwitchType]({})
-                        }
-                    </View>
+                    
                 </View>
             </View>
         </Modal>

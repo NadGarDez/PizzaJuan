@@ -1,18 +1,15 @@
 import React from "react"
-import { StyleSheet, Text, View, Image } from "react-native"
-import { useAppSelector } from "../../redux/hooks"
-import { sessionObjectSelector } from "../../redux/SessionReducer"
-import { AFTERNOON_GREATING, PLATFORM_TITLE, SLOGAN } from "../../constants/strings"
+import { StyleSheet, View, Image } from "react-native"
 import { colors } from "../../styles/colors"
-import LinearGradient from "react-native-linear-gradient"
+import { ModalFormNames } from "../../constants/userConfigurationConstants"
 
 
 const styles = StyleSheet.create(
     {
         container: {
-            marginHorizontal:16,
             borderRadius:10,
             height:140,
+            width: '100%'
         },
 
         textContainer: {
@@ -44,7 +41,6 @@ const styles = StyleSheet.create(
             position:"absolute",
             height:"100%",
             top:0,
-            backgroundColor:"red",
             zIndex:-1,
             borderRadius:10,
             overflow: "hidden"
@@ -56,8 +52,22 @@ const styles = StyleSheet.create(
     }
 )
 
-export const TitleStoreText = ():JSX.Element=> {
-    const {givenName, } = useAppSelector(sessionObjectSelector)
+type props = {
+    form:string
+}
+
+type selector = {
+    [key in ModalFormNames] : string
+}
+
+const imageselector:selector = {
+    PERSONAL_CONFIGURATION: 'https://www.lukkap.com/wp-content/uploads/2023/08/sistemas-de-voz.jpeg',
+    DELIVERY_CONFIGURATION: 'https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2023/08/calibrar-google-maps-3120262.jpg',
+    PAYMENT_CONFIGURATION: 'https://dataexport.com.gt/wp-content/uploads/2022/10/pagos-en-linea.jpg'
+}
+
+export const FormImageHeader = ({form}:props):JSX.Element=> {
+
     return (
         <>
     
@@ -66,24 +76,10 @@ export const TitleStoreText = ():JSX.Element=> {
            >
                     <View style={styles.imageContainer}>
                         <Image 
-                            source={{uri:"https://imagenes.20minutos.es/files/image_1920_1080/uploads/imagenes/2022/08/08/fotografia-de-una-pizza.jpeg"}}
+                            source={{uri:imageselector[form as ModalFormNames]}}
                             style={styles.imageStyles}
                         />
                     </View>
-                    
-                    <LinearGradient style={styles.textContainer}
-                        colors={[colors.principal, "#00000000"]} 
-                        start={{x: 0.2, y: 0.5}}
-                        end={{x: 1, y: 1}}
-                    >
-                        <Text style={styles.platformTitleText}>
-                            {`${PLATFORM_TITLE}!`}
-                        </Text>
-                        <Text style={styles.sloganText}>
-                            {`Disfruta de la ${"\n"}mejor pizza sin salir de casa`}
-                        </Text>
-                    </LinearGradient>
-            
             </View>
         </>
         
