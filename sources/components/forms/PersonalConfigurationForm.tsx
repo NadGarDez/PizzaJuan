@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, GestureResponderEvent, StyleSheet, Text, TextInput, View } from "react-native";
-import { StandardOutlinedInput } from "../inputs/StandardOutlinedInput";
-import { Form, Formik, useFormik } from "formik";
-import { personalConfigurationSchemaType, personalConfigurationMetadata, personalConfigurationSchema } from "../../constants/yupSchemas";
+import { GestureResponderEvent, StyleSheet, Text, View } from "react-native";
+import { useFormik } from "formik";
+import { personalConfigurationSchemaType, personalConfigurationMetadata, personalConfigurationSchema } from "../../constants/formConstants";
 import { colors } from "../../styles/colors";
+import { inputSelector } from "../../utils/inputSelector";
 
 const styles = StyleSheet.create({
     container: {
@@ -23,8 +23,6 @@ const styles = StyleSheet.create({
     }
 })
 
-
-type onPressType = (e?: GestureResponderEvent) => void;
 const defaultValue : personalConfigurationSchemaType = {
     name: '',
     lastName: '',
@@ -46,35 +44,32 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
         },
     );
 
-    console.log(values);
-
     return (
         <View style={styles.container}>
-            {
-                Object.keys(defaultValue).map(
-                    (item, index) => {
-                        const {placeholder = '', inputType, name} = personalConfigurationMetadata[item as keyof personalConfigurationSchemaType];
-                        return (
-                            <View style={styles.inputContainer} key={`input-${item}-${index}`}>
-                                <View style={styles.titleContainer}>
-                                    <Text style={styles.titleInputStyles}>
-                                        {name}
-                                    </Text>
-                                </View>
-
-                                <StandardOutlinedInput 
-                                    placeholder={placeholder}
-                                    onChangeCallback={
-                                        (text:string)=> {
-                                            setFieldValue(item, text);
-                                        }
+                {
+                    Object.keys(defaultValue).map(
+                        (item, index) => {
+                            const {placeholder = '', inputType, name} = personalConfigurationMetadata[item as keyof personalConfigurationSchemaType];
+                            return (
+                                <View style={styles.inputContainer} key={`input-${item}-${index}`}>
+                                    <View style={styles.titleContainer}>
+                                        <Text style={styles.titleInputStyles}>
+                                            {name}
+                                        </Text>
+                                    </View>
+                                    {
+                                        inputSelector[inputType]({
+                                            placeholder,
+                                            onChangeCallback:(text:string)=> {
+                                                setFieldValue(item, text);
+                                            }
+                                        })
                                     }
-                                />
-                            </View>
-                        )
-                    }
-                )
-            }
+                                </View>
+                            )
+                        }
+                    )
+                }
         </View>
     )
 }

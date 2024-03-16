@@ -1,5 +1,11 @@
 import { object, string, number, date, InferType } from 'yup';
 
+export enum inputTypes {
+    TEXT='TEXT',
+    SELECT='SELECT',
+    DATE='DATE',
+    LOCATION='LOCATION'
+}
 
 type genre = 'male' | 'female' | 'other' ;
 
@@ -19,7 +25,7 @@ export type personalConfigurationSchemaType = InferType<typeof personalConfigura
 type personalConfigurationSchemaTranslationsValues = {
     name:string,
     placeholder?:string,
-    inputType:string
+    inputType: inputTypes
 };
 
 type personalConfigurationSchemaTranslationsType = Record<keyof personalConfigurationSchemaType, personalConfigurationSchemaTranslationsValues>;
@@ -28,29 +34,29 @@ export const personalConfigurationMetadata:personalConfigurationSchemaTranslatio
     name: {
         name: 'Nombres',
         placeholder: 'Agrega tus nombres. Ej. Pedro Julian.',
-        inputType:'text'
+        inputType:inputTypes.TEXT
     },
     lastName: {
         name: 'Apellidos',
         placeholder: 'Agrega tus apellidos. Ej. Perez Lopez.',
-        inputType:'text',
+        inputType:inputTypes.TEXT,
     },
     email: {
         name: 'Correo Electronico',
         placeholder: 'Agrega tu correo electronico. Ej. nombre@server.com.',
-        inputType:'text'
+        inputType:inputTypes.TEXT
     },
     birthDate: { 
         name: 'Agrega tu Fecha de nacimiento',
-        inputType:'text'// should be a date input
+        inputType:inputTypes.TEXT
     },
     ci: {
         name: 'Cedula de Identidad / Numero de pasaporte',
         placeholder: 'Agrega tu numero de documento. Ej. V123456789.',
-        inputType:'text'
+        inputType:inputTypes.TEXT
     },
     genre: { 
         name: 'Genero',
-        inputType:'text' // should be a select item 
+        inputType:inputTypes.TEXT
     }
 }
