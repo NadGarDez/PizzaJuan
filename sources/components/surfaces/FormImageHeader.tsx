@@ -19,7 +19,6 @@ const styles = StyleSheet.create(
             flexDirection:"column",
             justifyContent:"center",
             borderRadius:10,
-
         },
        
         afterNameText: {
@@ -70,10 +69,9 @@ export const FormImageHeader = ({form}:props):JSX.Element=> {
 
     return (
         <>
-    
-           <View 
+            <View 
                 style={styles.container}
-           >
+            >
                     <View style={styles.imageContainer}>
                         <Image 
                             source={{uri:imageselector[form as ModalFormNames]}}

@@ -44,6 +44,8 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
         },
     );
 
+    console.log(values);
+
     return (
         <View style={styles.container}>
                 {
@@ -62,7 +64,8 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
                                             placeholder,
                                             onChangeCallback:(text:string)=> {
                                                 setFieldValue(item, text);
-                                            }
+                                            },
+                                            inputName:name
                                         })
                                     }
                                 </View>

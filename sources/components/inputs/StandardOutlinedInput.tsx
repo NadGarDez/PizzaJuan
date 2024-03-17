@@ -2,6 +2,8 @@ import React, { Reducer, useEffect, useReducer } from "react";
 import { NativeSyntheticEvent, StyleSheet, TextInput, TextInputChangeEventData, View, Text } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
+import { basicInputState, defaultInputActionTypes, defaultInputStates, inputAction } from "../../constants/inputConstants";
+import { getErrorStrings, shouldRenderError } from "../../utils/inputUtils";
 
 const styles = StyleSheet.create({
     generalContainer: {
@@ -43,124 +45,83 @@ const styles = StyleSheet.create({
         borderColor:"red",
         ...shadows.principalShadow
     },
-})
+});
 
-// types and enums
-
-enum actionTypes {
-    initialization,
-    activate,
-    change, 
-    fail,
-    neutralize
-}
-
-enum inputStatus {
-    initialCreation ,
-    initialEdition,
-    active, 
-    changing,
-    error,
-    neutral
-}
-
-type state = {
-    inputStatus:inputStatus,
-    inputValue:string,
-    error:string[] | string,
-}
+// local types
 
 type payloadType = {
-    currentFormValue?:string,
+    value?:string,
     error?: string | string[]
 }
 
-type formAction = {
-    actionType: actionTypes,
-    payload: null | payloadType
-}
+type formAction = inputAction<payloadType>;
 
 type props = {
     placeholder:string,
     initialValue?:string,
     onChangeCallback:(text:string)=>void,
+    inputName:string
 }
 
 //default form value
 
-const defaultValue:state = {
-    inputStatus:inputStatus.initialCreation,
-    inputValue:"",
-    error: ""
+const defaultValue:basicInputState = {
+    machineState:defaultInputStates.neutral,
+    value:'',
+    error: ''
 }
 
 // form reducer
 
-const formReducer: Reducer<state,formAction> = (state, action)=> {
+const formReducer: Reducer<basicInputState,formAction> = (state, action)=> {
 
-    const {actionType, payload } = action;
+    const {type, payload } = action;
 
     let newState = {...state};
 
     if (payload ==  null ) return  newState;
 
-    switch (actionType) {
-
-        case actionTypes.initialization : 
-            const inputValue = !!payload.currentFormValue ? payload.currentFormValue : "";
-            newState =  {
+    switch (type) {
+        case defaultInputActionTypes.neutralize : {
+            return {
                 ...state,
-                inputStatus: inputStatus.initialEdition,
-                inputValue: inputValue,
-            }
-            break;
-
-        case actionTypes.activate :
-            newState = {
+                machineState:defaultInputStates.neutral
+            };;
+        }
+        case defaultInputActionTypes.activating : {
+            return {
                 ...state,
-                inputStatus:inputStatus.active,
-                error:""
+                machineState:defaultInputStates.active
             };
-            break;
-
-        case actionTypes.change :
-            const {currentFormValue = ""} = payload;
-            newState =  {
+        }
+        case defaultInputActionTypes.changing : {
+            const {value = ''} =  payload;
+            return {
                 ...state,
-                inputStatus:inputStatus.changing,
-                inputValue:currentFormValue
+                value,
+                machineState: defaultInputStates.change
             }
-            break;
-
-        case actionTypes.fail : 
+        }
+        case defaultInputActionTypes.failing : {
             const {error = ""} = payload;
-            newState = {
+            return {
                 ...state,
-                inputStatus:inputStatus.error,
-                error:error
+                error
             }
-            break;
-            
-        case actionTypes.neutralize :
-            newState = {
-                ...state,
-                inputStatus:inputStatus.neutral
-            };
-            break;
+        }
+        default: 
+            return state
     }
-
-    return newState;
-
 }
 
-const getContainerStyles = (state:state)=> {
-    if(state.inputStatus  === inputStatus.active || state.inputStatus  === inputStatus.changing ){
+const getContainerStyles = (state:basicInputState)=> {
+    if( state.machineState === defaultInputStates.active || state.machineState  === defaultInputStates.change ){
         return {
             ...styles.container,
             ...styles.activeBorderStyles
         };
     }
-    else if (state.inputStatus  === inputStatus.error) {
+    else if (state.machineState  === defaultInputStates.fail) {
         return {
             ...styles.container,
             ...styles.errorBorderStyles
@@ -171,74 +132,19 @@ const getContainerStyles = (state:state)=> {
         ...styles.neutralBorderStyles
     };
 };
-
-const getErrorStrings = (state:state) => {
-    const {error = ""} = state;
-
-    if(Array.isArray(error)){
-        return error;
-    } 
-    else {
-        return [error]
-    }
-}
-
-const shouldRenderError = (state:state):boolean=> {
-    const {error = ""} = state;
-    return (Array.isArray(error) || error.length > 0)
-}   
+ 
 
 // simulation 
 
-const validate = (value:string)=> (value.length > 10);
+export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCallback, inputName}:props) => {
 
-
-export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCallback}:props) => {
-
-    const [state, dispatch] = useReducer(formReducer, defaultValue);
+    const [state, dispatch] = useReducer(formReducer, {...defaultValue, value:initialValue});
 
     const containerStyles = getContainerStyles(state);
 
-    useEffect(
-        ()=> {
-            if(initialValue.length > 0) dispatch(
-                {
-                    actionType:actionTypes.initialization,
-                    payload: {}
-                }
-            );
-        },
-        [initialValue]
-    );
-
-    // simulate error
-    useEffect(
-        ()=> {
-            if(initialValue!== state.inputValue){ // provitional
-                if(validate(state.inputValue)) dispatch({
-                    actionType:actionTypes.fail,
-                    payload:{
-                        error:[
-                            "El nombre tiene mas de diez caracterez",
-                            "El culo ya no le aprieta",
-                            "Tu marido te monta cacho"
-                        ]
-                    }
-                }) 
-                else {
-                    dispatch({
-                        actionType:actionTypes.activate,
-                        payload:{}
-                    }) 
-                }
-            }
-        },
-        [state.inputValue, initialValue]
-    )
-
     const onFocusCallback = ()=> {
         dispatch({
-            actionType:actionTypes.activate,
+            type:defaultInputActionTypes.activating,
             payload:{}
         })
     }
@@ -248,9 +154,9 @@ export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCal
         onChangeCallback(inputValue);
         dispatch(
             {
-                actionType:actionTypes.change,
+                type:defaultInputActionTypes.changing,
                 payload: {
-                    currentFormValue:inputValue
+                    value:inputValue
                 }
             }
         )
@@ -259,12 +165,11 @@ export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCal
     const onBlur = ()=> {
         dispatch(
             {
-                actionType:actionTypes.neutralize,
+                type:defaultInputActionTypes.neutralize,
                 payload: {}
             }
         )
     }
-
 
     return (
         <View style={styles.generalContainer}>
@@ -275,15 +180,16 @@ export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCal
                     onFocus={onFocusCallback}
                     onChange={onChange}
                     onBlur={onBlur}
-                    value={state.inputValue}
+                    value={state.value}
                     autoFocus={false}
+                    placeholderTextColor={colors.seconday_text + 80} 
                 />
             </View>
             {
                 !!shouldRenderError(state) ? 
                     getErrorStrings(state).map(
-                        item => (
-                            <View style={styles.textContainer}>
+                        (item, index) => (
+                            <View style={styles.textContainer} key={`error-${index}-input-${inputName}`}>
 
                                 <Text style={styles.textStyles}>
                                     {item}

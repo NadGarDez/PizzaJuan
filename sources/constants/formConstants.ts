@@ -47,8 +47,9 @@ export const personalConfigurationMetadata:personalConfigurationSchemaTranslatio
         inputType:inputTypes.TEXT
     },
     birthDate: { 
-        name: 'Agrega tu Fecha de nacimiento',
-        inputType:inputTypes.TEXT
+        name: 'Fecha de nacimiento',
+        placeholder:'Agrega tu fecha de nacimiento',
+        inputType:inputTypes.DATE
     },
     ci: {
         name: 'Cedula de Identidad / Numero de pasaporte',
