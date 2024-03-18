@@ -2,9 +2,9 @@ import React, { Reducer, useReducer } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
+import RNPickerSelect from 'react-native-picker-select';
 import { basicInputState, defaultInputActionTypes, defaultInputStates, inputAction } from "../../constants/inputConstants";
-import DatePicker from "react-native-date-picker";
-import { getErrorStrings, shouldRenderError } from "../../utils/inputUtils";
+import { genre } from "../../constants/formConstants";
 
 // types 
 type localActionPayloadType = {
@@ -21,50 +21,51 @@ type props = {
     inputName:string
 }
 
-// constants
-const styles = StyleSheet.create({
-    generalContainer: {
-        display: "flex",
-        flexDirection:"column",
-        marginBottom:8
-    },
-    dateContainer: {
-        width:"100%",
-        paddingHorizontal:8,
-        height:40,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        borderRadius:5,
-        borderStyle: "solid",
-        borderWidth:1
-    },
-    neutralBorderStyles: {
-        borderColor: colors.seconday_text + 90,
-    },
-    activeBorderStyles: {
-        borderColor:colors.principal,
-        ...shadows.principalShadow
-    },
-    errorBorderStyles: {
-        borderColor:"red",
-        ...shadows.principalShadow
-    },
-    placeholderTextStyles: {
-        color:colors.seconday_text + 80
-    },
-    valueStyles: {
+const styles = StyleSheet.create(
+   {
+        generalContainer: {
+            display: "flex",
+            flexDirection:"column",
+            marginBottom:8
+        },
+        selectContainer: {
+            width:"100%",
+            paddingHorizontal:8,
+            height:40,
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            borderRadius:5,
+            borderStyle: "solid",
+            borderWidth:1
+        },
+        neutralBorderStyles: {
+            borderColor: colors.seconday_text + 90,
+        },
+        activeBorderStyles: {
+            borderColor:colors.principal,
+            ...shadows.principalShadow
+        },
+        errorBorderStyles: {
+            borderColor:"red",
+            ...shadows.principalShadow
+        },
+        placeholderTextStyles: {
+            color:colors.seconday_text + 80
+        },
+        valueStyles: {
 
-    },
-    textContainer: {
-        marginTop:4,
-    },
-    textStyles: {
-        fontSize:12,
-        fontWeight: "200",
-        color:"red",
-    },
-});
+        },
+        textContainer: {
+            marginTop:4,
+        },
+        textStyles: {
+            fontSize:12,
+            fontWeight: "200",
+            color:"red",
+        },
+   }
+);
 
 const initialState:basicInputState = {
     machineState: defaultInputStates.neutral,
@@ -72,8 +73,25 @@ const initialState:basicInputState = {
     error:''
 };
 
+type selectItemsType = {
+   value: genre,
+   label:string
+}
 
-//util functions 
+const selectItems:selectItemsType[] = [
+    {
+        value:'male',
+        label:'Masculino'
+    },
+    {
+        value:'female',
+        label:'Femenino'
+    },
+    {
+        value:'other',
+        label: 'Otre'
+    }
+]
 
 const reducer: Reducer<basicInputState,actionObjectType> = (state, action)=> {
     const {type, payload} = action;
@@ -109,35 +127,32 @@ const reducer: Reducer<basicInputState,actionObjectType> = (state, action)=> {
 const getContainerStyles = (state:basicInputState)=> {
     if(state.machineState  === defaultInputStates.active || state.machineState  === defaultInputStates.change ){
         return {
-            ...styles.dateContainer,
+            ...styles.selectContainer,
             ...styles.activeBorderStyles
         };
     }
     else if (state.machineState  === defaultInputStates.fail) {
         return {
-            ...styles.dateContainer,
+            ...styles.selectContainer,
             ...styles.errorBorderStyles
         };
     }
     return {
-        ...styles.dateContainer,
+        ...styles.selectContainer,
         ...styles.neutralBorderStyles
     };
-};
+}
 
-const getDateFromString = (string:string) => string.length < 1 ? new Date() : new Date(string);
-
-export const StandardOutlinedDatePicker = (props:props):JSX.Element=> {
+export const StandardOutlinedSelectInput = (props:props):JSX.Element=> {
 
     const {placeholder, onChangeCallback, initialValue = '', inputName, } = props;
 
     const [state, dispatch] = useReducer(reducer,{...initialState, value:initialValue });
 
-    const {value, machineState } = state;
-
     const activate = ()=> dispatch({
         type:defaultInputActionTypes.activating,
     });
+
     const neutralize = ()=> dispatch({
         type:defaultInputActionTypes.neutralize
     });
@@ -149,8 +164,7 @@ export const StandardOutlinedDatePicker = (props:props):JSX.Element=> {
         }
     });
 
-    const manageDate = (date:Date)=> {
-        const value = date.toISOString().split('T')[0];
+    const manageOnChange = (value:any)=> {
         change(value);
         onChangeCallback(value);
         neutralize();
@@ -159,50 +173,32 @@ export const StandardOutlinedDatePicker = (props:props):JSX.Element=> {
     return (
         <View style={styles.generalContainer}>
             <Pressable
-                onPress={
-                    activate
-                }
+                onPress={activate}
             >
                 <View 
                     style={
                         getContainerStyles(state)
                     }
                 >
-                    {
-                        state.value === '' ? (
-                            <Text style={styles.placeholderTextStyles}>{placeholder}</Text>
-                        ): (
-                            <Text style={styles.valueStyles}>{state.value}</Text>
-                        )
-                    }
-                   
+                    <RNPickerSelect
+                        placeholder={{
+                            label:placeholder
+                        }}
+                        style={
+                            {
+                                inputIOS: {
+                                    fontSize: 14,
+                                    height:40,
+                                    width:400,
+                                    color: colors.seconday_text + 80
+                                  },
+                            }
+                        }
+                        onValueChange={manageOnChange}
+                        items={selectItems}
+                    />
                 </View>
             </Pressable>
-            {
-                !!shouldRenderError(state) ? 
-                    getErrorStrings(state).map(
-                        (item, index) => (
-                            <View style={styles.textContainer} key={`error-${index}-input-${inputName}`}>
-
-                                <Text style={styles.textStyles}>
-                                    {item}
-                                </Text>
-                            </View>
-
-                        )
-                    ):null
-            }
-            <DatePicker 
-                title={inputName}
-                mode="date"
-                androidVariant="iosClone"
-                modal
-                open={machineState === defaultInputStates.active}
-                date={getDateFromString(value)}
-                onConfirm={manageDate}
-                onCancel={neutralize}
-            
-            />
         </View>
     )
 }

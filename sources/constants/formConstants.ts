@@ -7,7 +7,7 @@ export enum inputTypes {
     LOCATION='LOCATION'
 }
 
-type genre = 'male' | 'female' | 'other' ;
+export type genre = 'male' | 'female' | 'other' ;
 
 export const personalConfigurationSchema = object(
     {
@@ -58,6 +58,7 @@ export const personalConfigurationMetadata:personalConfigurationSchemaTranslatio
     },
     genre: { 
         name: 'Genero',
-        inputType:inputTypes.TEXT
+        placeholder: 'Agrega tu genero.',
+        inputType:inputTypes.SELECT
     }
 }
