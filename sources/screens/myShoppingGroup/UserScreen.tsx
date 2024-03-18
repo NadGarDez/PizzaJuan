@@ -20,15 +20,17 @@ const styles = StyleSheet.create(
 export const UserScreen = ():JSX.Element=>{
 
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const [modalObject, setModalObject] = useState<configurationItem>(defaultConfigurationSectionValue)
+    const [modalObject, setModalObject] = useState<configurationItem>(defaultConfigurationSectionValue);
+    const [validForm, setValidForm] = useState(false);
 
     const toggleModal =()=> setModalVisible(!modalVisible);
     const setFormType = (item:configurationItem)=>setModalObject(item)
+    const setValidFormValue = (value:boolean)=>setValidForm(value);
     const dispatch = useAppDispatch()
     
     return (
         <>
-            <ModalContext.Provider value={{visible:modalVisible, modalObject, toggleModal, setFormType}}>
+            <ModalContext.Provider value={{visible:modalVisible, modalObject, toggleModal, setFormType, validForm, setValidFormValue}}>
                 <View style={styles.container}>
                     <TransformedSquareWithoutRotation />
                     <UserInformationContainer />

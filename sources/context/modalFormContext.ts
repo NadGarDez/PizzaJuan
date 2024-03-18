@@ -10,13 +10,17 @@ type context = {
     visible:boolean,
     toggleModal:()=>void,
     setFormType:(item:configurationItem)=>void,
-    modalObject:configurationItem
+    setValidFormValue:(value:boolean)=>void,
+    modalObject:configurationItem,
+    validForm:boolean
 }
 
 const defaultModalValue = {
     visible:false,
     toggleModal:()=>{},
     setFormType:(item:configurationItem)=>{},
-    modalObject:defaultConfigurationSectionValue
+    setValidFormValue:(value:boolean)=>{},
+    modalObject:defaultConfigurationSectionValue,
+    validForm:false
 }
 export const ModalContext = createContext<context>(defaultModalValue);

@@ -73,7 +73,16 @@ const styles =  StyleSheet.create(
 
 export const ModalForm = ():JSX.Element=> {
 
-    const {toggleModal, visible, modalObject:{title, formKey }} = useContext(ModalContext);
+    const {toggleModal, validForm, visible, modalObject:{title, formKey }} = useContext(ModalContext);
+
+    const manageSave = ()=> {
+        if(validForm){
+            // do something
+        }
+        else {
+            // alert 
+        }
+    }
 
     return (
         <Modal isVisible={visible} style={{padding:0}} animationInTiming={400} animationOutTiming={400}>
@@ -95,8 +104,10 @@ export const ModalForm = ():JSX.Element=> {
                             </Text> */}
                         </View>
                         <View style={styles.rightButtonContainer}>
-                            <IconButton onPress={toggleModal}>
-                                <Text style={styles.buttonText}>
+                            <IconButton onPress={manageSave}>
+                                <Text 
+                                    style={validForm ? styles.buttonText : styles.buttonTextCancel }
+                                >
                                     Guardar
                                 </Text>
                             </IconButton>

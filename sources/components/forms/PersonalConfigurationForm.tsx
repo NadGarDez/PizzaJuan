@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useFormik } from "formik";
 import { personalConfigurationSchemaType, personalConfigurationMetadata, personalConfigurationSchema } from "../../constants/formConstants";
 import { colors } from "../../styles/colors";
 import { inputSelector } from "../../utils/inputSelector";
+import { ModalContext } from "../../context/modalFormContext";
 
 const styles = StyleSheet.create({
     container: {
@@ -34,6 +35,8 @@ const defaultValue : personalConfigurationSchemaType = {
 
 export const PersonalConfigurationForm = (): JSX.Element=> {
 
+    const {setValidFormValue} = useContext(ModalContext);
+
     const {values, setFieldValue, handleSubmit, errors} = useFormik(
         {
             initialValues: defaultValue,
@@ -44,7 +47,14 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
         },
     );
 
-    console.log(values);
+    
+    useEffect(
+        ()=> {
+            const errorKeys = Object.keys(errors);
+            setValidFormValue(errorKeys.length === 0);
+        },
+        [errors]
+    )
 
     return (
         <View style={styles.container}>
