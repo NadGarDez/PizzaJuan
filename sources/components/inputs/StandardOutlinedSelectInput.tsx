@@ -191,7 +191,13 @@ export const StandardOutlinedSelectInput = (props:props):JSX.Element=> {
                                     height:40,
                                     width:400,
                                     color: colors.seconday_text + 80
-                                  },
+                                },
+                                inputAndroid: {
+                                    fontSize: 14,
+                                    height:40,
+                                    width:400,
+                                    color: colors.seconday_text + 80
+                                }
                             }
                         }
                         onValueChange={manageOnChange}
