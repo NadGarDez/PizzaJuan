@@ -1,7 +1,8 @@
-import React, { Reducer, useReducer } from "react";
+import React, { Reducer, RefObject, useEffect, useReducer, useRef } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import RNPickerSelect from 'react-native-picker-select';
+import {Picker} from '@react-native-picker/picker';
 import { basicInputState, defaultInputActionTypes, defaultInputStates, inputAction } from "../../constants/inputConstants";
 import { genre } from "../../constants/formConstants";
 
@@ -30,7 +31,6 @@ const styles = StyleSheet.create(
         selectContainer: {
             width:"100%",
             paddingHorizontal:8,
-            height:40,
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
@@ -181,6 +181,7 @@ export const StandardOutlinedSelectInput = (props:props):JSX.Element=> {
                         placeholder={{
                             label:placeholder
                         }}
+                        useNativeAndroidPickerStyle={false}
                         style={
                             {
                                 inputIOS: {
@@ -190,18 +191,18 @@ export const StandardOutlinedSelectInput = (props:props):JSX.Element=> {
                                     color: colors.seconday_text + 80
                                 },
                                 inputAndroid: {
-                                    fontSize: 14,
-                                    padding:0,
-                                    height:20,
-                                    width:400,
-                                    color: colors.seconday_text + 80,
-                                    backgroundColor:'red'
+                                    paddingVertical: 8,
+                                    height:40,
+                                    width:400
+                                },
+                                placeholder: {
+                                    color:colors.seconday_text + 80
                                 }
                             }
                         }
                         onValueChange={manageOnChange}
                         items={selectItems}
-                    />
+                    /> 
                 </View>
             </Pressable>
         </View>
