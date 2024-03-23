@@ -1,7 +1,6 @@
 import React, { Reducer, useEffect, useReducer } from "react";
 import { NativeSyntheticEvent, StyleSheet, TextInput, TextInputChangeEventData, View, Text } from "react-native";
 import { colors } from "../../styles/colors";
-import { shadows } from "../../styles/shadow";
 import { basicInputState, defaultInputActionTypes, defaultInputStates, inputAction } from "../../constants/inputConstants";
 import { getErrorStrings, shouldRenderError } from "../../utils/inputUtils";
 
@@ -35,15 +34,14 @@ const styles = StyleSheet.create({
     },
     textInput: {
         width: "100%",
-        height:"100%"
+        height:"100%",
+        color: colors.seconday_text,
     },
     activeBorderStyles: {
         borderColor:colors.principal,
-        ...shadows.principalShadow
     },
     errorBorderStyles: {
         borderColor:"red",
-        ...shadows.principalShadow
     },
 });
 

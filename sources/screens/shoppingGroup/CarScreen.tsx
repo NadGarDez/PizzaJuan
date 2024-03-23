@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Platform, StyleSheet, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { CarStackProp } from "../../navigation/Stacks/CarStack"

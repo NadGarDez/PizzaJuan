@@ -21,7 +21,7 @@ export const UserScreen = ():JSX.Element=>{
 
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [modalObject, setModalObject] = useState<configurationItem>(defaultConfigurationSectionValue);
-    const [validForm, setValidForm] = useState(false);
+    const [validForm, setValidForm] = useState(true);
 
     const toggleModal =()=> setModalVisible(!modalVisible);
     const setFormType = (item:configurationItem)=>setModalObject(item)
