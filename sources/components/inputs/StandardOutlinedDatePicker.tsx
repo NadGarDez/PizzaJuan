@@ -1,7 +1,6 @@
 import React, { Reducer, useReducer } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
-import { shadows } from "../../styles/shadow";
 import { basicInputState, defaultInputActionTypes, defaultInputStates, inputAction } from "../../constants/inputConstants";
 import DatePicker from "react-native-date-picker";
 import { getErrorStrings, shouldRenderError } from "../../utils/inputUtils";
@@ -44,11 +43,9 @@ const styles = StyleSheet.create({
     },
     activeBorderStyles: {
         borderColor:colors.principal,
-        ...shadows.principalShadow
     },
     errorBorderStyles: {
         borderColor:"red",
-        ...shadows.principalShadow
     },
     placeholderTextStyles: {
         color:colors.seconday_text + 80

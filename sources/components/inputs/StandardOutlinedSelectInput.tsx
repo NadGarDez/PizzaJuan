@@ -1,7 +1,6 @@
 import React, { Reducer, useReducer } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
-import { shadows } from "../../styles/shadow";
 import RNPickerSelect from 'react-native-picker-select';
 import { basicInputState, defaultInputActionTypes, defaultInputStates, inputAction } from "../../constants/inputConstants";
 import { genre } from "../../constants/formConstants";
@@ -37,18 +36,16 @@ const styles = StyleSheet.create(
             alignItems: "center",
             borderRadius:5,
             borderStyle: "solid",
-            borderWidth:1
+            borderWidth:1,
         },
         neutralBorderStyles: {
             borderColor: colors.seconday_text + 90,
         },
         activeBorderStyles: {
             borderColor:colors.principal,
-            ...shadows.principalShadow
         },
         errorBorderStyles: {
             borderColor:"red",
-            ...shadows.principalShadow
         },
         placeholderTextStyles: {
             color:colors.seconday_text + 80
@@ -194,9 +191,11 @@ export const StandardOutlinedSelectInput = (props:props):JSX.Element=> {
                                 },
                                 inputAndroid: {
                                     fontSize: 14,
-                                    height:40,
+                                    padding:0,
+                                    height:20,
                                     width:400,
-                                    color: colors.seconday_text + 80
+                                    color: colors.seconday_text + 80,
+                                    backgroundColor:'red'
                                 }
                             }
                         }
