@@ -1,8 +1,10 @@
 import React from "react"
-import { StyleSheet, View, Image } from "react-native"
+import { StyleSheet, View, Image, ImageRequireSource } from "react-native"
 import { colors } from "../../styles/colors"
 import { ModalFormNames } from "../../constants/userConfigurationConstants"
-
+import imagePersonalConfiguration from "../../../static/images/personalInformationFormImage.jpeg";
+import imageDeliveryConfiguration from "../../../static/images/locaitonFormImage.jpg";
+import imagePaymentConfiguration from "../../../static/images/payConfigurationFormImage.jpg"
 
 const styles = StyleSheet.create(
     {
@@ -45,7 +47,8 @@ const styles = StyleSheet.create(
             overflow: "hidden"
         },
         imageStyles: {
-            height:"100%"
+            height:140,
+            width:"100%"
         }
 
     }
@@ -56,13 +59,13 @@ type props = {
 }
 
 type selector = {
-    [key in ModalFormNames] : string
+    [key in ModalFormNames] : ImageRequireSource
 }
 
 const imageselector:selector = {
-    PERSONAL_CONFIGURATION: 'https://www.lukkap.com/wp-content/uploads/2023/08/sistemas-de-voz.jpeg',
-    DELIVERY_CONFIGURATION: 'https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2023/08/calibrar-google-maps-3120262.jpg',
-    PAYMENT_CONFIGURATION: 'https://dataexport.com.gt/wp-content/uploads/2022/10/pagos-en-linea.jpg'
+    PERSONAL_CONFIGURATION: imagePersonalConfiguration,
+    DELIVERY_CONFIGURATION: imageDeliveryConfiguration,
+    PAYMENT_CONFIGURATION: imagePaymentConfiguration
 }
 
 export const FormImageHeader = ({form}:props):JSX.Element=> {
@@ -74,8 +77,9 @@ export const FormImageHeader = ({form}:props):JSX.Element=> {
             >
                     <View style={styles.imageContainer}>
                         <Image 
-                            source={{uri:imageselector[form as ModalFormNames]}}
+                            source={imageselector[form as ModalFormNames]}
                             style={styles.imageStyles}
+                            resizeMode="cover"
                         />
                     </View>
             </View>

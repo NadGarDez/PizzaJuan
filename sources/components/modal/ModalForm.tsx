@@ -21,7 +21,9 @@ const styles =  StyleSheet.create(
             borderTopLeftRadius:20,
             borderTopRightRadius:20,
             backgroundColor:colors.white_card,
-            paddingHorizontal:16
+            paddingHorizontal:16,
+            paddingBottom:20,
+            display:'flex',
         },
         headerContainer: {
             display: "flex",
@@ -45,7 +47,7 @@ const styles =  StyleSheet.create(
             justifyContent: "center"
         },
         titleFontStyles: {
-            fontSize:30,
+            fontSize:33,
             fontWeight: "300",
             color:colors.seconday_text,
         },
@@ -61,12 +63,15 @@ const styles =  StyleSheet.create(
         },
         bodyContainer: {
             flex:1,
-            marginTop:16
+            marginTop:4,
         },
         titleContainer: {
-            marginTop:16,
+            marginTop:8,
             display: "flex",
             width: "100%"
+        },
+        modalGeneralContainer: {
+            flex:1,
         }
     }
 )
@@ -88,49 +93,50 @@ export const ModalForm = ():JSX.Element=> {
         <Modal isVisible={visible} style={{padding:0}} animationInTiming={400} animationOutTiming={400}>
             <View style={styles.container}>
                 <View style={styles.modalCard}>
-                    <View style={styles.headerContainer}>
-                        <View style={styles.leftButtonContainer}>
-                            <IconButton onPress={toggleModal}>
-                                <Text style={styles.buttonTextCancel}>
-                                    Cancelar
-                                </Text>
-                            </IconButton>
-                        </View>
-                        <View style={styles.centerheaderContainer}>
-                            {/* <Text style={styles.titleFontStyles}>
-                                {
-                                    title
-                                }
-                            </Text> */}
-                        </View>
-                        <View style={styles.rightButtonContainer}>
-                            <IconButton onPress={manageSave}>
-                                <Text 
-                                    style={validForm ? styles.buttonText : styles.buttonTextCancel }
-                                >
-                                    Guardar
-                                </Text>
-                            </IconButton>
-                        </View>
-                    </View>
-                    <FormImageHeader form={formKey}/>
-                    <View style={{flex:1}}>
-                        <ScrollView>
-                            <View style={styles.titleContainer}>
-                                <Text style={styles.titleFontStyles}> 
+                    <View style={styles.modalGeneralContainer}>
+                        <View style={styles.headerContainer}>
+                            <View style={styles.leftButtonContainer}>
+                                <IconButton onPress={toggleModal}>
+                                    <Text style={styles.buttonTextCancel}>
+                                        Cancelar
+                                    </Text>
+                                </IconButton>
+                            </View>
+                            <View style={styles.centerheaderContainer}>
+                                {/* <Text style={styles.titleFontStyles}>
                                     {
                                         title
                                     }
-                                </Text>
+                                </Text> */}
                             </View>
-                            <View style={styles.bodyContainer}>
-                                {
-                                    modalSwitch[formKey as keyof modalSwitchType]({})
-                                }
+                            <View style={styles.rightButtonContainer}>
+                                <IconButton onPress={manageSave}>
+                                    <Text 
+                                        style={validForm ? styles.buttonText : styles.buttonTextCancel }
+                                    >
+                                        Guardar
+                                    </Text>
+                                </IconButton>
+                            </View>
+                        </View>
+                        <FormImageHeader form={formKey}/>
+                        <ScrollView style={{flex:1}}>
+                            <View style={{flex:1}}>
+                                <View style={styles.titleContainer}>
+                                    <Text style={styles.titleFontStyles}> 
+                                        {
+                                            title
+                                        }
+                                    </Text>
+                                </View>
+                                <View style={styles.bodyContainer}>
+                                    {
+                                        modalSwitch[formKey as keyof modalSwitchType]({})
+                                    }
+                                </View>
                             </View>
                         </ScrollView>
                     </View>
-                    
                 </View>
             </View>
         </Modal>

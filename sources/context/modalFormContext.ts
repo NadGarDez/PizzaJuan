@@ -11,8 +11,10 @@ type context = {
     toggleModal:()=>void,
     setFormType:(item:configurationItem)=>void,
     setValidFormValue:(value:boolean)=>void,
+    setTabIndex:(value:number)=> void,
     modalObject:configurationItem,
-    validForm:boolean
+    validForm:boolean,
+    tabIndex:number
 }
 
 const defaultModalValue = {
@@ -20,7 +22,9 @@ const defaultModalValue = {
     toggleModal:()=>{},
     setFormType:(item:configurationItem)=>{},
     setValidFormValue:(value:boolean)=>{},
+    setTabIndex:(value:number)=> {},
     modalObject:defaultConfigurationSectionValue,
-    validForm:false
+    validForm:false,
+    tabIndex:0
 }
 export const ModalContext = createContext<context>(defaultModalValue);

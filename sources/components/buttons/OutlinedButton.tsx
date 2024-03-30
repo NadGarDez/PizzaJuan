@@ -12,9 +12,11 @@ const styles = StyleSheet.create(
             justifyContent:"center",
             alignItems:"center",
             padding: 8,
-            backgroundColor: colors.principal,
             borderRadius:12,
-            ...shadows.principalShadow
+            borderStyle: "solid",
+            borderWidth:1,
+            backgroundColor:colors.white_card,
+            borderColor:colors.principal,
         }
     }
 )
@@ -22,11 +24,10 @@ const styles = StyleSheet.create(
 type props = {
     onPress: ()=>void,
     children:  JSX.Element,
-    radius?:number,
-    withShadow?:boolean
+    radius?:number
 }
 
-export const PrincipalButton = (props:props):JSX.Element=>{
+export const OutlinedButton = (props:props):JSX.Element=>{
     const {children, onPress, radius:borderRadius = 12}=props;
 
     const buttonStyles = {...styles.buttonContainer, borderRadius};

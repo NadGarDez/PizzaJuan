@@ -2,10 +2,10 @@ import React from "react"
 import { StyleSheet, Text, View, Image } from "react-native"
 import { useAppSelector } from "../../redux/hooks"
 import { sessionObjectSelector } from "../../redux/SessionReducer"
-import { AFTERNOON_GREATING, PLATFORM_TITLE, SLOGAN } from "../../constants/strings"
+import { PLATFORM_TITLE } from "../../constants/strings"
 import { colors } from "../../styles/colors"
 import LinearGradient from "react-native-linear-gradient"
-
+import image from "../../../static/images/imageTitle.jpeg";
 
 const styles = StyleSheet.create(
     {
@@ -50,7 +50,8 @@ const styles = StyleSheet.create(
             overflow: "hidden"
         },
         imageStyles: {
-            height:"100%"
+            height:"100%",
+            width: "100%"
         }
 
     }
@@ -66,8 +67,9 @@ export const TitleStoreText = ():JSX.Element=> {
            >
                     <View style={styles.imageContainer}>
                         <Image 
-                            source={{uri:"https://imagenes.20minutos.es/files/image_1920_1080/uploads/imagenes/2022/08/08/fotografia-de-una-pizza.jpeg"}}
+                            source={image}
                             style={styles.imageStyles}
+                            resizeMode="cover"
                         />
                     </View>
                     

@@ -22,6 +22,7 @@ export const UserScreen = ():JSX.Element=>{
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [modalObject, setModalObject] = useState<configurationItem>(defaultConfigurationSectionValue);
     const [validForm, setValidForm] = useState(true);
+    const [tabIndex, setTabIndex] = useState(0);
 
     const toggleModal =()=> setModalVisible(!modalVisible);
     const setFormType = (item:configurationItem)=>setModalObject(item)
@@ -30,7 +31,7 @@ export const UserScreen = ():JSX.Element=>{
     
     return (
         <>
-            <ModalContext.Provider value={{visible:modalVisible, modalObject, toggleModal, setFormType, validForm, setValidFormValue}}>
+            <ModalContext.Provider value={{visible:modalVisible, modalObject, toggleModal, setFormType, validForm, setValidFormValue, setTabIndex, tabIndex}}>
                 <View style={styles.container}>
                     <TransformedSquareWithoutRotation />
                     <UserInformationContainer />

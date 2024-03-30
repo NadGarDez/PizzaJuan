@@ -106,6 +106,7 @@ export const MyShoppingScreen = ():JSX.Element=>{
                         onIndexChange={setIndex}
                         initialLayout={{ width: Dimensions.get("screen").width - 32 }}
                         renderTabBar={renderTabBar}
+                    
                     />
                     <View style={styles.bottomLine}>
 

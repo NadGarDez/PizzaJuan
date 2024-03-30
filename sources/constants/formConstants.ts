@@ -20,7 +20,14 @@ export const personalConfigurationSchema = object(
     }
 );
 
+export const deliveryConfigurationSchema = object({
+    directionName: string().required(),
+    pluscode: string().required(),
+    description: string()
+})
+
 export type personalConfigurationSchemaType = InferType<typeof personalConfigurationSchema>;
+export type deliveryConfigurationSchemaType = InferType<typeof deliveryConfigurationSchema>;
 
 type personalConfigurationSchemaTranslationsValues = {
     name:string,
@@ -29,6 +36,7 @@ type personalConfigurationSchemaTranslationsValues = {
 };
 
 type personalConfigurationSchemaTranslationsType = Record<keyof personalConfigurationSchemaType, personalConfigurationSchemaTranslationsValues>;
+type deliveryConfigurationSchemaTranslationsType = Record<keyof deliveryConfigurationSchemaType, personalConfigurationSchemaTranslationsValues>;
 
 export const personalConfigurationMetadata:personalConfigurationSchemaTranslationsType = {
     name: {
@@ -60,5 +68,23 @@ export const personalConfigurationMetadata:personalConfigurationSchemaTranslatio
         name: 'Genero',
         placeholder: 'Agrega tu genero.',
         inputType:inputTypes.SELECT
+    }
+}
+
+export const deliveryConfigurationMetadata:deliveryConfigurationSchemaTranslationsType = {
+    directionName: { 
+        name: 'Nombre de Direccion',
+        placeholder: 'Eje. Casa, Trabajo.',
+        inputType:inputTypes.TEXT
+    },
+    pluscode: { 
+        name: 'Codigo Plus',
+        placeholder: 'Identificador de direccion. Eje. WH57+QFR',
+        inputType:inputTypes.TEXT
+    },
+    description: { 
+        name: 'Descripcion',
+        placeholder: 'Detalles adicionales de la direccion',
+        inputType:inputTypes.TEXT
     }
 }

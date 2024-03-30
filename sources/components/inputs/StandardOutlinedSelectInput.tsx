@@ -1,8 +1,7 @@
-import React, { Reducer, RefObject, useEffect, useReducer, useRef } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { Reducer, useReducer } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
 import { colors } from "../../styles/colors";
 import RNPickerSelect from 'react-native-picker-select';
-import {Picker} from '@react-native-picker/picker';
 import { basicInputState, defaultInputActionTypes, defaultInputStates, inputAction } from "../../constants/inputConstants";
 import { genre } from "../../constants/formConstants";
 
