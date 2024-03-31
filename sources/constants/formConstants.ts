@@ -8,6 +8,8 @@ export enum inputTypes {
 }
 
 export type genre = 'male' | 'female' | 'other' ;
+export type paymethodType = 'mobile_pay';
+export type availableBanks = 'mercantil' | 'bnc' | 'povincial';
 
 export const personalConfigurationSchema = object(
     {
@@ -24,10 +26,20 @@ export const deliveryConfigurationSchema = object({
     directionName: string().required(),
     pluscode: string().required(),
     description: string()
-})
+});
+
+export const payMethodConfigurationSchema = object(
+    {
+        type: string<paymethodType>().required(),
+        ni: string().required(),
+        phone: string().required(),
+        bank: string<availableBanks>().required()
+    }
+)
 
 export type personalConfigurationSchemaType = InferType<typeof personalConfigurationSchema>;
 export type deliveryConfigurationSchemaType = InferType<typeof deliveryConfigurationSchema>;
+export type payMethodConfigurationSchemaType = InferType<typeof payMethodConfigurationSchema>;
 
 type personalConfigurationSchemaTranslationsValues = {
     name:string,
@@ -37,6 +49,7 @@ type personalConfigurationSchemaTranslationsValues = {
 
 type personalConfigurationSchemaTranslationsType = Record<keyof personalConfigurationSchemaType, personalConfigurationSchemaTranslationsValues>;
 type deliveryConfigurationSchemaTranslationsType = Record<keyof deliveryConfigurationSchemaType, personalConfigurationSchemaTranslationsValues>;
+type payMethodConfigurationSchemaTranslationsType = Record<keyof payMethodConfigurationSchemaType, personalConfigurationSchemaTranslationsValues>;
 
 export const personalConfigurationMetadata:personalConfigurationSchemaTranslationsType = {
     name: {
@@ -86,5 +99,28 @@ export const deliveryConfigurationMetadata:deliveryConfigurationSchemaTranslatio
         name: 'Descripcion',
         placeholder: 'Detalles adicionales de la direccion',
         inputType:inputTypes.TEXT
+    }
+}
+
+export const payMethodConfigurationMetadata: payMethodConfigurationSchemaTranslationsType = {
+    type: {
+        name: 'Tipo',
+        placeholder: 'Agrega tu tipo de metodo de pago',
+        inputType: inputTypes.SELECT
+    },
+    ni: {
+        name: 'CI',
+        placeholder: 'Cedula relacionada al metodo de pago',
+        inputType: inputTypes.TEXT
+    },
+    bank: {
+        name: 'Banco',
+        placeholder: 'Banco relacionado al metodo de pago',
+        inputType: inputTypes.SELECT
+    },
+    phone: {
+        name: 'Telefono',
+        placeholder: 'Numero de telefono relacionado al metodo de pago',
+        inputType: inputTypes.TEXT
     }
 }

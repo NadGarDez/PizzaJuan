@@ -4,8 +4,9 @@ import { ToggableList } from "../lists/ToggableList";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { colors } from "../../styles/colors";
 import { PrincipalButton } from "../buttons/PrincipalButton";
-import { DESCRIPTION, PLUS_CODE, toogableListItem } from "../../constants/userConfigurationConstants";
-import { LocationIcon } from "../icons/LocationIcon";
+import { toogableListItem } from "../../constants/userConfigurationConstants";
+import { payMethodConfigurationMetadata } from "../../constants/formConstants";
+import { WalletIcon } from "../icons/WalletIcon";
 
 const styles = StyleSheet.create({
     container: {
@@ -50,61 +51,42 @@ type aditionalProps = {
 
 type props = tabViewSceneProps & aditionalProps
 
-const staticValues: toogableListItem[] = [
+const staticData: toogableListItem[] = [
     {
-        title: 'Direccion 1',
-        [PLUS_CODE]: 'JJXX+HR8',
-        [DESCRIPTION]: 'Esta es una direccion',
+        title: 'Metodo de Pago 1',
+        [payMethodConfigurationMetadata.bank.name]: 'Mercantil',
+        [payMethodConfigurationMetadata.ni.name]: '26177497',
+        [payMethodConfigurationMetadata.type.name]: 'Pago Movil',
+        [payMethodConfigurationMetadata.phone.name]: '26177497'
     },
     {
-        title: 'Direccion 2',
-        [PLUS_CODE]: 'JJXX+HRR',
-        [DESCRIPTION]: 'Esta es una direccion',
+        title: 'Metodo de Pago 2',
+        [payMethodConfigurationMetadata.bank.name]: 'Provincial',
+        [payMethodConfigurationMetadata.ni.name]: '26177497',
+        [payMethodConfigurationMetadata.type.name]: 'Pago Movil',
+        [payMethodConfigurationMetadata.phone.name]: '26177497'
     },
     {
-        title: 'Direccion 3',
-        [PLUS_CODE]: 'JJXX+HR0',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 4',
-        [PLUS_CODE]: 'JJXX+HR1',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 5',
-        [PLUS_CODE]: 'JJXX+HR0',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 6',
-        [PLUS_CODE]: 'JJXX+HR1',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 7',
-        [PLUS_CODE]: 'JJXX+HR0',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 8',
-        [PLUS_CODE]: 'JJXX+HR1',
-        [DESCRIPTION]: 'Esta es una direccion',
+        title: 'Metodo de Pago 3',
+        [payMethodConfigurationMetadata.bank.name]: 'Banesco',
+        [payMethodConfigurationMetadata.ni.name]: '26177497',
+        [payMethodConfigurationMetadata.type.name]: 'Pago Movil',
+        [payMethodConfigurationMetadata.phone.name]: '26177497'
     }
-];
+]
 
-export const DirectionListContainer = (props:props): JSX.Element=> {
+
+export const PayMethodContainer = (props:props): JSX.Element=> {
 
     const {jumpTo} = props;
 
     const onPressCreate = ()=> {
         jumpTo("second");
     }
-
     const leftItem = ()=> {
         return (
             <View style={styles.semiTransparentCircle}>
-                <LocationIcon color={colors.white_card}/>
+                <WalletIcon color={colors.white_card}/>
             </View>
         )
     }
@@ -113,18 +95,14 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
        <View style={styles.container}>
             <View style={styles.subtitleContainer}>
                 <Text style={styles.subtitleText}>
-                    Direcciones disponibles
+                    Metodos de Pago Disponibles
                 </Text>
              </View>
-            <ToggableList 
-                data={staticValues} 
-                leftItem={leftItem}
-                voidMessage="No hay direcciones disponibles"
-            /> 
+            <ToggableList data={staticData} leftItem={leftItem} voidMessage="No hay metodos de pago disponibles"/> 
                 <PrincipalButton onPress={onPressCreate} radius={5}>
                     <View style={styles.textContainer}>
                         <Text style={styles.textStyles}>
-                            Agregar Direccion
+                            Agregar Metodo de Pago
                         </Text>
                     </View>
                 </PrincipalButton>

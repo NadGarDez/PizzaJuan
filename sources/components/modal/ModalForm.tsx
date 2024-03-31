@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react"
-import { Dimensions, StyleSheet, View, Text } from "react-native"
+import React, { useContext } from "react"
+import {  StyleSheet, View, Text } from "react-native"
 import { colors } from "../../styles/colors"
 import { IconButton } from "../buttons/IconButton"
 import Modal from "react-native-modal";
 import { ModalContext } from "../../context/modalFormContext";
 import { modalSwitch, modalSwitchType } from "../../utils/modalContentSelector";
-import { ScrollView } from "react-native-gesture-handler";
 import { FormImageHeader } from "../surfaces/FormImageHeader";
 
 const styles =  StyleSheet.create(

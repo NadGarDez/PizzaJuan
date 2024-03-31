@@ -52,3 +52,11 @@ export const defaultConfigurationSectionValue : configurationItem = {
 
 export const PLUS_CODE = 'Codigo Plus';
 export const DESCRIPTION = 'Descripcion';
+
+// toogable list data type 
+
+type title =  {
+    title:string
+}
+
+export type toogableListItem = Record<string, string> & title;

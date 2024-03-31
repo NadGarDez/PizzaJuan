@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { ToggableItem } from "../surfaces/ToggableItem";
-import { DESCRIPTION, PLUS_CODE } from "../../constants/userConfigurationConstants";
+import { DESCRIPTION, PLUS_CODE, toogableListItem } from "../../constants/userConfigurationConstants";
 import { LocationIcon } from "../icons/LocationIcon";
 import { colors } from "../../styles/colors";
 
@@ -36,76 +36,30 @@ const styles =  StyleSheet.create(
         },
     }
 );
-const staticValues = [
-    {
-        title: 'Direccion 1',
-        [PLUS_CODE]: 'JJXX+HR8',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 2',
-        [PLUS_CODE]: 'JJXX+HRR',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 3',
-        [PLUS_CODE]: 'JJXX+HR0',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 4',
-        [PLUS_CODE]: 'JJXX+HR1',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 5',
-        [PLUS_CODE]: 'JJXX+HR0',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 6',
-        [PLUS_CODE]: 'JJXX+HR1',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 7',
-        [PLUS_CODE]: 'JJXX+HR0',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 8',
-        [PLUS_CODE]: 'JJXX+HR1',
-        [DESCRIPTION]: 'Esta es una direccion',
-    }
+
+type props = {
+    data: toogableListItem[],
+    leftItem: ()=>JSX.Element,
+    voidMessage:string
+}
 
 
-]
-
-
-export const ToggableList = (): JSX.Element => {
+export const ToggableList = ({data, voidMessage, leftItem}:props): JSX.Element => {
 
     const [itemSelected, setItemSelected] =  useState<number>(0);
 
     const onChangeSelect = (index:number) => setItemSelected(index);
 
-    const leftItem = ()=> {
-        return (
-            <View style={styles.semiTransparentCircle}>
-                <LocationIcon color={colors.white_card}/>
-            </View>
-        )
-    }
-
     const voidList = ()=> (
         <View style={styles.voidContainer}>
-            <Text style={styles.secondaryKeys}>No hay direcciones disponibles</Text>
+            <Text style={styles.secondaryKeys}>{voidMessage}</Text>
         </View>
     )
 
     return (
         <View style={styles.container}>
             <FlatList 
-                data={[]}
+                data={data}
                 showsVerticalScrollIndicator={false}
                 ListEmptyComponent={voidList}
                 renderItem={

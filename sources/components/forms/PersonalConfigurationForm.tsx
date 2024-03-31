@@ -21,6 +21,15 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         marginBottom:4
+    },
+    subtitleContainer: {
+        width: "100%",
+        marginBottom: 8
+    },
+    subtitleText: {
+        fontSize:20,
+        fontWeight: "200",
+        color:colors.seconday_text,
     }
 })
 
@@ -57,6 +66,11 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
 
     return (
         <ScrollView style={styles.container}>
+            <View style={styles.subtitleContainer}>
+                <Text style={styles.subtitleText}>
+                    Cuentanos sobre ti
+                </Text>
+             </View>
                 {
                     Object.keys(defaultValue).map(
                         (item, index) => {
