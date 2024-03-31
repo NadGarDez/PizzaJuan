@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useFormik } from "formik";
 import { personalConfigurationSchemaType, personalConfigurationMetadata, personalConfigurationSchema } from "../../constants/formConstants";
 import { colors } from "../../styles/colors";
@@ -56,7 +56,7 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
     )
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
                 {
                     Object.keys(defaultValue).map(
                         (item, index) => {
@@ -82,6 +82,6 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
                         }
                     )
                 }
-        </View>
+        </ScrollView>
     )
 }

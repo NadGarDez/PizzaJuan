@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { SceneMap, TabView, TabViewProps } from "react-native-tab-view";
+import { SceneMap, TabView } from "react-native-tab-view";
 import { DeliveryConfigurationForm } from "../forms/DeliveryConfiguraitonForm";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { ModalContext } from "../../context/modalFormContext";
 import { DirectionListContainer } from "../surfaces/DirectionListContainer";
 
@@ -10,8 +10,7 @@ const styles = StyleSheet.create({
         flex:1,
         height:800
     }
-})
-
+});
 
 const renderScene = SceneMap({
     first: DirectionListContainer,
@@ -26,7 +25,6 @@ const routes = [
 export const DeliveryTabView = ():JSX.Element=> {
     const {tabIndex, setTabIndex} = useContext(ModalContext);
     const manageChange = (index:number)=> {
-        console.log(index, "index");
         setTabIndex(index);
     };
     return (

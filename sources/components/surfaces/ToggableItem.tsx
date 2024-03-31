@@ -34,6 +34,16 @@ const styles = StyleSheet.create({
         fontSize:14,
         fontWeight: "200",
         color:colors.seconday_text,
+    },
+    generalItemContainer: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    leftItemContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 8
     }
 
 })
@@ -47,10 +57,11 @@ type props = {
     index:number,
     onChangeSelect: (index:number)=>void,
     data: Record<string, string> & titleType;
+    leftItem?: ()=>JSX.Element | null;
 }
 
 export const ToggableItem = (props:props):JSX.Element => {
-    const {active, data, index, onChangeSelect} = props;
+    const {active, data, index, onChangeSelect, leftItem = null} = props;
     
     const activeStyles = !!active ? styles.activeContainerStyles : styles.unactiveContainerStyles;
     const onPress = ()=> {
@@ -59,24 +70,31 @@ export const ToggableItem = (props:props):JSX.Element => {
 
     return (
         <Pressable style={{...styles.baseContainer, ...activeStyles}} onPress={onPress}>
-            <View style={styles.bodyContainer}>
-                <Text style={styles.titleTextStyles}>
-                    {data.title}
-                </Text>
-                {
-                    Object.keys(data).map(
-                        (item, index) => {
-                            const time = new Date().getTime();
-                            if(item !== "title") return (
-                                <View key={`locaiton-item-${index}-${time}`}>
-                                    <Text style={styles.secondaryKeys}>
-                                        {`${item}: ${data[item]}`}
-                                    </Text>
-                                </View>
-                            )
-                        }
-                    )
-                }
+            <View style={styles.generalItemContainer}>
+                <View style={styles.leftItemContainer}>
+                    {
+                        !!leftItem ? leftItem() : null
+                    }
+                </View>
+                <View style={styles.bodyContainer}>
+                    <Text style={styles.titleTextStyles}>
+                        {data.title}
+                    </Text>
+                    {
+                        Object.keys(data).map(
+                            (item, index) => {
+                                const time = new Date().getTime();
+                                if(item !== "title") return (
+                                    <View key={`locaiton-item-${index}-${time}`}>
+                                        <Text style={styles.secondaryKeys}>
+                                            {`${item}: ${data[item]}`}
+                                        </Text>
+                                    </View>
+                                )
+                            }
+                        )
+                    }
+                </View>
             </View>
         </Pressable>
     )

@@ -120,22 +120,20 @@ export const ModalForm = ():JSX.Element=> {
                             </View>
                         </View>
                         <FormImageHeader form={formKey}/>
-                        <ScrollView style={{flex:1}}>
-                            <View style={{flex:1}}>
-                                <View style={styles.titleContainer}>
-                                    <Text style={styles.titleFontStyles}> 
-                                        {
-                                            title
-                                        }
-                                    </Text>
-                                </View>
-                                <View style={styles.bodyContainer}>
+                        <View style={{flex:1}}>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.titleFontStyles}> 
                                     {
-                                        modalSwitch[formKey as keyof modalSwitchType]({})
+                                        title
                                     }
-                                </View>
+                                </Text>
                             </View>
-                        </ScrollView>
+                            <View style={styles.bodyContainer}>
+                                {
+                                    modalSwitch[formKey as keyof modalSwitchType]({})
+                                }
+                            </View>
+                        </View>
                     </View>
                 </View>
             </View>
