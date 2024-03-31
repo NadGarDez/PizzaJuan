@@ -8,6 +8,7 @@ import { PrincipalButton } from "../buttons/PrincipalButton";
 const styles = StyleSheet.create({
     container: {
         flex:1,
+        height:2000,
     },
     subtitleContainer: {
         width: "100%",
@@ -53,14 +54,14 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
                     Direcciones disponibles
                 </Text>
              </View>
-            <ToggableList />
-            <PrincipalButton onPress={onPressCreate} radius={5}>
-                <View style={styles.textContainer}>
-                    <Text style={styles.textStyles}>
-                        Agregar Direccion
-                    </Text>
-                </View>
-            </PrincipalButton>
+            <ToggableList /> 
+                <PrincipalButton onPress={onPressCreate} radius={5}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.textStyles}>
+                            Agregar Direccion
+                        </Text>
+                    </View>
+                </PrincipalButton>
        </View>
     )
 }

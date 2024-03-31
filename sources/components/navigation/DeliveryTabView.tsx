@@ -8,7 +8,7 @@ import { DirectionListContainer } from "../surfaces/DirectionListContainer";
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        minHeight:400,
+        height:800
     }
 })
 

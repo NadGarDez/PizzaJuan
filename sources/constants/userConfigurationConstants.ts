@@ -46,3 +46,9 @@ export const defaultConfigurationSectionValue : configurationItem = {
     subtitle:SECTION_ONE_SUBTITLE,
     formKey: ModalFormNames.PERSONAL_CONFIGURATION
 } 
+
+
+// delivery location strings
+
+export const PLUS_CODE = 'Codigo Plus';
+export const DESCRIPTION = 'Descripcion';
