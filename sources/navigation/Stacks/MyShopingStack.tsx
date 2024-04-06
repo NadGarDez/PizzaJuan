@@ -1,14 +1,15 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import React   from "react"
-import { MyShoppingScreen } from "../../screens/userGroup/MyShopingScreen";
+
 import { InitialStackScreenHeader } from "../../components/headers/InitialStackScreenHeader";
+import { MyShoppingScreen } from "../../screens/myShoppingGroup/MyShopingScreen";
 
 export type MyShoppingStackProps = {
     MY_SHOPING_SCREEN: undefined,
 };
 const Stack = createNativeStackNavigator<MyShoppingStackProps>()
 
-
+MyShoppingScreen
 export const MyShoppingStack = ():JSX.Element=>{
     return (
         <Stack.Navigator

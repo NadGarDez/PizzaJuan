@@ -1,8 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import React   from "react"
-import { UserScreen } from "../../screens/myShoppingGroup/UserScreen";
+
 import { FloatingUserHeader } from "../../components/headers/FloatingUserHeader";
 import { withScrollView } from "../../HOCs/WithScrollView";
+import { UserScreen } from "../../screens/userGroup/UserScreen";
 
 export type UserStackProps = {
     USER_SCREEN: undefined,
@@ -10,7 +11,6 @@ export type UserStackProps = {
 const Stack = createNativeStackNavigator<UserStackProps>()
 
 const HOCUserScreen = withScrollView(UserScreen)
-
 export const UserStack = ():JSX.Element=>{
     return (
         <Stack.Navigator
