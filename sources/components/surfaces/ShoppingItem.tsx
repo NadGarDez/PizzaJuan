@@ -6,6 +6,9 @@ import { DeleteProductButton } from "../buttons/DeleteProductButton";
 import { shadows } from "../../styles/shadow";
 import { IconWithTextElement } from "./IconWithTextElement";
 import { LocationIcon } from "../icons/LocationIcon";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { MyShoppingStackProps } from "../../navigation/Stacks/MyShopingStack";
+import { useNavigation } from "@react-navigation/native";
 
 const styles = StyleSheet.create(
     {
@@ -158,19 +161,20 @@ type props =  {
     lastAcutalization: string
 }
 
-// type ProductListScreenPropType = NativeStackScreenProps<ProductStackType,"PRODUCT_LIST_SCREEN">
+type ProductListScreenPropType = StackNavigationProp<MyShoppingStackProps,"MY_SHOPING_SCREEN">;
+
 
 export const ShoppingItem = ({image, amount, pedido, lastAcutalization, status}:props):JSX.Element=>{
 
-    // const {navigate} = useNavigation<ProductListScreenPropType['navigation']>()
+    const {navigate} = useNavigation<ProductListScreenPropType>()
 
-    // const nav = ()=> {
-    //     navigate("PRODUCT_SCREEN", {productId:"123"})
-    // }
+    const nav = ()=> {
+        navigate("INVOICE_SCREEN", {orderId:"123"})
+    }
     
     return (
         <Pressable
-           
+           onPress={nav}
         >
             {
                 ({pressed})=>(
