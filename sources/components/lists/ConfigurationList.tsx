@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import { FlatList } from "react-native";
-import { configurationObjectType, configurationSections } from "../../constants/userConfigurationConstants";
+import React from "react";
+import { ModalFormNames, configurationObjectType, configurationSections } from "../../constants/userConfigurationConstants";
 import { ConfigurationItem } from "../surfaces/ConfigurationItem";
-import { ModalContext } from "../../context/modalFormContext";
+import { useAppDispatch } from "../../redux/hooks";
+import { activateWithoutValid, configure } from "../../redux/ModalFormReducer";
 
 export const ConfigurationList = ()=> {
-    const {toggleModal, setFormType}= useContext(ModalContext)
-    const configurationKeys = Object.keys(configurationSections);
+    const dispatch = useAppDispatch();
+    const configurationKeys = Object.keys(ModalFormNames);
 
     return (
         <>
@@ -25,8 +25,8 @@ export const ConfigurationList = ()=> {
                                 key={`${index}-configurationItem`} 
                                 onPress={
                                     ()=>{
-                                        setFormType(configurationItem)
-                                        toggleModal()
+                                        dispatch(configure(key as ModalFormNames));
+                                        dispatch(activateWithoutValid());
                                     }
                                 }
                             />

@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native"; 
 import { colors } from "../../styles/colors";
-import { deliveryConfigurationMetadata, deliveryConfigurationSchemaType, payMethodConfigurationMetadata, payMethodConfigurationSchema, payMethodConfigurationSchemaType } from "../../constants/formConstants";
-import { ModalContext } from "../../context/modalFormContext";
+import { payMethodConfigurationMetadata, payMethodConfigurationSchema, payMethodConfigurationSchemaType } from "../../constants/formConstants";
 import { useFormik } from "formik";
 import { inputSelector } from "../../utils/inputSelector";
 import { PrincipalButton } from "../buttons/PrincipalButton";
@@ -77,8 +76,6 @@ type props = tabViewSceneProps & aditionalProps;
 export const PaymentConfigurationForm = (props:props): JSX.Element=> {
     const {jumpTo} = props;
 
-    const {setValidFormValue} = useContext(ModalContext);
-
     const {values, setFieldValue, handleSubmit, errors} = useFormik(
         {
             initialValues: defaultValue,
@@ -92,7 +89,7 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
     useEffect(
         ()=> {
             const errorKeys = Object.keys(errors);
-            setValidFormValue(errorKeys.length === 0);
+            // setValidFormValue(errorKeys.length === 0);
         },
         [errors]
     );
@@ -143,7 +140,7 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
                 </View>
                 <PrincipalButton onPress={onPress} radius={5}>
                     <View style={styles.textContainer}>
-                        <Text style={styles.textStyles}>
+                        <Text style={styles.textStyles}> {/* deberia bloquearse de no ser el pago valido o no tener efecto */}
                             Guardar Metodo de Pago
                         </Text>
                     </View>

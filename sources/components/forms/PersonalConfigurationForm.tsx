@@ -1,10 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useFormik } from "formik";
 import { personalConfigurationSchemaType, personalConfigurationMetadata, personalConfigurationSchema } from "../../constants/formConstants";
 import { colors } from "../../styles/colors";
 import { inputSelector } from "../../utils/inputSelector";
-import { ModalContext } from "../../context/modalFormContext";
+import { ModalFormHeader } from "../surfaces/ModalFormHeader";
+import { ModalFormNames } from "../../constants/userConfigurationConstants";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { hide, modalFormSelector } from "../../redux/ModalFormReducer";
 
 const styles = StyleSheet.create({
     container: {
@@ -44,9 +47,8 @@ const defaultValue : personalConfigurationSchemaType = {
 
 export const PersonalConfigurationForm = (): JSX.Element=> {
 
-    const {setValidFormValue} = useContext(ModalContext);
-
-    const {values, setFieldValue, handleSubmit, errors} = useFormik(
+    const {valid} = useAppSelector(modalFormSelector);
+    const { setFieldValue } = useFormik(
         {
             initialValues: defaultValue,
             validationSchema:personalConfigurationSchema,
@@ -55,47 +57,59 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
             },
         },
     );
-    
-    useEffect(
-        ()=> {
-            const errorKeys = Object.keys(errors);
-            setValidFormValue(errorKeys.length === 0);
-        },
-        [errors]
-    )
+
+
+    const dispatch = useAppDispatch();
+
+    const onSave = ()=> {
+        dispatch(hide());
+    }
+
+    const onCancel = ()=> {
+        dispatch(hide());
+    }
 
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>
-                    Cuentanos sobre ti
-                </Text>
-             </View>
-                {
-                    Object.keys(defaultValue).map(
-                        (item, index) => {
-                            const {placeholder = '', inputType, name} = personalConfigurationMetadata[item as keyof personalConfigurationSchemaType];
-                            return (
-                                <View style={styles.inputContainer} key={`input-${item}-${index}`}>
-                                    <View style={styles.titleContainer}>
-                                        <Text style={styles.titleInputStyles}>
-                                            {name}
-                                        </Text>
+        <>
+            <ModalFormHeader 
+                formKey={ModalFormNames.PERSONAL_CONFIGURATION}
+                isFormValid={valid}
+                onCancel={onCancel}
+                onSave={onSave}
+            />
+            <ScrollView style={styles.container}>
+                <View style={styles.subtitleContainer}>
+                    <Text style={styles.subtitleText}>
+                        Cuentanos sobre ti
+                    </Text>
+                </View>
+                    {
+                        Object.keys(defaultValue).map(
+                            (item, index) => {
+                                const {placeholder = '', inputType, name} = personalConfigurationMetadata[item as keyof personalConfigurationSchemaType];
+                                return (
+                                    <View style={styles.inputContainer} key={`input-${item}-${index}`}>
+                                        <View style={styles.titleContainer}>
+                                            <Text style={styles.titleInputStyles}>
+                                                {name}
+                                            </Text>
+                                        </View>
+                                        {
+                                            inputSelector[inputType]({
+                                                placeholder,
+                                                onChangeCallback:(text:string)=> {
+                                                    setFieldValue(item, text);
+                                                },
+                                                inputName:name
+                                            })
+                                        }
                                     </View>
-                                    {
-                                        inputSelector[inputType]({
-                                            placeholder,
-                                            onChangeCallback:(text:string)=> {
-                                                setFieldValue(item, text);
-                                            },
-                                            inputName:name
-                                        })
-                                    }
-                                </View>
-                            )
-                        }
-                    )
-                }
-        </ScrollView>
+                                )
+                            }
+                        )
+                    }
+            </ScrollView>
+        </>
+       
     )
 }

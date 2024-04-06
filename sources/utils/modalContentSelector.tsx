@@ -1,17 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { PersonalConfigurationForm } from "../components/forms/PersonalConfigurationForm";
-import { DeliveryConfigurationForm } from "../components/forms/DeliveryConfiguraitonForm";
-import { PaymentConfigurationForm } from "../components/forms/PaymentConfigurationForm";
 import { ModalFormNames } from "../constants/userConfigurationConstants";
+
+import { Text } from "react-native";
 import { DeliveryTabView } from "../components/navigation/DeliveryTabView";
 import { PayMethodTabView } from "../components/navigation/PayMethodTabView";
 
-export type modalSwitchType = {
-    [key in ModalFormNames] : (props:any)=> JSX.Element
-}
-
-export const modalSwitch: modalSwitchType = {
-    PERSONAL_CONFIGURATION: PersonalConfigurationForm,
-    DELIVERY_CONFIGURATION: DeliveryTabView,
-    PAYMENT_CONFIGURATION: PayMethodTabView
+export const modalSwitch: Record<ModalFormNames,JSX.Element> = {
+    PERSONAL_CONFIGURATION: <PersonalConfigurationForm />,
+    DELIVERY_CONFIGURATION: <DeliveryTabView />,
+    PAYMENT_CONFIGURATION: <PayMethodTabView />
 }

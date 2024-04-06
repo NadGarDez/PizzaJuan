@@ -1,11 +1,10 @@
-import React, { useContext } from "react"
-import {  StyleSheet, View, Text } from "react-native"
+import React from "react"
+import {  StyleSheet, View } from "react-native"
 import { colors } from "../../styles/colors"
-import { IconButton } from "../buttons/IconButton"
 import Modal from "react-native-modal";
-import { ModalContext } from "../../context/modalFormContext";
-import { modalSwitch, modalSwitchType } from "../../utils/modalContentSelector";
-import { FormImageHeader } from "../surfaces/FormImageHeader";
+import { modalSwitch } from "../../utils/modalContentSelector";
+import { useAppSelector } from "../../redux/hooks";
+import { modalFormSelector } from "../../redux/ModalFormReducer";
 
 const styles =  StyleSheet.create(
     {
@@ -77,66 +76,23 @@ const styles =  StyleSheet.create(
 
 export const ModalForm = ():JSX.Element=> {
 
-    const {toggleModal, validForm, visible, modalObject:{title, formKey }} = useContext(ModalContext);
-
-    const manageSave = ()=> {
-        if(validForm){
-            // do something
-        }
-        else {
-            // alert 
-        }
-    }
+    const {name, visible} = useAppSelector(modalFormSelector);
 
     return (
         <Modal isVisible={visible} style={{padding:0}} animationInTiming={400} animationOutTiming={400}>
             <View style={styles.container}>
                 <View style={styles.modalCard}>
                     <View style={styles.modalGeneralContainer}>
-                        <View style={styles.headerContainer}>
-                            <View style={styles.leftButtonContainer}>
-                                <IconButton onPress={toggleModal}>
-                                    <Text style={styles.buttonTextCancel}>
-                                        Cancelar
-                                    </Text>
-                                </IconButton>
-                            </View>
-                            <View style={styles.centerheaderContainer}>
-                                {/* <Text style={styles.titleFontStyles}>
-                                    {
-                                        title
-                                    }
-                                </Text> */}
-                            </View>
-                            <View style={styles.rightButtonContainer}>
-                                <IconButton onPress={manageSave}>
-                                    <Text 
-                                        style={validForm ? styles.buttonText : styles.buttonTextCancel }
-                                    >
-                                        Guardar
-                                    </Text>
-                                </IconButton>
-                            </View>
-                        </View>
-                        <FormImageHeader form={formKey}/>
                         <View style={{flex:1}}>
-                            <View style={styles.titleContainer}>
-                                <Text style={styles.titleFontStyles}> 
-                                    {
-                                        title
-                                    }
-                                </Text>
-                            </View>
                             <View style={styles.bodyContainer}>
-                                {
-                                    modalSwitch[formKey as keyof modalSwitchType]({})
-                                }
+                               {
+                                modalSwitch[name]
+                               }
                             </View>
                         </View>
                     </View>
                 </View>
             </View>
         </Modal>
-       
     )
 }
