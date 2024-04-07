@@ -1,14 +1,23 @@
 import React from "react"
-import { StyleSheet, View } from "react-native"
-import { HelloWorldComponent } from "../../components/HelloWorldComponent"
+import { Platform, StyleSheet, View } from "react-native"
 import { CarStackProp } from "../../navigation/Stacks/CarStack"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useNavigation } from "@react-navigation/native"
+import { colors } from "../../styles/colors"
+import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
+import { AmountContainer } from "../../components/surfaces/AmountContainer"
+import { PayMethodSelector } from "../../components/surfaces/PayMethodSelector"
 
 const styles = StyleSheet.create(
     {
         container : {
-            flex:1
+            flex:1,
+            backgroundColor: "transparent",
+            paddingHorizontal:16,
+            paddingTop:Platform.select({
+                android: 56,
+                ios: 93
+            }),
         }
     }
 )
@@ -24,8 +33,11 @@ export const PayScreen = ():JSX.Element=>{
     }
 
     return (
-        <View style={styles.container}>
-            <HelloWorldComponent sectionMessage="Ventana de pago" onPress={onPress}/>
-        </View>
+        <>
+            <View style={styles.container}>
+                <AmountContainer />
+                <PayMethodSelector />
+            </View>
+        </>
     )
 }

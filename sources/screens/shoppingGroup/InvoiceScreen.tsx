@@ -15,10 +15,6 @@ const styles = StyleSheet.create(
             flex:1,
             backgroundColor: "transparent",
             paddingHorizontal:16,
-            // paddingVertical:Platform.select({
-            //     android: 56,
-            //     ios: 93
-            // }),
             paddingBottom: 32,
             overflow: 'hidden'
         },

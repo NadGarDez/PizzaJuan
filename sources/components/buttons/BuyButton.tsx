@@ -42,7 +42,7 @@ export const BuyButton = (props:props):JSX.Element=>{
                 ({pressed})=> (
                     <View style={pressedStyles(pressed)}>
                         <Text style={styles.textStyles}>
-                            Comprar
+                            Pagar
                         </Text>
                         <CarIcon color={colors.text_contrast}/>
                     </View>
