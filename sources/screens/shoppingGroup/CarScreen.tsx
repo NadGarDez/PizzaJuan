@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Platform, StyleSheet, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { CarStackProp } from "../../navigation/Stacks/CarStack"
@@ -8,6 +8,7 @@ import { CarProductList } from "../../components/lists/CarProductList"
 import { AmountInformationComponent } from "../../components/surfaces/AmountInformationComponent"
 import { BuyButton } from "../../components/buttons/BuyButton"
 import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
+import { productInstance } from "../../constants/productConstants"
 
 const styles = StyleSheet.create(
     {
@@ -41,9 +42,9 @@ const styles = StyleSheet.create(
             marginTop:16
         }
     }
-)
+);
 
-const staticData = [
+const staticData:productInstance[] = [
     {
         productName:"Pizza numero 1",
         price:12,
@@ -113,13 +114,13 @@ export const CarScreen = ():JSX.Element=>{
        }, 300);
     }
 
-    
     return (
         <>
             <TransformedSquare />
             <View style={styles.container}>
                 <CarProductList 
-                    onPress={jumpToUser}
+                    onPress={()=>{}}
+                    data={staticData}
                 />
                 <View style={styles.calculatorContainer}>
                     <AmountInformationComponent 
@@ -128,7 +129,6 @@ export const CarScreen = ():JSX.Element=>{
                 </View>
                 <View style={styles.buttonContainer}>
                     <BuyButton 
-                    
                         onPress={()=> {}}
                     />
                 </View>

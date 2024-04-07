@@ -5,5 +5,6 @@ type screenNames = {
 
 export const screenNames:screenNames={
     CAR_SCREEN:"Carro de compras",
-    MY_SHOPING_SCREEN: "Mis compras"
+    MY_SHOPING_SCREEN: "Mis compras",
+    INVOICE_SCREEN: 'Pedido'
 }

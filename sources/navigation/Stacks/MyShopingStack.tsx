@@ -8,9 +8,11 @@ import { NormalStackScreenHeader } from "../../components/headers/NormalStackScr
 export type MyShoppingStackProps = {
     MY_SHOPING_SCREEN: undefined,
     INVOICE_SCREEN: {
-        orderId:string
+        orderId:string,
+        aditionalInfo: string
     }
 };
+
 const Stack = createNativeStackNavigator<MyShoppingStackProps>()
 
 MyShoppingScreen
@@ -37,7 +39,6 @@ export const MyShoppingStack = ():JSX.Element=>{
                         <NormalStackScreenHeader 
                             {...props}
                             displayRightContent={false}
-                            
                         />
                     )
                 }}

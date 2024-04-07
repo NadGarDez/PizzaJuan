@@ -56,11 +56,12 @@ const styles = StyleSheet.create(
 
 type props = {
     onChange: (value:number)=>void,
-    initialValue:number
+    initialValue:number,
+    readonly?:boolean
 }
 
 export const PlusLessButton = (props:props):JSX.Element=>{
-    const { onChange, initialValue}=props;
+    const { onChange, initialValue, readonly = false}=props;
 
     const [counter, setCounter] = useState<number>(
         initialValue
@@ -81,38 +82,47 @@ export const PlusLessButton = (props:props):JSX.Element=>{
 
     return (
         <View style={styles.buttonContainer}>
-            <Pressable
-                onPress={restCounter}
-            >
-                {
-                    ({pressed})=>(
-                        <View style={{...styles.leftButton, backgroundColor: pressed ? colors.seconday_text + "30" : colors.white_card}}>
-                            <Text style={styles.textStyles}>
-                                -
-                            </Text>
-                        </View>
-                    )
-                }
-            </Pressable>
+            {
+                !readonly ? (
+                    <Pressable
+                        onPress={restCounter}
+                    >
+                        {
+                            ({pressed})=>(
+                                <View style={{...styles.leftButton, backgroundColor: pressed ? colors.seconday_text + "30" : colors.white_card}}>
+                                    <Text style={styles.textStyles}>
+                                        -
+                                    </Text>
+                                </View>
+                            )
+                        }
+                    </Pressable>
+                ) : null
+            }
             
             <View style={styles.centerNumber}>
                 <Text style={styles.textStyles}>
                     {counter}
                 </Text>
             </View>
-            <Pressable
-                onPress={addCounter}
-            >
-                {
-                    ({pressed})=>(
-                        <View style={{...styles.rightButton, backgroundColor: pressed ? colors.seconday_text + "30" : colors.white_card}}>
-                            <Text style={styles.textStyles}>
-                                +
-                            </Text>
-                        </View>
-                    )
-                }
-            </Pressable>
+
+            {
+                !readonly ? (
+                    <Pressable
+                        onPress={addCounter}
+                    >
+                        {
+                            ({pressed})=>(
+                                <View style={{...styles.rightButton, backgroundColor: pressed ? colors.seconday_text + "30" : colors.white_card}}>
+                                    <Text style={styles.textStyles}>
+                                        +
+                                    </Text>
+                                </View>
+                            )
+                        }
+                    </Pressable>
+                ) : null
+            }
         </View>
     )
 }

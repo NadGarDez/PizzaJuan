@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
 import { DireactionSelector } from "./DirectionSelector";
+import { RenderInvoiceDirection } from "./RenderInvoiceDirection";
 
 
 const styles = StyleSheet.create({
@@ -86,16 +87,21 @@ const styles = StyleSheet.create({
 })
 
 type props = {
-    onPressLocation:()=>void
+    onPressLocation:()=>void,
+    readonly?:boolean
 }
 
 
-export const AmountInformationComponent = ({onPressLocation}:props)=> {
+export const AmountInformationComponent = ({onPressLocation, readonly = false}:props)=> {
     return (
         <View style={styles.container}>
-                <DireactionSelector 
-                    onPress={onPressLocation}
-                />
+                {
+                    !readonly ? (
+                        <DireactionSelector 
+                            onPress={onPressLocation}
+                        />
+                    ) : <RenderInvoiceDirection />
+                }
                 <View style={styles.row}>
                     <View style={styles.column}>
                             <Text style={styles.subtotalTextStyles}>

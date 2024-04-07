@@ -59,7 +59,7 @@ export const CarStack = ():JSX.Element=>{
                 name="PAY_SCREEN"
                 options={{
                     header: props =>(
-                        <NormalStackScreenHeader {...props} displayRightContent={false}/>
+                        <NormalStackScreenHeader {...props} displayRightContent={false} />
                     )
                 }}
             />

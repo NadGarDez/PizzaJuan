@@ -3,7 +3,7 @@ import { Dimensions, Image, Pressable, StyleSheet,Text,View } from "react-native
 import { colors } from "../../styles/colors";
 import { PlusLessButton } from "../buttons/PlusLessButton";
 import { DeleteProductButton } from "../buttons/DeleteProductButton";
-import { shadows } from "../../styles/shadow";
+import { productInstance } from "../../constants/productConstants";
 
 const styles = StyleSheet.create(
     {
@@ -132,28 +132,16 @@ const styles = StyleSheet.create(
     }
 )
 
-type props = {
-    productName:string,
-    price:number,
-    favorite:boolean,
-    image:string,
-    likes:number,
-    description:string,
-    creator:string,
-    numberOfItems:number,
-    onPressItem: (index:number)=>void,
-    last?:boolean
+type props = productInstance & {
+    readonly?: boolean,
+    onPressItem:(index:number)=>void,
+    last:boolean
 }
 
-// type ProductListScreenPropType = NativeStackScreenProps<ProductStackType,"PRODUCT_LIST_SCREEN">
+export const CarItem = (props:props):JSX.Element=>{
 
-export const CarItem = ({image, likes,productName, price, favorite,description,onPressItem, creator, last}:props):JSX.Element=>{
+    const {image, productName, price, description, onPressItem, last, readonly = false} = props;
 
-    // const {navigate} = useNavigation<ProductListScreenPropType['navigation']>()
-
-    // const nav = ()=> {
-    //     navigate("PRODUCT_SCREEN", {productId:"123"})
-    // }
     const lastStyles = !!last ? {} : styles.borderStyles;
     const [numberOfItems, setNumberOfItems] = useState<number>(1)
 
@@ -164,8 +152,9 @@ export const CarItem = ({image, likes,productName, price, favorite,description,o
     return (
         <Pressable
             onPress={
-                ()=>onPressItem(1)
+                ()=> onPressItem(1)
             }
+            disabled={readonly}
         >
             {
                 ({pressed})=>(
@@ -189,17 +178,20 @@ export const CarItem = ({image, likes,productName, price, favorite,description,o
                                                 {productName}
                                             </Text>
                                         </View>
-                                                
-                                        <View style={styles.likeContainer}>
-                                            <DeleteProductButton 
-                                            
-                                                onPress={
-                                                    ()=>{
-        
-                                                    }
-                                                }
-                                            />
-                                        </View>
+                                        {
+                                            !readonly ? (
+                                                <View style={styles.likeContainer}>
+                                                    <DeleteProductButton 
+                                                    
+                                                        onPress={
+                                                            ()=>{
+                
+                                                            }
+                                                        }
+                                                    />
+                                                </View>
+                                            ) : null
+                                        }
                                     </View>
                                     <View style={styles.ingredientsDescriptionContainer}>
                                         <Text style={styles.descriptionTextStyles} numberOfLines={3}>
@@ -214,6 +206,7 @@ export const CarItem = ({image, likes,productName, price, favorite,description,o
                                         </View>
                                         <View style={styles.countSelector}>
                                             <PlusLessButton
+                                                readonly={readonly}
                                                 onChange={
                                                     onChangeItemNumber
                                                 }
@@ -230,6 +223,5 @@ export const CarItem = ({image, likes,productName, price, favorite,description,o
                 )
             }
         </Pressable>
-        
-    )
+    );
 }

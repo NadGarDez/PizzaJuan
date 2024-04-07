@@ -74,7 +74,7 @@ type headerProps = {
 }
 
 export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProps):JSX.Element=> {
-    const {displayRightContent,navigation, transparent = false , floating = false,headerTitle = false}= props;
+    const {displayRightContent,navigation, transparent = false , floating = false, headerTitle = false}= props;
 
     const openDrawer = ()=> {
         navigation.dispatch(DrawerActions.openDrawer())

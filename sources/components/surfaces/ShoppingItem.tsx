@@ -118,7 +118,7 @@ export const ShoppingItem = ({image, amount, pedido, lastAcutalization, status}:
     const {navigate} = useNavigation<ProductListScreenPropType>()
 
     const nav = ()=> {
-        navigate("INVOICE_SCREEN", {orderId:"123"})
+        navigate("INVOICE_SCREEN", {orderId:pedido, aditionalInfo:pedido})
     }
     
     return (

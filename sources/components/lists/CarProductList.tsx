@@ -6,14 +6,18 @@ import { ProductItem } from "../surfaces/ProductItem";
 import { CarItem } from "../surfaces/CarItem";
 import { DireactionSelector } from "../surfaces/DirectionSelector";
 import { shadows } from "../../styles/shadow";
+import { productInstance } from "../../constants/productConstants";
 
 const styles = StyleSheet.create(
     {
         container: {
             marginTop:8,
-           
             display:"flex",
             height:Dimensions.get("window").height * 0.45
+        },
+        expandedContainer: {
+            marginTop:8,
+            flex:1
         },
         listContainer: {
             flex:1,
@@ -57,53 +61,33 @@ const styles = StyleSheet.create(
 )
 
 
-type listProps = {onPress:()=>void};
+type listProps = {
+    onPress:()=>void,
+    data: productInstance[],
+    readonly?:boolean,
+    expand?:boolean
+};
 
-export const CarProductList = ({onPress}:listProps):JSX.Element=> {
-
-    const staticData = [
-        {
-            productName:"Pizza numero 1",
-            price:12,
-            favorite:true,
-            image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-            likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-            creator: "PizzaJuan",
-            numberOfItems:2
-        },
-        {
-            productName:"Pizza numero 2",
-            price:12,
-            favorite:false,
-            image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-            likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-            creator: "PizzaJuan",
-            numberOfItems:2
-        },
-    ]
-
+export const CarProductList = ({onPress, data, readonly = false, expand = false}:listProps):JSX.Element=> {
 
     const onPressItem = (index:number)=>{
         onPress()
     }
 
-
     return (
-        <View style={styles.container}>
+        <View style={!!expand ? styles.expandedContainer: styles.container}>
             <View style={styles.listContainer}>
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleFonts}>
-                        {staticData.length} Elementos agregados
+                        {data.length} Elementos agregados
                     </Text>
                 </View>
                 <FlatList
-                    data={staticData}
+                    data={data}
                     showsVerticalScrollIndicator={false}
                     renderItem={(props)=>(
                         <CarItem 
-                            {...props.item} onPressItem={onPressItem} last={props.index === (staticData.length - 1 )}
+                            {...props.item} onPressItem={onPressItem} last={props.index === (data.length - 1 )} readonly={readonly}
                         />
                     )}
                     

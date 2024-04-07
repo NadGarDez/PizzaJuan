@@ -1,24 +1,153 @@
 import React from "react";
-import { StyleSheet, View } from "react-native"
-import { HelloWorldComponent } from "../../components/HelloWorldComponent"
+import { Platform, StyleSheet, Text, View } from "react-native"
+import { TransformedSquare } from "../../components/surfaces/TransformedSquare";
+import { CarProductList } from "../../components/lists/CarProductList";
+import { AmountInformationComponent } from "../../components/surfaces/AmountInformationComponent";
+import { colors } from "../../styles/colors";
+import { productInstance } from "../../constants/productConstants";
+import { MyShoppingStackProps } from "../../navigation/Stacks/MyShopingStack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const styles = StyleSheet.create(
     {
+
         container : {
-            flex:1
-        }
+            flex:1,
+            backgroundColor: "transparent",
+            paddingHorizontal:16,
+            // paddingVertical:Platform.select({
+            //     android: 56,
+            //     ios: 93
+            // }),
+            paddingBottom: 32,
+            overflow: 'hidden'
+        },
+        titleList: {
+            color:colors.seconday_text,
+            fontSize:16,
+            fontWeight:"600"
+        },
+        productContainer: {
+            display: "flex"
+        },
+        directionContainer: {
+        },
+        calculatorContainer: {
+            display:"flex",
+            marginTop:8
+        },
+        buttonContainer: {
+            flex:1,
+            justifyContent:"flex-end",
+            marginTop:16
+        },
+        titleContainer: {
+            width: '100%',
+            height:Platform.select({
+                android: 56,
+                ios: 93
+            }),
+            paddingTop:Platform.select({
+                ios:47,
+                android:10
+            }),
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            paddingBottom:16,
+        },
+        titleStyles: {
+            fontSize:25,
+            fontWeight: "500",
+            color:colors.background_white,
+        },
     }
 )
 
-export const InvoiceScreen = ()=> {
+const staticData:productInstance[] = [
+    {
+        productName:"Pizza numero 1",
+        price:12,
+        favorite:true,
+        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
+        likes:12,
+        description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+        creator: "PizzaJuan",
+        count:2
+    },
+    {
+        productName:"Pizza numero 2",
+        price:12,
+        favorite:false,
+        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
+        likes:12,
+        description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+        creator: "PizzaJuan",
+        count:2
+    },
+    {
+        productName:"Pizza numero 3",
+        price:12,
+        favorite:false,
+        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
+        likes:12,
+        description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+        creator: "PizzaJuan",
+        count:2
+    },
+    {
+        productName:"Pizza numero 4",
+        price:12,
+        favorite:false,
+        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
+        likes:12,
+        description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+        creator: "PizzaJuan",
+        count:2
+    },
+    {
+        productName:"Pizza numero 5",
+        price:12,
+        favorite:false,
+        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
+        likes:12,
+        description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
+        creator: "PizzaJuan",
+        count:2
+    },
+];
+
+type props = NativeStackScreenProps<MyShoppingStackProps, 'INVOICE_SCREEN'>;
+
+export const InvoiceScreen = (props: props)=> {
+    const {route: {params: {orderId}}} = props;
 
     const onPress = ()=> {
 
     }
 
     return (
-        <View style={styles.container}>
-            <HelloWorldComponent sectionMessage="Ventana de factura" onPress={onPress}/>
+        <View style={{overflow:"hidden", flex:1}}>
+            <TransformedSquare />
+            <View style={styles.titleContainer}>
+                <Text style={styles.titleStyles}>
+                    Pedido #{orderId}
+                </Text>
+            </View>
+            <View style={styles.container}>
+                <CarProductList 
+                    data={staticData}
+                    onPress={onPress}
+                    readonly
+                    expand
+                />
+                <View style={styles.calculatorContainer}>
+                    <AmountInformationComponent 
+                        readonly
+                        onPressLocation={onPress}
+                    />
+                </View>
+            </View>
         </View>
     )
 }
