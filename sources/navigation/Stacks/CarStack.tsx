@@ -4,10 +4,9 @@ import { CarScreen } from "../../screens/shoppingGroup/CarScreen";
 import { PayScreen } from "../../screens/shoppingGroup/PayScreen";
 import { TranscValidationScreen } from "../../screens/shoppingGroup/TranscValidationScreen";
 import { InitialStackScreenHeader } from "../../components/headers/InitialStackScreenHeader";
-import { NormalStackScreenHeart } from "../../components/headers/NormalStackScreenHeader";
-import { StyleSheet, Text, View } from "react-native";
+import { NormalStackScreenHeader } from "../../components/headers/NormalStackScreenHeader";
+import { StyleSheet } from "react-native";
 import { colors } from "../../styles/colors";
-import { HeaderTitleComponent } from "../../components/surfaces/HeaderTitleComponent";
 import { withScrollView } from "../../HOCs/WithScrollView";
 
 export type CarStackProp = {
@@ -60,7 +59,7 @@ export const CarStack = ():JSX.Element=>{
                 name="PAY_SCREEN"
                 options={{
                     header: props =>(
-                        <NormalStackScreenHeart {...props} displayRightContent={false}/>
+                        <NormalStackScreenHeader {...props} displayRightContent={false}/>
                     )
                 }}
             />
@@ -69,7 +68,7 @@ export const CarStack = ():JSX.Element=>{
                 name="TRANSC_VALIDATION_SCREEN"
                 options={{
                     header: props =>(
-                        <NormalStackScreenHeart {...props} displayRightContent={false}/>
+                        <NormalStackScreenHeader {...props} displayRightContent={false}/>
                     )
                 }}
             />

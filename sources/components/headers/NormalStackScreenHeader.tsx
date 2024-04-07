@@ -1,7 +1,6 @@
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import React from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
-import { colors } from "../../styles/colors";
+import { Platform, StyleSheet, View } from "react-native";
 import { IconButton } from "../buttons/IconButton";
 import { BackIcon } from "../icons/BackIcon";
 import { HeartButton } from "../buttons/HeartButton";
@@ -54,7 +53,7 @@ type rightContent = {
     actionReceipt?:string // me be for the reciber o a certain action 
 }
 
-export const NormalStackScreenHeart = ({navigation, displayRightContent}:NativeStackHeaderProps&rightContent):JSX.Element=> {
+export const NormalStackScreenHeader = ({navigation, displayRightContent}:NativeStackHeaderProps&rightContent):JSX.Element=> {
 
     const back = ()=> {
         navigation.goBack()

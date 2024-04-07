@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Dimensions, Image, Pressable, StyleSheet,Text,View } from "react-native";
 import { colors } from "../../styles/colors";
-import { PlusLessButton } from "../buttons/PlusLessButton";
-import { DeleteProductButton } from "../buttons/DeleteProductButton";
-import { shadows } from "../../styles/shadow";
 import { IconWithTextElement } from "./IconWithTextElement";
 import { LocationIcon } from "../icons/LocationIcon";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -36,16 +33,6 @@ const styles = StyleSheet.create(
         },
         imageStyles: {
            height:110
-        },
-        likeContainer: {
-
-            position:"relative",
-            top:-15,
-            right:-10,
-            display: "flex",
-            flexDirection:"row",
-            justifyContent:"flex-end",
-            alignItems:"center",
         },
         titleContainerAndFavorite: {
             display: "flex",
@@ -81,47 +68,9 @@ const styles = StyleSheet.create(
             fontWeight: "300",
             color:colors.seconday_text
         },
-        likeNumberContainer: {
-            fontSize:12,
-            fontWeight: "200",
-            color:colors.seconday_text,
-            marginRight:4
-        },
-        ingredientsDescriptionContainer: {
-            marginBottom: 8
-        },
-        descriptionTextStyles: {
-            fontSize:14,
-            fontWeight: "300",
-            color:colors.seconday_text
-        },
-        line: {
-            borderStyle:"solid",
-            borderWidth: 0,
-            borderTopWidth:1,
-            borderTopColor: colors.seconday_text + "30",
-            width: "100%",
-            marginTop:8,
-        },
         flexRowStyles: {
             flex:1,
             flexDirection: "row",
-        },
-        creator: {
-            display: "flex",
-            width: "100%",
-            flexDirection: "row",
-            height:30,
-            alignItems: "center",
-            paddingHorizontal:2
-        },
-        firstPartOfCreator: {
-            flex:1
-        },
-        secondPartOfCreator: {
-            flex:1,
-            flexDirection:"row",
-            justifyContent: "flex-end"
         },
         priceContainer:{
             flex:1,
@@ -204,17 +153,6 @@ export const ShoppingItem = ({image, amount, pedido, lastAcutalization, status}:
                                         icon={<LocationIcon color={colors.white_card} size={14}/>}
                                         text="Urbanizacion Guarico Apure, Calle Guarico, casa #9"
                                     />
-                                    {/* <IconWithTextElement
-                                        color={colors.hightLightPrincipal}
-                                        icon={<LocationIcon color={colors.white_card} size={14}/>}
-                                        text="Pedido Confirmado"
-                                    />
-
-                                    <IconWithTextElement
-                                        color={colors.pink}
-                                        icon={<LocationIcon color={colors.white_card} size={14}/>}
-                                        text="40$"
-                                    /> */}
                                     <View style={styles.priceContainerAndCount}>
                                         <View style={styles.priceContainer}>
                                             <Text style={styles.dolarPrice}>
@@ -242,6 +180,5 @@ export const ShoppingItem = ({image, amount, pedido, lastAcutalization, status}:
                 )
             }
         </Pressable>
-        
     )
 }
