@@ -4,6 +4,9 @@ import { SceneMap, TabView } from "react-native-tab-view";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
 import { DefaultAppTabBar } from "../../screens/shoppingGroup/DefaultAppTabBar";
+import { StoreQR } from "../surfaces/StoreQR";
+import { StoreSMS } from "../surfaces/StoreSMS";
+import { StoreMobilePayData } from "../surfaces/StoreMobilePayData";
 
 const styles = StyleSheet.create({
     container: {
@@ -30,9 +33,9 @@ interface routeType {
 }
 
 const renderScene = SceneMap({
-    first:()=><Text>Pagina 1</Text>,
-    second: ()=><Text>Pagina 2</Text>,
-    third: ()=><Text>Pagina 3</Text>
+    first: StoreQR,
+    second: StoreSMS,
+    third: StoreMobilePayData
 });
 
 export const StorePaymentDataTab = ():JSX.Element=> {

@@ -128,6 +128,7 @@ export const CarScreen = ():JSX.Element=>{
                 </View>
                 <View style={styles.buttonContainer}>
                     <BuyButton 
+                        text="Realizar Pago"
                         onPress={onPress}
                     />
                 </View>
