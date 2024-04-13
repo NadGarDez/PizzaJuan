@@ -4,9 +4,9 @@ import { ToggableList } from "../lists/ToggableList";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { colors } from "../../styles/colors";
 import { PrincipalButton } from "../buttons/PrincipalButton";
-import { toogableListItem } from "../../constants/userConfigurationConstants";
-import { payMethodConfigurationMetadata } from "../../constants/formConstants";
+import { payMethodConfigurationMetadata } from "../../constants/form/formConstants";
 import { WalletIcon } from "../icons/WalletIcon";
+import { toggableListItem } from "../../types/forms/generalFormTypes";
 
 const styles = StyleSheet.create({
     container: {
@@ -51,7 +51,7 @@ type aditionalProps = {
 
 type props = tabViewSceneProps & aditionalProps
 
-const staticData: toogableListItem[] = [
+const staticData: toggableListItem[] = [
     {
         title: 'Metodo de Pago 1',
         [payMethodConfigurationMetadata.bank.name]: 'Mercantil',

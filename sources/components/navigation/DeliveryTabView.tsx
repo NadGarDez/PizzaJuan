@@ -3,10 +3,10 @@ import { SceneMap, TabView } from "react-native-tab-view";
 import { DeliveryConfigurationForm } from "../forms/DeliveryConfiguraitonForm";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { DirectionListContainer } from "../surfaces/DirectionListContainer";
-import { ModalFormNames } from "../../constants/userConfigurationConstants";
 import { ModalFormHeader } from "../surfaces/ModalFormHeader";
 import { useAppDispatch } from "../../redux/hooks";
 import { hide } from "../../redux/ModalFormReducer";
+import { ModalFormNames } from "../../types/forms/generalFormTypes";
 
 const styles = StyleSheet.create({
     container: {

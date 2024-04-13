@@ -1,12 +1,13 @@
 import React, {  useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native"; 
 import { colors } from "../../styles/colors";
-import { payMethodConfigurationMetadata, payMethodConfigurationSchema, payMethodConfigurationSchemaType } from "../../constants/formConstants";
+import { payMethodConfigurationMetadata, } from "../../constants/form/formConstants";
 import { useFormik } from "formik";
 import { inputSelector } from "../../utils/inputSelector";
 import { PrincipalButton } from "../buttons/PrincipalButton";
 import { OutlinedButton } from "../buttons/OutlinedButton";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
+import { payMethodConfigurationSchema, payMethodConfigurationSchemaType } from "../../types/forms/payMethodFormTypes";
 
 const styles = StyleSheet.create({
     container: {

@@ -1,14 +1,14 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useFormik } from "formik";
-import { personalConfigurationMetadata } from "../../constants/form/formConstants";
+import { personalConfigurationMetadata, transcValidationMetadata } from "../../constants/form/formConstants";
 import { colors } from "../../styles/colors";
 import { inputSelector } from "../../utils/inputSelector";
 import { ModalFormHeader } from "../surfaces/ModalFormHeader";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { hide, modalFormSelector } from "../../redux/ModalFormReducer";
 import { ModalFormNames } from "../../types/forms/generalFormTypes";
-import { personalConfigurationSchema, personalConfigurationSchemaType } from "../../types/forms/personalConfigurationTypes";
+import { transcValidationMetadataType, transcValidationSchema, transcValidationSchemaType } from "../../types/forms/transcValidationFormTypes";
 
 
 const styles = StyleSheet.create({
@@ -32,28 +32,23 @@ const styles = StyleSheet.create({
         marginBottom: 8
     },
     subtitleText: {
-        fontSize:20,
+        fontSize:16,
         fontWeight: "200",
         color:colors.seconday_text,
     }
 })
 
-const defaultValue : personalConfigurationSchemaType = {
-    name: '',
-    lastName: '',
-    email: '',
-    genre: 'male',
-    birthDate: new Date(),
-    ci:''
+const defaultValue : transcValidationSchemaType = {
+   transactionCode:''
 }
 
-export const PersonalConfigurationForm = (): JSX.Element=> {
+export const TransactionCodeForm = (): JSX.Element=> {
 
     const {valid} = useAppSelector(modalFormSelector);
     const { setFieldValue } = useFormik(
         {
             initialValues: defaultValue,
-            validationSchema:personalConfigurationSchema,
+            validationSchema:transcValidationSchema,
             onSubmit: values => {
                 console.log(values)
             },
@@ -74,7 +69,7 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
     return (
         <>
             <ModalFormHeader 
-                formKey={ModalFormNames.PERSONAL_CONFIGURATION}
+                formKey={ModalFormNames.TRANSACTION_CODE_FORM}
                 isFormValid={valid}
                 onCancel={onCancel}
                 onSave={onSave}
@@ -82,13 +77,13 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
             <ScrollView style={styles.container}>
                 <View style={styles.subtitleContainer}>
                     <Text style={styles.subtitleText}>
-                        Cuentanos sobre ti
+                        Ingresa la referencia de pago en el siguiente formulario
                     </Text>
                 </View>
                     {
                         Object.keys(defaultValue).map(
                             (item, index) => {
-                                const {placeholder = '', inputType, name} = personalConfigurationMetadata[item as keyof personalConfigurationSchemaType];
+                                const {placeholder = '', inputType, name} = transcValidationMetadata[item as keyof transcValidationMetadataType];
                                 return (
                                     <View style={styles.inputContainer} key={`input-${item}-${index}`}>
                                         <View style={styles.titleContainer}>

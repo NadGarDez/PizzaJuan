@@ -3,8 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { IconButton } from "../buttons/IconButton";
 import { colors } from "../../styles/colors";
 import { FormImageHeader } from "./FormImageHeader";
-import { ModalFormNames, configurationObjectType, configurationSections } from "../../constants/userConfigurationConstants";
-
+import { ModalFormNames } from "../../types/forms/generalFormTypes";
+import { modalFormData } from "../../constants/form/formConstants";
 const styles = StyleSheet.create({
     container: {
         flex:1,
@@ -78,6 +78,7 @@ interface props {
     formKey: ModalFormNames
 }
 
+
 export const ModalFormHeader = (props:props):JSX.Element=> {
     const {onCancel, onSave, isFormValid, formKey} = props;
 
@@ -112,7 +113,7 @@ export const ModalFormHeader = (props:props):JSX.Element=> {
             <View style={styles.titleContainer}>
                 <Text style={styles.titleFontStyles}> 
                   {
-                    configurationSections[formKey].title
+                    modalFormData[formKey].title
                   }
                 </Text>
             </View>

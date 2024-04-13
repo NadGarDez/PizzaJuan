@@ -1,19 +1,20 @@
 import React from "react";
-import { ModalFormNames, configurationObjectType, configurationSections } from "../../constants/userConfigurationConstants";
 import { ConfigurationItem } from "../surfaces/ConfigurationItem";
 import { useAppDispatch } from "../../redux/hooks";
 import { activateWithoutValid, configure } from "../../redux/ModalFormReducer";
+import { ModalFormNames, allFormsType  } from "../../types/forms/generalFormTypes";
+import { modalFormData } from "../../constants/form/formConstants";
 
 export const ConfigurationList = ()=> {
     const dispatch = useAppDispatch();
-    const configurationKeys = Object.keys(ModalFormNames);
+    const configurationKeys = Object.keys(modalFormData).filter(item=> item !== ModalFormNames.TRANSACTION_CODE_FORM);
 
     return (
         <>
             {
                 configurationKeys.map(
                     (key, index) =>{
-                        const configurationItem = configurationSections[key as keyof configurationObjectType];
+                        const configurationItem = modalFormData[key as keyof allFormsType];
                         return (
                             <ConfigurationItem 
                                 title={

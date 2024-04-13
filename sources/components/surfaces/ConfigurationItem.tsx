@@ -4,9 +4,8 @@ import { colors } from "../../styles/colors";
 import { LocationIcon } from "../icons/LocationIcon";
 import { GoFoward } from "../icons/GoFoward";
 import { shadows } from "../../styles/shadow";
-import { SECTION_ONE_TITLE, SECTION_THREE_TITLE, SECTION_TWO_TITLE } from "../../constants/userConfigurationConstants";
+import { SECTION_ONE_TITLE, SECTION_TWO_TITLE } from "../../constants/userConfigurationConstants";
 import { PersonIcon } from "../icons/PersonIcon";
-import { HeartIconOutlined } from "../icons/HeartIconOutlined";
 import { WalletIcon } from "../icons/WalletIcon";
 
 const styles = StyleSheet.create({

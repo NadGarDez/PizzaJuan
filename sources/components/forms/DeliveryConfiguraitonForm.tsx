@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native"; 
 import { colors } from "../../styles/colors";
-import { deliveryConfigurationMetadata, deliveryConfigurationSchema, deliveryConfigurationSchemaType } from "../../constants/formConstants";
+import { deliveryConfigurationMetadata } from "../../constants/form/formConstants";
 import { useFormik } from "formik";
 import { inputSelector } from "../../utils/inputSelector";
 import { PrincipalButton } from "../buttons/PrincipalButton";
-import { WhiteButton } from "../buttons/WhiteButton";
 import { OutlinedButton } from "../buttons/OutlinedButton";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
+import { deliveryConfigurationSchema, deliveryConfigurationSchemaType } from "../../types/forms/deliveryFormTypes";
 
 const styles = StyleSheet.create({
     container: {

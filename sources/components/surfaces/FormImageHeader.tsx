@@ -1,10 +1,10 @@
 import React from "react"
 import { StyleSheet, View, Image, ImageRequireSource } from "react-native"
 import { colors } from "../../styles/colors"
-import { ModalFormNames } from "../../constants/userConfigurationConstants"
 import imagePersonalConfiguration from "../../../static/images/personalInformationFormImage.jpeg";
 import imageDeliveryConfiguration from "../../../static/images/locaitonFormImage.jpg";
 import imagePaymentConfiguration from "../../../static/images/payConfigurationFormImage.jpg"
+import { ModalFormNames } from "../../types/forms/generalFormTypes";
 
 const styles = StyleSheet.create(
     {
@@ -58,16 +58,15 @@ type props = {
     form:string
 }
 
-type selector = {
-    [key in ModalFormNames] : ImageRequireSource
-}
 
-const imageselector:selector = {
+type selector = Record<ModalFormNames, ImageRequireSource>
+
+const imageselector:Record<ModalFormNames, ImageRequireSource> = {
     PERSONAL_CONFIGURATION: imagePersonalConfiguration,
     DELIVERY_CONFIGURATION: imageDeliveryConfiguration,
-    PAYMENT_CONFIGURATION: imagePaymentConfiguration
+    PAYMENT_CONFIGURATION: imagePaymentConfiguration,
+    TRANSACTION_CODE_FORM: imagePaymentConfiguration,
 }
-
 export const FormImageHeader = ({form}:props):JSX.Element=> {
 
     return (

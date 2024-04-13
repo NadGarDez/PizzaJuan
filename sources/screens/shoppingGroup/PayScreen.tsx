@@ -3,10 +3,12 @@ import { Platform, StyleSheet, View } from "react-native"
 import { CarStackProp } from "../../navigation/Stacks/CarStack"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useNavigation } from "@react-navigation/native"
-import { colors } from "../../styles/colors"
-import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
 import { AmountContainer } from "../../components/surfaces/AmountContainer"
 import { PayMethodSelector } from "../../components/surfaces/PayMethodSelector"
+import { useAppDispatch } from "../../redux/hooks"
+import { activateWithoutValid, configure } from "../../redux/ModalFormReducer"
+import { ModalFormNames } from "../../types/forms/generalFormTypes"
+import { ModalForm } from "../../components/modal/ModalForm"
 
 const styles = StyleSheet.create(
     {
@@ -25,6 +27,8 @@ const styles = StyleSheet.create(
 type CarScreenPropType = StackNavigationProp<CarStackProp, "PAY_SCREEN">
 
 export const PayScreen = ():JSX.Element=>{
+
+    const dispatch = useAppDispatch();
     
     const {navigate} = useNavigation<CarScreenPropType>()
 
@@ -32,12 +36,18 @@ export const PayScreen = ():JSX.Element=>{
         navigate("TRANSC_VALIDATION_SCREEN", {transactionCode:"123abc"});
     }
 
+    const openModalA = ()=> {
+        dispatch(configure(ModalFormNames.TRANSACTION_CODE_FORM));
+        dispatch(activateWithoutValid());
+    }
+
     return (
         <>
             <View style={styles.container}>
                 <AmountContainer />
-                <PayMethodSelector />
+                <PayMethodSelector onPress={openModalA}/>
             </View>
+            <ModalForm />
         </>
     )
 }

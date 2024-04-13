@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./reduxTypes";
-import { ModalFormNames } from "../constants/userConfigurationConstants";
+import { ModalFormNames } from "../types/forms/generalFormTypes";
 
 // this state should be util for almost every form in the app, all form screen in the projecto should use this pattern
 // should be convinient find a abstract shape that fit to all form implementation, 

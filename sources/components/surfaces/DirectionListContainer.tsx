@@ -4,8 +4,9 @@ import { ToggableList } from "../lists/ToggableList";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { colors } from "../../styles/colors";
 import { PrincipalButton } from "../buttons/PrincipalButton";
-import { DESCRIPTION, PLUS_CODE, toogableListItem } from "../../constants/userConfigurationConstants";
+import { DESCRIPTION, PLUS_CODE } from "../../constants/userConfigurationConstants";
 import { LocationIcon } from "../icons/LocationIcon";
+import { toggableListItem } from "../../types/forms/generalFormTypes";
 
 const styles = StyleSheet.create({
     container: {
@@ -50,7 +51,7 @@ type aditionalProps = {
 
 type props = tabViewSceneProps & aditionalProps
 
-const staticValues: toogableListItem[] = [
+const staticValues: toggableListItem[] = [
     {
         title: 'Direccion 1',
         [PLUS_CODE]: 'JJXX+HR8',

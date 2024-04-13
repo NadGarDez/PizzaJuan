@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { colors } from "../../styles/colors";
 import RNPickerSelect from 'react-native-picker-select';
 import { basicInputState, defaultInputActionTypes, defaultInputStates, inputAction } from "../../constants/inputConstants";
-import { genre } from "../../constants/formConstants";
+import { genre } from "../../constants/form/formConstants";
 
 // types 
 type localActionPayloadType = {

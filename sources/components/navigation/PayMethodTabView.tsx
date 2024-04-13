@@ -6,10 +6,10 @@ import { DirectionListContainer } from "../surfaces/DirectionListContainer";
 import { PayMethodContainer } from "../surfaces/PayMethodListContainer";
 import { PaymentConfigurationForm } from "../forms/PaymentConfigurationForm";
 import { ModalFormHeader } from "../surfaces/ModalFormHeader";
-import { ModalFormNames } from "../../constants/userConfigurationConstants";
 import { number } from "yup";
 import { useAppDispatch } from "../../redux/hooks";
 import { hide } from "../../redux/ModalFormReducer";
+import { ModalFormNames } from "../../types/forms/generalFormTypes";
 
 const styles = StyleSheet.create({
     container: {

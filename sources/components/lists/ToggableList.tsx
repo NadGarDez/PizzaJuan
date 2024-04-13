@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { ToggableItem } from "../surfaces/ToggableItem";
-import { DESCRIPTION, PLUS_CODE, toogableListItem } from "../../constants/userConfigurationConstants";
-import { LocationIcon } from "../icons/LocationIcon";
 import { colors } from "../../styles/colors";
+import { toggableListItem } from "../../types/forms/generalFormTypes";
 
 const styles =  StyleSheet.create(
     {
@@ -38,7 +37,7 @@ const styles =  StyleSheet.create(
 );
 
 type props = {
-    data: toogableListItem[],
+    data: toggableListItem[],
     leftItem: ()=>JSX.Element,
     voidMessage:string
 }

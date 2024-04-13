@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
-import { shadows } from "../../styles/shadow";
-import { toogableListItem } from "../../constants/userConfigurationConstants";
+import { toggableListItem } from "../../types/forms/generalFormTypes";
 
 const styles = StyleSheet.create({
     baseContainer: {
@@ -57,7 +56,7 @@ type props = {
     active: boolean,
     index:number,
     onChangeSelect: (index:number)=>void,
-    data: toogableListItem;
+    data: toggableListItem;
     leftItem?: ()=>JSX.Element | null;
 }
 

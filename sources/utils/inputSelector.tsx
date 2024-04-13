@@ -1,5 +1,5 @@
 import React from "react";
-import { inputTypes } from "../constants/formConstants";
+import { inputTypes } from "../constants/form/formConstants";
 import { StandardOutlinedInput } from "../components/inputs/StandardOutlinedInput";
 import { StandardOutlinedDatePicker } from "../components/inputs/StandardOutlinedDatePicker";
 import { StandardOutlinedSelectInput } from "../components/inputs/StandardOutlinedSelectInput";
