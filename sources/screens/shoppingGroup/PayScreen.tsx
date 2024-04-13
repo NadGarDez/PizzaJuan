@@ -1,5 +1,5 @@
 import React from "react"
-import { Platform, StyleSheet, View } from "react-native"
+import { Platform, StyleSheet, Text, View } from "react-native"
 import { CarStackProp } from "../../navigation/Stacks/CarStack"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useNavigation } from "@react-navigation/native"
@@ -9,6 +9,8 @@ import { useAppDispatch } from "../../redux/hooks"
 import { activateWithoutValid, configure } from "../../redux/ModalFormReducer"
 import { ModalFormNames } from "../../types/forms/generalFormTypes"
 import { ModalForm } from "../../components/modal/ModalForm"
+import { BuyButton } from "../../components/buttons/BuyButton"
+import { StorePaymentDataTab } from "../../components/navigation/StorePaymentDataTab"
 
 const styles = StyleSheet.create(
     {
@@ -20,6 +22,16 @@ const styles = StyleSheet.create(
                 android: 56,
                 ios: 93
             }),
+        },
+        buttonContainer: {
+            marginTop:16,
+            marginBottom: 30
+        },
+        tabContainer: {
+            marginTop: 16,
+            flex:1,
+            justifyContent: 'center',
+            alignItems: 'center'
         }
     }
 )
@@ -36,8 +48,13 @@ export const PayScreen = ():JSX.Element=>{
         navigate("TRANSC_VALIDATION_SCREEN", {transactionCode:"123abc"});
     }
 
-    const openModalA = ()=> {
+    const openConfirmModal = ()=> {
         dispatch(configure(ModalFormNames.TRANSACTION_CODE_FORM));
+        dispatch(activateWithoutValid());
+    }
+
+    const openPayMethodModal = ()=> {
+        dispatch(configure(ModalFormNames.PAYMENT_CONFIGURATION));
         dispatch(activateWithoutValid());
     }
 
@@ -45,7 +62,16 @@ export const PayScreen = ():JSX.Element=>{
         <>
             <View style={styles.container}>
                 <AmountContainer />
-                <PayMethodSelector onPress={openModalA}/>
+                <PayMethodSelector onPress={openPayMethodModal}/>
+                <View style={styles.tabContainer}>
+                    <StorePaymentDataTab />
+                </View>
+                <View style={styles.buttonContainer}>
+                    <BuyButton 
+                        onPress={openConfirmModal}
+                        text="Confirmar"
+                    />
+                </View>
             </View>
             <ModalForm />
         </>

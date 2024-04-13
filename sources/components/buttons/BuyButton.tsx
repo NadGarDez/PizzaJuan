@@ -27,14 +27,13 @@ const styles = StyleSheet.create(
 
 type props = {
     onPress: ()=>void,
+    text?:string
 }
 
 const pressedStyles= (pressed:boolean)=>pressed ? {...styles.buttonContainer, ...shadows.lightShadow, backgroundColor: colors.hightLightPrincipal } : {...styles.buttonContainer, ...shadows.principalShadow}
 
 export const BuyButton = (props:props):JSX.Element=>{
-    const {onPress}=props;
-
-
+    const {onPress, text = ""}=props;
 
     return (
         <Pressable onPress={onPress}>
@@ -42,7 +41,9 @@ export const BuyButton = (props:props):JSX.Element=>{
                 ({pressed})=> (
                     <View style={pressedStyles(pressed)}>
                         <Text style={styles.textStyles}>
-                            Pagar
+                            {
+                                text === "" ? "Pagar" : text
+                            }
                         </Text>
                         <CarIcon color={colors.text_contrast}/>
                     </View>

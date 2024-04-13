@@ -4,9 +4,10 @@ import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
 import { colors } from "../../styles/colors"
 import { shadows } from "../../styles/shadow"
 import { InProgressShoppingList } from "../../components/lists/InProgressShoppingList"
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { TabView, SceneMap } from 'react-native-tab-view';
 import { FinishedShoppingList } from "../../components/lists/FinishedShoopingList"
 import { TransformedBottomCircle } from "../../components/surfaces/TransformedBottomCircle"
+import { DefaultAppTabBar } from "./DefaultAppTabBar"
 
 const renderScene = SceneMap({
   first: InProgressShoppingList,
@@ -73,19 +74,6 @@ const styles = StyleSheet.create(
     }
 )
 
-const renderTabBar = (props:any) => (
-    <TabBar
-      {...props}
-      indicatorStyle={{ backgroundColor: colors.principal }}
-      style={styles.tabBarStyle}
-      renderLabel={({ route, focused, color }) => (
-        <Text style={styles.titleFonts}>
-          {route.title}
-        </Text>
-      )}
-    />
-  );
-
 export const MyShoppingScreen = ():JSX.Element=>{
 
     const [index, setIndex] = React.useState(0);
@@ -105,7 +93,7 @@ export const MyShoppingScreen = ():JSX.Element=>{
                         renderScene={renderScene}
                         onIndexChange={setIndex}
                         initialLayout={{ width: Dimensions.get("screen").width - 32 }}
-                        renderTabBar={renderTabBar}
+                        renderTabBar={DefaultAppTabBar}
                     
                     />
                     <View style={styles.bottomLine}>

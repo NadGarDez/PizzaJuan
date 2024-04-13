@@ -20,7 +20,6 @@ const styles = StyleSheet.create(
                 android: 56,
                 ios: 93
             }),
-
         },
         titleList: {
             color:colors.seconday_text,
