@@ -12,7 +12,7 @@ const styles = StyleSheet.create(
             justifyContent:"center",
             alignItems:"center",
             padding: 8,
-            borderRadius:12,
+            borderRadius:3,
             borderStyle: "solid",
             borderWidth:1,
             backgroundColor:colors.white_card,

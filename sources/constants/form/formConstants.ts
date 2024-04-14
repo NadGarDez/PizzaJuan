@@ -47,7 +47,7 @@ export const VenezuelanBancs = [
     {
         "value": "0168",
         "label": "Bancrecer",
-        "sms": false,
+        "sms": true,
     },
     {
         "value": "0169",
@@ -62,7 +62,7 @@ export const VenezuelanBancs = [
     {
         "value": "0191",
         "label": "Banco Nacional de Crédito (BNC)",
-        "sms": true,
+        "sms": false,
     },
     {
         "value": "0105",
@@ -72,7 +72,7 @@ export const VenezuelanBancs = [
     {
         "value": "0108",
         "label": "Banco Provincial",
-        "sms": true,
+        "sms": false,
     },
     {
         "value": "0114",
@@ -92,7 +92,7 @@ export const VenezuelanBancs = [
     {
         "value": "0128",
         "label": "Banco Caroní",
-        "sms": false,
+        "sms": true,
     },
     {
         "value": "0134",
@@ -107,7 +107,7 @@ export const VenezuelanBancs = [
     {
         "value": "0138",
         "label": "Banco Plaza",
-        "sms": true,
+        "sms": false,
     },
     {
         "value": "0146",
@@ -122,12 +122,12 @@ export const VenezuelanBancs = [
     {
         "value": "0156",
         "label": "100% Banco",
-        "sms": true,
+        "sms": false,
     },
     {
         "value": "0157",
         "label": "Del Sur Banco Universal",
-        "sms": false,
+        "sms": true,
     },
     {
         "value": "0171",

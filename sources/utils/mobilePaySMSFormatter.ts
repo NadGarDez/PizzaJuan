@@ -18,6 +18,18 @@ export const mobilePaySMSFormatter = (issuingBank:string, receivingBank:string, 
                 phoneNumber: '22741'
             };
         }
+        case "0115" : {
+            return {
+                sms: `Pagar ${receivingBank} ${receivingCI} ${receivingPhone} ${amount}`,
+                phoneNumber: '278'
+            };
+        }
+        case "0128" : {
+            return {
+                sms: `Pagar ${receivingBank} ${receivingPhone} ${receivingCI} ${amount}`,
+                phoneNumber: '3266'
+            };
+        }
         case "0134" : {
             return {
                 sms: `${receivingBank} ${receivingPhone} ${CIPre} ${receivingCI} ${amount}`,
@@ -36,10 +48,22 @@ export const mobilePaySMSFormatter = (issuingBank:string, receivingBank:string, 
                 phoneNumber: '2383'
             };
         }
+        case "0157" : {
+            return {
+                sms: `DELSURP2C ${receivingBank} ${receivingPhone} ${receivingCI} ${amount}`,
+                phoneNumber: '2383'
+            };
+        }
         case "0175" : {
             return {
                 sms: `Pago ${receivingBank} ${receivingPhone} ${CIPre}${receivingCI} ${amount}`,
                 phoneNumber: '2383'
+            };
+        }
+        case "0168" : {
+            return {
+                sms: `Pagoya ${receivingPhone} ${CIPre} ${receivingCI}${receivingBank} ${amount} [pin]`,
+                phoneNumber: '27327'
             };
         }
         default: {
