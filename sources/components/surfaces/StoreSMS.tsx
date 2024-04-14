@@ -57,13 +57,6 @@ const styles = StyleSheet.create({
     },
 })
 
-// formato banesco : 0134 04141234567 V 10123456 300,00 -> al : 2846
-// formato bdv : Pagar 0102 04141234567 10123456 300,00 -> al : 2661
-// formato bicentenrario: Pago 0175 04261234567 V12345678 12,34 -> al : 2383
-// formato bfc : PAT 0151 04261234567 300,00 V12345678 -> all : 88232
-// formato bancaribe : mipago V12345678 0114 50000,10 04141234567 -> all : 22741
-// formato banco del tesoro: Pagar 0102 04141234567 V 10123456 300,00 CODIGO_COORDENADA -> all : 2383
-
 const data = VenezuelanBancs.filter(
     item => item.sms === true
 );
