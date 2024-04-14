@@ -43,7 +43,7 @@ export const StorePaymentDataTab = ():JSX.Element=> {
     const [routes] = useState<routeType[]>([
         { key: 'first', title: 'QR' },
         { key: 'second', title: 'SMS' },
-        { key: 'third', title: 'Aplicacion' },
+        { key: 'third', title: 'Datos' },
     ]);
 
     return (
