@@ -1,6 +1,8 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
+import { StandardOutlinedSelectInput } from "../inputs/StandardOutlinedSelectInput";
+import { VenezuelanBancs } from "../../constants/form/formConstants";
 
 const styles = StyleSheet.create({
     container: {
@@ -19,6 +21,9 @@ const styles = StyleSheet.create({
     imageStyles: {
         width:'100%',
         height: '100%'
+    },
+    selectContainer: {
+        marginTop:8
     }
 })
 
@@ -29,12 +34,29 @@ const styles = StyleSheet.create({
 // formato bancaribe : mipago V12345678 0114 50000,10 04141234567 -> all : 22741
 // formato banco del tesoro: Pagar 0102 04141234567 V 10123456 300,00 CODIGO_COORDENADA -> all : 2383
 
+const data = VenezuelanBancs.filter(
+    item => item.sms === true
+);
+
 export const StoreSMS = ()=> {
     return (
         <View style={styles.container}>
             <Text style={styles.textStyles}>Envia un pago movil con el monto de tu compra usando el siguiente mensaje de texto</Text>
             <View style={styles.smsContainer}>
-               
+               <View style={styles.selectContainer}>
+                    <StandardOutlinedSelectInput 
+                        onChangeCallback={
+                            ()=>{
+
+                            }
+                        }
+                        inputName="Formato del mensaje de texto"
+                        placeholder="Formato del mensaje"
+                        initialValue="0102"
+                        data={data}
+                        
+                    />
+               </View>
             </View>
         </View>
     )

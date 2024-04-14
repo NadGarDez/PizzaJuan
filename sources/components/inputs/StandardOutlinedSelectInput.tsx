@@ -180,6 +180,7 @@ export const StandardOutlinedSelectInput = (props:props):JSX.Element=> {
                         placeholder={{
                             label:placeholder
                         }}
+                        value={state.value}
                         useNativeAndroidPickerStyle={false}
                         style={
                             {
