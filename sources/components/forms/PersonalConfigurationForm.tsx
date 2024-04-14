@@ -88,7 +88,7 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
                     {
                         Object.keys(defaultValue).map(
                             (item, index) => {
-                                const {placeholder = '', inputType, name} = personalConfigurationMetadata[item as keyof personalConfigurationSchemaType];
+                                const {placeholder = '', inputType, name, aditionalData} = personalConfigurationMetadata[item as keyof personalConfigurationSchemaType];
                                 return (
                                     <View style={styles.inputContainer} key={`input-${item}-${index}`}>
                                         <View style={styles.titleContainer}>
@@ -102,7 +102,8 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
                                                 onChangeCallback:(text:string)=> {
                                                     setFieldValue(item, text);
                                                 },
-                                                inputName:name
+                                                inputName:name,
+                                                ...aditionalData
                                             })
                                         }
                                     </View>

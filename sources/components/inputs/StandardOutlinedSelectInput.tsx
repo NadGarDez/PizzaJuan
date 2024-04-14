@@ -3,7 +3,6 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { colors } from "../../styles/colors";
 import RNPickerSelect from 'react-native-picker-select';
 import { basicInputState, defaultInputActionTypes, defaultInputStates, inputAction } from "../../constants/inputConstants";
-import { genre } from "../../constants/form/formConstants";
 
 // types 
 type localActionPayloadType = {
@@ -12,13 +11,6 @@ type localActionPayloadType = {
 }
 
 type actionObjectType = inputAction<localActionPayloadType>;
-
-type props = {
-    placeholder:string,
-    initialValue?:string,
-    onChangeCallback:(text:string)=>void,
-    inputName:string
-}
 
 const styles = StyleSheet.create(
    {
@@ -70,8 +62,16 @@ const initialState:basicInputState = {
 };
 
 type selectItemsType = {
-   value: genre,
+   value: string,
    label:string
+}
+
+type props = {
+    placeholder:string,
+    initialValue?:string,
+    data: selectItemsType[],
+    onChangeCallback:(text:string)=>void,
+    inputName:string
 }
 
 const selectItems:selectItemsType[] = [
@@ -141,7 +141,7 @@ const getContainerStyles = (state:basicInputState)=> {
 
 export const StandardOutlinedSelectInput = (props:props):JSX.Element=> {
 
-    const {placeholder, onChangeCallback, initialValue = '', inputName, } = props;
+    const {placeholder, onChangeCallback, initialValue = '', inputName, data } = props;
 
     const [state, dispatch] = useReducer(reducer,{...initialState, value:initialValue });
 
@@ -200,7 +200,7 @@ export const StandardOutlinedSelectInput = (props:props):JSX.Element=> {
                             }
                         }
                         onValueChange={manageOnChange}
-                        items={selectItems}
+                        items={data}
                     /> 
                 </View>
             </Pressable>

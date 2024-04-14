@@ -115,7 +115,7 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
                     {
                         Object.keys(defaultValue).map(
                             (item, index) => {
-                                const {placeholder = '', inputType, name} = deliveryConfigurationMetadata[item as keyof deliveryConfigurationSchemaType];
+                                const {placeholder = '', inputType, name, aditionalData = {}} = deliveryConfigurationMetadata[item as keyof deliveryConfigurationSchemaType];
                                 return (
                                     <View style={styles.inputContainer} key={`input-${item}-${index}`}>
                                         <View style={styles.titleContainer}>
@@ -129,7 +129,8 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
                                                 onChangeCallback:(text:string)=> {
                                                     setFieldValue(item, text);
                                                 },
-                                                inputName:name
+                                                inputName:name,
+                                                ...aditionalData
                                             })
                                         }
                                     </View>

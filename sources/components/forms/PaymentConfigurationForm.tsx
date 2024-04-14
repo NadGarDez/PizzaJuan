@@ -116,7 +116,7 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
                     {
                         Object.keys(defaultValue).map(
                             (item, index) => {
-                                const {placeholder = '', inputType, name} = payMethodConfigurationMetadata[item as keyof payMethodConfigurationSchemaType];
+                                const {placeholder = '', inputType, name, aditionalData} = payMethodConfigurationMetadata[item as keyof payMethodConfigurationSchemaType];
                                 return (
                                     <View style={styles.inputContainer} key={`input-${item}-${index}`}>
                                         <View style={styles.titleContainer}>
@@ -130,7 +130,8 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
                                                 onChangeCallback:(text:string)=> {
                                                     setFieldValue(item, text);
                                                 },
-                                                inputName:name
+                                                inputName:name,
+                                                ...aditionalData
                                             })
                                         }
                                     </View>

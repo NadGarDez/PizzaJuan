@@ -1,5 +1,5 @@
 import React from "react"
-import { Platform, StyleSheet, Text, View } from "react-native"
+import { Platform, StyleSheet, View } from "react-native"
 import { CarStackProp } from "../../navigation/Stacks/CarStack"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useNavigation } from "@react-navigation/native"
@@ -69,7 +69,7 @@ export const PayScreen = ():JSX.Element=>{
                 <View style={styles.buttonContainer}>
                     <BuyButton 
                         onPress={openConfirmModal}
-                        text="Confirmar"
+                        text="Registrar codigo de referencia"
                     />
                 </View>
             </View>

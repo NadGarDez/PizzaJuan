@@ -30,5 +30,9 @@ export interface inputMetadata {
 type title =  {
     title:string
 }
+export interface selectItemsType  {
+    value: string,
+    label:string
+}
 
 export type toggableListItem = Record<string, string> & title;

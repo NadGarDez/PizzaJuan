@@ -18,6 +18,138 @@ const SECTION_THREE_SUBTITLE = "Agrega medios de pago o recarga P'taxies"
 const TRANSC_VALIDATION_FORM_TITLE = ""
 const TRANSC_VALIDATION_FORM_SUBTITLE = ""
 
+export const VenezuelanBancs = [
+    {
+        "value": "0001",
+        "label": "Banco Central de Venezuela",
+        "sms": false,
+    },
+    {
+        "value": "0102",
+        "label": "Banco de Venezuela",
+        "sms": true,
+    },
+    {
+        "value": "0104",
+        "label": "Banco Venezolano de Crédito",
+        "sms": false,
+    },
+    {
+        "value": "0163",
+        "label": "Banco del Tesoro",
+        "sms": true,
+    },
+    {
+        "value": "0166",
+        "label": "Banco Agrícola de Venezuela",
+        "sms": false,
+    },
+    {
+        "value": "0168",
+        "label": "Bancrecer",
+        "sms": false,
+    },
+    {
+        "value": "0169",
+        "label": "Mi Banco",
+        "sms": false,
+    },
+    {
+        "value": "0177",
+        "label": "Banco de la Fuerza Armada Nacional Bolivariana (BANFANB)",
+        "sms": false,
+    },
+    {
+        "value": "0191",
+        "label": "Banco Nacional de Crédito (BNC)",
+        "sms": true,
+    },
+    {
+        "value": "0105",
+        "label": "Banco Mercantil",
+        "sms": false,
+    },
+    {
+        "value": "0108",
+        "label": "Banco Provincial",
+        "sms": true,
+    },
+    {
+        "value": "0114",
+        "label": "Bancaribe",
+        "sms": true,
+    },
+    {
+        "value": "0115",
+        "label": "Banco Exterior",
+        "sms": true,
+    },
+    {
+        "value": "0116",
+        "label": "Banco Occidental de Descuento",
+        "sms": false,
+    },
+    {
+        "value": "0128",
+        "label": "Banco Caroní",
+        "sms": false,
+    },
+    {
+        "value": "0134",
+        "label": "Banesco",
+        "sms": true,
+    },
+    {
+        "value": "0137",
+        "label": "Sofitasa",
+        "sms": false,
+    },
+    {
+        "value": "0138",
+        "label": "Banco Plaza",
+        "sms": true,
+    },
+    {
+        "value": "0146",
+        "label": "Bangente",
+        "sms": false,
+    },
+    {
+        "value": "0151",
+        "label": "Banco Fondo Común (BFC)",
+        "sms": true,
+    },
+    {
+        "value": "0156",
+        "label": "100% Banco",
+        "sms": true,
+    },
+    {
+        "value": "0157",
+        "label": "Del Sur Banco Universal",
+        "sms": false,
+    },
+    {
+        "value": "0171",
+        "label": "Activo Banco",
+        "sms": false,
+    },
+    {
+        "value": "0172", 
+        "label": "Bancamiga",
+        "sms": true,
+    },
+    {
+        "value": "0174",
+        "label": "Banplus",
+        "sms": true,
+    },
+    {
+        "value": "0175", 
+        "label": "Banco Bicentenario del Pueblo",
+        "sms": true,
+    }
+]
 
 export const personalConfigurationMetadata:personalFormMetadataType = {
     name: {
@@ -48,7 +180,23 @@ export const personalConfigurationMetadata:personalFormMetadataType = {
     genre: { 
         name: 'Genero',
         placeholder: 'Agrega tu genero.',
-        inputType:inputTypes.SELECT
+        inputType:inputTypes.SELECT,
+        aditionalData: {
+            data: [
+                {
+                    value:'male',
+                    label:'Masculino'
+                },
+                {
+                    value:'female',
+                    label:'Femenino'
+                },
+                {
+                    value:'other',
+                    label: 'Otre'
+                }
+            ]
+        }
     }
 }
 
@@ -74,7 +222,15 @@ export const payMethodConfigurationMetadata: payMethodFormMetadatType = {
     type: {
         name: 'Tipo',
         placeholder: 'Agrega tu tipo de metodo de pago',
-        inputType: inputTypes.SELECT
+        inputType: inputTypes.SELECT,
+        aditionalData:{
+            data: [
+                {
+                    value:'mobile_pay',
+                    label:'Pago Movil'
+                },
+            ]
+        }
     },
     ni: {
         name: 'CI',
@@ -84,7 +240,10 @@ export const payMethodConfigurationMetadata: payMethodFormMetadatType = {
     bank: {
         name: 'Banco',
         placeholder: 'Banco relacionado al metodo de pago',
-        inputType: inputTypes.SELECT
+        inputType: inputTypes.SELECT,
+        aditionalData: {
+            data: VenezuelanBancs
+        }
     },
     phone: {
         name: 'Telefono',

@@ -83,7 +83,7 @@ export const TransactionCodeForm = (): JSX.Element=> {
                     {
                         Object.keys(defaultValue).map(
                             (item, index) => {
-                                const {placeholder = '', inputType, name} = transcValidationMetadata[item as keyof transcValidationMetadataType];
+                                const {placeholder = '', inputType, name, aditionalData} = transcValidationMetadata[item as keyof transcValidationMetadataType];
                                 return (
                                     <View style={styles.inputContainer} key={`input-${item}-${index}`}>
                                         <View style={styles.titleContainer}>
@@ -97,7 +97,8 @@ export const TransactionCodeForm = (): JSX.Element=> {
                                                 onChangeCallback:(text:string)=> {
                                                     setFieldValue(item, text);
                                                 },
-                                                inputName:name
+                                                inputName:name,
+                                                ...aditionalData
                                             })
                                         }
                                     </View>

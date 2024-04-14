@@ -42,7 +42,7 @@ export const StorePaymentDataTab = ():JSX.Element=> {
     const [index, setIndex] = useState<number>(0);
     const [routes] = useState<routeType[]>([
         { key: 'first', title: 'QR' },
-        { key: 'second', title: 'Msj. de texto' },
+        { key: 'second', title: 'SMS' },
         { key: 'third', title: 'Aplicacion' },
     ]);
 

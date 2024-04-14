@@ -1,8 +1,8 @@
 import React from "react";
-import { inputTypes } from "../constants/form/formConstants";
 import { StandardOutlinedInput } from "../components/inputs/StandardOutlinedInput";
 import { StandardOutlinedDatePicker } from "../components/inputs/StandardOutlinedDatePicker";
 import { StandardOutlinedSelectInput } from "../components/inputs/StandardOutlinedSelectInput";
+import { inputTypes } from "../types/forms/generalFormTypes";
 
 type inputSelectorType = {
     [key in inputTypes]: (props:any)=>JSX.Element
