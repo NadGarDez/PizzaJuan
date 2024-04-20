@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         fontWeight:"300"
     },
     titleContainer: {
-        flex:1,
+        paddingBottom:8
     },
     priceContainer: {
         flex:1
