@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useFormik } from "formik";
 import { personalConfigurationMetadata } from "../../constants/form/formConstants";
 import { colors } from "../../styles/colors";
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { hide, modalFormSelector } from "../../redux/ModalFormReducer";
 import { ModalFormNames } from "../../types/forms/generalFormTypes";
 import { personalConfigurationSchema, personalConfigurationSchemaType } from "../../types/forms/personalConfigurationTypes";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 
 const styles = StyleSheet.create({
@@ -72,14 +73,15 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
     }
 
     return (
-        <>
+        <KeyboardAwareScrollView
+        >
             <ModalFormHeader 
                 formKey={ModalFormNames.PERSONAL_CONFIGURATION}
                 isFormValid={valid}
                 onCancel={onCancel}
                 onSave={onSave}
             />
-            <ScrollView style={styles.container}>
+            <View style={styles.container}>
                 <View style={styles.subtitleContainer}>
                     <Text style={styles.subtitleText}>
                         Cuentanos sobre ti
@@ -111,8 +113,8 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
                             }
                         )
                     }
-            </ScrollView>
-        </>
+            </View>
+        </KeyboardAwareScrollView>
        
     )
 }

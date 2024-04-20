@@ -1,5 +1,5 @@
 import React, {  useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native"; 
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native"; 
 import { colors } from "../../styles/colors";
 import { payMethodConfigurationMetadata, } from "../../constants/form/formConstants";
 import { useFormik } from "formik";
@@ -8,6 +8,7 @@ import { PrincipalButton } from "../buttons/PrincipalButton";
 import { OutlinedButton } from "../buttons/OutlinedButton";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { payMethodConfigurationSchema, payMethodConfigurationSchemaType } from "../../types/forms/payMethodFormTypes";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const styles = StyleSheet.create({
     container: {
@@ -106,7 +107,9 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
     }
 
     return (
-        <View style={styles.container}>
+        <KeyboardAwareScrollView 
+            style={styles.container}
+        >
                 <View style={styles.subtitleContainer}>
                     <Text style={styles.subtitleText}>
                         Agrega un nuevo metodo de pago
@@ -157,6 +160,6 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
                         </View>
                     </OutlinedButton>
                 </View>
-        </View>
+        </KeyboardAwareScrollView>
     )
 }

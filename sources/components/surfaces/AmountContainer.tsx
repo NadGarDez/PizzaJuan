@@ -5,12 +5,15 @@ import { shadows } from "../../styles/shadow";
 
 const styles = StyleSheet.create({
     container: {
+        position: 'relative',
         borderRadius:10,
         height:130,
         backgroundColor: colors.principal,
         display:"flex",
         paddingHorizontal:8,
         paddingVertical:16,
+        zIndex:20,
+        overflow: 'hidden',
         ...shadows.principalShadow
     },
     titleText: {
@@ -40,20 +43,22 @@ const styles = StyleSheet.create({
 
 export const AmountContainer = ()=> {
     return (
-        <View style={styles.container}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.titleText}>
-                    Pedido #1234abcd567
-                </Text>
+        <>
+            <View style={styles.container}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.titleText}>
+                        Pedido #1234abcd567
+                    </Text>
+                </View>
+                <View style={styles.priceContainer}>
+                    <Text style={styles.descriptionText}>
+                    Monto a pagar en Bolivares
+                    </Text>
+                    <Text style={styles.amoutText}>
+                        400VES
+                    </Text>
+                </View>
             </View>
-            <View style={styles.priceContainer}>
-                <Text style={styles.descriptionText}>
-                Monto a pagar en Bolivares
-                </Text>
-                <Text style={styles.amoutText}>
-                    400VES
-                </Text>
-            </View>
-        </View>
+        </>
     )
 }

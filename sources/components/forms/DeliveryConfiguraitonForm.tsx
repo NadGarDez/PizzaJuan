@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native"; 
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native"; 
 import { colors } from "../../styles/colors";
 import { deliveryConfigurationMetadata } from "../../constants/form/formConstants";
 import { useFormik } from "formik";
@@ -8,11 +8,12 @@ import { PrincipalButton } from "../buttons/PrincipalButton";
 import { OutlinedButton } from "../buttons/OutlinedButton";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { deliveryConfigurationSchema, deliveryConfigurationSchemaType } from "../../types/forms/deliveryFormTypes";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        minHeight:200
+        minHeight:200,
     },
     inputContainer: {
         marginBottom:8,
@@ -105,7 +106,9 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
     }
 
     return (
-        <View style={styles.container}>
+        <KeyboardAwareScrollView
+            style={styles.container}
+        >
                 <View style={styles.subtitleContainer}>
                     <Text style={styles.subtitleText}>
                         Agrega una nueva direccion
@@ -156,6 +159,6 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
                         </View>
                     </OutlinedButton>
                 </View>
-        </View>
+        </KeyboardAwareScrollView>
     )
 }

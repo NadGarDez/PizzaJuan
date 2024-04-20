@@ -3,6 +3,10 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { LocationIcon } from "../icons/LocationIcon";
 import { GoFoward } from "../icons/GoFoward";
+import { ModalForm } from "../modal/ModalForm";
+import { useAppDispatch } from "../../redux/hooks";
+import { activateWithoutValid, configure } from "../../redux/ModalFormReducer";
+import { ModalFormNames } from "../../types/forms/generalFormTypes";
 
 
 const styles = StyleSheet.create({
@@ -57,44 +61,51 @@ const styles = StyleSheet.create({
 })
 
 
-type props= {
-    onPress?: ()=>void | null
-}
 
-export const DireactionSelector = ({onPress}:props) => {
+export const DireactionSelector = () => {
+
+    const dispatch = useAppDispatch()
+
+    const onPress = ()=> {
+        dispatch(configure("DELIVERY_CONFIGURATION" as ModalFormNames))
+        dispatch(activateWithoutValid())
+    }
+
     return (
-        <Pressable
-            onPress={onPress}
-        >
-            {
-                ({pressed})=>(
-                    <View style={{
-                        ...styles.container,
-                        backgroundColor: pressed ? colors.seconday_text + "10" : "transparent"
-                    }}>
-           
-                        <View style={styles.informationContainerAndButton}>
-                            <View style={styles.iconContainer}>
-                                <View style={styles.semiTransparentCircle}>
-                                    <LocationIcon color={colors.white_card} />
+        <>
+            <Pressable
+                onPress={onPress}
+            >
+                {
+                    ({pressed})=>(
+                        <View style={{
+                            ...styles.container,
+                            backgroundColor: pressed ? colors.seconday_text + "10" : "transparent"
+                        }}>
+            
+                            <View style={styles.informationContainerAndButton}>
+                                <View style={styles.iconContainer}>
+                                    <View style={styles.semiTransparentCircle}>
+                                        <LocationIcon color={colors.white_card} />
+                                    </View>
+                                </View>
+                                <View style={styles.directionContainer}>
+                                        <Text style={styles.firstLineDirection}>
+                                            Urbanizacion Guarico Apure, casa #9
+                                        </Text>
+                                        <Text style={styles.secondLineDirection}>
+                                            Calabozo edo Guarico
+                                        </Text>
+                                </View>
+                                <View style={styles.buttonContainer}>
+                                    <GoFoward size={30} color={colors.seconday_text}/>
                                 </View>
                             </View>
-                            <View style={styles.directionContainer}>
-                                    <Text style={styles.firstLineDirection}>
-                                        Urbanizacion Guarico Apure, casa #9
-                                    </Text>
-                                    <Text style={styles.secondLineDirection}>
-                                        Calabozo edo Guarico
-                                    </Text>
-                            </View>
-                            <View style={styles.buttonContainer}>
-                                <GoFoward size={30} color={colors.seconday_text}/>
-                            </View>
                         </View>
-                    </View>
-                )
-            }
-            
-        </Pressable>
+                    )
+                }
+            </Pressable>
+            <ModalForm />
+        </>
     )
 }

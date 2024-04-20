@@ -8,6 +8,7 @@ import { WhiteButton } from "../buttons/WhiteButton";
 import { LocationIcon } from "../icons/LocationIcon";
 import { DrawerActions } from "@react-navigation/native";
 import { HeaderTitleComponent } from "../surfaces/HeaderTitleComponent";
+import { LocationButton } from "../buttons/LocationButton";
 
 
 const styles  = StyleSheet.create(
@@ -50,17 +51,6 @@ const styles  = StyleSheet.create(
             alignItems:"center",
             minWidth:40
         },
-        ubicationContainer : {
-            display: "flex",
-            flexDirection:"row",
-            alignItems:"center"
-        },
-        textLocationStyles: {
-            marginRight:6,
-            color:colors.seconday_text
-        }
-
-
     }
 )
 
@@ -110,14 +100,7 @@ export const InitialStackScreenHeader = (props:NativeStackHeaderProps&headerProp
             <View style={styles.righContainer}>
                 {
                     displayRightContent ? (
-                        <WhiteButton onPress={jumpToUser} deepShadow={false}>
-                            <View style={styles.ubicationContainer}>
-                                <Text style={styles.textLocationStyles}>
-                                    Tu Ubicacion
-                                </Text>
-                                <LocationIcon size={20}/>
-                            </View>
-                        </WhiteButton>
+                      <LocationButton />
                     ): null
                 }
                 
