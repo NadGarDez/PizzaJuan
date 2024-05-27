@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 import { ThreDotsIcon } from "../icons/ThreDotsIcon";
+import { BASE_URL } from "../../constants/apiConstants";
 
 const styles = StyleSheet.create(
     {
@@ -121,21 +122,22 @@ const styles = StyleSheet.create(
 )
 
 type props = {
-    productName:string,
+    name:string,
     price:number,
     favorite:boolean,
     image:string,
-    likes:number,
+    recomendations:number,
     description:string,
-    creator:string,
+    product_variant_set: any[],
     onPressItem: (index:number)=>void
 }
 
 type ProductListScreenPropType = NativeStackScreenProps<ProductStackType,"PRODUCT_LIST_SCREEN">
 
-export const ProductItem = ({image, likes,productName, price, favorite,description,onPressItem, creator}:props):JSX.Element=>{
+export const ProductItem = ({image, recomendations, name, price, favorite,description,onPressItem, product_variant_set}:props):JSX.Element=>{
 
-    const {navigate} = useNavigation<ProductListScreenPropType['navigation']>()
+    const {navigate} = useNavigation<ProductListScreenPropType['navigation']>();
+    const first_instance = product_variant_set[0];
 
     const nav = ()=> {
         navigate("PRODUCT_SCREEN", {productId:"123"})
@@ -153,7 +155,7 @@ export const ProductItem = ({image, likes,productName, price, favorite,descripti
                     }>
                     <View style={styles.flexRowStyles}>
                         <View style={styles.imageContainer}>
-                            <Image source={{uri:image}} style={styles.imageStyles}/>
+                            <Image source={{uri:`${BASE_URL}${first_instance.product_image_set[0].image}`}} style={styles.imageStyles}/>
                         </View>
                         <View style={styles.informationContainer}>
                         
@@ -161,13 +163,13 @@ export const ProductItem = ({image, likes,productName, price, favorite,descripti
                                 <View style={styles.titleContainerAndFavorite}>
                                     <View style={styles.titleContainer}>
                                         <Text style={styles.titleTextStyles}>
-                                            {productName}
+                                            {name}
                                         </Text>
                                     </View>
                                     
                                     <View style={styles.likeContainer}>
                                         <Text style={styles.likeNumberContainer}>
-                                            {likes}
+                                            {recomendations}
                                         </Text>
                                         {
                                             favorite ? <HeartIconFilled  size={14} color={colors.pink} /> : <HeartIconOutlined size={14} />
@@ -181,10 +183,10 @@ export const ProductItem = ({image, likes,productName, price, favorite,descripti
                                 </View>
                                 <View style={styles.priceContainer}>
                                     <Text style={styles.dolarPrice}>
-                                        {price + "$"}
+                                        Desde {first_instance.price + "$"}
                                     </Text>
                                     <Text style={styles.bsPrice}>
-                                        referencia {(price * 36) + "bs"}
+                                        referencia {(first_instance.price * 36) + "bs"}
                                     </Text>
                                 </View>
                             </View>
@@ -196,7 +198,7 @@ export const ProductItem = ({image, likes,productName, price, favorite,descripti
                     <View style={styles.creator}>
                             <View style={styles.firstPartOfCreator}>
                                 <Text style={styles.likeNumberContainer}>
-                                    {creator}
+                                    Jhon's Pizza
                                 </Text>    
                             </View>
                             <View style={styles.secondPartOfCreator}>

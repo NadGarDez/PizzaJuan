@@ -1,7 +1,6 @@
 import React from "react";
-import { View, StyleSheet, StatusBar, Text, ScrollView } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { colors } from "../../styles/colors";
-import { HelloWorldComponent } from "../../components/HelloWorldComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 import { TitleStoreText } from "../../components/surfaces/TitleStoreText";
@@ -60,8 +59,6 @@ export const ProductListScreen = ({navigation}:ProductListScreenPropType): JSX.E
                         ({item}) =><RenderItem value={item} />
                     }
                 />
-                    {/* <CategoryList />
-                    <ProductList /> */}
             </View>
         </>
     )

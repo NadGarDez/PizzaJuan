@@ -3,8 +3,6 @@ import { StyleSheet, View, Dimensions, Animated, Pressable } from "react-native"
 import { colors } from "../../styles/colors";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../../navigation/Stacks/ProductStack";
-import { useQuery } from "@apollo/client";
-import { GET_PRODUCTS } from "../../constants/querys";
 import { ProductInformationCard } from "../../components/surfaces/ProductInformationCard";
 import { CarouselProductComplexComponent } from "../../components/surfaces/CarouselProductComplexComponent";
 
@@ -64,8 +62,6 @@ const expandedAnimatedValue = Dimensions.get("window").height * (ScreenHeight>70
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
     //this screen should fetch the product
-
-    const {loading, error, data} = useQuery(GET_PRODUCTS);
 
     const animation = useRef(new Animated.Value(defaultAnimationValue)).current;
 

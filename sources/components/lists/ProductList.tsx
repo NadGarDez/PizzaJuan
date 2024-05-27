@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet , View} from "react-native";
 import { ProductItem } from "../surfaces/ProductItem";
+import { getProductList } from "../../utils/apiRequests";
+import { BASE_API_URL } from "../../constants/apiConstants";
 
 const styles = StyleSheet.create(
     {
@@ -13,6 +15,20 @@ const styles = StyleSheet.create(
 type ItemProps = {categoryName: string, active:false};
 
 export const ProductList = ():JSX.Element=> {
+
+    const [products, setProducts] = useState<any[]>([]);
+
+    const fetchProducts = async ()=>{
+        const {data} = await getProductList("todos");
+        setProducts(data)
+    }
+
+    useEffect(
+        ()=> {
+            fetchProducts()
+        },
+        []
+    )
 
     const staticData = [
         {
@@ -70,7 +86,7 @@ export const ProductList = ():JSX.Element=> {
         <View style={styles.container}>
             <View >
                 <FlatList
-                    data={staticData}
+                    data={products}
                     renderItem={(props)=>(
                         <ProductItem 
                             {...props.item} onPressItem={onPressItem}
