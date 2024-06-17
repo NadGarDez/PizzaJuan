@@ -3,14 +3,19 @@ import { urlFormatter } from "./apiUrlFormatter"
 
 const {getProducts} = urlFormatter;
 
-export const getProductList = async (category:string)=>{
+export const getProductList = async (category:string, token:string)=>{
     const url = getProducts(category);
     try {
-        const {status, data, headers} = await axios.get(url);
+        const {status, data, headers, statusText} = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
         return {
             status,
             data,
-            headers
+            headers,
+            statusText
         };
     } catch (error) {
         return {

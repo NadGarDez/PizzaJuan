@@ -3,6 +3,10 @@ import { FlatList, StyleSheet , View} from "react-native";
 import { ProductItem } from "../surfaces/ProductItem";
 import { getProductList } from "../../utils/apiRequests";
 import { BASE_API_URL } from "../../constants/apiConstants";
+import { useAuth0 } from "react-native-auth0";
+import { useAppSelector } from "../../redux/hooks";
+import { sessionObjectSelector } from "../../redux/SessionReducer";
+import { baseProduct } from "../../types/api/productTypes";
 
 const styles = StyleSheet.create(
     {
@@ -16,11 +20,13 @@ type ItemProps = {categoryName: string, active:false};
 
 export const ProductList = ():JSX.Element=> {
 
-    const [products, setProducts] = useState<any[]>([]);
+    const [products, setProducts] = useState<baseProduct[]>([]);
+    const {sessionToken} = useAppSelector(sessionObjectSelector);
 
     const fetchProducts = async ()=>{
-        const {data} = await getProductList("todos");
-        setProducts(data)
+        const {data, status} = await getProductList("todos", sessionToken ?? '');
+        console.log(data, status)
+        setProducts(data.results)
     }
 
     useEffect(
@@ -30,58 +36,6 @@ export const ProductList = ():JSX.Element=> {
         []
     )
 
-    const staticData = [
-        {
-            productName:"Pizza numero 1",
-            price:12,
-            favorite:true,
-            image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-            likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-            creator: "PizzaJuan"
-        },
-        {
-            productName:"Pizza numero 2",
-            price:12,
-            favorite:false,
-            image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-            likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-            creator: "PizzaJuan"
-        },
-        {
-            productName:"Pizza numero 3",
-            price:12,
-            favorite:false,
-            image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-            likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-            creator: "PizzaJuan"
-        },
-        {
-            productName:"Pizza numero 4",
-            price:12,
-            favorite:false,
-            image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-            likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-            creator: "PizzaJuan"
-        },
-        {
-            productName:"Pizza numero 5",
-            price:12,
-            favorite:false,
-            image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-            likes:12,
-            description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-            creator: "PizzaJuan"
-        },
-    ]
-
-
-    const onPressItem = (index:number)=>{}
-
-
     return (
         <View style={styles.container}>
             <View >
@@ -89,7 +43,7 @@ export const ProductList = ():JSX.Element=> {
                     data={products}
                     renderItem={(props)=>(
                         <ProductItem 
-                            {...props.item} onPressItem={onPressItem}
+                            {...props.item}
                         />
                     )}
                     showsHorizontalScrollIndicator={false}

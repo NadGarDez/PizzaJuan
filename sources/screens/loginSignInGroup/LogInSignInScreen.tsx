@@ -24,7 +24,9 @@ export const LogInSignInScreen = ():JSX.Element=>{
     
     const LoginSignInPanel=async ()=>{
         try {
-            await authorize()
+            await authorize(
+                {audience:"https://localhost/jhons_pizza_backend"}
+            )
         } catch (error) {
             
         }
@@ -32,6 +34,7 @@ export const LogInSignInScreen = ():JSX.Element=>{
 
     const getCre = async ()=>{
         const credentials = await getCredentials();
+        console.log(credentials);
         if(credentials?.accessToken !== undefined || credentials?.accessToken!==null){
             dispatch(setSession(credentials?.accessToken as string))
         }

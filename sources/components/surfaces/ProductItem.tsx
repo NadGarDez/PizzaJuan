@@ -9,6 +9,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 import { ThreDotsIcon } from "../icons/ThreDotsIcon";
 import { BASE_URL } from "../../constants/apiConstants";
+import { baseProduct } from "../../types/api/productTypes";
 
 const styles = StyleSheet.create(
     {
@@ -121,28 +122,19 @@ const styles = StyleSheet.create(
     }
 )
 
-type props = {
-    name:string,
-    price:number,
-    favorite:boolean,
-    image:string,
-    recomendations:number,
-    description:string,
-    product_variant_set: any[],
-    onPressItem: (index:number)=>void
+type ownProps = {
+    onPressItem?: (index:number)=>void
 }
 
 type ProductListScreenPropType = NativeStackScreenProps<ProductStackType,"PRODUCT_LIST_SCREEN">
 
-export const ProductItem = ({image, recomendations, name, price, favorite,description,onPressItem, product_variant_set}:props):JSX.Element=>{
+export const ProductItem = ({principal_image, recomendations, name, base_price, short_description, pk }:ownProps&baseProduct):JSX.Element=>{
 
     const {navigate} = useNavigation<ProductListScreenPropType['navigation']>();
-    const first_instance = product_variant_set[0];
 
     const nav = ()=> {
-        navigate("PRODUCT_SCREEN", {productId:"123"})
+        navigate("PRODUCT_SCREEN", {productId:`${pk}`})
     }
-    
 
     return (
         <Pressable 
@@ -155,7 +147,7 @@ export const ProductItem = ({image, recomendations, name, price, favorite,descri
                     }>
                     <View style={styles.flexRowStyles}>
                         <View style={styles.imageContainer}>
-                            <Image source={{uri:`${BASE_URL}${first_instance.product_image_set[0].image}`}} style={styles.imageStyles}/>
+                            <Image source={{uri:`${BASE_URL}${principal_image}`}} style={styles.imageStyles}/>
                         </View>
                         <View style={styles.informationContainer}>
                         
@@ -172,21 +164,21 @@ export const ProductItem = ({image, recomendations, name, price, favorite,descri
                                             {recomendations}
                                         </Text>
                                         {
-                                            favorite ? <HeartIconFilled  size={14} color={colors.pink} /> : <HeartIconOutlined size={14} />
+                                            true ? <HeartIconFilled  size={14} color={colors.pink} /> : <HeartIconOutlined size={14} />
                                         }
                                     </View>
                                 </View>
                                 <View style={styles.ingredientsDescriptionContainer}>
                                     <Text style={styles.descriptionTextStyles} numberOfLines={3}>
-                                        {description}
+                                        {short_description}
                                     </Text>
                                 </View>
                                 <View style={styles.priceContainer}>
                                     <Text style={styles.dolarPrice}>
-                                        Desde {first_instance.price + "$"}
+                                        Desde {base_price+ "$"}
                                     </Text>
                                     <Text style={styles.bsPrice}>
-                                        referencia {(first_instance.price * 36) + "bs"}
+                                        ref. {(base_price * 36).toFixed(2) + "bs"}
                                     </Text>
                                 </View>
                             </View>
