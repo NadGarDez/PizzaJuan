@@ -1,3 +1,4 @@
+
 export interface image {
     image:string,
     name:string
@@ -26,4 +27,10 @@ export interface productVariant {
     images:image[],
     total_with_taxes:number,
     taxes:tax[]
+}
+
+export interface defaultApiResponse {
+    status:number,
+    data:object,
+    statusText:string
 }

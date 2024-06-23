@@ -68,7 +68,7 @@ export const {setSession, resetSession, setSessionObject} = sessionSlice.actions
 
 //selector export
 
-export const sessionTokenSelector = (state:RootState) => state.session.sessionToken;
+export const sessionTokenSelector = (state:RootState): string | null => state.session.sessionToken;
 export const sessionObjectSelector = (state:RootState) => state.session;
 
 // reducer export

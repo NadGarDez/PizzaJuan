@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet , View} from "react-native";
 import { ProductItem } from "../surfaces/ProductItem";
-import { getProductList } from "../../utils/apiRequests";
-import { BASE_API_URL } from "../../constants/apiConstants";
-import { useAuth0 } from "react-native-auth0";
-import { useAppSelector } from "../../redux/hooks";
-import { sessionObjectSelector } from "../../redux/SessionReducer";
-import { baseProduct } from "../../types/api/productTypes";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { productsSelector } from "../../redux/productsReducer";
 
 const styles = StyleSheet.create(
     {
@@ -16,22 +12,16 @@ const styles = StyleSheet.create(
     }
 )
 
-type ItemProps = {categoryName: string, active:false};
-
 export const ProductList = ():JSX.Element=> {
 
-    const [products, setProducts] = useState<baseProduct[]>([]);
-    const {sessionToken} = useAppSelector(sessionObjectSelector);
-
-    const fetchProducts = async ()=>{
-        const {data, status} = await getProductList("todos", sessionToken ?? '');
-        console.log(data, status)
-        setProducts(data.results)
-    }
+    const dispatch = useAppDispatch()
+    const products  = useAppSelector(productsSelector)
 
     useEffect(
         ()=> {
-            fetchProducts()
+            dispatch({
+                type: 'REQUEST_PRODUCTS',
+            })
         },
         []
     )
@@ -40,7 +30,7 @@ export const ProductList = ():JSX.Element=> {
         <View style={styles.container}>
             <View >
                 <FlatList
-                    data={products}
+                    data={products ?? []}
                     renderItem={(props)=>(
                         <ProductItem 
                             {...props.item}

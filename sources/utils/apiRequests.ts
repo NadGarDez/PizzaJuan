@@ -1,12 +1,13 @@
-import axios, {RawAxiosRequestHeaders} from "axios"
+import axios, {AxiosError, RawAxiosRequestHeaders} from "axios"
 import { urlFormatter } from "./apiUrlFormatter"
+import { baseProduct } from "../types/api/productTypes";
 
 const {getProducts} = urlFormatter;
 
-export const getProductList = async (category:string, token:string)=>{
+export const getProductList = async (category:string, token:string):Promise<object>=>{
     const url = getProducts(category);
     try {
-        const {status, data, headers, statusText} = await axios.get(url, {
+        const {status, data, statusText} = await axios.get(url, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -14,13 +15,29 @@ export const getProductList = async (category:string, token:string)=>{
         return {
             status,
             data,
-            headers,
             statusText
         };
-    } catch (error) {
+        
+    } catch (error:any) {
+        const {status = 500} = error.toJSON() as object
         return {
-            status: 500, 
-            message:error
+            status: status, 
+            data: {
+                count: 0, 
+                next: null, 
+                previous: null, 
+                results: [], 
+            },
+            statusText:error.message
         }
     }
+}
+
+export const getProductList2 = async (category:string, token:string):Promise<object>=>{
+    const url = getProducts(category);
+    return await axios.get(url, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
 }
