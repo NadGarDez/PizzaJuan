@@ -52,16 +52,16 @@ type props = {
     active:boolean,
     name:string,
     index:number,
-    onPressItem: (index:number)=>void
+    pk:number,
+    onPressItem: (pk:number)=>void
 }
 
-export const CategoryItem = ({active, name, index, onPressItem}:props):JSX.Element=>{
+export const CategoryItem = ({active, name, index, pk, onPressItem}:props):JSX.Element=>{
 
     const restContainerStyles =  active ? styles.activeContainer : styles.unactiveContainer;
     return (
         <Pressable style={{marginLeft: index===0 ? 16:0}}
-        
-            onPress={()=>onPressItem(index)}
+            onPress={()=>onPressItem(pk)}
         >
             {
                 ({pressed})=>(
@@ -72,17 +72,6 @@ export const CategoryItem = ({active, name, index, onPressItem}:props):JSX.Eleme
                            ...styles.baseContainer, ...restContainerStyles
                         }
                     }>
-                        {/* <View style={styles.imageContainer}>
-
-                            <Image 
-                            
-                                source={{
-                                    uri:image
-                                }}
-                                style={styles.imageStyles}
-                                resizeMethod="scale"
-                            /> 
-                        </View> */}
                         <View style={styles.textContainer}>
                                 <Text style={{
                                     ...styles.textStyles,

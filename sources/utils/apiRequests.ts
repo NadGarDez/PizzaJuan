@@ -1,10 +1,11 @@
 import axios, { AxiosResponse} from "axios"
 import { urlFormatter } from "./apiUrlFormatter"
 
-const {getProducts, getCategory} = urlFormatter;
+const {getProducts,getProducWithCategory, getCategory} = urlFormatter;
 
 export const getProductList = async (category:string, token:string):Promise<object>=>{
-    const url = getProducts(category);
+    const url = category === '' ? getProducts() : getProducWithCategory(category)
+    console.log(url, 'super urls')
     try {
         const {status, data, statusText} = await axios.get(url, {
             headers: {
@@ -88,13 +89,4 @@ export const getCategoryList = async (token:string): Promise<object>=> {
         }
         
     }
-}
-
-export const getProductList2 = async (category:string, token:string):Promise<object>=>{
-    const url = getProducts(category);
-    return await axios.get(url, {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
 }

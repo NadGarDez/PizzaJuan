@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FlatList, StyleSheet, View, ActivityIndicator} from "react-native";
 import { CategoryItem } from "../surfaces/CategoryItem";
 import { colors } from "../../styles/colors";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { categoriesErrorSelector, categoryReducersStaus, categorySelector } from "../../redux/categorySlicer";
 import { ErrorModal } from "../surfaces/ErrorModal";
 
@@ -24,19 +24,32 @@ const styles = StyleSheet.create(
 
 type ItemProps = {categoryName: string, active:false};
 
+const allCategory = {
+    pk: 0,
+    name: 'Todos'
+}
+
 export const CategoryList = ():JSX.Element=> {
 
     const [selectedItem, setSelectedItem] = useState<number>(0);
+
+    const dispatch = useAppDispatch();
 
     const categories = useAppSelector(categorySelector)
     const status = useAppSelector(categoryReducersStaus)
     const error = useAppSelector(categoriesErrorSelector)
 
-    const onPressItem = (index:number)=>setSelectedItem(index);
+    const onPressItem = (pk:number)=>{
+        setSelectedItem(pk);
+        dispatch({
+            type: 'REQUEST_PRODUCTS',
+            payload:pk
+        })
+    };
 
-    const Item = (props:{name:string, index:number}) =>{
+    const Item = (props:{name:string, index:number, pk:number}) =>{
         return (
-            <CategoryItem {...props} onPressItem={onPressItem} active={selectedItem===props.index}/>
+            <CategoryItem {...props} onPressItem={onPressItem} active={selectedItem===props.pk}/>
         )
     }
 
@@ -47,10 +60,7 @@ export const CategoryList = ():JSX.Element=> {
                     <FlatList
                     data={
                         [
-                            {
-                                name: 'Todos'
-                            }
-                            ,
+                            allCategory,
                             ...categories as any[]
                         ]
                     }

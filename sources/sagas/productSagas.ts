@@ -3,7 +3,7 @@ import { call, put, select, takeEvery } from "redux-saga/effects";
 import { sessionTokenSelector } from "../redux/SessionReducer";
 import { getProductList } from "../utils/apiRequests";
 import { defaultApiResponse } from "../types/api/productTypes";
-import { finishRequestSuccessfully, finishRequestWithError } from "../redux/productsSlicer";
+import { finishRequestSuccessfully, finishRequestWithError, startRequest } from "../redux/productsSlicer";
 
 interface data {
    results: any[],
@@ -12,16 +12,18 @@ interface data {
    previeus: string
 }
 
-function* requestProductSagas(action: PayloadAction<string>) {
+function* requestProductSagas(action: PayloadAction<number>) {
+   const category =  action.payload > 0 ? action.payload : '';
    const token: null | string = yield select(sessionTokenSelector);
    try {
       if(token!==null){
-        const result: defaultApiResponse<data> = yield call(getProductList,'', token);
-        if(result.status !== 200){
+         yield put(startRequest())
+         const result: defaultApiResponse<data> = yield call(getProductList,`${category}`, token);
+         if(result.status !== 200){
             yield put(finishRequestWithError(result))
-        } else {
-         yield put(finishRequestSuccessfully(result))
-        }
+         } else {
+            yield put(finishRequestSuccessfully(result))
+         }
       }else {
          yield put(finishRequestWithError())
       }
