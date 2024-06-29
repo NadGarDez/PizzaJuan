@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { colors } from "../../styles/colors";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -8,6 +8,8 @@ import { SearchAndSettingsBanner } from "../../components/surfaces/SearchAndSett
 import { CategoryList } from "../../components/lists/CategoryList";
 import { ProductList } from "../../components/lists/ProductList";
 import { FlatList } from "react-native-gesture-handler";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { categoryGeneralReducerSelector } from "../../redux/categorySlicer";
 
 const styles = StyleSheet.create(
     {
@@ -43,9 +45,18 @@ const RenderItem = (props:{value:number})=>{
 
 export const ProductListScreen = ({navigation}:ProductListScreenPropType): JSX.Element=>{
 
-    const navigateToProduct = ():void=>{
-       navigation.navigate("PRODUCT_SCREEN", {productId:"123"});
-    }
+    const dispatch = useAppDispatch()
+
+    useEffect(
+        ()=> {
+            dispatch({
+                type: 'REQUEST_CATEGORIES',
+            })
+            dispatch({
+                type: 'REQUEST_PRODUCTS'
+            })
+        },
+    )
 
     return (
         <>

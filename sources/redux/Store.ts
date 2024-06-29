@@ -1,18 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
-import SessionReducer from "./SessionReducer";
+import SessionSlicer from "./SessionReducer";
 import ModalFormReducer from "./ModalFormReducer";
-import ProductsReducer from "./productsReducer";
+import ProductsSlicer from "./productsSlicer";
 import createSagaMiddleware from 'redux-saga'
 import { rootSagas } from "../sagas/rootSagas";
+import categorySlicer from "./categorySlicer";
 
 
 const middleware = createSagaMiddleware()
 
 export const store = configureStore({
     reducer:{
-        session:SessionReducer,
-        products:ProductsReducer,
-        modalForm:ModalFormReducer
+        session:SessionSlicer,
+        products:ProductsSlicer,
+        modalForm:ModalFormReducer,
+        category: categorySlicer
     },
     middleware: (getDefaultMiddleware)=> getDefaultMiddleware().concat(middleware)
 })

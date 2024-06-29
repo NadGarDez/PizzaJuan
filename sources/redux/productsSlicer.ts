@@ -1,13 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./reduxTypes";
-import { baseProduct, type defaultApiResponse } from "../types/api/productTypes";
+import { type defaultApiResponse } from "../types/api/productTypes";
 
 // state type
 
+interface data {
+    results: any[],
+    count?:number,
+    next?: string,
+    prev?: string
+}
 
 interface requestStatus  {
     reducerStatus: 'INITIAL' | 'LOADING' | 'SUCCESS' | 'ERROR',
-    responseObject: defaultApiResponse | null
+    responseObject: defaultApiResponse<data> | null
 } 
 
 //initial state
@@ -25,11 +31,11 @@ const productsSlice = createSlice(
             startRequest: (state) => {
                 state.reducerStatus = 'LOADING'
             },
-            finishRequestSuccessfully:(state, action: PayloadAction<defaultApiResponse>)=>{
+            finishRequestSuccessfully:(state, action: PayloadAction<defaultApiResponse<data>>)=>{
                 state.reducerStatus = 'SUCCESS'
                 state.responseObject = action.payload
             },
-            finishRequestWithError: (state, action: PayloadAction<defaultApiResponse | undefined>) => {
+            finishRequestWithError: (state, action: PayloadAction<defaultApiResponse<data> | undefined>) => {
                 state.reducerStatus = 'ERROR',
                 state.responseObject = action.payload || null
             }
@@ -43,8 +49,8 @@ export const {startRequest, finishRequestSuccessfully, finishRequestWithError} =
 
 //selector export
 
-export const productsSelector = (state:RootState): any[] => {
-    return state.products.responseObject?.data.results
+export const productsSelector = (state:RootState): any[]  => {
+    return state.products.responseObject?.data.results || []
 }
 export const productReducersStaus = (state:RootState) => state.products.reducerStatus;
 export const productGeneralReducerSelector = (state:RootState)=> state.products;

@@ -3,14 +3,20 @@ import { call, put, select, takeEvery } from "redux-saga/effects";
 import { sessionTokenSelector } from "../redux/SessionReducer";
 import { getProductList } from "../utils/apiRequests";
 import { defaultApiResponse } from "../types/api/productTypes";
-import { finishRequestSuccessfully, finishRequestWithError } from "../redux/productsReducer";
+import { finishRequestSuccessfully, finishRequestWithError } from "../redux/productsSlicer";
+
+interface data {
+   results: any[],
+   count?:number,
+   next?: string,
+   prev?: string
+}
 
 function* requestProductSagas(action: PayloadAction<string>) {
    const token: null | string = yield select(sessionTokenSelector);
-
    try {
       if(token!==null){
-        const result: defaultApiResponse = yield call(getProductList,'', token);
+        const result: defaultApiResponse<data> = yield call(getProductList,'', token);
         if(result.status !== 200){
             yield put(finishRequestWithError(result))
         } else {
@@ -22,7 +28,6 @@ function* requestProductSagas(action: PayloadAction<string>) {
    } catch (error) {
       yield put(finishRequestWithError())
    }
-   
  }
 
 

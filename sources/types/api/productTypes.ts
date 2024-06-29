@@ -29,8 +29,8 @@ export interface productVariant {
     taxes:tax[]
 }
 
-export interface defaultApiResponse {
+export interface defaultApiResponse<T> {
     status:number,
-    data:object,
+    data:T,
     statusText:string
 }

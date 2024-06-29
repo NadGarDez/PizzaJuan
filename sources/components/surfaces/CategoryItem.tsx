@@ -50,12 +50,12 @@ const styles = StyleSheet.create(
 
 type props = {
     active:boolean,
-    categoryName:string,
+    name:string,
     index:number,
     onPressItem: (index:number)=>void
 }
 
-export const CategoryItem = ({active, categoryName, index, onPressItem}:props):JSX.Element=>{
+export const CategoryItem = ({active, name, index, onPressItem}:props):JSX.Element=>{
 
     const restContainerStyles =  active ? styles.activeContainer : styles.unactiveContainer;
     return (
@@ -88,7 +88,7 @@ export const CategoryItem = ({active, categoryName, index, onPressItem}:props):J
                                     ...styles.textStyles,
                                     color: active ? colors.white_card : colors.principal
                                     }}>
-                                    {categoryName}
+                                    {name}
                                 </Text>
                         </View>
                     </View>
