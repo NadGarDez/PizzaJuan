@@ -2,8 +2,9 @@ import React from "react";
 import { ActivityIndicator, FlatList, StyleSheet , View} from "react-native";
 import { ProductItem } from "../surfaces/ProductItem";
 import {  useAppSelector } from "../../redux/hooks";
-import { productReducersStaus, productsSelector } from "../../redux/productsSlicer";
+import { productReducersStaus, productsErrorTextSelector, productsSelector } from "../../redux/productsSlicer";
 import { colors } from "../../styles/colors";
+import { ErrorModal } from "../surfaces/ErrorModal";
 
 const styles = StyleSheet.create(
     {
@@ -25,6 +26,7 @@ export const ProductList = ():JSX.Element=> {
 
     const products  = useAppSelector(productsSelector)
     const status = useAppSelector(productReducersStaus)
+    const error = useAppSelector(productsErrorTextSelector)
 
     return (
         <View style={styles.container}>
@@ -55,6 +57,15 @@ export const ProductList = ():JSX.Element=> {
                         <ActivityIndicator size={60} color={colors.principal}/>
                     </View>
                 ) : null
+            }
+
+            {
+                status === 'ERROR' ? (
+                    <ErrorModal 
+                        title="Error cargando la lista de productos"
+                        subtitle={error as string}
+                    />
+                ): null
             }
         
         </View>

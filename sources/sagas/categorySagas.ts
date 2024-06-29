@@ -12,7 +12,6 @@ interface data {
  }
 
 function* requestCategorySagas(){
-    console.log('super holix')
     const token: null | string = yield select(sessionTokenSelector)
     try {
         if(token!==null){

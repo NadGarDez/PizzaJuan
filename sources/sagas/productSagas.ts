@@ -7,9 +7,9 @@ import { finishRequestSuccessfully, finishRequestWithError } from "../redux/prod
 
 interface data {
    results: any[],
-   count?:number,
-   next?: string,
-   prev?: string
+   count:number,
+   next: string,
+   previeus: string
 }
 
 function* requestProductSagas(action: PayloadAction<string>) {

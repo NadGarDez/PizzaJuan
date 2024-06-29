@@ -3,7 +3,8 @@ import { FlatList, StyleSheet, View, ActivityIndicator} from "react-native";
 import { CategoryItem } from "../surfaces/CategoryItem";
 import { colors } from "../../styles/colors";
 import { useAppSelector } from "../../redux/hooks";
-import { categoryReducersStaus, categorySelector } from "../../redux/categorySlicer";
+import { categoriesErrorSelector, categoryReducersStaus, categorySelector } from "../../redux/categorySlicer";
+import { ErrorModal } from "../surfaces/ErrorModal";
 
 const styles = StyleSheet.create(
     {
@@ -29,6 +30,7 @@ export const CategoryList = ():JSX.Element=> {
 
     const categories = useAppSelector(categorySelector)
     const status = useAppSelector(categoryReducersStaus)
+    const error = useAppSelector(categoriesErrorSelector)
 
     const onPressItem = (index:number)=>setSelectedItem(index);
 
@@ -43,7 +45,15 @@ export const CategoryList = ():JSX.Element=> {
             {
                 status === 'SUCCESS' ? (
                     <FlatList
-                    data={categories}
+                    data={
+                        [
+                            {
+                                name: 'Todos'
+                            }
+                            ,
+                            ...categories as any[]
+                        ]
+                    }
                     renderItem={(props)=><Item {...props.item} index={props.index}/>}
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -56,6 +66,15 @@ export const CategoryList = ():JSX.Element=> {
                     <View style={styles.loading}>
                         <ActivityIndicator size={20} color={colors.principal}/>
                     </View>
+                ) : null
+            }
+
+            {
+                status === 'ERROR' ? (
+                    <ErrorModal 
+                        title="Error cargando las categorias"
+                        subtitle={error as string}
+                    />
                 ) : null
             }
                 

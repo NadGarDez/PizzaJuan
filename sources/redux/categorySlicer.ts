@@ -49,11 +49,12 @@ export const {startRequest, finishRequestSuccessfully, finishRequestWithError} =
 
 //selector export
 
-export const categorySelector = (state:RootState): any[]  => {
-    return state.category.responseObject?.data.results || []
+export const categorySelector = (state:RootState): any[] | undefined => {
+    return state.category.responseObject?.data.results
 }
 export const categoryReducersStaus = (state:RootState) => state.category.reducerStatus;
 export const categoryGeneralReducerSelector = (state:RootState)=> state.category;
+export const categoriesErrorSelector = (state:RootState)=> state.category.responseObject?.statusText
 
 // reducer export
 export default categorySlice.reducer;

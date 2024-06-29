@@ -8,8 +8,7 @@ import { SearchAndSettingsBanner } from "../../components/surfaces/SearchAndSett
 import { CategoryList } from "../../components/lists/CategoryList";
 import { ProductList } from "../../components/lists/ProductList";
 import { FlatList } from "react-native-gesture-handler";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { categoryGeneralReducerSelector } from "../../redux/categorySlicer";
+import { useAppDispatch } from "../../redux/hooks";
 
 const styles = StyleSheet.create(
     {
@@ -64,12 +63,14 @@ export const ProductListScreen = ({navigation}:ProductListScreenPropType): JSX.E
                 <TitleStoreText />
                 <SearchAndSettingsBanner/>
                 <FlatList
-                
                     data={[0,1]}
                     renderItem={
                         ({item}) =><RenderItem value={item} />
                     }
-                />
+                    style={{
+                        flex:1,
+                    }}
+                /> 
             </View>
         </>
     )

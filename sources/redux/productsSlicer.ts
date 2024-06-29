@@ -6,10 +6,11 @@ import { type defaultApiResponse } from "../types/api/productTypes";
 
 interface data {
     results: any[],
-    count?:number,
-    next?: string,
-    prev?: string
+    count:number,
+    next: string | null,
+    previeus: string 
 }
+ 
 
 interface requestStatus  {
     reducerStatus: 'INITIAL' | 'LOADING' | 'SUCCESS' | 'ERROR',
@@ -49,10 +50,11 @@ export const {startRequest, finishRequestSuccessfully, finishRequestWithError} =
 
 //selector export
 
-export const productsSelector = (state:RootState): any[]  => {
-    return state.products.responseObject?.data.results || []
+export const productsSelector = (state:RootState): any[] | undefined  => {
+    return state.products.responseObject?.data.results
 }
 export const productReducersStaus = (state:RootState) => state.products.reducerStatus;
+export const productsErrorTextSelector  = (state:RootState) => state.products.responseObject?.statusText
 export const productGeneralReducerSelector = (state:RootState)=> state.products;
 
 // reducer export
