@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, FlatList, StyleSheet , View} from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet , Text, View} from "react-native";
 import { ProductItem } from "../surfaces/ProductItem";
 import {  useAppSelector } from "../../redux/hooks";
 import { productReducersStaus, productsErrorTextSelector, productsSelector } from "../../redux/productsSlicer";
@@ -9,17 +9,36 @@ import { ErrorModal } from "../surfaces/ErrorModal";
 const styles = StyleSheet.create(
     {
         container: {
-            marginTop:8
+            marginTop:8,
+            flex:1
         },
         loading: {
             width: '100%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: 300,
+            height: 200,
             marginBottom: 16
+        },
+        emptyComponent: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 200
+        },
+        emptyText: {
+            fontSize:14,
+            fontWeight: "200",
+            color:colors.seconday_text,
         }
     }
+)
+
+const EmptyComponent = ():JSX.Element => (
+    <View style={styles.emptyComponent}>
+        <Text style={styles.emptyText}>No se encontraron resultados para esta busqueda</Text>
+    </View>
 )
 
 export const ProductList = ():JSX.Element=> {
@@ -30,7 +49,6 @@ export const ProductList = ():JSX.Element=> {
 
     return (
         <View style={styles.container}>
-
             {
                 status === 'SUCCESS' ? (
                     <FlatList
@@ -40,6 +58,9 @@ export const ProductList = ():JSX.Element=> {
                                 {...props.item}
                             />
                         )}
+                        ListEmptyComponent={
+                            EmptyComponent
+                        }
                         showsHorizontalScrollIndicator={false}
                         ListFooterComponent={
                             (
@@ -50,7 +71,6 @@ export const ProductList = ():JSX.Element=> {
                     />
                 ) : null
             }
-
             {
                 status === 'INITIAL' || status === 'LOADING' ? (
                     <View style={styles.loading}>
@@ -58,7 +78,6 @@ export const ProductList = ():JSX.Element=> {
                     </View>
                 ) : null
             }
-
             {
                 status === 'ERROR' ? (
                     <ErrorModal 
@@ -67,7 +86,6 @@ export const ProductList = ():JSX.Element=> {
                     />
                 ): null
             }
-        
         </View>
     )
 }

@@ -20,7 +20,7 @@ function* requestCategorySagas(){
             if(result.status !== 200){
                 yield put(finishRequestWithError(result));
             } else {
-            yield put(finishRequestSuccessfully(result));
+                yield put(finishRequestSuccessfully(result));
             }
         }else {
             yield put(finishRequestWithError());
