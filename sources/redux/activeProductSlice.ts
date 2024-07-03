@@ -5,12 +5,14 @@ import { baseProduct } from "../types/api/productTypes";
 // state type
 
 interface reducerType {
-    product : baseProduct | null
+    product : baseProduct | null,
+    activeVariant:number
 }
 
 //initial state
 const initialState:reducerType = {
-    product : null
+    product : null,
+    activeVariant: 0
 }
 
 //slice
@@ -25,17 +27,21 @@ const activeProductSlice = createSlice(
             resetActiveProduct:(state)=>{
                 state.product = null
             },
+            setActiveVariant: (state, action:PayloadAction<number>)=> {
+                state.activeVariant = action.payload
+            }   
         },
     }
 );
 
 //actions export
 
-export const {setActiveProduct, resetActiveProduct } = activeProductSlice.actions;
+export const {setActiveProduct, resetActiveProduct, setActiveVariant } = activeProductSlice.actions;
 
 //selector export
 
 export const activeProductSelector = (state:RootState)=> state.activeProduct.product;
+export const activeVariantSeelector = (state:RootState)=> state.activeProduct.activeVariant;
 
 // reducer export
 export default activeProductSlice.reducer;

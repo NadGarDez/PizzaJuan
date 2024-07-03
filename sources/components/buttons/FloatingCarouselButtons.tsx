@@ -23,7 +23,7 @@ const styles = StyleSheet.create(
             borderRadius:12,
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-around"
+            justifyContent: "center"
         },
         itemStyles : {
             width: 10,//10,
@@ -36,6 +36,7 @@ const styles = StyleSheet.create(
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            marginRight: 6
         },
         fillStyles: {
             width:5,

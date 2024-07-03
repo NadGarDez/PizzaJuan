@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Dimensions, StyleSheet, PanResponder } from "react-native";
 import { VariantSelector } from "../buttons/VariantSelector";
 import { FloatingCarouselButtons } from "../buttons/FloatingCarouselButtons";
 import { ImageCarousel } from "./ImageCarousel";
 import { colors } from "../../styles/colors";
 import { baseProduct } from "../../types/api/productTypes";
+import { getImagesFromBaseProduct } from "../../utils/complexSelectors";
 
 const styles = StyleSheet.create(
     {
@@ -47,17 +48,28 @@ type variant = {
 
 type props = {
     availablePan:boolean,
+    product: baseProduct
 }
 
 
-export const CarouselProductComplexComponent = ({availablePan,principal_image, variants}:baseProduct&props):JSX.Element=> {
+export const CarouselProductComplexComponent = (props:props):JSX.Element=> {
+
+    const {availablePan, product} = props;
 
     const [focusImage, setFocusImage] = useState<number>(0);
     const [dx, setDx] =  useState<number>(0);
     const [released, setReleased] = useState<boolean>(false);
+    const [images, setImages] = useState<string[]>([]);
 
     const changeFocus = (index:number)=>setFocusImage(index);
 
+
+    useEffect(
+        ()=> {
+            setImages(getImagesFromBaseProduct(product));
+        },
+        [props]
+    )
     const panResponder = useRef(
         PanResponder.create({
             // Ask to be the responder.
@@ -104,7 +116,7 @@ export const CarouselProductComplexComponent = ({availablePan,principal_image, v
                     <ImageCarousel 
                             focused={focusImage}
                             data={
-                               [principal_image]
+                               images
                             }
                             dx={dx}
                             released={released}
@@ -119,13 +131,12 @@ export const CarouselProductComplexComponent = ({availablePan,principal_image, v
             </View>
             <VariantSelector 
                 visible={availablePan}
-                variants={variants || []}
+                variants={product.variants || []}
                 onChangeVariant={
                     (index)=>{}
                 }
             />
-            <FloatingCarouselButtons numberOfItems={1} onPressItem={changeFocus} focused={focusImage} visible={availablePan} /> 
-            
+            <FloatingCarouselButtons numberOfItems={images.length} onPressItem={changeFocus} focused={focusImage} visible={availablePan} /> 
         </>
     )
 }

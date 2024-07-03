@@ -49,7 +49,6 @@ const isNeededBack = (dx:number, index:number):boolean=> {
 
 
 export const ImageCarousel = ({data, focused,dx, released, setFocus}:props):JSX.Element=> {
-    console.log(data, 'super data', BASE_URL)
 
     const animation = useRef(
         new Animated.Value(0)

@@ -5,6 +5,8 @@ import { PlusLessButton } from "../buttons/PlusLessButton"
 import { AddToCarButton } from "../buttons/AddToCarButton"
 import { colors } from "../../styles/colors"
 import { baseProduct } from "../../types/api/productTypes"
+import { useAppSelector } from "../../redux/hooks"
+import { activeProductSelector, activeVariantSeelector } from "../../redux/activeProductSlice"
 
 const styles = StyleSheet.create({
     informationContainer: {
@@ -127,7 +129,10 @@ type props = {
 
 
 
-export const ProductInformationCard = ({name, description, base_price,recomendations, compressed }:baseProduct & props)=> {
+export const ProductInformationCard = ({name, description, base_price,recomendations, compressed, variants }:baseProduct & props)=> {
+
+    const activeVariant = useAppSelector(activeVariantSeelector);
+
     return (
         <View style={styles.informationContainer}>
         <View style={styles.titleLikesContainer}>
@@ -170,10 +175,10 @@ export const ProductInformationCard = ({name, description, base_price,recomendat
             <View style={styles.amountButtonContainerAndPrice}>
                 <View style={styles.priceContainer}>
                         <Text style={styles.dolarPrice}>
-                            {base_price + "$"}
+                            {variants[activeVariant].price + "$"}
                         </Text>
                         <Text style={styles.bsPrice}>
-                            referencia {(base_price * 36) + "bs"}
+                            referencia {(variants[activeVariant].price * 36) + "bs"}
                         </Text>
                 </View>
                 <View style={styles.orderContiner}>

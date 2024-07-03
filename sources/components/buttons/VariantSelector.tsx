@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Dimensions, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { PizzaIcon } from "../icons/PizzaIcon";
-import { shadows } from "../../styles/shadow";
 import { productVariant } from "../../types/api/productTypes";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { activeVariantSeelector, setActiveVariant } from "../../redux/activeProductSlice";
 
 
 
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         minWidth: 50,
-        maxWidth:70,
+        maxWidth:100,
         minHeight:50,
         borderRadius:14,
         padding:8
@@ -85,8 +86,10 @@ export const VariantSelector = ({variants, visible, onChangeVariant}:props):JSX.
 
     const animation = useRef(new Animated.Value(1)).current;
 
-    const [selectedIndex, setSelectedIndex] = useState<number>(0);
+    const dispatch = useAppDispatch();
 
+    const selectedIndex = useAppSelector(activeVariantSeelector);
+    const setSelectedIndex = (index:number)=>dispatch(setActiveVariant(index))
 
     const [segmentHeight, setSegmentHeight]= useState<number>(0)
 
@@ -185,23 +188,3 @@ export const VariantSelector = ({variants, visible, onChangeVariant}:props):JSX.
        </>
     )
 }
-
-// <Animated.View style={
-//             {
-//                 ...styles.container,
-//                 opacity: animation
-//             }
-//         }>
-//             {
-//                 variants.map(
-//                     (item, index) => (
-//                        <Item name={item.name} selected={index === selectedIndex} key={`variant-item-${item.name}-${index}`}
-//                             onPress={
-//                                 ()=>onPressItem(index)
-//                             }
-//                        />
-//                     )
-//                 )
-//             }
-
-//        </Animated.View>

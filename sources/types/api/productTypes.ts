@@ -28,7 +28,7 @@ export interface baseProduct {
     recomendations:number, 
     principal_image:string,
     base_price:number,
-    variants?: productVariant[]
+    variants: productVariant[]
 }
 
 export interface defaultApiResponse<T> {
