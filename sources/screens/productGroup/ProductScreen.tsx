@@ -1,10 +1,12 @@
-import React, {  useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import { StyleSheet, View, Dimensions, Animated, Pressable } from "react-native";
 import { colors } from "../../styles/colors";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 import { ProductInformationCard } from "../../components/surfaces/ProductInformationCard";
 import { CarouselProductComplexComponent } from "../../components/surfaces/CarouselProductComplexComponent";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { activeProductSelector, resetActiveProduct } from "../../redux/activeProductSlice";
 
 const styles = StyleSheet.create(
     {
@@ -63,13 +65,21 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
 
     //this screen should fetch the product
 
+    const product = useAppSelector(activeProductSelector);
+    const dispatch  = useAppDispatch();
+
     const animation = useRef(new Animated.Value(defaultAnimationValue)).current;
 
     const [expanded, setExpand] = useState<boolean>(false);
 
-    const onPress =()=>{
-        navigation.navigate("PRODUCT_SELLER_SCREEN", {sellerId:"123"});
-    }
+    useEffect(
+        ()=> {
+            return ()=> {
+                dispatch(resetActiveProduct())
+            }
+        },
+        []
+    )
 
     const expand = ()=> {
         setExpand(true)
@@ -107,11 +117,13 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
         }
     }
 
+    if(product === null) return <></>
+
     return (
         <>
             <CarouselProductComplexComponent 
                 availablePan={!expanded}
-                data={staticData}
+                {...product}
             />
             <View>
                 <Animated.View 
@@ -125,7 +137,7 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                         onPress={onPressInformation}
                     >
                         
-                            <ProductInformationCard {...staticData} compressed={!expanded}/>
+                            <ProductInformationCard {...product} compressed={!expanded}/>
                     </Pressable>
                 </Animated.View>
             </View>

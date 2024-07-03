@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dimensions, Image, Pressable, StyleSheet,Text,View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
@@ -10,6 +10,8 @@ import { ProductStackType } from "../../navigation/Stacks/ProductStack";
 import { ThreDotsIcon } from "../icons/ThreDotsIcon";
 import { BASE_URL } from "../../constants/apiConstants";
 import { baseProduct } from "../../types/api/productTypes";
+import { useAppDispatch } from "../../redux/hooks";
+import { setActiveProduct } from "../../redux/activeProductSlice";
 
 const styles = StyleSheet.create(
     {
@@ -122,17 +124,16 @@ const styles = StyleSheet.create(
     }
 )
 
-type ownProps = {
-    onPressItem?: (index:number)=>void
-}
-
 type ProductListScreenPropType = NativeStackScreenProps<ProductStackType,"PRODUCT_LIST_SCREEN">
 
-export const ProductItem = ({principal_image, recomendations, name, base_price, short_description, pk }:ownProps&baseProduct):JSX.Element=>{
+export const ProductItem = (props:baseProduct):JSX.Element=>{
 
+    const {principal_image, recomendations, name, base_price, short_description, pk } = props;
     const {navigate} = useNavigation<ProductListScreenPropType['navigation']>();
+    const dispatch = useAppDispatch();
 
     const nav = ()=> {
+        dispatch(setActiveProduct(props))
         navigate("PRODUCT_SCREEN", {productId:`${pk}`})
     }
 

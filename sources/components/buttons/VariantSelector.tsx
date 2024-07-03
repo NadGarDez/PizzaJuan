@@ -3,6 +3,7 @@ import { Animated, Dimensions, Image, Pressable, StyleSheet, Text, View } from "
 import { colors } from "../../styles/colors";
 import { PizzaIcon } from "../icons/PizzaIcon";
 import { shadows } from "../../styles/shadow";
+import { productVariant } from "../../types/api/productTypes";
 
 
 
@@ -42,12 +43,8 @@ const styles = StyleSheet.create({
     }
 })
 
-type variant = {
-    name:string,
-    image:string
-}
 type props = {
-    variants: variant[],
+    variants: productVariant[],
     visible:boolean,
     onChangeVariant: (index:number)=>void
 }

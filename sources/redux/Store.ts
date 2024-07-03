@@ -5,6 +5,7 @@ import ProductsSlicer from "./productsSlicer";
 import createSagaMiddleware from 'redux-saga'
 import { rootSagas } from "../sagas/rootSagas";
 import categorySlicer from "./categorySlicer";
+import activeProductSlice from "./activeProductSlice";
 
 
 const middleware = createSagaMiddleware()
@@ -14,7 +15,8 @@ export const store = configureStore({
         session:SessionSlicer,
         products:ProductsSlicer,
         modalForm:ModalFormReducer,
-        category: categorySlicer
+        category: categorySlicer,
+        activeProduct: activeProductSlice
     },
     middleware: (getDefaultMiddleware)=> getDefaultMiddleware().concat(middleware)
 })

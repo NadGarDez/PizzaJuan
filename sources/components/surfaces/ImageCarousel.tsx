@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react"
 import {Animated, Dimensions, StyleSheet, Image, Platform} from "react-native"
+import { image } from "../../types/api/productTypes"
+import { BASE_API_URL, BASE_URL } from "../../constants/apiConstants"
 
 type props = {
     data: string[],
@@ -47,6 +49,7 @@ const isNeededBack = (dx:number, index:number):boolean=> {
 
 
 export const ImageCarousel = ({data, focused,dx, released, setFocus}:props):JSX.Element=> {
+    console.log(data, 'super data', BASE_URL)
 
     const animation = useRef(
         new Animated.Value(0)
@@ -120,7 +123,7 @@ export const ImageCarousel = ({data, focused,dx, released, setFocus}:props):JSX.
                                 <Image
                                     key={`${index}-image-carousel`}
                                     source={{
-                                        uri: item
+                                        uri: BASE_URL + item
                                     }}
                                     style={{
                                         ...styles.imageStyles,

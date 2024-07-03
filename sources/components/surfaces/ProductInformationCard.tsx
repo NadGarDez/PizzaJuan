@@ -1,13 +1,14 @@
 import React from "react"
-import { View, Text, StyleSheet, Dimensions } from "react-native"
+import { View, Text, StyleSheet } from "react-native"
 import { HeartIconFilled } from "../icons/HeartIconFilled"
 import { PlusLessButton } from "../buttons/PlusLessButton"
 import { AddToCarButton } from "../buttons/AddToCarButton"
 import { colors } from "../../styles/colors"
-import { ScrollView } from "react-native-gesture-handler"
+import { baseProduct } from "../../types/api/productTypes"
 
 const styles = StyleSheet.create({
     informationContainer: {
+        width: '100%',
         backgroundColor:colors.white_card,
         borderRadius:30,
         paddingVertical:16,
@@ -112,7 +113,8 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "flex-end",
         flexDirection:"column",
-        flexGrow:1
+        flexGrow:1,
+        width: '100%'
     }
 
 
@@ -120,31 +122,25 @@ const styles = StyleSheet.create({
 
 
 type props = {
-    productName:string,
-    price:number,
-    favorite:boolean,
-    image?:any,
-    likes:number,
-    description?:string,
-    longDescription: string,
-    variants?:any,
     compressed:boolean
 }
 
-export const ProductInformationCard = ({productName, price, favorite,likes, longDescription, compressed }:props)=> {
+
+
+export const ProductInformationCard = ({name, description, base_price,recomendations, compressed }:baseProduct & props)=> {
     return (
         <View style={styles.informationContainer}>
         <View style={styles.titleLikesContainer}>
                 <View style={styles.titleContainer}>
                         <Text style={styles.titleStyles}>
-                            {productName}
+                            {name}
                         </Text>
                 </View>
 
 
                 <View style={styles.likeButtonContainer}>
                     <Text style={styles.likeNumberContainer}>
-                        {likes} han reaccionado con
+                        {recomendations} han reaccionado con
                     </Text>
                     <HeartIconFilled color={colors.pink}/>
                 </View>
@@ -159,11 +155,11 @@ export const ProductInformationCard = ({productName, price, favorite,likes, long
             {
                 compressed ? (
                     <Text style={styles.descriptionTextStyles}>
-                        {longDescription.substring(0,200)}... Ver mas
+                        {description.substring(0,200)}... Ver mas
                     </Text>
                 ) : (
                     <Text style={styles.descriptionTextStyles}>
-                        {longDescription}
+                        {description}
                     </Text>
                 )
             }
@@ -174,10 +170,10 @@ export const ProductInformationCard = ({productName, price, favorite,likes, long
             <View style={styles.amountButtonContainerAndPrice}>
                 <View style={styles.priceContainer}>
                         <Text style={styles.dolarPrice}>
-                            {price + "$"}
+                            {base_price + "$"}
                         </Text>
                         <Text style={styles.bsPrice}>
-                            referencia {(price * 36) + "bs"}
+                            referencia {(base_price * 36) + "bs"}
                         </Text>
                 </View>
                 <View style={styles.orderContiner}>

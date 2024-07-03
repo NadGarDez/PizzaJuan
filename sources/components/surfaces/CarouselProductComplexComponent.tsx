@@ -4,6 +4,7 @@ import { VariantSelector } from "../buttons/VariantSelector";
 import { FloatingCarouselButtons } from "../buttons/FloatingCarouselButtons";
 import { ImageCarousel } from "./ImageCarousel";
 import { colors } from "../../styles/colors";
+import { baseProduct } from "../../types/api/productTypes";
 
 const styles = StyleSheet.create(
     {
@@ -46,14 +47,10 @@ type variant = {
 
 type props = {
     availablePan:boolean,
-    data: {
-        variants: variant[],
-        images: string[]
-    },
 }
 
 
-export const CarouselProductComplexComponent = ({availablePan, data:{variants,images}}:props):JSX.Element=> {
+export const CarouselProductComplexComponent = ({availablePan,principal_image, variants}:baseProduct&props):JSX.Element=> {
 
     const [focusImage, setFocusImage] = useState<number>(0);
     const [dx, setDx] =  useState<number>(0);
@@ -107,7 +104,7 @@ export const CarouselProductComplexComponent = ({availablePan, data:{variants,im
                     <ImageCarousel 
                             focused={focusImage}
                             data={
-                                images
+                               [principal_image]
                             }
                             dx={dx}
                             released={released}
@@ -122,12 +119,12 @@ export const CarouselProductComplexComponent = ({availablePan, data:{variants,im
             </View>
             <VariantSelector 
                 visible={availablePan}
-                variants={variants}
+                variants={variants || []}
                 onChangeVariant={
                     (index)=>{}
                 }
             />
-            <FloatingCarouselButtons numberOfItems={4} onPressItem={changeFocus} focused={focusImage} visible={availablePan} /> 
+            <FloatingCarouselButtons numberOfItems={1} onPressItem={changeFocus} focused={focusImage} visible={availablePan} /> 
             
         </>
     )
