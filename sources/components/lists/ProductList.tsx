@@ -1,8 +1,8 @@
 import React from "react";
 import { ActivityIndicator, FlatList, StyleSheet , Text, View} from "react-native";
 import { ProductItem } from "../surfaces/ProductItem";
-import {  useAppSelector } from "../../redux/hooks";
-import { productReducersStaus, productsErrorTextSelector, productsSelector } from "../../redux/productsSlicer";
+import {  useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { productGeneralReducerSelector, productReducersStaus, productsErrorTextSelector, productsSelector } from "../../redux/productsSlicer";
 import { colors } from "../../styles/colors";
 import { ErrorModal } from "../surfaces/ErrorModal";
 
@@ -18,6 +18,14 @@ const styles = StyleSheet.create(
             justifyContent: 'center',
             alignItems: 'center',
             height: 200,
+            marginBottom: 16
+        },
+        litleLoading: {
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 50,
             marginBottom: 16
         },
         emptyComponent: {
@@ -41,16 +49,42 @@ const EmptyComponent = ():JSX.Element => (
     </View>
 )
 
+const FooterComponent = ({status}:{status:string}):JSX.Element => (
+    <>
+        {
+            status === 'N_LOADING' ? (
+                <View style={styles.litleLoading}>
+                    <ActivityIndicator size={60} color={colors.principal}/>
+                </View>
+            ): (
+                <View style={{marginBottom:10}}/>
+            )
+        }
+    </>
+)
+
 export const ProductList = ():JSX.Element=> {
 
     const products  = useAppSelector(productsSelector)
     const status = useAppSelector(productReducersStaus)
     const error = useAppSelector(productsErrorTextSelector)
+    const dispatch = useAppDispatch()
+
+    const manageNext = ()=> {
+        if(status === 'SUCCESSED') {
+            dispatch({
+                type: 'N_REQUEST_PRODUCT',
+            })
+        }   
+    }
+
+    const manageRefresh = ()=> {
+    }
 
     return (
         <View style={styles.container}>
             {
-                status === 'SUCCESS' ? (
+                status === 'SUCCESSED' || status === 'N_LOADING' ? (
                     <FlatList
                         data={products ?? []}
                         renderItem={(props)=>(
@@ -63,11 +97,10 @@ export const ProductList = ():JSX.Element=> {
                         }
                         showsHorizontalScrollIndicator={false}
                         ListFooterComponent={
-                            (
-                                <View style={{marginBottom:10}}>
-                                </View>
-                            )
+                           <FooterComponent status={status} />
                         }
+                        onEndReached={manageNext}
+                        onRefresh={manageRefresh}
                     />
                 ) : null
             }
