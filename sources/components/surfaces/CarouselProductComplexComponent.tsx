@@ -135,6 +135,7 @@ export const CarouselProductComplexComponent = (props:props):JSX.Element=> {
                 onChangeVariant={
                     (index)=>{}
                 }
+                category={product.category.name}
             />
             <FloatingCarouselButtons numberOfItems={images.length} onPressItem={changeFocus} focused={focusImage} visible={availablePan} /> 
         </>

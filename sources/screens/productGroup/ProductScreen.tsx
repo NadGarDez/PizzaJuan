@@ -34,9 +34,8 @@ const expandedAnimatedValue = Dimensions.get("window").height * (ScreenHeight>70
 
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
-    //this screen should fetch the product
-
     const product = useAppSelector(activeProductSelector);
+
     const dispatch  = useAppDispatch();
 
     const animation = useRef(new Animated.Value(defaultAnimationValue)).current;

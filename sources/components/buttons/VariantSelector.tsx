@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { PizzaIcon } from "../icons/PizzaIcon";
-import { productVariant } from "../../types/api/productTypes";
+import { categorires, productVariant } from "../../types/api/productTypes";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { activeVariantSeelector, setActiveVariant } from "../../redux/activeProductSlice";
+import { variantIconSwitch } from "../../utils/variantIconSelctor";
 
 
 
@@ -47,7 +48,8 @@ const styles = StyleSheet.create({
 type props = {
     variants: productVariant[],
     visible:boolean,
-    onChangeVariant: (index:number)=>void
+    onChangeVariant: (index:number)=>void,
+    category:categorires
 }
 
 
@@ -60,7 +62,7 @@ const getTopMargin = (index:number, segmentHeight:number):number=> {
     return startSegment + centerValue;
 }
 
-const Item = ({name, selected, onPress, index, segmentHeight}:{name:string, selected:boolean, onPress:()=>void, index:number, segmentHeight:number})=> {
+const Item = ({name, selected, onPress, category}:{name:string, selected:boolean, onPress:()=>void, category:categorires})=> {
 
     const containerStyles = selected ? {...styles.variantContainer, ...styles.selectedStyles} : {...styles.variantContainer, ...styles.unselectedStyles, }
 
@@ -73,16 +75,18 @@ const Item = ({name, selected, onPress, index, segmentHeight}:{name:string, sele
              <View 
                  style={containerStyles} 
              >
-             <PizzaIcon />
-                 <Text style={styles.variantText} numberOfLines={2}>
-                     {name}
-                 </Text>
+                {
+                    variantIconSwitch[category] || variantIconSwitch['default']
+                }
+                <Text style={styles.variantText} numberOfLines={2}>
+                    {name}
+                </Text>
              </View>
          </Pressable>
     )
 }
 
-export const VariantSelector = ({variants, visible, onChangeVariant}:props):JSX.Element => {
+export const VariantSelector = ({variants, visible, onChangeVariant,category}:props):JSX.Element => {
 
     const animation = useRef(new Animated.Value(1)).current;
 
@@ -175,7 +179,7 @@ export const VariantSelector = ({variants, visible, onChangeVariant}:props):JSX.
                                 }
                                 key={`variant-item-${item.name}-${index}`}
                             >
-                                <Item name={item.name} selected={index === selectedIndex} index={index} segmentHeight={segmentHeight}
+                                <Item name={item.name} selected={index === selectedIndex} category={category}
                                     onPress={
                                         ()=>onPressItem(index)
                                     }

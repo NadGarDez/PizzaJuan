@@ -9,6 +9,7 @@ export interface tax {
     name:string
 }
 
+export type categorires = 'Pizza' | 'Bebidas' | 'Snacks' | 'Acompañantes' | 'default';
 
 export interface productVariant {
     name:string, 
@@ -28,7 +29,11 @@ export interface baseProduct {
     recomendations:number, 
     principal_image:string,
     base_price:number,
-    variants: productVariant[]
+    variants: productVariant[],
+    category: {
+        pk:number,
+        name:categorires
+    }
 }
 
 export interface defaultApiResponse<T> {
