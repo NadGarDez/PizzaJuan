@@ -3,7 +3,10 @@ import { Dimensions, Image, Pressable, StyleSheet,Text,View } from "react-native
 import { colors } from "../../styles/colors";
 import { PlusLessButton } from "../buttons/PlusLessButton";
 import { DeleteProductButton } from "../buttons/DeleteProductButton";
-import { productInstance } from "../../constants/productConstants";
+import { shoppingCarItemType } from "../../types/api/productTypes";
+import { BASE_URL } from "../../constants/apiConstants";
+import { useAppDispatch } from "../../redux/hooks";
+import { deleteItem, setNumberOfItems } from "../../redux/shoppingCardSlice";
 
 const styles = StyleSheet.create(
     {
@@ -29,7 +32,7 @@ const styles = StyleSheet.create(
         },
         informationContainer: {
             flex:2,
-            paddingRight:4
+            paddingHorizontal:4,
         },
         imageStyles: {
            height:110
@@ -132,21 +135,42 @@ const styles = StyleSheet.create(
     }
 )
 
-type props = productInstance & {
+type props =  {
     readonly?: boolean,
     onPressItem:(index:number)=>void,
-    last:boolean
+    last:boolean,
+    product: shoppingCarItemType
 }
 
 export const CarItem = (props:props):JSX.Element=>{
 
-    const {image, productName, price, description, onPressItem, last, readonly = false} = props;
+    const {
+        product: {
+            principal_image, name, variant: {price, pk:variantPk}, description, numberOfItems, pk
+        }, 
+        onPressItem, 
+        last, 
+        readonly = false
+    } = props;
+
 
     const lastStyles = !!last ? {} : styles.borderStyles;
-    const [numberOfItems, setNumberOfItems] = useState<number>(1)
+    const dispatch = useAppDispatch();
+
+    const removeItemFromCar =()=> {
+        dispatch(deleteItem(`${pk}.${variantPk}`))
+    }
 
     const onChangeItemNumber = (value:number):void=> {
-        setNumberOfItems(value)
+        if(value < 1) {
+            removeItemFromCar()
+        }
+        else {
+            dispatch(setNumberOfItems({
+                key: `${pk}.${variantPk}`,
+                numberOfItems: value
+            }))
+        }
     }
     
     return (
@@ -167,7 +191,7 @@ export const CarItem = (props:props):JSX.Element=>{
                     }>
                         <View style={styles.flexRowStyles}>
                             <View style={styles.imageContainer}>
-                                <Image source={{uri:image}} style={styles.imageStyles}/>
+                                <Image source={{uri:BASE_URL + principal_image, cache: 'force-cache'}} style={styles.imageStyles} resizeMode='contain'/>
                             </View>
                             <View style={styles.informationContainer}>
                                     
@@ -175,7 +199,7 @@ export const CarItem = (props:props):JSX.Element=>{
                                     <View style={styles.titleContainerAndFavorite}>
                                         <View style={styles.titleContainer}>
                                             <Text style={styles.titleTextStyles}>
-                                                {productName}
+                                                {name}
                                             </Text>
                                         </View>
                                         {
@@ -184,9 +208,7 @@ export const CarItem = (props:props):JSX.Element=>{
                                                     <DeleteProductButton 
                                                     
                                                         onPress={
-                                                            ()=>{
-                
-                                                            }
+                                                           removeItemFromCar
                                                         }
                                                     />
                                                 </View>
@@ -201,7 +223,7 @@ export const CarItem = (props:props):JSX.Element=>{
                                     <View style={styles.priceContainerAndCount}>
                                         <View style={styles.priceContainer}>
                                             <Text style={styles.dolarPrice}>
-                                                {(price * numberOfItems) + "$"}
+                                                {( price * numberOfItems) + "$"}
                                             </Text>
                                         </View>
                                         <View style={styles.countSelector}>

@@ -18,7 +18,8 @@ export interface productVariant {
     disponibility:number,
     images:image[],
     total_with_taxes:number,
-    taxes:tax[]
+    taxes:tax[],
+    pk:number
 }
 
 export interface baseProduct {
@@ -35,6 +36,23 @@ export interface baseProduct {
         name:categorires
     }
 }
+
+export type shoppingCarItemType =  {
+    pk:number,
+    name:string,
+    description:string,
+    short_description:string,
+    recomendations:number, 
+    principal_image:string,
+    base_price:number,
+    variant: productVariant,
+    numberOfItems:number
+    category: {
+        pk:number,
+        name:categorires
+    }
+}
+
 
 export interface defaultApiResponse<T> {
     status:number,

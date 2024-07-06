@@ -1,12 +1,15 @@
-import React from "react"
+import React, { useState } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { HeartIconFilled } from "../icons/HeartIconFilled"
 import { PlusLessButton } from "../buttons/PlusLessButton"
 import { AddToCarButton } from "../buttons/AddToCarButton"
 import { colors } from "../../styles/colors"
 import { baseProduct } from "../../types/api/productTypes"
-import { useAppSelector } from "../../redux/hooks"
-import { activeProductSelector, activeVariantSeelector } from "../../redux/activeProductSlice"
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
+import {  activeVariantSeelector } from "../../redux/activeProductSlice"
+import { useAnimatedProps } from "react-native-reanimated"
+import { setProduct } from "../../redux/shoppingCardSlice"
+import { NotificationModal } from "../modal/NotificationModal"
 
 const styles = StyleSheet.create({
     informationContainer: {
@@ -129,69 +132,102 @@ type props = {
 
 
 
-export const ProductInformationCard = ({name, description, base_price,recomendations, compressed, variants }:baseProduct & props)=> {
+export const ProductInformationCard = (props:baseProduct & props)=> {
+
+    const {name, description, base_price,recomendations, compressed, variants} = props;
+    const [productAmount, setProductAmount] = useState<number>(1);
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     const activeVariant = useAppSelector(activeVariantSeelector);
+    const dispatch = useAppDispatch()
+
+    const plusLessManager = (counter:number)=>setProductAmount(counter);
+
+    const addProductToStore = ()=> {
+
+        const {variants,compressed,...rest } = props
+        const key = `${props.pk}.${variants[activeVariant].pk}`
+
+        dispatch(
+            setProduct({
+                item: {
+                    ...rest,
+                    variant: variants[activeVariant],
+                    numberOfItems: productAmount
+                },
+                key
+            })
+        )
+        setShowModal(true);
+    }
+
+    const onCloseModal = ()=> setShowModal(false);
 
     return (
-        <View style={styles.informationContainer}>
-        <View style={styles.titleLikesContainer}>
-                <View style={styles.titleContainer}>
+        <>
+            <View style={styles.informationContainer}>
+                <View style={styles.titleLikesContainer}>
+                    <View style={styles.titleContainer}>
                         <Text style={styles.titleStyles}>
                             {name}
                         </Text>
-                </View>
+                    </View>
 
 
-                <View style={styles.likeButtonContainer}>
-                    <Text style={styles.likeNumberContainer}>
-                        {recomendations} han reaccionado con
-                    </Text>
-                    <HeartIconFilled color={colors.pink}/>
-                </View>
-        </View>
-        <View style={styles.descriptionContainer}>
-            <Text style={styles.descriptionTitleStyles}>
-                Descripcion
-            </Text>
-            <View  style={styles.line}>
-            </View>
-
-            {
-                compressed ? (
-                    <Text style={styles.descriptionTextStyles}>
-                        {description.substring(0,200)}... Ver mas
-                    </Text>
-                ) : (
-                    <Text style={styles.descriptionTextStyles}>
-                        {description}
-                    </Text>
-                )
-            }
-            
-        </View>
-
-        <View style={styles.buttonAndOrderContainer}>
-            <View style={styles.amountButtonContainerAndPrice}>
-                <View style={styles.priceContainer}>
-                        <Text style={styles.dolarPrice}>
-                            {variants[activeVariant].price + "$"}
+                    <View style={styles.likeButtonContainer}>
+                        <Text style={styles.likeNumberContainer}>
+                            {recomendations} han reaccionado con
                         </Text>
-                        <Text style={styles.bsPrice}>
-                            referencia {(variants[activeVariant].price * 36) + "bs"}
-                        </Text>
+                        <HeartIconFilled color={colors.pink}/>
+                    </View>
                 </View>
-                <View style={styles.orderContiner}>
-                    <PlusLessButton onChange={()=>{}} initialValue={1}/>
-                </View>
-            </View>
-            <View style={styles.buttonAddContainer}>
-                <AddToCarButton onPress={()=> {
-                }} />
-            </View>
-        </View>
-       
+                <View style={styles.descriptionContainer}>
+                    <Text style={styles.descriptionTitleStyles}>
+                        Descripcion
+                    </Text>
+                    <View  style={styles.line}>
+                    </View>
 
-</View>
+                    {
+                        compressed ? (
+                            <Text style={styles.descriptionTextStyles}>
+                                {description.substring(0,200)}... Ver mas
+                            </Text>
+                        ) : (
+                            <Text style={styles.descriptionTextStyles}>
+                                {description}
+                            </Text>
+                        )
+                    }
+                    
+                </View>
+
+                <View style={styles.buttonAndOrderContainer}>
+                    <View style={styles.amountButtonContainerAndPrice}>
+                        <View style={styles.priceContainer}>
+                            <Text style={styles.dolarPrice}>
+                                {variants[activeVariant].price + "$"}
+                            </Text>
+                            <Text style={styles.bsPrice}>
+                                referencia {(variants[activeVariant].price * 36) + "bs"}
+                            </Text>
+                        </View>
+                        <View style={styles.orderContiner}>
+                            <PlusLessButton onChange={plusLessManager} initialValue={1}/>
+                        </View>
+                    </View>
+                    <View style={styles.buttonAddContainer}>
+                        <AddToCarButton onPress={addProductToStore} />
+                    </View>
+                </View>
+            </View>
+            <NotificationModal 
+                visible={showModal}
+                onClose={onCloseModal}
+                title="Se ha agregado un nuevo producto al carrito"
+                subtitle="Ingresa al carrito de compras en el menu lateral para continuar tu compra"
+            />
+        </>
+        
     )
 }

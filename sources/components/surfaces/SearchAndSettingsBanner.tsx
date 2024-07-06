@@ -33,11 +33,6 @@ export const SearchAndSettingsBanner = ():JSX.Element=> {
             <View style={styles.inputContainer}>
                 <WhiteInputWithSearchIcon/>
             </View>
-            {/* <View style={styles.buttonContainer}>
-                <FilterButton 
-                    onPress={()=>{}}
-                />
-            </View> */}
         </View>
     )
 }

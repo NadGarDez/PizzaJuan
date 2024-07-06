@@ -7,6 +7,7 @@ import { ProductInformationCard } from "../../components/surfaces/ProductInforma
 import { CarouselProductComplexComponent } from "../../components/surfaces/CarouselProductComplexComponent";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { activeProductSelector, resetActiveProduct } from "../../redux/activeProductSlice";
+import { shoppingCardSelector } from "../../redux/shoppingCardSlice";
 
 const styles = StyleSheet.create(
     {
@@ -35,6 +36,9 @@ const expandedAnimatedValue = Dimensions.get("window").height * (ScreenHeight>70
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
     const product = useAppSelector(activeProductSelector);
+    const car = useAppSelector(shoppingCardSelector)
+
+    console.log(car, 'holix')
 
     const dispatch  = useAppDispatch();
 
@@ -106,8 +110,7 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                     <Pressable
                         onPress={onPressInformation}
                     >
-                        
-                            <ProductInformationCard {...product} compressed={!expanded}/>
+                        <ProductInformationCard {...product} compressed={!expanded}/>
                     </Pressable>
                 </Animated.View>
             </View>

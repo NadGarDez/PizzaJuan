@@ -4,7 +4,7 @@ import { ProductItem } from "../surfaces/ProductItem";
 import {  useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { productGeneralReducerSelector, productReducersStaus, productsErrorTextSelector, productsSelector } from "../../redux/productsSlicer";
 import { colors } from "../../styles/colors";
-import { ErrorModal } from "../surfaces/ErrorModal";
+import { ErrorModal } from "../modal/ErrorModal";
 
 const styles = StyleSheet.create(
     {

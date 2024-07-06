@@ -132,7 +132,7 @@ export const InvoiceScreen = (props: props)=> {
             </View>
             <View style={styles.container}>
                 <CarProductList 
-                    data={staticData}
+                    data={[]}
                     onPress={onPress}
                     readonly
                     expand

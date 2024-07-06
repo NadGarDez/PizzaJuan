@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { SceneMap, TabView } from "react-native-tab-view";
-import { DeliveryConfigurationForm } from "../forms/DeliveryConfiguraitonForm";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { DirectionListContainer } from "../surfaces/DirectionListContainer";
 import { PayMethodContainer } from "../surfaces/PayMethodListContainer";
 import { PaymentConfigurationForm } from "../forms/PaymentConfigurationForm";
 import { ModalFormHeader } from "../surfaces/ModalFormHeader";
-import { number } from "yup";
 import { useAppDispatch } from "../../redux/hooks";
 import { hide } from "../../redux/ModalFormReducer";
 import { ModalFormNames } from "../../types/forms/generalFormTypes";

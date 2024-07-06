@@ -36,7 +36,7 @@ const styles = StyleSheet.create(
             left:0,
             height:Dimensions.get("window").height * 0.4 + 33,
             width: Dimensions.get("screen").width,
-            backgroundColor: colors.white_card
+            backgroundColor: 'transparent'
         },
     }
 )
@@ -125,9 +125,8 @@ export const CarouselProductComplexComponent = (props:props):JSX.Element=> {
                     </View>
                 </View>
         
-                <View style={styles.colorLimit}>
-
-                </View>
+                
+                <View style={styles.colorLimit} />
             </View>
             <VariantSelector 
                 visible={availablePan}

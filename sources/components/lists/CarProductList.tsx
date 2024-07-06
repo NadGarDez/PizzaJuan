@@ -6,7 +6,7 @@ import { ProductItem } from "../surfaces/ProductItem";
 import { CarItem } from "../surfaces/CarItem";
 import { DireactionSelector } from "../surfaces/DirectionSelector";
 import { shadows } from "../../styles/shadow";
-import { productInstance } from "../../constants/productConstants";
+import { baseProduct, shoppingCarItemType } from "../../types/api/productTypes";
 
 const styles = StyleSheet.create(
     {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create(
 
 type listProps = {
     onPress:()=>void,
-    data: productInstance[],
+    data: shoppingCarItemType[],
     readonly?:boolean,
     expand?:boolean
 };
@@ -82,12 +82,12 @@ export const CarProductList = ({onPress, data, readonly = false, expand = false}
                         {data.length} Elementos agregados
                     </Text>
                 </View>
-                <FlatList
+                 <FlatList
                     data={data}
                     showsVerticalScrollIndicator={false}
                     renderItem={(props)=>(
                         <CarItem 
-                            {...props.item} onPressItem={onPressItem} last={props.index === (data.length - 1 )} readonly={readonly}
+                            product={props.item} onPressItem={onPressItem} last={props.index === (data.length - 1 )} readonly={readonly}
                         />
                     )}
                     

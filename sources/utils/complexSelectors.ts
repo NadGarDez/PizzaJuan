@@ -11,7 +11,6 @@ const getImagesFromVariants = (variant:productVariant):string[]=> {
 export const getImagesFromBaseProduct = (product:baseProduct) => {
     const images:string[] = []
     const {variants, principal_image} = product;
-    images.push(principal_image)
     variants.forEach(
         item => {
             images.push(...getImagesFromVariants(item))

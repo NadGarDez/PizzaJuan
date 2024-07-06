@@ -8,7 +8,8 @@ import { CarProductList } from "../../components/lists/CarProductList"
 import { AmountInformationComponent } from "../../components/surfaces/AmountInformationComponent"
 import { BuyButton } from "../../components/buttons/BuyButton"
 import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
-import { productInstance } from "../../constants/productConstants"
+import { useAppSelector } from "../../redux/hooks"
+import { shoppingCardSelector } from "../../redux/shoppingCardSlice"
 
 const styles = StyleSheet.create(
     {
@@ -42,64 +43,13 @@ const styles = StyleSheet.create(
     }
 );
 
-const staticData:productInstance[] = [
-    {
-        productName:"Pizza numero 1",
-        price:12,
-        favorite:true,
-        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-        likes:12,
-        description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-        creator: "PizzaJuan",
-        count:2
-    },
-    {
-        productName:"Pizza numero 2",
-        price:12,
-        favorite:false,
-        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-        likes:12,
-        description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-        creator: "PizzaJuan",
-        count:2
-    },
-    {
-        productName:"Pizza numero 3",
-        price:12,
-        favorite:false,
-        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-        likes:12,
-        description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-        creator: "PizzaJuan",
-        count:2
-    },
-    {
-        productName:"Pizza numero 4",
-        price:12,
-        favorite:false,
-        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-        likes:12,
-        description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-        creator: "PizzaJuan",
-        count:2
-    },
-    {
-        productName:"Pizza numero 5",
-        price:12,
-        favorite:false,
-        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-        likes:12,
-        description:"Una pizza muy deliciosa con un monton de ingredientes de alta calidad. By PizzaJuan!",
-        creator: "PizzaJuan",
-        count:2
-    },
-]
-
 type CarScreenPropType = StackNavigationProp<CarStackProp, "CAR_SCREEN">
 
 export const CarScreen = ():JSX.Element=>{
 
     const {navigate, dispatch} = useNavigation<CarScreenPropType>()
+
+    const {products} = useAppSelector(shoppingCardSelector)
     
     const onPress=()=>{
         navigate("PAY_SCREEN");
@@ -118,7 +68,7 @@ export const CarScreen = ():JSX.Element=>{
             <View style={styles.container}>
                 <CarProductList 
                     onPress={()=>{}}
-                    data={staticData}
+                    data={Object.values(products)}
                 />
                 <View style={styles.calculatorContainer}>
                     <AmountInformationComponent 

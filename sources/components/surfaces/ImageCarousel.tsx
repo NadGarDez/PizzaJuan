@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         position: "relative"
     },
     imageStyles: {
-        height: Dimensions.get("window").height * 0.6,
+        height: Dimensions.get("window").height * 0.60,
         width: Dimensions.get("screen").width
     },
 })
@@ -120,9 +120,11 @@ export const ImageCarousel = ({data, focused,dx, released, setFocus}:props):JSX.
                         data.map(
                             (item, index)=>(
                                 <Image
+                                    resizeMode='center'
                                     key={`${index}-image-carousel`}
                                     source={{
-                                        uri: BASE_URL + item
+                                        uri: BASE_URL + item,
+                                        cache: 'force-cache',
                                     }}
                                     style={{
                                         ...styles.imageStyles,

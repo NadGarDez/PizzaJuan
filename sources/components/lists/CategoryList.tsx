@@ -4,7 +4,7 @@ import { CategoryItem } from "../surfaces/CategoryItem";
 import { colors } from "../../styles/colors";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { categoriesErrorSelector, categoryReducersStaus, categorySelector } from "../../redux/categorySlicer";
-import { ErrorModal } from "../surfaces/ErrorModal";
+import { ErrorModal } from "../modal/ErrorModal";
 
 const styles = StyleSheet.create(
     {

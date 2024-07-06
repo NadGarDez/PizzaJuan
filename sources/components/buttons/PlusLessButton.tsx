@@ -74,7 +74,9 @@ export const PlusLessButton = (props:props):JSX.Element=>{
 
     useEffect(
         ()=>{
-            onChange(counter)
+            if(counter !== initialValue){
+                onChange(counter)
+            }
         },
         [counter, onChange]
     )

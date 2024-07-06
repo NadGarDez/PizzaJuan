@@ -10,6 +10,6 @@ export const variantIconSwitch: Record<categorires,JSX.Element> = {
     Pizza: <PizzaIcon />,
     default: <DefaultVariantIcon />,
     Bebidas: <Drinks />,
-    Acompañantes: <AditionalIcon />,
+    Acompañantes: <DefaultVariantIcon />,
     Snacks: <SnackIcon />
 }
