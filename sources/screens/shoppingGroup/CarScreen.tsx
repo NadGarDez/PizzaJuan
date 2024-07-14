@@ -10,6 +10,7 @@ import { BuyButton } from "../../components/buttons/BuyButton"
 import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
 import { useAppSelector } from "../../redux/hooks"
 import { shoppingCardSelector } from "../../redux/shoppingCardSlice"
+import { VoidShoppingCarComponent } from "../../components/surfaces/VoidShoppingCarComponent"
 
 const styles = StyleSheet.create(
     {
@@ -39,7 +40,7 @@ const styles = StyleSheet.create(
         buttonContainer: {
             flex:1,
             marginTop:16
-        }
+        },
     }
 );
 
@@ -55,7 +56,7 @@ export const CarScreen = ():JSX.Element=>{
         navigate("PAY_SCREEN");
     }
 
-    const jumpToUser = ()=> {
+    const openLocationModal = ()=> {
        dispatch(DrawerActions.openDrawer())
        setTimeout(() => {
         dispatch(DrawerActions.jumpTo("USER_STACK"))
@@ -66,21 +67,32 @@ export const CarScreen = ():JSX.Element=>{
         <>
             <TransformedSquare />
             <View style={styles.container}>
-                <CarProductList 
-                    onPress={()=>{}}
-                    data={Object.values(products)}
-                />
-                <View style={styles.calculatorContainer}>
-                    <AmountInformationComponent 
-                        onPressLocation={jumpToUser}
-                    />
-                </View>
-                <View style={styles.buttonContainer}>
-                    <BuyButton 
-                        text="Realizar Pago"
-                        onPress={onPress}
-                    />
-                </View>
+
+
+                {
+                    Object.values(products).length > 0 ? (
+                        <>
+                            <CarProductList 
+                                onPress={()=>{}}
+                                data={Object.values(products)}
+                            />
+                            <View style={styles.calculatorContainer}>
+                                <AmountInformationComponent 
+                                    onPressLocation={openLocationModal}
+                                />
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                <BuyButton 
+                                    text="Realizar Pago"
+                                    onPress={onPress}
+                                />
+                            </View>
+                        </>
+                    ) : (
+                        <VoidShoppingCarComponent />
+                    )
+                }
+                
             </View>
         </>
     )
