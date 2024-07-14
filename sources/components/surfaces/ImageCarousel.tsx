@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react"
-import {Animated, Dimensions, StyleSheet, Image, Platform} from "react-native"
-import { image } from "../../types/api/productTypes"
-import { BASE_API_URL, BASE_URL } from "../../constants/apiConstants"
+import {Animated, Dimensions, StyleSheet, Image, Platform } from "react-native"
+import { BASE_URL } from "../../constants/apiConstants"
+import { colors } from "../../styles/colors"
 
 type props = {
     data: string[],
@@ -15,11 +15,12 @@ const styles = StyleSheet.create({
     container:{
         display: "flex",
         flexDirection: "row",
-        position: "relative"
+        position: "relative",
+        backgroundColor: colors.hightLightPrincipal + '50'
     },
     imageStyles: {
         height: Dimensions.get("window").height * 0.60,
-        width: Dimensions.get("screen").width
+        width: Dimensions.get("screen").width,
     },
 })
 
@@ -120,7 +121,6 @@ export const ImageCarousel = ({data, focused,dx, released, setFocus}:props):JSX.
                         data.map(
                             (item, index)=>(
                                 <Image
-                                    resizeMode='center'
                                     key={`${index}-image-carousel`}
                                     source={{
                                         uri: BASE_URL + item,
@@ -129,6 +129,7 @@ export const ImageCarousel = ({data, focused,dx, released, setFocus}:props):JSX.
                                     style={{
                                         ...styles.imageStyles,
                                     }}
+                                    resizeMode='cover'
                                 />
                             )
                         )

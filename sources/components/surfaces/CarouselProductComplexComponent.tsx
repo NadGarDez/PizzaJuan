@@ -6,6 +6,7 @@ import { ImageCarousel } from "./ImageCarousel";
 import { colors } from "../../styles/colors";
 import { baseProduct } from "../../types/api/productTypes";
 import { getImagesFromBaseProduct } from "../../utils/complexSelectors";
+import LinearGradient from "react-native-linear-gradient";
 
 const styles = StyleSheet.create(
     {
@@ -23,7 +24,7 @@ const styles = StyleSheet.create(
         },
         imageContainer: {
             display:"flex",
-            backgroundColor:colors.white_card,
+            backgroundColor:colors.hightLightPrincipal + '30',
             overflow:"hidden"
         },
         colorLimit:{
@@ -37,6 +38,16 @@ const styles = StyleSheet.create(
             height:Dimensions.get("window").height * 0.4 + 33,
             width: Dimensions.get("screen").width,
             backgroundColor: 'transparent'
+        },
+        colorLimit2:{
+            display: "flex",
+            flexDirection: "row",
+            position: "absolute",
+            zIndex:-2,
+            left:0,
+            top:0,
+            height:Dimensions.get("window").height * 0.60,
+            width: Dimensions.get("screen").width,
         },
     }
 )
@@ -127,6 +138,12 @@ export const CarouselProductComplexComponent = (props:props):JSX.Element=> {
         
                 
                 <View style={styles.colorLimit} />
+                {/* <LinearGradient
+                    colors={['#ffffff00','#F5F5F530','#F5F5F5', '#dddddd']}
+                    locations={[0.85,0.88,0.90, 1]}
+                    style={styles.colorLimit2}
+                >
+                </LinearGradient> */}
             </View>
             <VariantSelector 
                 visible={availablePan}
