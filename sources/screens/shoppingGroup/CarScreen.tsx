@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Platform, StyleSheet, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { CarStackProp } from "../../navigation/Stacks/CarStack"
@@ -8,9 +8,10 @@ import { CarProductList } from "../../components/lists/CarProductList"
 import { AmountInformationComponent } from "../../components/surfaces/AmountInformationComponent"
 import { BuyButton } from "../../components/buttons/BuyButton"
 import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
-import { useAppSelector } from "../../redux/hooks"
-import { shoppingCardSelector } from "../../redux/shoppingCardSlice"
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
+import { setTotals, shoppingCardSelector } from "../../redux/shoppingCardSlice"
 import { VoidShoppingCarComponent } from "../../components/surfaces/VoidShoppingCarComponent"
+import { orderCalculation } from "../../utils/calculations"
 
 const styles = StyleSheet.create(
     {
@@ -48,20 +49,22 @@ type CarScreenPropType = StackNavigationProp<CarStackProp, "CAR_SCREEN">
 
 export const CarScreen = ():JSX.Element=>{
 
-    const {navigate, dispatch} = useNavigation<CarScreenPropType>()
+    const {navigate} = useNavigation<CarScreenPropType>()
 
-    const {products} = useAppSelector(shoppingCardSelector)
+    const { products } = useAppSelector(shoppingCardSelector)
+
+    const redux_dispatch = useAppDispatch();
     
     const onPress=()=>{
         navigate("PAY_SCREEN");
     }
 
-    const openLocationModal = ()=> {
-       dispatch(DrawerActions.openDrawer())
-       setTimeout(() => {
-        dispatch(DrawerActions.jumpTo("USER_STACK"))
-       }, 300);
-    }
+    useEffect(
+        ()=> {
+            redux_dispatch(setTotals(orderCalculation(Object.values(products))))
+        },
+        [products]
+    )
 
     return (
         <>
@@ -77,9 +80,7 @@ export const CarScreen = ():JSX.Element=>{
                                 data={Object.values(products)}
                             />
                             <View style={styles.calculatorContainer}>
-                                <AmountInformationComponent 
-                                    onPressLocation={openLocationModal}
-                                />
+                                <AmountInformationComponent />
                             </View>
                             <View style={styles.buttonContainer}>
                                 <BuyButton 

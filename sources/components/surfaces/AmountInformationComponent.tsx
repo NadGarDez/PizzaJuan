@@ -1,9 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
 import { DireactionSelector } from "./DirectionSelector";
 import { RenderInvoiceDirection } from "./RenderInvoiceDirection";
+import { useAppSelector } from "../../redux/hooks";
+import { shoppingCardSelector } from "../../redux/shoppingCardSlice";
 
 
 const styles = StyleSheet.create({
@@ -12,6 +14,7 @@ const styles = StyleSheet.create({
         backgroundColor:colors.white_card,
         borderRadius:12,
         paddingVertical:8,
+        maxHeight: Dimensions.get('window').height * 0.3,
         ...shadows.principalShadow
     },
     row: {
@@ -87,21 +90,24 @@ const styles = StyleSheet.create({
 })
 
 type props = {
-    onPressLocation:()=>void,
     readonly?:boolean
 }
 
 
-export const AmountInformationComponent = ({onPressLocation, readonly = false}:props)=> {
+export const AmountInformationComponent = ({ readonly = false}:props)=> {
+
+    const {totals: {info: {subtotal = 0, ...rest}, total}} = useAppSelector(shoppingCardSelector);
+
+    const restKeys = Object.keys(rest);
+
     return (
         <View style={styles.container}>
-                {
-                    !readonly ? (
-                        <DireactionSelector 
-                            onPress={onPressLocation}
-                        />
-                    ) : <RenderInvoiceDirection />
-                }
+            {
+                !readonly ? (
+                    <DireactionSelector />
+                ) : <RenderInvoiceDirection />
+            }
+            <ScrollView showsVerticalScrollIndicator>
                 <View style={styles.row}>
                     <View style={styles.column}>
                             <Text style={styles.subtotalTextStyles}>
@@ -110,36 +116,47 @@ export const AmountInformationComponent = ({onPressLocation, readonly = false}:p
                     </View>
                     <View style={styles.columnRight}>
                             <Text style={styles.subtotalTextStyles}>
-                                200$ 
+                                {subtotal}$
                             </Text>
                     </View>
                 </View>
+                {
+                    restKeys.length > 0 ? (
+                        restKeys.map(
+                            (item, index) => (
+                                <View style={styles.row} key={`tax-item-{${index}}`}>
+                                    <View style={styles.column}>
+                                            <Text style={styles.subtotalTextStyles}>
+                                                {item}
+                                            </Text>
+                                    </View>
+                                    <View style={styles.columnRight}>
+                                            <Text style={styles.subtotalTextStyles}>
+                                                {
+                                                    rest[item] || 0
+                                                }$
+                                            </Text>
+                                    </View>
+                                </View>
+                            )
+                        )
+                    ):null
+                }
                 <View style={styles.row}>
                     <View style={styles.column}>
-                            <Text style={styles.subtotalTextStyles}>
-                                IVA
-                            </Text>
+                        <Text style={styles.subtotalTextStyles}>
+                            Delivery
+                        </Text>
                     </View>
                     <View style={styles.columnRight}>
-                            <Text style={styles.subtotalTextStyles}>
-                                {
-                                    `${200 * 0.16}$`
-                                }
-                            </Text>
+                        <Text style={styles.subtotalTextStyles}>
+                            Gratis
+                        </Text>
                     </View>
                 </View>
-                <View style={styles.row}>
-                    <View style={styles.column}>
-                            <Text style={styles.subtotalTextStyles}>
-                                Delivery
-                            </Text>
-                    </View>
-                    <View style={styles.columnRight}>
-                            <Text style={styles.subtotalTextStyles}>
-                               Gratis
-                            </Text>
-                    </View>
-                </View>
+                
+            </ScrollView>
+            
                 
             <View style={styles.line} />
                 <View style={styles.row2}>
@@ -149,13 +166,12 @@ export const AmountInformationComponent = ({onPressLocation, readonly = false}:p
                             </Text>
                     </View>
                     <View style={styles.columnRight}>
-                           
-                            <Text style={styles.totalTextStyles}>
-                                        {232 + "$"}
-                                    </Text>
-                                    <Text style={styles.bsPrice}>
-                                        {" "}ref. {(232 * 36) + "bs"}
-                                    </Text>
+                        <Text style={styles.totalTextStyles}>
+                            {total + "$"}
+                        </Text>
+                        <Text style={styles.bsPrice}>
+                            {" "}ref. {((total * 36).toFixed(2)) + "bs"}
+                        </Text>
                     </View>
                 </View>
         </View>

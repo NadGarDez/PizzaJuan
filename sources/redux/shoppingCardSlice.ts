@@ -1,23 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./reduxTypes";
-import { baseProduct, shoppingCarItemType } from "../types/api/productTypes";
+import { shoppingCarItemType } from "../types/api/productTypes";
 
 // state type
 
 
-interface shoppingCartType {
-    products: Record<string,shoppingCarItemType>,
-    totals:Record<string, number | string>,
+export interface totals {
+    total: number,
+    info:Record<string, number>,
 }
  
+
+interface shoppingCartType {
+    products: Record<string,shoppingCarItemType>,
+    totals:totals
+}
+
 
 //initial state
 const initialState: shoppingCartType = {
    products: {
-
    },
    totals: {
-
+        total:0,
+        info: {}
    }
 }
 
@@ -66,6 +72,12 @@ const shoppingCardSlice = createSlice(
                 }>
             )=> {
                 state.products[action.payload.key].numberOfItems = action.payload.numberOfItems;
+            },
+            setTotals:(
+                state,
+                action:PayloadAction<totals>
+            )=> {
+                state.totals = action.payload;
             }
 
         },
@@ -74,11 +86,12 @@ const shoppingCardSlice = createSlice(
 
 //actions export
 
-export const {setProduct, incrementItem, decrementItem, deleteItem, setNumberOfItems} = shoppingCardSlice.actions;
+export const {setProduct, incrementItem, decrementItem, deleteItem, setNumberOfItems, setTotals} = shoppingCardSlice.actions;
 
 //selector export
 
-export const shoppingCardSelector = (state:RootState)  => state.shoppingCard;
+export const shoppingCardSelector = (state:RootState)  => state.shoppingCar;
+export const totalsSelector = (state:RootState)=> state.shoppingCar.totals
 
 // reducer export
 export default shoppingCardSlice.reducer;

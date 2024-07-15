@@ -38,8 +38,6 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
     const product = useAppSelector(activeProductSelector);
     const car = useAppSelector(shoppingCardSelector)
 
-    console.log(car, 'holix')
-
     const dispatch  = useAppDispatch();
 
     const animation = useRef(new Animated.Value(defaultAnimationValue)).current;

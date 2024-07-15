@@ -18,7 +18,7 @@ export const store = configureStore({
         modalForm:ModalFormReducer,
         category: categorySlicer,
         activeProduct: activeProductSlice,
-        shoppingCard: shoppingCardSlice
+        shoppingCar: shoppingCardSlice
     },
     middleware: (getDefaultMiddleware)=> getDefaultMiddleware().concat(middleware)
 })

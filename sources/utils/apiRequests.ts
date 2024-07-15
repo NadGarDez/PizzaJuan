@@ -5,7 +5,6 @@ const {getProducts,getProducWithCategory, getCategory} = urlFormatter;
 
 export const getProductList = async (category:string, token:string):Promise<object>=>{
     const url = category === '' ? getProducts() : getProducWithCategory(category)
-    console.log(url)
     try {
         const {status, data, statusText} = await axios.get(url, {
             headers: {
