@@ -133,3 +133,15 @@ export const getNext = async (token:string, url:string):Promise<object> => {
         
     }
 }
+
+export const createOrder = ()=>{
+
+}
+
+export const createPayMethod = ()=> {
+
+}
+
+export const updateUser = () => {
+    
+}

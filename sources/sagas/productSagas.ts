@@ -15,6 +15,7 @@ interface data {
 function* requestProductSagas(action: PayloadAction<number>) {
    const category =  action.payload > 0 ? action.payload : '';
    const token: null | string = yield select(sessionTokenSelector);
+   console.log(token, 'super token')
    try {
       if(token!==null){
          yield put(startRequest())
