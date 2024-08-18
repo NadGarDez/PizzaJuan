@@ -24,19 +24,19 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="icoon.png" translatesAutoresizingMaskIntoConstraints="NO" id="BMl-x6-pC5">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="SplashImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="BPS-Vl-hP7">
                                 <rect key="frame" x="0.0" y="-1" width="430" height="899"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" name="Primary"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="BMl-x6-pC5" secondAttribute="trailing" id="0Uz-Lo-QAF"/>
-                            <constraint firstItem="BMl-x6-pC5" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" constant="-60" id="8d2-ne-6Xx"/>
-                            <constraint firstItem="BMl-x6-pC5" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="T0M-Sh-y5b"/>
-                            <constraint firstItem="BMl-x6-pC5" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" constant="-60" id="bT6-39-PpZ"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="BMl-x6-pC5" secondAttribute="bottom" id="tRK-Ci-Hkc"/>
-                            <constraint firstItem="BMl-x6-pC5" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="tot-a6-tH9"/>
+                            <constraint firstItem="BPS-Vl-hP7" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" constant="-60" id="M0O-gi-1aW"/>
+                            <constraint firstItem="BPS-Vl-hP7" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="P0E-Jj-jwI"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="BPS-Vl-hP7" secondAttribute="bottom" id="bby-n7-QSh"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="BPS-Vl-hP7" secondAttribute="trailing" id="hBT-Ni-o3h"/>
+                            <constraint firstItem="BPS-Vl-hP7" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" constant="-60" id="jzK-8c-DGZ"/>
+                            <constraint firstItem="BPS-Vl-hP7" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="pfT-gE-Fhv"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -46,7 +46,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icoon.png" width="485" height="436"/>
+        <image name="SplashImage.png" width="400" height="400"/>
         <namedColor name="Primary">
             <color red="0.94901960784313721" green="0.73725490196078436" blue="0.3411764705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

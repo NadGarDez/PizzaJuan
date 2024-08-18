@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { View, StyleSheet, StatusBar } from "react-native";
 import { colors } from "./sources/styles/colors";
 import { NavigationContainer } from "@react-navigation/native";
@@ -6,6 +6,7 @@ import { store } from "./sources/redux/Store";
 import { Provider } from "react-redux";
 import { RootNavigation } from "./sources/navigation/RootNavigation";
 import { Auth0Provider } from "react-native-auth0";
+import * as SplashScreen from 'expo-splash-screen';
 
 const styles = StyleSheet.create(
     {
@@ -20,9 +21,19 @@ const styles = StyleSheet.create(
 
 const STYLES = ['default', 'dark-content', 'light-content'] as const;
 
+SplashScreen.preventAutoHideAsync()
+
 export const App = (): JSX.Element=>{
 
-    const logged = true;
+    useEffect(
+        ()=>{
+            const stopSplash = async () => {
+                await SplashScreen.hideAsync()
+            }
+            stopSplash()
+        },
+        []
+    )
 
     return (
         <View style={{flex:1}}>
