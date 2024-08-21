@@ -52,10 +52,3 @@ export type shoppingCarItemType =  {
         name:categorires
     }
 }
-
-
-export interface defaultApiResponse<T> {
-    status:number,
-    data:T,
-    statusText:string
-}

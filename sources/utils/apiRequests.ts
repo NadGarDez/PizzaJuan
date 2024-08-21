@@ -1,7 +1,8 @@
 import axios, { AxiosResponse} from "axios"
 import { urlFormatter } from "./apiUrlFormatter"
+import { createDeliveryLocaitonType } from "../types/api/deliveryLocation";
 
-const {getProducts,getProducWithCategory, getCategory} = urlFormatter;
+const {getProducts,getProducWithCategory, getCategory, createOrder, createPayMethod, createDeliveryLocation} = urlFormatter;
 
 export const getProductList = async (category:string, token:string):Promise<object>=>{
     const url = category === '' ? getProducts() : getProducWithCategory(category)
@@ -134,14 +135,60 @@ export const getNext = async (token:string, url:string):Promise<object> => {
     }
 }
 
-export const createOrder = ()=>{
+export const createOrderRequest = (token:string, bodyObject:any)=>{
+    const url = createOrder()
 
 }
 
-export const createPayMethod = ()=> {
+export const createPayMethodRequest = (token:string, bodyObject:any)=> {
+    const url = createPayMethod()
+}
+
+export const createDeliveryLocationRequest = async (token:string, bodyObject: createDeliveryLocaitonType)=> {
+
+    const url =  createDeliveryLocation()
+
+    try {
+        const response = await axios.post(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            bodyObject
+        })
+        console.log(response)
+        
+    } catch (error:any) {
+        console.log(error);
+        // if(error.response){
+        //     const {data, status} = error.response as AxiosResponse;
+        //     return {
+        //         status,
+        //         data: {
+        //             count: 0, 
+        //             next: null, 
+        //             previous: null, 
+        //             results: [], 
+        //         },
+        //         statusText:data.detail
+        //     }
+        // }
+        // else {
+        //      return {
+        //         status: 500,
+        //         data: {
+        //             count: 0, 
+        //             next: null, 
+        //             previous: null, 
+        //             results: [], 
+        //         },
+        //         statusText:'Error inesperado'
+        //     }
+        // }
+        
+    }
 
 }
 
-export const updateUser = () => {
+export const updateUser = (token:string) => {
     
 }

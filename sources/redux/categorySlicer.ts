@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./reduxTypes";
-import { type defaultApiResponse } from "../types/api/productTypes";
+import { type defaultApiResponse } from "../types/api/defaultTypes";
 
 // state type
 

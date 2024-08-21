@@ -2,7 +2,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { sessionTokenSelector } from "../redux/SessionReducer";
 import { getNext, getProductList } from "../utils/apiRequests";
-import { defaultApiResponse } from "../types/api/productTypes";
+import { defaultApiResponse } from "../types/api/defaultTypes";
 import { finishRequestSuccessfully, finishRequestWithError, productNextSelector, startRequest, startNRequest, finishNRequestSuccessfully } from "../redux/productsSlicer";
 
 interface data {

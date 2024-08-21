@@ -1,6 +1,6 @@
 import { call, put, select, takeEvery } from "redux-saga/effects"
 import { sessionTokenSelector } from "../redux/SessionReducer"
-import { defaultApiResponse } from "../types/api/productTypes";
+import { defaultApiResponse } from "../types/api/defaultTypes";
 import { getCategoryList } from "../utils/apiRequests";
 import { finishRequestSuccessfully, finishRequestWithError, startRequest } from "../redux/categorySlicer";
 
