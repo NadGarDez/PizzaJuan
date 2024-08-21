@@ -15,7 +15,7 @@ type colors_type = {
 
 export const colors : colors_type= {
     background_white:"#fcfcfc",
-    principal:"#f2bc57",
+    principal: "#f2bc57",
     hightLightPrincipal:"#f9d95f",
     black:"#07090d",
     white_card:"#ffffff",
