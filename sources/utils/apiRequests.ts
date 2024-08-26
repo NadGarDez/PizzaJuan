@@ -1,6 +1,7 @@
 import axios, { AxiosResponse} from "axios"
 import { urlFormatter } from "./apiUrlFormatter"
 import { createDeliveryLocaitonType } from "../types/api/deliveryLocation";
+import { defaultApiResponse } from "../types/api/defaultTypes";
 
 const {getProducts,getProducWithCategory, getCategory, createOrder, createPayMethod, createDeliveryLocation} = urlFormatter;
 
@@ -19,7 +20,6 @@ export const getProductList = async (category:string, token:string):Promise<obje
         };
         
     } catch (error:any) {
-        console.log(error)
         if(error.response){
             const {data, status} = error.response as AxiosResponse;
             return {
@@ -144,46 +144,42 @@ export const createPayMethodRequest = (token:string, bodyObject:any)=> {
     const url = createPayMethod()
 }
 
-export const createDeliveryLocationRequest = async (token:string, bodyObject: createDeliveryLocaitonType)=> {
-
+export const createDeliveryLocationRequest = async (token:string, bodyObject: createDeliveryLocaitonType): Promise<defaultApiResponse< object | null>> => {
     const url =  createDeliveryLocation()
-
     try {
-        const response = await axios.post(url, {
-            headers: {
-                'Authorization': `Bearer ${token}`
+        const {status, statusText, data} = await axios.post(url, 
+            {
+                ...bodyObject
             },
-            bodyObject
-        })
-        console.log(response)
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            
+            }
+        )
+        return {
+            status, 
+            data, 
+            statusText
+        }
         
     } catch (error:any) {
-        console.log(error);
-        // if(error.response){
-        //     const {data, status} = error.response as AxiosResponse;
-        //     return {
-        //         status,
-        //         data: {
-        //             count: 0, 
-        //             next: null, 
-        //             previous: null, 
-        //             results: [], 
-        //         },
-        //         statusText:data.detail
-        //     }
-        // }
-        // else {
-        //      return {
-        //         status: 500,
-        //         data: {
-        //             count: 0, 
-        //             next: null, 
-        //             previous: null, 
-        //             results: [], 
-        //         },
-        //         statusText:'Error inesperado'
-        //     }
-        // }
+        if(error.response){
+            const {data, status} = error.response as AxiosResponse;
+            return {
+                status,
+                data: null,
+                statusText:data.detail
+            }
+        }
+        else {
+             return {
+                status: 500,
+                data: null,
+                statusText:'Error inesperado'
+            }
+        }
         
     }
 

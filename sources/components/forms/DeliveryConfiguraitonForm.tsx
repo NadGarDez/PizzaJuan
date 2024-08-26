@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native"; 
+import React from "react";
+import { StyleSheet, Text, View } from "react-native"; 
 import { colors } from "../../styles/colors";
 import { deliveryConfigurationMetadata } from "../../constants/form/formConstants";
 import { useFormik } from "formik";
@@ -9,6 +9,9 @@ import { OutlinedButton } from "../buttons/OutlinedButton";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { deliveryConfigurationSchema, deliveryConfigurationSchemaType } from "../../types/forms/deliveryFormTypes";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { createDeliveryLocationRequest } from "../../utils/apiRequests";
+import { useAppSelector } from "../../redux/hooks";
+import { sessionTokenSelector } from "../../redux/SessionReducer";
 
 const styles = StyleSheet.create({
     container: {
@@ -62,8 +65,8 @@ const styles = StyleSheet.create({
 })
 
 const defaultValue : deliveryConfigurationSchemaType = {
-   directionName:'',
-   pluscode:'',
+   name:'',
+   plus_code:'',
    description:''
 }
 
@@ -75,29 +78,43 @@ type props = tabViewSceneProps & aditionalProps;
 
 
 export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
+
+    const token = useAppSelector(sessionTokenSelector)
     const {jumpTo} = props;
 
-    const {values, setFieldValue, handleSubmit, errors} = useFormik(
+    const { setFieldValue, handleSubmit, errors, setFieldTouched, touched } = useFormik(
         {
             initialValues: defaultValue,
             validationSchema:deliveryConfigurationSchema,
-            onSubmit: values => {
-                console.log(values)
+            onSubmit: async (values, {resetForm}) => {
+               const {status} = await createDeliveryLocationRequest(token || '', {
+                    ...values,
+                    owner:7
+                })
+                if(status === 201) {
+                    jumpTo('first');
+                }
             },
         },
     );
-    
-    useEffect(
-        ()=> {
-            const errorKeys = Object.keys(errors);
-            // setValidFormValue(errorKeys.length === 0);
-        },
-        [errors]
-    );
+
+    const isItemTouched = (item:string) => {
+        const touchedRecord = touched as Record<string, boolean>;
+        return touchedRecord[item];
+    }
+
+    const getItemError = (item:string) : string | string[] | undefined => {
+        const error = errors as Record<string, string | string[]>;
+        return (isItemTouched(item) && !!error[item]) ? error[item] : undefined
+    }
+
+    const handleTouch = async  (inputName:string) => {
+        await setFieldTouched(inputName);
+    }
 
     const onPress= ()=> {
-        console.log('do something and then relocate');
-        jumpTo('second');
+        // const h = errors as Record<string, string | [string]> // we can use this form to get especific errors
+        handleSubmit()
     }
 
     const onPressCancel = ()=> {
@@ -129,11 +146,14 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
                                         {
                                             inputSelector[inputType]({
                                                 placeholder,
-                                                onChangeCallback:(text:string)=> {
-                                                    setFieldValue(item, text);
+                                                onChangeCallback: async (text:string)=> {
+                                                    await setFieldValue(item, text);
+                                                    await setFieldTouched(item, true, true)
                                                 },
-                                                inputName:name,
-                                                ...aditionalData
+                                                inputName:item,
+                                                error: getItemError(item) ,
+                                                handleTouch,
+                                                ...aditionalData,
                                             })
                                         }
                                     </View>

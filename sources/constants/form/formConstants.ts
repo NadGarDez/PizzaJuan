@@ -201,12 +201,12 @@ export const personalConfigurationMetadata:personalFormMetadataType = {
 }
 
 export const deliveryConfigurationMetadata:deliveryFormMetadataType = {
-    directionName: { 
+    name: { 
         name: 'Nombre de Direccion',
         placeholder: 'Eje. Casa, Trabajo.',
         inputType:inputTypes.TEXT
     },
-    pluscode: { 
+    plus_code: { 
         name: 'Codigo Plus',
         placeholder: 'Identificador de direccion. Eje. WH57+QFR',
         inputType:inputTypes.TEXT

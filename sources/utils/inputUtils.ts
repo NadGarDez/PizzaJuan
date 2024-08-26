@@ -12,6 +12,6 @@ export const getErrorStrings = (state:basicInputState):string[]=> {
 }
 
 export const shouldRenderError = (state:basicInputState):boolean=> {
-    const {error = ""} = state;
-    return (Array.isArray(error) || error.length > 0)
+    const {error = "", machineState } = state;
+    return (Array.isArray(error) || error.length > 0)  && machineState === 3
 }  

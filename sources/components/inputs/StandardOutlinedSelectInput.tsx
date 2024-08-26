@@ -58,7 +58,7 @@ const styles = StyleSheet.create(
 const initialState:basicInputState = {
     machineState: defaultInputStates.neutral,
     value:'',
-    error:''
+    error:'',
 };
 
 type selectItemsType = {
@@ -70,8 +70,9 @@ type props = {
     placeholder:string,
     initialValue?:string,
     data: selectItemsType[],
-    onChangeCallback:(text:string)=>void,
-    inputName:string
+    onChangeCallback:(text:string)=>Promise<void>,
+    inputName:string,
+    error: string | string[] | undefined
 }
 
 const selectItems:selectItemsType[] = [
@@ -160,9 +161,9 @@ export const StandardOutlinedSelectInput = (props:props):JSX.Element=> {
         }
     });
 
-    const manageOnChange = (value:any)=> {
+    const manageOnChange = async (value:any)=> {
         change(value);
-        onChangeCallback(value);
+        await onChangeCallback(value);
         neutralize();
     }
 

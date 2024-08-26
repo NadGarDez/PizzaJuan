@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
 type payloadType = {
     value?:string,
-    error?: string | string[]
+    error?: string | string[],
 }
 
 type formAction = inputAction<payloadType>;
@@ -58,7 +58,8 @@ type props = {
     placeholder:string,
     initialValue?:string,
     onChangeCallback:(text:string)=>void,
-    inputName:string
+    inputName:string,
+    error?: string | string[],
 }
 
 //default form value
@@ -66,7 +67,7 @@ type props = {
 const defaultValue:basicInputState = {
     machineState:defaultInputStates.neutral,
     value:'',
-    error: ''
+    error: '',
 }
 
 // form reducer
@@ -83,13 +84,14 @@ const formReducer: Reducer<basicInputState,formAction> = (state, action)=> {
         case defaultInputActionTypes.neutralize : {
             return {
                 ...state,
-                machineState:defaultInputStates.neutral
+                machineState:defaultInputStates.neutral,
             };;
         }
         case defaultInputActionTypes.activating : {
             return {
                 ...state,
-                machineState:defaultInputStates.active
+                machineState:defaultInputStates.active,
+                error: ''
             };
         }
         case defaultInputActionTypes.changing : {
@@ -97,13 +99,14 @@ const formReducer: Reducer<basicInputState,formAction> = (state, action)=> {
             return {
                 ...state,
                 value,
-                machineState: defaultInputStates.change
+                machineState: defaultInputStates.change,
             }
         }
         case defaultInputActionTypes.failing : {
             const {error = ""} = payload;
             return {
                 ...state,
+                machineState: defaultInputStates.fail,
                 error
             }
         }
@@ -134,8 +137,7 @@ const getContainerStyles = (state:basicInputState)=> {
 
 // simulation 
 
-export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCallback, inputName}:props) => {
-
+export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCallback, inputName, error }:props) => {
     const [state, dispatch] = useReducer(formReducer, {...defaultValue, value:initialValue});
 
     const containerStyles = getContainerStyles(state);
@@ -161,13 +163,37 @@ export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCal
     }
 
     const onBlur = ()=> {
-        dispatch(
-            {
-                type:defaultInputActionTypes.neutralize,
-                payload: {}
-            }
-        )
+        if(error === undefined){
+            dispatch(
+                {
+                    type:defaultInputActionTypes.neutralize,
+                    payload: {}
+                }
+            )
+        }
     }
+
+    useEffect(
+        ()=> {
+            if(error !== undefined) {
+                dispatch({
+                    type: defaultInputActionTypes.failing,
+                    payload: {
+                        error
+                    }
+                })
+            }
+            else {
+                dispatch(
+                    {
+                        type: defaultInputActionTypes.activating,
+                        payload: {}
+                    }
+                )
+            }
+        },
+        [error]
+    )
 
     return (
         <View style={styles.generalContainer}>
@@ -188,12 +214,10 @@ export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCal
                     getErrorStrings(state).map(
                         (item, index) => (
                             <View style={styles.textContainer} key={`error-${index}-input-${inputName}`}>
-
                                 <Text style={styles.textStyles}>
                                     {item}
                                 </Text>
                             </View>
-
                         )
                     ):null
             }
