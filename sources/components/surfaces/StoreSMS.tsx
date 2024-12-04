@@ -8,6 +8,7 @@ import { OutlinedButton } from "../buttons/OutlinedButton";
 import { IconButton } from "../buttons/IconButton";
 import { SendIcon } from "../icons/SendIcon";
 import { CopyIcon } from "../icons/CopyIcon";
+import Clipboard from "@react-native-clipboard/clipboard";
 
 const styles = StyleSheet.create({
     container: {
@@ -43,9 +44,9 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     buttonsContainer: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent : "center",
+        // display: "flex",
+        // // flexDirection: "row",
+        // justifyContent : "center",
         marginTop:12
     },
     buttonContainer: {
@@ -62,6 +63,10 @@ const data = VenezuelanBancs.filter(
 );
 
 export const StoreSMS = ()=> {
+
+    const copyText = (text:string) => {
+        Clipboard.setString(text);
+    }
 
     const [issuingBank, setIssuingBank] = useState<string>('');
     const onChangeSelect = (value: string) => setIssuingBank(value);
@@ -93,14 +98,19 @@ export const StoreSMS = ()=> {
                         {msjData.sms}
                     </Text>
                     <View style={styles.buttonsContainer}>
-                            <IconButton onPress={()=>{}}>
+                        <IconButton onPress={()=>{
+                            copyText(msjData.sms)
+                        }} >
+                            <CopyIcon color={colors.seconday_text + 80}/>
+                        </IconButton>
+                            {/* <IconButton onPress={()=>{}}>
                                 <SendIcon color={colors.seconday_text + 80}/>
                             </IconButton>
                             <View style={{marginLeft:10}}>
                                 <IconButton onPress={()=>{}}>
                                     <CopyIcon color={colors.seconday_text + 80}/>
                                 </IconButton>
-                            </View>
+                            </View> */}
                     </View>
                </View>
             </View>

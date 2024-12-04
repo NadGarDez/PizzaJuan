@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { IconButton } from "../buttons/IconButton";
 import { CopyIcon } from "../icons/CopyIcon";
+import Clipboard from "@react-native-clipboard/clipboard";
 
 const styles = StyleSheet.create({
     container: {
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         flexGrow:1,
-        alignItems: "center",
+        alignItems: "baseline",
         paddingLeft:16
     },
     columnRight: {
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-end",
         flexGrow:1,
-        alignItems: "center",
+        alignItems: "baseline",
         paddingRight:16
     },
     subtotalTextStyles: {
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         marginTop:8,
         color:colors.seconday_text,
-        marginRight:3
+        marginRight:6
     },
     line: {
         height:0,
@@ -65,9 +66,21 @@ const styles = StyleSheet.create({
         borderBottomColor:colors.seconday_text + "30",
         marginTop:8
     },
+    copyContainer: {
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
 })
 
 export const StoreMobilePayData = ()=> {
+
+    const copyText = (text:string) => {
+        Clipboard.setString(text);
+    }
+
+
     return (
         <View style={styles.container}>
             <Text style={styles.textStyles}>Envia un pago movil con el monto de tu compra a los siguientes datos usando tu aplicacion bancaria</Text>
@@ -82,7 +95,9 @@ export const StoreMobilePayData = ()=> {
                                 <Text style={styles.subtotalTextStyles}>
                                     0105
                                 </Text>
-                                <IconButton onPress={()=>{}}>
+                                <IconButton onPress={()=>{
+                                    copyText('0105')
+                                }}>
                                     <CopyIcon color={colors.seconday_text + 80}  size={15}/>
                                 </IconButton>
                         </View>
@@ -98,9 +113,12 @@ export const StoreMobilePayData = ()=> {
                                 <Text style={styles.subtotalTextStyles}>
                                     04243121846
                                 </Text>
-                                <IconButton onPress={()=>{}}>
+                                <IconButton onPress={()=>{
+                                     copyText('04243121846')
+                                }}>
                                     <CopyIcon color={colors.seconday_text + 80}  size={15}/>
                                 </IconButton>
+                               
                         </View>
                     </View>
                     <View style={styles.line}/>
@@ -114,7 +132,9 @@ export const StoreMobilePayData = ()=> {
                                 <Text style={styles.subtotalTextStyles}>
                                     V
                                 </Text>
-                                <IconButton onPress={()=>{}}>
+                                <IconButton onPress={()=>{
+                                     copyText('V')
+                                }}>
                                     <CopyIcon color={colors.seconday_text + 80} size={15}/>
                                 </IconButton>
                         </View>
@@ -130,7 +150,9 @@ export const StoreMobilePayData = ()=> {
                                 <Text style={styles.subtotalTextStyles}>
                                     26177497
                                 </Text>
-                                <IconButton onPress={()=>{}}>
+                                <IconButton onPress={()=>{
+                                     copyText('26177497')
+                                }}>
                                     <CopyIcon color={colors.seconday_text + 80}  size={15}/>
                                 </IconButton>
                         </View>

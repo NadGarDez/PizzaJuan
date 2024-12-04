@@ -3,7 +3,7 @@ import { inputMetadata } from './generalFormTypes';
 
 export const transcValidationSchema = object(
     {
-        transactionCode: string().required(),
+        transactionCode: string().min(3).required(),
     }
 );
 

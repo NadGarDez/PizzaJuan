@@ -19,9 +19,13 @@ const styles = StyleSheet.create(
             flex:1,
             backgroundColor: "transparent",
             paddingHorizontal:16,
-            paddingVertical:Platform.select({
+            paddingTop:Platform.select({
                 android: 56,
                 ios: 93
+            }),
+            paddingBottom: Platform.select({
+                android: 16,
+                ios: 32
             }),
         },
         titleList: {
@@ -39,7 +43,6 @@ const styles = StyleSheet.create(
             marginTop:8
         },
         buttonContainer: {
-            flex:1,
             marginTop:16
         },
     }
@@ -71,24 +74,25 @@ export const CarScreen = ():JSX.Element=>{
             <TransformedSquare />
             <View style={styles.container}>
 
-
                 {
                     Object.values(products).length > 0 ? (
-                        <>
+                        <View style={{flex:1}}>
                             <CarProductList 
                                 onPress={()=>{}}
                                 data={Object.values(products)}
                             />
+                            
                             <View style={styles.calculatorContainer}>
                                 <AmountInformationComponent />
                             </View>
+                            
                             <View style={styles.buttonContainer}>
                                 <BuyButton 
                                     text="Realizar Pago"
                                     onPress={onPress}
                                 />
-                            </View>
-                        </>
+                            </View> 
+                        </View>
                     ) : (
                         <VoidShoppingCarComponent />
                     )

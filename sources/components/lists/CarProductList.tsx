@@ -1,21 +1,13 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, Text , FlatListProps, View, Dimensions} from "react-native";
-import { CategoryItem } from "../surfaces/CategoryItem";
+import { FlatList, StyleSheet, Text, View} from "react-native";
 import { colors } from "../../styles/colors";
-import { ProductItem } from "../surfaces/ProductItem";
 import { CarItem } from "../surfaces/CarItem";
-import { DireactionSelector } from "../surfaces/DirectionSelector";
 import { shadows } from "../../styles/shadow";
-import { baseProduct, shoppingCarItemType } from "../../types/api/productTypes";
+import { shoppingCarItemType } from "../../types/api/productTypes";
 
 const styles = StyleSheet.create(
     {
         container: {
-            marginTop:8,
-            display:"flex",
-            height:Dimensions.get("window").height * 0.45
-        },
-        expandedContainer: {
             marginTop:8,
             flex:1
         },
@@ -75,7 +67,7 @@ export const CarProductList = ({onPress, data, readonly = false, expand = false}
     }
 
     return (
-        <View style={!!expand ? styles.expandedContainer: styles.container}>
+        <View style={styles.container}>
             <View style={styles.listContainer}>
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleFonts}>

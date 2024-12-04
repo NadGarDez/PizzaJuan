@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
 })
 
 const defaultValue : transcValidationSchemaType = {
-   transactionCode:''
-}
+   transactionCode: ''
+}   
 
 export const TransactionCodeForm = (): JSX.Element=> {
 
     const {valid} = useAppSelector(modalFormSelector);
-    const { setFieldValue } = useFormik(
+    const { setFieldValue, errors, values } = useFormik(
         {
             initialValues: defaultValue,
             validationSchema:transcValidationSchema,
@@ -70,7 +70,7 @@ export const TransactionCodeForm = (): JSX.Element=> {
         <>
             <ModalFormHeader 
                 formKey={ModalFormNames.TRANSACTION_CODE_FORM}
-                isFormValid={valid}
+                isFormValid={Object.keys(errors).length === 0 && values.transactionCode !== defaultValue.transactionCode}
                 onCancel={onCancel}
                 onSave={onSave}
             />

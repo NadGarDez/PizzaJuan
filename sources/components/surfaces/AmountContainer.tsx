@@ -2,6 +2,9 @@ import React from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
+import { useAppSelector } from "../../redux/hooks";
+import { shoppingCardSelector } from "../../redux/shoppingCardSlice";
+import { sessionObjectSelector } from "../../redux/SessionReducer";
 
 const circleWidth = (Dimensions.get("screen").width - 32) 
 
@@ -42,7 +45,10 @@ const styles = StyleSheet.create({
         fontWeight:"400"
     },
     titleContainer: {
-        paddingBottom:8
+        paddingBottom:8,
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     },
     priceContainer: {
         flex:1
@@ -80,6 +86,10 @@ const styles = StyleSheet.create({
 
 
 export const AmountContainer = ()=> {
+
+    const {totals: {total}} = useAppSelector(shoppingCardSelector);
+    const {email} = useAppSelector(sessionObjectSelector);
+
     return (
         <View style={styles.container}>
             <View style={styles.form}>
@@ -91,16 +101,20 @@ export const AmountContainer = ()=> {
             </View>
             <View style={styles.cover}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.titleText}>
-                        Pedido #1234abcd567
+                    <Text style={styles.titleText} numberOfLines={1}>
+                        Cliente:{" "}
+                        <Text numberOfLines={1} style={{...styles.titleText, fontWeight: "800"}}>
+                            {email}
+                        </Text>
                     </Text>
+                    
                 </View>
                 <View style={styles.priceContainer}>
                     <Text style={styles.descriptionText}>
                     Monto a pagar en Bolivares
                     </Text>
                     <Text style={styles.amoutText}>
-                        400VES
+                        {total * 36}VES
                     </Text>
                 </View>
             </View>

@@ -2,9 +2,9 @@ import { object, string, InferType } from 'yup';
 import { inputMetadata } from './generalFormTypes';
 
 export const deliveryConfigurationSchema = object({
-    name: string().required(),
-    plus_code: string().required(),
-    description: string().required(),
+    name: string().required('El campo Nombre es requerido'),
+    plus_code: string().required('El campo Codigo Plus es requerido'),
+    description: string().required('El campo Descripcion es requerido'),
 });
 
 export type deliveryConfigurationSchemaType = InferType<typeof deliveryConfigurationSchema>;
