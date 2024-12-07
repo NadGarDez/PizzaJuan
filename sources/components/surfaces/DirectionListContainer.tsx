@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ToggableList } from "../lists/ToggableList";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
@@ -7,6 +7,9 @@ import { PrincipalButton } from "../buttons/PrincipalButton";
 import { DESCRIPTION, PLUS_CODE } from "../../constants/userConfigurationConstants";
 import { LocationIcon } from "../icons/LocationIcon";
 import { toggableListItem } from "../../types/forms/generalFormTypes";
+import { getResourceList } from "../../utils/apiRequests";
+import { useSelector } from "react-redux";
+import { sessionTokenSelector } from "../../redux/SessionReducer";
 
 const styles = StyleSheet.create({
     container: {
@@ -96,7 +99,17 @@ const staticValues: toggableListItem[] = [
 
 export const DirectionListContainer = (props:props): JSX.Element=> {
 
+    const token = useSelector(sessionTokenSelector)
+
     const {jumpTo} = props;
+
+
+    useEffect(
+        () => {
+            getResourceList(token ?? '', 'getDeliveryLocations');
+        },
+        []
+    )
 
     const onPressCreate = ()=> {
         jumpTo("second");

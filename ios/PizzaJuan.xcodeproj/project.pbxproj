@@ -34,9 +34,7 @@
 		D90C12092B52B55B002A340A /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D90C11F62B52B55B002A340A /* SimpleLineIcons.ttf */; };
 		D90C120A2B52B55B002A340A /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D90C11F72B52B55B002A340A /* FontAwesome6_Brands.ttf */; };
 		D90C120B2B52B55B002A340A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D90C11F82B52B55B002A340A /* MaterialIcons.ttf */; };
-		D9223C292C762E13004AD986 /* splash_screen.png in Resources */ = {isa = PBXBuildFile; fileRef = D9223C282C762E13004AD986 /* splash_screen.png */; };
 		D942F8702C7141F40074B069 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D942F86F2C7141F40074B069 /* LaunchScreen.storyboard */; };
-		D9F0E0072C7269AB00858033 /* SplashImage.png in Resources */ = {isa = PBXBuildFile; fileRef = D9F0E0062C7269AB00858033 /* SplashImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,9 +84,7 @@
 		D90C11F62B52B55B002A340A /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		D90C11F72B52B55B002A340A /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
 		D90C11F82B52B55B002A340A /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
-		D9223C282C762E13004AD986 /* splash_screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_screen.png; path = ../../../../Desktop/splash_screen.png; sourceTree = "<group>"; };
 		D942F86F2C7141F40074B069 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D9F0E0062C7269AB00858033 /* SplashImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashImage.png; path = ../../../../Desktop/SplashImage.png; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -137,8 +133,6 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				D9223C282C762E13004AD986 /* splash_screen.png */,
-				D9F0E0062C7269AB00858033 /* SplashImage.png */,
 			);
 			name = PizzaJuan;
 			sourceTree = "<group>";
@@ -348,7 +342,6 @@
 				D90C12042B52B55B002A340A /* FontAwesome5_Regular.ttf in Resources */,
 				D90C11F92B52B55B002A340A /* Fontisto.ttf in Resources */,
 				D90C11FE2B52B55B002A340A /* FontAwesome5_Brands.ttf in Resources */,
-				D9223C292C762E13004AD986 /* splash_screen.png in Resources */,
 				D90C12022B52B55B002A340A /* Ionicons.ttf in Resources */,
 				D90C12032B52B55B002A340A /* FontAwesome5_Solid.ttf in Resources */,
 				D90C11FD2B52B55B002A340A /* Entypo.ttf in Resources */,
@@ -360,7 +353,6 @@
 				D90C11FB2B52B55B002A340A /* Feather.ttf in Resources */,
 				D90C12092B52B55B002A340A /* SimpleLineIcons.ttf in Resources */,
 				D90C12072B52B55B002A340A /* EvilIcons.ttf in Resources */,
-				D9F0E0072C7269AB00858033 /* SplashImage.png in Resources */,
 				D90C11FA2B52B55B002A340A /* Octicons.ttf in Resources */,
 				D90C12052B52B55B002A340A /* FontAwesome.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,

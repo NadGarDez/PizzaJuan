@@ -1,10 +1,12 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import React from "react";
+import React, { useEffect } from "react";
 import { ProductStack } from "../Stacks/ProductStack";
 import { CarStack } from "../Stacks/CarStack";
 import { MyShoppingStack } from "../Stacks/MyShopingStack";
 import { UserStack } from "../Stacks/UserStack";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CustomDrawer } from "../../components/navigation/CustomDrawer";
+import { useAuth0 } from "react-native-auth0";
 
 export type HomeDrawerType = {
     PRODUCT_STACK: undefined
@@ -16,6 +18,36 @@ export type HomeDrawerType = {
 const Drawer = createDrawerNavigator<HomeDrawerType>()
 
 export const HomeDrawer = ():JSX.Element=> {
+
+    const {user} = useAuth0();
+
+    const storeData = async (key:string,value: string) => {
+        try {
+          await AsyncStorage.setItem(key, value);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+
+    const getUserConstants = async () => {
+        try {
+            const value = await AsyncStorage.getItem(user?.sub ?? '');
+            if (value === null) {
+                storeData(user?.sub ?? '', JSON.stringify({}));
+            }
+        
+          } catch (e) {
+            console.log(e)
+          }
+    }
+
+    useEffect(
+        () => {
+            getUserConstants()
+        },
+        []
+    )
+
     return (
         <Drawer.Navigator 
             screenOptions={{

@@ -8,10 +8,13 @@ import { PrincipalButton } from "../buttons/PrincipalButton";
 import { OutlinedButton } from "../buttons/OutlinedButton";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { deliveryConfigurationSchema, deliveryConfigurationSchemaType } from "../../types/forms/deliveryFormTypes";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { createDeliveryLocationRequest } from "../../utils/apiRequests";
 import { useAppSelector } from "../../redux/hooks";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
+import { useAuth0 } from "react-native-auth0";
+import { getUserConstants, storeData } from "../../utils/asyncStore";
 
 const styles = StyleSheet.create({
     container: {
@@ -80,17 +83,36 @@ type props = tabViewSceneProps & aditionalProps;
 export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
 
     const token = useAppSelector(sessionTokenSelector)
+    const {user} = useAuth0();
     const {jumpTo} = props;
+
+    const onCreateItem = async (id: string)=>{  
+        const object = {
+            activeLocation: id
+        }
+        const value = getUserConstants(user?.sub ?? '');
+        if (value !== null) {
+        // value previously stored
+            await storeData(user?.sub ?? '', JSON.stringify(object))
+        } else {
+            const parsedValue = JSON.parse(value);
+            await storeData(user?.sub ?? '', JSON.stringify({
+                ...parsedValue,
+                ...object
+            }))
+        }
+    }
 
     const { setFieldValue, handleSubmit, errors, setFieldTouched, touched } = useFormik(
         {
             initialValues: defaultValue,
             validationSchema:deliveryConfigurationSchema,
             onSubmit: async (values, {resetForm}) => {
-               const {status} = await createDeliveryLocationRequest(token || '', {
+               const {status, data} = await createDeliveryLocationRequest(token || '', {
                     ...values,
                     owner:7
                 })
+                console.log(data);
                 if(status === 201) {
                     jumpTo('first');
                 }
