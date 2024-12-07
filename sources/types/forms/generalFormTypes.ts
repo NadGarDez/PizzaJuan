@@ -28,7 +28,7 @@ export interface inputMetadata {
 };
 
 type title =  {
-    title:string
+    name:string
 }
 export interface selectItemsType  {
     value: string,

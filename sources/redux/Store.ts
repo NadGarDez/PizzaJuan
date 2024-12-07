@@ -7,6 +7,7 @@ import { rootSagas } from "../sagas/rootSagas";
 import categorySlicer from "./categorySlicer";
 import activeProductSlice from "./activeProductSlice";
 import shoppingCardSlice from "./shoppingCardSlice";
+import deliveryLocation from './deliveryLocationSlicer'
 
 
 const middleware = createSagaMiddleware()
@@ -18,7 +19,8 @@ export const store = configureStore({
         modalForm:ModalFormReducer,
         category: categorySlicer,
         activeProduct: activeProductSlice,
-        shoppingCar: shoppingCardSlice
+        shoppingCar: shoppingCardSlice,
+        deliveryLocation
     },
     middleware: (getDefaultMiddleware)=> getDefaultMiddleware().concat(middleware)
 })

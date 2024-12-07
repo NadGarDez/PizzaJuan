@@ -100,7 +100,6 @@ export const getResourceList = async (token:string, resource: string): Promise<o
                 'Authorization': `Bearer ${token}`
             }
         })
-
         return {
             status,
             data,

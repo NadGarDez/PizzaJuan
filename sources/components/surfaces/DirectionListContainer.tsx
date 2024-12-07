@@ -8,8 +8,10 @@ import { DESCRIPTION, PLUS_CODE } from "../../constants/userConfigurationConstan
 import { LocationIcon } from "../icons/LocationIcon";
 import { toggableListItem } from "../../types/forms/generalFormTypes";
 import { getResourceList } from "../../utils/apiRequests";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
+import { deliveryLocationGeneralReducerSelector, deliveryLocationSelector } from "../../redux/deliveryLocationSlicer";
+import { deliveryLocationRequestSagasAction } from "../../sagas/deliveryLocationSagas";
 
 const styles = StyleSheet.create({
     container: {
@@ -54,59 +56,18 @@ type aditionalProps = {
 
 type props = tabViewSceneProps & aditionalProps
 
-const staticValues: toggableListItem[] = [
-    {
-        title: 'Direccion 1',
-        [PLUS_CODE]: 'JJXX+HR8',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 2',
-        [PLUS_CODE]: 'JJXX+HRR',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 3',
-        [PLUS_CODE]: 'JJXX+HR0',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 4',
-        [PLUS_CODE]: 'JJXX+HR1',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 5',
-        [PLUS_CODE]: 'JJXX+HR0',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 6',
-        [PLUS_CODE]: 'JJXX+HR1',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 7',
-        [PLUS_CODE]: 'JJXX+HR0',
-        [DESCRIPTION]: 'Esta es una direccion',
-    },
-    {
-        title: 'Direccion 8',
-        [PLUS_CODE]: 'JJXX+HR1',
-        [DESCRIPTION]: 'Esta es una direccion',
-    }
-];
-
 export const DirectionListContainer = (props:props): JSX.Element=> {
 
     const token = useSelector(sessionTokenSelector)
 
-    const {jumpTo} = props;
+    const data = useSelector(deliveryLocationSelector);
+    const dispatch = useDispatch();
 
+    const {jumpTo} = props;
 
     useEffect(
         () => {
-            getResourceList(token ?? '', 'getDeliveryLocations');
+            dispatch(deliveryLocationRequestSagasAction());
         },
         []
     )
@@ -131,7 +92,7 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
                 </Text>
              </View>
             <ToggableList 
-                data={staticValues} 
+                data={data ?? []} 
                 leftItem={leftItem}
                 voidMessage="No hay direcciones disponibles"
             /> 

@@ -48,10 +48,6 @@ const styles = StyleSheet.create({
 
 })
 
-type titleType = {
-    title:string
-}
-
 type props = {
     active: boolean,
     index:number,
@@ -78,7 +74,7 @@ export const ToggableItem = (props:props):JSX.Element => {
                 </View>
                 <View style={styles.bodyContainer}>
                     <Text style={styles.titleTextStyles}>
-                        {data.title}
+                        {data.name}
                     </Text>
                     {
                         Object.keys(data).map(
