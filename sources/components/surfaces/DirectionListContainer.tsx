@@ -56,6 +56,16 @@ type aditionalProps = {
 
 type props = tabViewSceneProps & aditionalProps
 
+const transformResults = (data: Record<string, any>[]) => data.map(
+    item => {
+        return {
+            name: item['name'],
+            ['Código Plus']: item['plus_code'],
+            ['Descripción']: item['description'],
+        }
+    }
+)
+
 export const DirectionListContainer = (props:props): JSX.Element=> {
 
     const token = useSelector(sessionTokenSelector)
@@ -92,7 +102,7 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
                 </Text>
              </View>
             <ToggableList 
-                data={data ?? []} 
+                data={transformResults(data ?? [])} 
                 leftItem={leftItem}
                 voidMessage="No hay direcciones disponibles"
             /> 

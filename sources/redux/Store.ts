@@ -8,6 +8,7 @@ import categorySlicer from "./categorySlicer";
 import activeProductSlice from "./activeProductSlice";
 import shoppingCardSlice from "./shoppingCardSlice";
 import deliveryLocation from './deliveryLocationSlicer'
+import payMethod from './payMethodSlicer'
 
 
 const middleware = createSagaMiddleware()
@@ -20,7 +21,8 @@ export const store = configureStore({
         category: categorySlicer,
         activeProduct: activeProductSlice,
         shoppingCar: shoppingCardSlice,
-        deliveryLocation
+        deliveryLocation,
+        payMethod
     },
     middleware: (getDefaultMiddleware)=> getDefaultMiddleware().concat(middleware)
 })

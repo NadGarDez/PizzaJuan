@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ToggableList } from "../lists/ToggableList";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { colors } from "../../styles/colors";
 import { PrincipalButton } from "../buttons/PrincipalButton";
-import { payMethodConfigurationMetadata } from "../../constants/form/formConstants";
 import { WalletIcon } from "../icons/WalletIcon";
-import { toggableListItem } from "../../types/forms/generalFormTypes";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { payMethodSlicerSelector } from "../../redux/payMethodSlicer";
+import { payMethodRequestSagasAction } from "../../sagas/paymethodSagas";
 
 const styles = StyleSheet.create({
     container: {
@@ -51,32 +52,41 @@ type aditionalProps = {
 
 type props = tabViewSceneProps & aditionalProps
 
-const staticData: toggableListItem[] = [
-    {
-        title: 'Metodo de Pago 1',
-        [payMethodConfigurationMetadata.bank.name]: 'Mercantil',
-        [payMethodConfigurationMetadata.ni.name]: '26177497',
-        [payMethodConfigurationMetadata.type.name]: 'Pago Movil',
-        [payMethodConfigurationMetadata.phone.name]: '26177497'
-    },
-    {
-        title: 'Metodo de Pago 2',
-        [payMethodConfigurationMetadata.bank.name]: 'Provincial',
-        [payMethodConfigurationMetadata.ni.name]: '26177497',
-        [payMethodConfigurationMetadata.type.name]: 'Pago Movil',
-        [payMethodConfigurationMetadata.phone.name]: '26177497'
-    },
-    {
-        title: 'Metodo de Pago 3',
-        [payMethodConfigurationMetadata.bank.name]: 'Banesco',
-        [payMethodConfigurationMetadata.ni.name]: '26177497',
-        [payMethodConfigurationMetadata.type.name]: 'Pago Movil',
-        [payMethodConfigurationMetadata.phone.name]: '26177497'
+const transformResults = (data: Record<string, any>[]) => data.map(
+    item => {
+        if(item['mobile_pay'] !== null) {
+            return {
+                name: `Pago Móvil ${item['mobile_pay'].pk}`,
+                ['ID']: item['mobile_pay'].pk,
+                ['Numero de telefono']: item['mobile_pay'].phone_number,
+                ['CI']: item['mobile_pay'].ci,
+                ['Código del banco']: item['mobile_pay'].back_code,
+            }
+        }
+        else {
+            return {
+                name: `Wallet ${item['wallet_pay'].pk ?? ''}`,
+                ['Clave Pública']: item['wallet_pay'].address,
+                ['Dirección de wallet']: item['wallet_pay'].public_key,
+            }
+        }
     }
-]
+)
 
 
 export const PayMethodContainer = (props:props): JSX.Element=> {
+
+    const results = useAppSelector(payMethodSlicerSelector);
+    const dispatch = useAppDispatch();
+
+    console.log(results);
+
+    useEffect(
+        () => {
+            dispatch(payMethodRequestSagasAction());
+        },
+        []
+    )
 
     const {jumpTo} = props;
 
@@ -98,7 +108,7 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
                     Metodos de Pago Disponibles
                 </Text>
              </View>
-            <ToggableList data={staticData} leftItem={leftItem} voidMessage="No hay metodos de pago disponibles"/> 
+            <ToggableList data={transformResults(results ?? [])} leftItem={leftItem} voidMessage="No hay metodos de pago disponibles"/> 
                 <PrincipalButton onPress={onPressCreate} radius={5}>
                     <View style={styles.textContainer}>
                         <Text style={styles.textStyles}>

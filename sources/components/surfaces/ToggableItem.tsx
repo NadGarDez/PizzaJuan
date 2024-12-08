@@ -57,7 +57,7 @@ type props = {
 }
 
 export const ToggableItem = (props:props):JSX.Element => {
-    const {active, data, index, onChangeSelect, leftItem = null} = props;
+    const {active, data: {name, ...rest}, index, onChangeSelect, leftItem = null} = props;
     
     const activeStyles = !!active ? styles.activeContainerStyles : styles.unactiveContainerStyles;
     const onPress = ()=> {
@@ -73,17 +73,21 @@ export const ToggableItem = (props:props):JSX.Element => {
                     }
                 </View>
                 <View style={styles.bodyContainer}>
-                    <Text style={styles.titleTextStyles}>
-                        {data.name}
-                    </Text>
                     {
-                        Object.keys(data).map(
+                        name !== undefined ? (
+                            <Text style={styles.titleTextStyles}>
+                                {name}
+                            </Text>
+                        ) : null
+                    }
+                    {
+                        Object.keys(rest).map(
                             (item, index) => {
                                 const time = new Date().getTime();
                                 if(item !== "title") return (
                                     <View key={`locaiton-item-${index}-${time}`}>
                                         <Text style={styles.secondaryKeys}>
-                                            {`${item}: ${data[item]}`}
+                                            {`${item}: ${rest[item]}`}
                                         </Text>
                                     </View>
                                 )
