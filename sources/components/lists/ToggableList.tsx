@@ -7,8 +7,8 @@ import { toggableListItem } from "../../types/forms/generalFormTypes";
 const styles =  StyleSheet.create(
     {
         container: {
+            flex:1,
             marginBottom:16,
-            maxHeight: '80%'
         },
         semiTransparentCircle: {
             width: 40,

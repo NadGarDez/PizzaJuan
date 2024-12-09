@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { ToggableList } from "../lists/ToggableList";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { colors } from "../../styles/colors";
@@ -10,13 +10,15 @@ import { toggableListItem } from "../../types/forms/generalFormTypes";
 import { getResourceList } from "../../utils/apiRequests";
 import { useDispatch, useSelector } from "react-redux";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
-import { deliveryLocationGeneralReducerSelector, deliveryLocationSelector } from "../../redux/deliveryLocationSlicer";
+import { deliveryLocationErrorSelector, deliveryLocationReducersStaus, deliveryLocationSelector } from "../../redux/deliveryLocationSlicer";
 import { deliveryLocationRequestSagasAction } from "../../sagas/deliveryLocationSagas";
+import { ErrorModal } from "../modal/ErrorModal";
+import { useAppSelector } from "../../redux/hooks";
 
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        height:2000,
+        paddingBottom:16,
     },
     subtitleContainer: {
         width: "100%",
@@ -48,6 +50,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    loading: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 200,
+        marginBottom: 16
+    },
 });
 
 type aditionalProps = {
@@ -68,9 +78,11 @@ const transformResults = (data: Record<string, any>[]) => data.map(
 
 export const DirectionListContainer = (props:props): JSX.Element=> {
 
-    const token = useSelector(sessionTokenSelector)
+    const token = useAppSelector(sessionTokenSelector)
 
-    const data = useSelector(deliveryLocationSelector);
+    const data = useAppSelector(deliveryLocationSelector);
+    const status = useAppSelector(deliveryLocationReducersStaus);
+    const error = useAppSelector(deliveryLocationErrorSelector);
     const dispatch = useDispatch();
 
     const {jumpTo} = props;
@@ -100,19 +112,41 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
                 <Text style={styles.subtitleText}>
                     Direcciones disponibles
                 </Text>
-             </View>
-            <ToggableList 
-                data={transformResults(data ?? [])} 
-                leftItem={leftItem}
-                voidMessage="No hay direcciones disponibles"
-            /> 
-                <PrincipalButton onPress={onPressCreate} radius={5}>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.textStyles}>
-                            Agregar Direccion
-                        </Text>
+            </View>
+            {
+                status === 'INITIAL' || status === 'LOADING' ? (
+                    <View style={styles.loading}>
+                        <ActivityIndicator size={60} color={colors.principal}/>
                     </View>
-                </PrincipalButton>
+                ) : null
+            }
+
+            {
+                status === 'SUCCESSED' ? (
+                    <>
+                        <ToggableList 
+                            data={transformResults(data ?? [])} 
+                            leftItem={leftItem}
+                            voidMessage="No hay direcciones disponibles"
+                        /> 
+                        <PrincipalButton onPress={onPressCreate} radius={5}>
+                            <View style={styles.textContainer}>
+                                <Text style={styles.textStyles}>
+                                    Agregar Direccion
+                                </Text>
+                            </View>
+                        </PrincipalButton>
+                    </>
+            ): null }
+
+{
+                status === 'ERROR' ? (
+                    <ErrorModal 
+                        title="Error cargando la lista de metodos de pago"
+                        subtitle={error as string}
+                    />
+                ): null
+            }
        </View>
     )
 }

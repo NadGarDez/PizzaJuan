@@ -1,18 +1,19 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { ToggableList } from "../lists/ToggableList";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { colors } from "../../styles/colors";
 import { PrincipalButton } from "../buttons/PrincipalButton";
 import { WalletIcon } from "../icons/WalletIcon";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { payMethodSlicerSelector } from "../../redux/payMethodSlicer";
+import { payMethodSlicerErrorSelector, payMethodSlicerReducersStaus, payMethodSlicerSelector } from "../../redux/payMethodSlicer";
 import { payMethodRequestSagasAction } from "../../sagas/paymethodSagas";
+import { ErrorModal } from "../modal/ErrorModal";
 
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        height:2000,
+        paddingBottom: 16
     },
     subtitleContainer: {
         width: "100%",
@@ -43,6 +44,14 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center"
+    },
+    loading: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 200,
+        marginBottom: 16
     },
 });
 
@@ -77,9 +86,9 @@ const transformResults = (data: Record<string, any>[]) => data.map(
 export const PayMethodContainer = (props:props): JSX.Element=> {
 
     const results = useAppSelector(payMethodSlicerSelector);
+    const status = useAppSelector(payMethodSlicerReducersStaus);
+    const error = useAppSelector(payMethodSlicerErrorSelector)
     const dispatch = useAppDispatch();
-
-    console.log(results);
 
     useEffect(
         () => {
@@ -107,15 +116,37 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
                 <Text style={styles.subtitleText}>
                     Metodos de Pago Disponibles
                 </Text>
-             </View>
-            <ToggableList data={transformResults(results ?? [])} leftItem={leftItem} voidMessage="No hay metodos de pago disponibles"/> 
-                <PrincipalButton onPress={onPressCreate} radius={5}>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.textStyles}>
-                            Agregar Metodo de Pago
-                        </Text>
+            </View>
+            {
+                status === 'INITIAL' || status === 'LOADING' ? (
+                    <View style={styles.loading}>
+                        <ActivityIndicator size={60} color={colors.principal}/>
                     </View>
-                </PrincipalButton>
+                ) : null
+            }
+             {
+                status === 'SUCCESSED' ? (
+                    <>
+                        <ToggableList data={transformResults(results ?? [])} leftItem={leftItem} voidMessage="No hay metodos de pago disponibles"/> 
+                        <PrincipalButton onPress={onPressCreate} radius={5}>
+                            <View style={styles.textContainer}>
+                                <Text style={styles.textStyles}>
+                                    Agregar Metodo de Pago
+                                </Text>
+                            </View>
+                        </PrincipalButton>
+                    </>
+                ): null
+            }
+            {
+                status === 'ERROR' ? (
+                    <ErrorModal 
+                        title="Error cargando la lista de metodos de pago"
+                        subtitle={error as string}
+                    />
+                ): null
+            }
+            
        </View>
     )
 }
