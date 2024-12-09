@@ -9,6 +9,10 @@ import { OutlinedButton } from "../buttons/OutlinedButton";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { payMethodConfigurationSchema, payMethodConfigurationSchemaType } from "../../types/forms/payMethodFormTypes";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { createPayMethodRequest } from "../../utils/apiRequests";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { sessionTokenSelector } from "../../redux/SessionReducer";
+import { payMethodRequestSagasAction } from "../../sagas/paymethodSagas";
 
 const styles = StyleSheet.create({
     container: {
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
 
 const defaultValue : payMethodConfigurationSchemaType = {
    type: 'mobile_pay',
-   ni: '',
+   ci: '',
    bank: 'mercantil',
    phone: ''
 }
@@ -76,14 +80,30 @@ type props = tabViewSceneProps & aditionalProps;
 
 
 export const PaymentConfigurationForm = (props:props): JSX.Element=> {
+
+    const token = useAppSelector(sessionTokenSelector);
+    const dispatch = useAppDispatch();
     const {jumpTo} = props;
 
     const {values, setFieldValue, handleSubmit, errors} = useFormik(
         {
             initialValues: defaultValue,
             validationSchema:payMethodConfigurationSchema,
-            onSubmit: values => {
-                console.log(values)
+            onSubmit: async (values, {resetForm}) => {
+                console.log(values);
+
+                const {status, data} = await createPayMethodRequest(token || '', {
+                    mobile_pay: {
+                        ci: values.ci,
+                        phone_number: values.phone,
+                        bank_code: values.bank,
+                    }
+                })
+                console.log(status, 'super data ');
+                if(status === 201) {
+                    dispatch(payMethodRequestSagasAction());
+                    jumpTo('first');
+                }
             },
         },
     );
@@ -97,8 +117,7 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
     );
 
     const onPress= ()=> {
-        console.log('do something and then relocate');
-        jumpTo('second');
+        handleSubmit()
     }
 
     const onPressCancel = ()=> {

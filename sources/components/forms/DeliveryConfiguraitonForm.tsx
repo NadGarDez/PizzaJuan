@@ -11,10 +11,11 @@ import { deliveryConfigurationSchema, deliveryConfigurationSchemaType } from "..
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { createDeliveryLocationRequest } from "../../utils/apiRequests";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
 import { useAuth0 } from "react-native-auth0";
 import { getUserConstants, storeData } from "../../utils/asyncStore";
+import { deliveryLocationRequestSagasAction } from "../../sagas/deliveryLocationSagas";
 
 const styles = StyleSheet.create({
     container: {
@@ -82,7 +83,8 @@ type props = tabViewSceneProps & aditionalProps;
 
 export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
 
-    const token = useAppSelector(sessionTokenSelector)
+    const token = useAppSelector(sessionTokenSelector);
+    const dispatch = useAppDispatch();
     const {user} = useAuth0();
     const {jumpTo} = props;
 
@@ -114,6 +116,7 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
                 })
                 console.log(data);
                 if(status === 201) {
+                    dispatch(deliveryLocationRequestSagasAction());
                     jumpTo('first');
                 }
             },

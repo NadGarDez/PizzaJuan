@@ -1,5 +1,5 @@
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useFormik } from "formik";
 import { personalConfigurationMetadata } from "../../constants/form/formConstants";
 import { colors } from "../../styles/colors";

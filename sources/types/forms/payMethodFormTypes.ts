@@ -7,7 +7,7 @@ export type availableBanks = 'mercantil' | 'bnc' | 'povincial';
 export const payMethodConfigurationSchema = object(
     {
         type: string<paymethodType>().required(),
-        ni: string().required(),
+        ci: string().required(),
         phone: string().required(),
         bank: string<availableBanks>().required()
     }

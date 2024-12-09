@@ -232,7 +232,7 @@ export const payMethodConfigurationMetadata: payMethodFormMetadatType = {
             ]
         }
     },
-    ni: {
+    ci: {
         name: 'CI',
         placeholder: 'Cedula relacionada al metodo de pago',
         inputType: inputTypes.TEXT

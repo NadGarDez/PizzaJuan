@@ -183,8 +183,45 @@ export const createOrderRequest = (token:string, bodyObject:any)=>{
 
 }
 
-export const createPayMethodRequest = (token:string, bodyObject:any)=> {
-    const url = createPayMethod(null)
+export const createPayMethodRequest = async (token:string, bodyObject:any)=> {
+    const url = createPayMethod(null);
+    try {
+        const {status, statusText, data} = await axios.post(url, 
+            {
+                ...bodyObject
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            
+            }
+        )
+        return {
+            status, 
+            data, 
+            statusText
+        }
+        
+    } catch (error:any) {
+        if(error.response){
+            const {data, status,} = error.response as AxiosResponse;
+            console.log(data)
+            return {
+                status,
+                data: null,
+                statusText:data.detail
+            }
+        }
+        else {
+             return {
+                status: 500,
+                data: null,
+                statusText:'Error inesperado'
+            }
+        }
+        
+    }
 }
 
 export const createDeliveryLocationRequest = async (token:string, bodyObject: createDeliveryLocaitonType): Promise<defaultApiResponse< object | null>> => {

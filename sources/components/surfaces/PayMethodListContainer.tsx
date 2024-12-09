@@ -69,7 +69,7 @@ const transformResults = (data: Record<string, any>[]) => data.map(
                 ['ID']: item['mobile_pay'].pk,
                 ['Numero de telefono']: item['mobile_pay'].phone_number,
                 ['CI']: item['mobile_pay'].ci,
-                ['Código del banco']: item['mobile_pay'].back_code,
+                ['Código del banco']: item['mobile_pay'].bank_code,
             }
         }
         else {
