@@ -51,17 +51,17 @@ const styles = StyleSheet.create({
 type props = {
     active: boolean,
     index:number,
-    onChangeSelect: (index:number)=>void,
+    onChangeSelect: (item:string)=>void,
     data: toggableListItem;
     leftItem?: ()=>JSX.Element | null;
 }
 
 export const ToggableItem = (props:props):JSX.Element => {
-    const {active, data: {name, ...rest}, index, onChangeSelect, leftItem = null} = props;
+    const {active, data: {name, ...rest}, onChangeSelect, leftItem = null} = props;
     
     const activeStyles = !!active ? styles.activeContainerStyles : styles.unactiveContainerStyles;
     const onPress = ()=> {
-        onChangeSelect(index);
+        onChangeSelect(rest.ID);
     }
 
     return (

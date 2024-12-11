@@ -1,19 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { ToggableList } from "../lists/ToggableList";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { colors } from "../../styles/colors";
 import { PrincipalButton } from "../buttons/PrincipalButton";
-import { DESCRIPTION, PLUS_CODE } from "../../constants/userConfigurationConstants";
 import { LocationIcon } from "../icons/LocationIcon";
-import { toggableListItem } from "../../types/forms/generalFormTypes";
-import { getResourceList } from "../../utils/apiRequests";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
 import { deliveryLocationErrorSelector, deliveryLocationReducersStaus, deliveryLocationSelector } from "../../redux/deliveryLocationSlicer";
 import { deliveryLocationRequestSagasAction } from "../../sagas/deliveryLocationSagas";
 import { ErrorModal } from "../modal/ErrorModal";
 import { useAppSelector } from "../../redux/hooks";
+import { getUserConstants, storeData } from "../../utils/asyncStore";
+import { useAuth0 } from "react-native-auth0";
 
 const styles = StyleSheet.create({
     container: {
@@ -70,6 +69,7 @@ const transformResults = (data: Record<string, any>[]) => data.map(
     item => {
         return {
             name: item['name'],
+            ['ID']: item.pk,
             ['Código Plus']: item['plus_code'],
             ['Descripción']: item['description'],
         }
@@ -79,16 +79,48 @@ const transformResults = (data: Record<string, any>[]) => data.map(
 export const DirectionListContainer = (props:props): JSX.Element=> {
 
     const token = useAppSelector(sessionTokenSelector)
-
+    const {user} = useAuth0();
     const data = useAppSelector(deliveryLocationSelector);
     const status = useAppSelector(deliveryLocationReducersStaus);
     const error = useAppSelector(deliveryLocationErrorSelector);
     const dispatch = useDispatch();
 
+    const [itemSelected, setItem] = useState<string | null>(null);
+
+    const onSelect = async (item:string) => {
+        console.log(item);
+        const object = {
+            activeLocation: item
+        }
+        const value = await getUserConstants(user?.sub ?? '');
+        if (value === null) {
+        // value previously stored
+            await storeData(user?.sub ?? '', JSON.stringify(object))
+        } else {
+            const parsedValue = JSON.parse(value);
+            await storeData(user?.sub ?? '', JSON.stringify({
+                ...parsedValue,
+                ...object
+            }))
+        }
+        setItem(item);
+    }
+
     const {jumpTo} = props;
+
+    const initializeItem = async () => {
+        const info = await getUserConstants(user?.sub ?? '')
+        if (info !== null) {
+            const obj = JSON.parse(info);
+            if ('activeLocation' in obj) {
+                setItem(obj.activeLocation);
+            }
+        }
+    }
 
     useEffect(
         () => {
+            initializeItem()
             dispatch(deliveryLocationRequestSagasAction());
         },
         []
@@ -125,9 +157,11 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
                 status === 'SUCCESSED' ? (
                     <>
                         <ToggableList 
-                            data={transformResults(data ?? [])} 
+                            onSelect={onSelect}
+                            data={transformResults(data)} 
                             leftItem={leftItem}
                             voidMessage="No hay direcciones disponibles"
+                            itemSelected={itemSelected}
                         /> 
                         <PrincipalButton onPress={onPressCreate} radius={5}>
                             <View style={styles.textContainer}>
@@ -142,7 +176,7 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
 {
                 status === 'ERROR' ? (
                     <ErrorModal 
-                        title="Error cargando la lista de metodos de pago"
+                        title="Error cargando la lista de direccciones"
                         subtitle={error as string}
                     />
                 ): null

@@ -64,8 +64,10 @@ export const {startRequest, finishRequestSuccessfully, finishRequestWithError,fi
 
 //selector export
 
-export const deliveryLocationSelector = (state:RootState): any[] | undefined => {
-    return state.deliveryLocation.responseObject?.data.results
+const voidDelivery:any[] = []
+
+export const deliveryLocationSelector = (state:RootState): any[] => {
+    return state.deliveryLocation.responseObject?.data.results ?? voidDelivery
 }
 export const deliveryLocationReducersStaus = (state:RootState) => state.deliveryLocation.reducerStatus;
 export const deliveryLocationGeneralReducerSelector = (state:RootState)=> state.deliveryLocation;

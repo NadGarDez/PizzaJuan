@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { ToggableList } from "../lists/ToggableList";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { payMethodSlicerErrorSelector, payMethodSlicerReducersStaus, payMethodSlicerSelector } from "../../redux/payMethodSlicer";
 import { payMethodRequestSagasAction } from "../../sagas/paymethodSagas";
 import { ErrorModal } from "../modal/ErrorModal";
+import { getUserConstants, storeData } from "../../utils/asyncStore";
+import { useAuth0 } from "react-native-auth0";
 
 const styles = StyleSheet.create({
     container: {
@@ -66,7 +68,7 @@ const transformResults = (data: Record<string, any>[]) => data.map(
         if(item['mobile_pay'] !== null) {
             return {
                 name: `Pago Móvil ${item['mobile_pay'].pk}`,
-                ['ID']: item['mobile_pay'].pk,
+                ['ID']: item.pk,
                 ['Numero de telefono']: item['mobile_pay'].phone_number,
                 ['CI']: item['mobile_pay'].ci,
                 ['Código del banco']: item['mobile_pay'].bank_code,
@@ -75,6 +77,7 @@ const transformResults = (data: Record<string, any>[]) => data.map(
         else {
             return {
                 name: `Wallet ${item['wallet_pay'].pk ?? ''}`,
+                ['ID']: item.pk,
                 ['Clave Pública']: item['wallet_pay'].address,
                 ['Dirección de wallet']: item['wallet_pay'].public_key,
             }
@@ -88,10 +91,44 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
     const results = useAppSelector(payMethodSlicerSelector);
     const status = useAppSelector(payMethodSlicerReducersStaus);
     const error = useAppSelector(payMethodSlicerErrorSelector)
+    const {user} = useAuth0();
+    const [itemSelected, setItem] = useState<string | null>(null);
+
     const dispatch = useAppDispatch();
+
+    const onSelect = async (item:string) => {
+        console.log(item);
+        const object = {
+            activePayMethod: item
+        }
+        const value = await getUserConstants(user?.sub ?? '');
+        if (value === null) {
+        // value previously stored
+            await storeData(user?.sub ?? '', JSON.stringify(object))
+        } else {
+            const parsedValue = JSON.parse(value);
+            await storeData(user?.sub ?? '', JSON.stringify({
+                ...parsedValue,
+                ...object
+            }))
+        }
+        setItem(item);
+    }
+
+    const initializeItem = async () => {
+        const info = await getUserConstants(user?.sub ?? '')
+        if (info !== null) {
+            const obj = JSON.parse(info);
+            if ('activePayMethod' in obj) {
+                
+                setItem(obj.activePayMethod);
+            }
+        }
+    }
 
     useEffect(
         () => {
+            initializeItem();
             dispatch(payMethodRequestSagasAction());
         },
         []
@@ -127,7 +164,7 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
              {
                 status === 'SUCCESSED' ? (
                     <>
-                        <ToggableList data={transformResults(results ?? [])} leftItem={leftItem} voidMessage="No hay metodos de pago disponibles"/> 
+                        <ToggableList onSelect={onSelect} data={transformResults(results ?? [])} leftItem={leftItem} voidMessage="No hay metodos de pago disponibles" itemSelected={itemSelected}/> 
                         <PrincipalButton onPress={onPressCreate} radius={5}>
                             <View style={styles.textContainer}>
                                 <Text style={styles.textStyles}>

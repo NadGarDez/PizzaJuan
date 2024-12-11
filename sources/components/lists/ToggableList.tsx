@@ -39,15 +39,14 @@ const styles =  StyleSheet.create(
 type props = {
     data: toggableListItem[],
     leftItem: ()=>JSX.Element,
-    voidMessage:string
+    voidMessage:string,
+    onSelect: (itemId: string)=> void,
+    itemSelected: string | null
 }
 
 
-export const ToggableList = ({data, voidMessage, leftItem}:props): JSX.Element => {
+export const ToggableList = ({data, voidMessage, leftItem, onSelect, itemSelected}:props): JSX.Element => {
 
-    const [itemSelected, setItemSelected] =  useState<number>(0);
-
-    const onChangeSelect = (index:number) => setItemSelected(index);
 
     const voidList = ()=> (
         <View style={styles.voidContainer}>
@@ -65,10 +64,10 @@ export const ToggableList = ({data, voidMessage, leftItem}:props): JSX.Element =
                     ({item, index})=> (
                         <ToggableItem 
                             key={`direction-${index}`}
-                            onChangeSelect={onChangeSelect}
+                            onChangeSelect={onSelect}
                             data={item}
                             index={index}
-                            active={itemSelected === index}
+                            active={itemSelected === item.ID}
                             leftItem={leftItem}
                         />
                     )
