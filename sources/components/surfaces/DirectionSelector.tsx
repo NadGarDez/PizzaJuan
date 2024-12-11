@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
 
 })
 
-const validCase = (data: undefined | any[], activeItem: string | undefined) => data !== undefined && data.length > 1 && activeItem !== undefined;
-
+const validCase = (data: any[], activeItem: string | undefined) => data.length > 0 && activeItem !== undefined;
+const errorCase = (data: any[], activeItem: string | undefined) => data.length === 0 || activeItem === undefined;
 
 export const DireactionSelector = () => {
 
@@ -179,6 +179,29 @@ export const DireactionSelector = () => {
                                         </View>
                                     </View>
                                 ) : null
+                            }
+
+                            {
+                                errorCase(deliveryLocations, itemSelected?.pk) ? (
+                                    <View style={styles.informationContainerAndButton}>
+                                    <View style={styles.iconContainer}>
+                                        <View style={styles.semiTransparentCircle}>
+                                            <LocationIcon color={colors.white_card} />
+                                        </View>
+                                    </View>
+                                    <View style={styles.directionContainer}>
+                                            <Text style={{...styles.firstLineDirection}}>
+                                               La dirección de envio no esta configurada
+                                            </Text>
+                                            <Text style={styles.secondLineDirection}>
+                                                Presiona aqui para configurar
+                                            </Text>
+                                    </View>
+                                    <View style={styles.buttonContainer}>
+                                        <GoFoward size={30} color={colors.seconday_text}/>
+                                    </View>
+                                </View>
+                                ): null
                             }
                             
                             
