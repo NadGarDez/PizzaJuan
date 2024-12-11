@@ -19,6 +19,18 @@ const styles = StyleSheet.create(
             width:"100%",
             ...shadows.lightShadow
         },
+        buttonContainerDisabled : {
+            display:"flex",
+            flexDirection: "row",
+            justifyContent:"center",
+            alignItems:"center",
+            padding: 6,
+            height:50,
+            backgroundColor: colors.principal + '50',
+            borderRadius:8,
+            width:"100%",
+            ...shadows.lightShadow
+        },
         textStyles: {
             color:colors.text_contrast
         }
@@ -27,19 +39,21 @@ const styles = StyleSheet.create(
 
 type props = {
     onPress: ()=>void,
-    text?:string
+    text?:string,
+    disabled: boolean
 }
 
 const pressedStyles= (pressed:boolean)=>pressed ? {...styles.buttonContainer, ...shadows.lightShadow, backgroundColor: colors.hightLightPrincipal } : {...styles.buttonContainer, ...shadows.principalShadow}
 
 export const BuyButton = (props:props):JSX.Element=>{
-    const {onPress, text = ""}=props;
+    const {onPress, text = "", disabled}=props;
 
     return (
-        <Pressable onPress={onPress}>
+        <Pressable onPress={onPress} disabled>
             {
                 ({pressed})=> (
-                    <View style={pressedStyles(pressed)}>
+                        
+                    <View style={disabled ? styles.buttonContainerDisabled : pressedStyles(pressed)}>
                         <Text style={styles.textStyles}>
                             {
                                 text === "" ? "Pagar" : text

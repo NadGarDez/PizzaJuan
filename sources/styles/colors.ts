@@ -9,7 +9,8 @@ type colors_type = {
     text_contrast:string,
     hightLightPrincipal:string,
     formBackground:string,
-    formBorder:string
+    formBorder:string,
+    error: string
 }
 
 
@@ -24,5 +25,6 @@ export const colors : colors_type= {
     seconday_text:"#636467",
     text_contrast:"#fafffa",
     formBackground:"#fafaf9",
-    formBorder:"#eeeeee"
+    formBorder:"#eeeeee",
+    error: '#F44336'
 }

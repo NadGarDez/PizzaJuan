@@ -1,8 +1,8 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Platform, StyleSheet, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { CarStackProp } from "../../navigation/Stacks/CarStack"
-import { DrawerActions, useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 import { colors } from "../../styles/colors"
 import { CarProductList } from "../../components/lists/CarProductList"
 import { AmountInformationComponent } from "../../components/surfaces/AmountInformationComponent"
@@ -12,6 +12,10 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import { setTotals, shoppingCardSelector } from "../../redux/shoppingCardSlice"
 import { VoidShoppingCarComponent } from "../../components/surfaces/VoidShoppingCarComponent"
 import { orderCalculation } from "../../utils/calculations"
+import { deliveryLocationReducersStaus, deliveryLocationSelector } from "../../redux/deliveryLocationSlicer"
+import { getUserConstants } from "../../utils/asyncStore"
+import { useAuth0 } from "react-native-auth0"
+import { modalFormSelector } from "../../redux/ModalFormReducer"
 
 const styles = StyleSheet.create(
     {
@@ -52,11 +56,21 @@ type CarScreenPropType = StackNavigationProp<CarStackProp, "CAR_SCREEN">
 
 export const CarScreen = ():JSX.Element=>{
 
-    const {navigate} = useNavigation<CarScreenPropType>()
+    const {navigate} = useNavigation<CarScreenPropType>();
 
-    const { products } = useAppSelector(shoppingCardSelector)
+    const { products } = useAppSelector(shoppingCardSelector);
+
+    const deliveryLocations = useAppSelector(deliveryLocationSelector);
+
+    const { visible} = useAppSelector(modalFormSelector);
+
+    const deliveryLocationsStatus = useAppSelector(deliveryLocationReducersStaus);
 
     const redux_dispatch = useAppDispatch();
+
+    const {user} = useAuth0();
+
+    const [itemSelected, setItem] = useState<string | undefined>(undefined);
     
     const onPress=()=>{
         navigate("PAY_SCREEN");
@@ -67,6 +81,25 @@ export const CarScreen = ():JSX.Element=>{
             redux_dispatch(setTotals(orderCalculation(Object.values(products))))
         },
         [products]
+    )
+
+    const initializeItem = async () => {
+        const info = await getUserConstants(user?.sub ?? '')
+        if (info !== null) {
+            const obj = JSON.parse(info);
+            if ('activeLocation' in obj ) {
+                setItem(obj.activeLocation)
+            }
+        }
+    }
+
+    useEffect(
+        () => {
+            if(deliveryLocationsStatus === 'SUCCESSED') {
+                initializeItem();
+            }
+        },
+        [deliveryLocationReducersStaus, visible]
     )
 
     return (
@@ -90,6 +123,7 @@ export const CarScreen = ():JSX.Element=>{
                                 <BuyButton 
                                     text="Realizar Pago"
                                     onPress={onPress}
+                                    disabled={deliveryLocations.length === 0 || itemSelected === undefined}
                                 />
                             </View> 
                         </View>

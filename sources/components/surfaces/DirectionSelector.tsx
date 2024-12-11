@@ -93,9 +93,6 @@ export const DireactionSelector = () => {
         const info = await getUserConstants(user?.sub ?? '')
         if (info !== null) {
             const obj = JSON.parse(info);
-
-            console.log(obj, 'super object')
-            
             if ('activeLocation' in obj ) {
                 console.log('paso por aqui');
                 const foundItem = deliveryLocations.find(item => item.pk === obj.activeLocation);
@@ -190,7 +187,7 @@ export const DireactionSelector = () => {
                                         </View>
                                     </View>
                                     <View style={styles.directionContainer}>
-                                            <Text style={{...styles.firstLineDirection}}>
+                                            <Text style={{...styles.firstLineDirection, color: colors.error}}>
                                                La dirección de envio no esta configurada
                                             </Text>
                                             <Text style={styles.secondLineDirection}>
