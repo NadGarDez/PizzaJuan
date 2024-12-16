@@ -94,7 +94,6 @@ export const DireactionSelector = () => {
         if (info !== null) {
             const obj = JSON.parse(info);
             if ('activeLocation' in obj ) {
-                console.log('paso por aqui');
                 const foundItem = deliveryLocations.find(item => item.pk === obj.activeLocation);
                 setItem(foundItem)
             }

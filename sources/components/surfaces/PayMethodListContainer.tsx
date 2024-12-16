@@ -115,6 +115,10 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
         setItem(item);
     }
 
+    const onDelete = (item: string) => {
+        console.log('delete item', item)
+    }
+
     const initializeItem = async () => {
         const info = await getUserConstants(user?.sub ?? '')
         if (info !== null) {
@@ -139,13 +143,6 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
     const onPressCreate = ()=> {
         jumpTo("second");
     }
-    const leftItem = ()=> {
-        return (
-            <View style={styles.semiTransparentCircle}>
-                <WalletIcon color={colors.white_card}/>
-            </View>
-        )
-    }
 
     return (
        <View style={styles.container}>
@@ -164,7 +161,7 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
              {
                 status === 'SUCCESSED' ? (
                     <>
-                        <ToggableList onSelect={onSelect} data={transformResults(results ?? [])} leftItem={leftItem} voidMessage="No hay metodos de pago disponibles" itemSelected={itemSelected}/> 
+                        <ToggableList onSelect={onSelect} onDelete={onDelete} data={transformResults(results ?? [])} voidMessage="No hay metodos de pago disponibles" itemSelected={itemSelected}/> 
                         <PrincipalButton onPress={onPressCreate} radius={5}>
                             <View style={styles.textContainer}>
                                 <Text style={styles.textStyles}>

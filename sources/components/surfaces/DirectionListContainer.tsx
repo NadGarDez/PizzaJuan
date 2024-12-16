@@ -85,6 +85,7 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
     const error = useAppSelector(deliveryLocationErrorSelector);
     const dispatch = useDispatch();
 
+
     const [itemSelected, setItem] = useState<string | null>(null);
 
     const onSelect = async (item:string) => {
@@ -104,6 +105,10 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
             }))
         }
         setItem(item);
+    }
+
+    const onDelete = (item: string) => {
+        console.log('delete item', item)
     }
 
     const {jumpTo} = props;
@@ -130,14 +135,6 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
         jumpTo("second");
     }
 
-    const leftItem = ()=> {
-        return (
-            <View style={styles.semiTransparentCircle}>
-                <LocationIcon color={colors.white_card}/>
-            </View>
-        )
-    }
-
     return (
        <View style={styles.container}>
             <View style={styles.subtitleContainer}>
@@ -157,9 +154,9 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
                 status === 'SUCCESSED' ? (
                     <>
                         <ToggableList 
+                            onDelete={onDelete}
                             onSelect={onSelect}
                             data={transformResults(data)} 
-                            leftItem={leftItem}
                             voidMessage="No hay direcciones disponibles"
                             itemSelected={itemSelected}
                         /> 

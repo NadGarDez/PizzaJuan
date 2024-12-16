@@ -41,11 +41,12 @@ type props = {
     leftItem: ()=>JSX.Element,
     voidMessage:string,
     onSelect: (itemId: string)=> void,
+    onDelete: (item:string) => void,
     itemSelected: string | null
 }
 
 
-export const ToggableList = ({data, voidMessage, leftItem, onSelect, itemSelected}:props): JSX.Element => {
+export const ToggableList = ({data, voidMessage, onDelete, onSelect, itemSelected}:props): JSX.Element => {
 
 
     const voidList = ()=> (
@@ -68,7 +69,7 @@ export const ToggableList = ({data, voidMessage, leftItem, onSelect, itemSelecte
                             data={item}
                             index={index}
                             active={itemSelected === item.ID}
-                            leftItem={leftItem}
+                            onDelete={onDelete}
                         />
                     )
                 }
