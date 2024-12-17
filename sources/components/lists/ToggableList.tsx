@@ -38,7 +38,6 @@ const styles =  StyleSheet.create(
 
 type props = {
     data: toggableListItem[],
-    leftItem: ()=>JSX.Element,
     voidMessage:string,
     onSelect: (itemId: string)=> void,
     onDelete: (item:string) => void,

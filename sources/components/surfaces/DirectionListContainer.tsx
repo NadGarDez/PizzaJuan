@@ -4,15 +4,16 @@ import { ToggableList } from "../lists/ToggableList";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { colors } from "../../styles/colors";
 import { PrincipalButton } from "../buttons/PrincipalButton";
-import { LocationIcon } from "../icons/LocationIcon";
 import { useDispatch } from "react-redux";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
 import { deliveryLocationErrorSelector, deliveryLocationReducersStaus, deliveryLocationSelector } from "../../redux/deliveryLocationSlicer";
 import { deliveryLocationRequestSagasAction } from "../../sagas/deliveryLocationSagas";
 import { ErrorModal } from "../modal/ErrorModal";
 import { useAppSelector } from "../../redux/hooks";
-import { getUserConstants, storeData } from "../../utils/asyncStore";
+import { getUserConstants, removeData, storeData } from "../../utils/asyncStore";
 import { useAuth0 } from "react-native-auth0";
+import { useLocalRequest } from "../../hooks/useLocalRequest";
+import { deleteDeliveryLocationRequest } from "../../utils/apiRequests";
 
 const styles = StyleSheet.create({
     container: {
@@ -83,6 +84,7 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
     const data = useAppSelector(deliveryLocationSelector);
     const status = useAppSelector(deliveryLocationReducersStaus);
     const error = useAppSelector(deliveryLocationErrorSelector);
+    const {refetch, clear, reducerStatus, responseObject} = useLocalRequest(deleteDeliveryLocationRequest);
     const dispatch = useDispatch();
 
 
@@ -107,8 +109,18 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
         setItem(item);
     }
 
-    const onDelete = (item: string) => {
-        console.log('delete item', item)
+    const onDelete = async (item: string) => {
+        const info = await getUserConstants(user?.sub ?? '')
+        if (info !== null) {
+            const {activePayMethod, ...rest} = JSON.parse(info);
+            if (activePayMethod !== undefined && activePayMethod === item) {
+                await removeData('activePayMethod');
+            }
+        }
+        refetch({
+            token: token ?? '',
+            item
+        })
     }
 
     const {jumpTo} = props;
@@ -130,6 +142,17 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
         },
         []
     )
+
+    useEffect(
+        () => {
+            if(reducerStatus === 'SUCCESSED') {
+                dispatch(deliveryLocationRequestSagasAction());
+                clear();
+            }
+        },
+        [reducerStatus]
+    )
+
 
     const onPressCreate = ()=> {
         jumpTo("second");

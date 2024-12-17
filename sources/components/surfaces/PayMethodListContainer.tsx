@@ -157,6 +157,7 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
         () => {
             if(reducerStatus === 'SUCCESSED') {
                 dispatch(payMethodRequestSagasAction());
+                clear();
             }
         },
         [reducerStatus]

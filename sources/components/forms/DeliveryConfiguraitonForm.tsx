@@ -114,7 +114,6 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
                     ...values,
                     owner:7
                 })
-                console.log(data);
                 if(status === 201) {
                     dispatch(deliveryLocationRequestSagasAction());
                     jumpTo('first');
