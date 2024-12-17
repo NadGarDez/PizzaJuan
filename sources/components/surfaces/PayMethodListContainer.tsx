@@ -11,6 +11,9 @@ import { payMethodRequestSagasAction } from "../../sagas/paymethodSagas";
 import { ErrorModal } from "../modal/ErrorModal";
 import { getUserConstants, storeData } from "../../utils/asyncStore";
 import { useAuth0 } from "react-native-auth0";
+import { useLocalRequest } from "../../hooks/useLocalRequest";
+import { deletePayMethodRequest } from "../../utils/apiRequests";
+import { sessionTokenSelector } from "../../redux/SessionReducer";
 
 const styles = StyleSheet.create({
     container: {
@@ -90,11 +93,15 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
 
     const results = useAppSelector(payMethodSlicerSelector);
     const status = useAppSelector(payMethodSlicerReducersStaus);
-    const error = useAppSelector(payMethodSlicerErrorSelector)
+    const error = useAppSelector(payMethodSlicerErrorSelector);
+    const {refetch, clear, reducerStatus, responseObject} = useLocalRequest(deletePayMethodRequest);
     const {user} = useAuth0();
+    const token = useAppSelector(sessionTokenSelector);
     const [itemSelected, setItem] = useState<string | null>(null);
 
     const dispatch = useAppDispatch();
+
+    console.log(reducerStatus, responseObject, 'super');
 
     const onSelect = async (item:string) => {
         console.log(item);
@@ -117,6 +124,10 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
 
     const onDelete = (item: string) => {
         console.log('delete item', item)
+        refetch({
+            token: token ?? '',
+            item
+        })
     }
 
     const initializeItem = async () => {

@@ -3,7 +3,7 @@ import { urlFormatter } from "./apiUrlFormatter"
 import { createDeliveryLocaitonType } from "../types/api/deliveryLocation";
 import { defaultApiResponse } from "../types/api/defaultTypes";
 
-const {getProducts,getProducWithCategory, getCategory, createOrder, createPayMethod, createDeliveryLocation} = urlFormatter;
+const {getProducts,getProducWithCategory, getCategory, createOrder, createPayMethod, createDeliveryLocation, deletePayMethod} = urlFormatter;
 
 export const getProductList = async (category:string, token:string):Promise<object>=>{
     const url = category === '' ? getProducts(null) : getProducWithCategory(category)
@@ -190,6 +190,51 @@ export const createPayMethodRequest = async (token:string, bodyObject:any)=> {
             {
                 ...bodyObject
             },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            
+            }
+        )
+        return {
+            status, 
+            data, 
+            statusText
+        }
+        
+    } catch (error:any) {
+        if(error.response){
+            const {data, status,} = error.response as AxiosResponse;
+            console.log(data)
+            return {
+                status,
+                data: null,
+                statusText:data.detail
+            }
+        }
+        else {
+             return {
+                status: 500,
+                data: null,
+                statusText:'Error inesperado'
+            }
+        }
+        
+    }
+}
+
+interface paramsDelete {
+    token: string,
+    item: string
+}
+
+export const deletePayMethodRequest = async (params: Record<'token' | 'item', string>)=> {
+    const {token, item} = params;
+    const url = deletePayMethod(item);
+
+    try {
+        const {status, statusText, data} = await axios.delete(url, 
             {
                 headers: {
                     'Authorization': `Bearer ${token}`
