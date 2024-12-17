@@ -4,12 +4,11 @@ import { ToggableList } from "../lists/ToggableList";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { colors } from "../../styles/colors";
 import { PrincipalButton } from "../buttons/PrincipalButton";
-import { WalletIcon } from "../icons/WalletIcon";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { payMethodSlicerErrorSelector, payMethodSlicerReducersStaus, payMethodSlicerSelector } from "../../redux/payMethodSlicer";
 import { payMethodRequestSagasAction } from "../../sagas/paymethodSagas";
 import { ErrorModal } from "../modal/ErrorModal";
-import { getUserConstants, storeData } from "../../utils/asyncStore";
+import { getUserConstants, removeData, storeData } from "../../utils/asyncStore";
 import { useAuth0 } from "react-native-auth0";
 import { useLocalRequest } from "../../hooks/useLocalRequest";
 import { deletePayMethodRequest } from "../../utils/apiRequests";
@@ -122,8 +121,14 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
         setItem(item);
     }
 
-    const onDelete = (item: string) => {
-        console.log('delete item', item)
+    const onDelete = async (item: string) => {
+        const info = await getUserConstants(user?.sub ?? '')
+        if (info !== null) {
+            const {activePayMethod, ...rest} = JSON.parse(info);
+            if (activePayMethod !== undefined && activePayMethod === item) {
+                await removeData('activePayMethod');
+            }
+        }
         refetch({
             token: token ?? '',
             item
@@ -135,7 +140,6 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
         if (info !== null) {
             const obj = JSON.parse(info);
             if ('activePayMethod' in obj) {
-                
                 setItem(obj.activePayMethod);
             }
         }
@@ -147,6 +151,15 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
             dispatch(payMethodRequestSagasAction());
         },
         []
+    );
+
+    useEffect(
+        () => {
+            if(reducerStatus === 'SUCCESSED') {
+                dispatch(payMethodRequestSagasAction());
+            }
+        },
+        [reducerStatus]
     )
 
     const {jumpTo} = props;
@@ -190,6 +203,15 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
                         subtitle={error as string}
                     />
                 ): null
+            }
+
+            {
+                reducerStatus === 'ERROR' ? (
+                    <ErrorModal 
+                    title="Error cargando eliminando el metodo de pago"
+                    subtitle={responseObject?.statusText ?? ''}
+                />
+                ) : null
             }
             
        </View>
