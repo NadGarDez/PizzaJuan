@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useFormik } from "formik";
 import { personalConfigurationMetadata } from "../../constants/form/formConstants";
@@ -6,10 +6,14 @@ import { colors } from "../../styles/colors";
 import { inputSelector } from "../../utils/inputSelector";
 import { ModalFormHeader } from "../surfaces/ModalFormHeader";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { hide, modalFormSelector } from "../../redux/ModalFormReducer";
+import { hide } from "../../redux/ModalFormReducer";
 import { ModalFormNames } from "../../types/forms/generalFormTypes";
 import { personalConfigurationSchema, personalConfigurationSchemaType } from "../../types/forms/personalConfigurationTypes";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useLocalRequest } from "../../hooks/useLocalRequest";
+import { updateUser } from "../../utils/apiRequests";
+import { sessionTokenSelector } from "../../redux/SessionReducer";
+import { ErrorModal } from "../modal/ErrorModal";
 
 
 const styles = StyleSheet.create({
@@ -48,36 +52,59 @@ const defaultValue : personalConfigurationSchemaType = {
     ci:''
 }
 
-export const PersonalConfigurationForm = (): JSX.Element=> {
 
-    const {valid} = useAppSelector(modalFormSelector);
-    const { setFieldValue } = useFormik(
+const hasChanged = (defaultValues: object, currentValues:object) => JSON.stringify(defaultValues) !== JSON.stringify(currentValues);
+
+export const PersonalConfigurationForm = (): JSX.Element=> {
+    const token = useAppSelector(sessionTokenSelector)
+    const {refetch, reducerStatus, responseObject } = useLocalRequest(updateUser);
+    const { setFieldValue,values , submitForm, errors, isValid} = useFormik(
         {
             initialValues: defaultValue,
             validationSchema:personalConfigurationSchema,
             onSubmit: values => {
-                console.log(values)
+                refetch(
+                    {
+                        token: token ?? '',
+                        first_name: values.name,
+                        last_name: values.lastName,
+                        email: values.email,
+                        genre: values.genre,
+                        ci: values.ci,
+                        birthday: values.birthDate
+                    }
+                )
             },
         },
     );
 
-
     const dispatch = useAppDispatch();
 
     const onSave = ()=> {
-        dispatch(hide());
+        submitForm();
+        // dispatch(hide());
     }
 
     const onCancel = ()=> {
         dispatch(hide());
     }
 
+    useEffect(
+        () => {
+            if (reducerStatus === 'SUCCESSED') {
+                dispatch(hide());
+            }
+        },
+        [reducerStatus]
+    )
+
     return (
+        <>
         <KeyboardAwareScrollView
         >
             <ModalFormHeader 
                 formKey={ModalFormNames.PERSONAL_CONFIGURATION}
-                isFormValid={valid}
+                isFormValid={isValid && hasChanged(defaultValue, values)}
                 onCancel={onCancel}
                 onSave={onSave}
             />
@@ -105,6 +132,7 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
                                                     setFieldValue(item, text);
                                                 },
                                                 inputName:name,
+                                                error: errors[item as keyof object],
                                                 ...aditionalData
                                             })
                                         }
@@ -115,6 +143,15 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
                     }
             </View>
         </KeyboardAwareScrollView>
+        {
+             reducerStatus === 'ERROR' ? (
+                <ErrorModal 
+                    title="Error cargando la lista de direccciones"
+                    subtitle={responseObject?.statusText ?? ''}
+                />
+            ): null
+        }
+        </>
        
     )
 }

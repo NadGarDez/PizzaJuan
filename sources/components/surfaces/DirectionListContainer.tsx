@@ -79,7 +79,7 @@ const transformResults = (data: Record<string, any>[]) => data.map(
 
 export const DirectionListContainer = (props:props): JSX.Element=> {
 
-    const token = useAppSelector(sessionTokenSelector)
+    const token = useAppSelector(sessionTokenSelector);
     const {user} = useAuth0();
     const data = useAppSelector(deliveryLocationSelector);
     const status = useAppSelector(deliveryLocationReducersStaus);

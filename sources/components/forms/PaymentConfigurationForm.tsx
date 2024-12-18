@@ -85,13 +85,11 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
     const dispatch = useAppDispatch();
     const {jumpTo} = props;
 
-    const {values, setFieldValue, handleSubmit, errors} = useFormik(
+    const {values, setFieldValue, handleSubmit, errors,} = useFormik(
         {
             initialValues: defaultValue,
             validationSchema:payMethodConfigurationSchema,
             onSubmit: async (values, {resetForm}) => {
-                console.log(values);
-
                 const {status, data} = await createPayMethodRequest(token || '', {
                     mobile_pay: {
                         ci: values.ci,

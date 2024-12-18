@@ -5,12 +5,12 @@ export type genre = 'male' | 'female' | 'other' ;
 
 export const personalConfigurationSchema = object(
     {
-        name: string().required(),
-        lastName: string().required(),
+        name: string().required().min(2),
+        lastName: string().required().min(2),
         email: string().email().required(),
         genre: string<genre>().required(),
         birthDate: date().required(),
-        ci: string().required()
+        ci: string().required().min(6)
     }
 );
 

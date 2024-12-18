@@ -1,9 +1,9 @@
 import axios, { AxiosResponse} from "axios"
 import { urlFormatter } from "./apiUrlFormatter"
-import { createDeliveryLocaitonType } from "../types/api/deliveryLocation";
+import { createDeliveryLocaitonType, updateUserInformaiton } from "../types/api/deliveryLocation";
 import { defaultApiResponse } from "../types/api/defaultTypes";
 
-const {getProducts,getProducWithCategory, getCategory, createOrder, createPayMethod, createDeliveryLocation, deletePayMethod, deleteDeliveryLocation} = urlFormatter;
+const {getProducts,getProducWithCategory, getCategory, createOrder, createPayMethod, createDeliveryLocation, deletePayMethod, deleteDeliveryLocation, updateUserUrl} = urlFormatter;
 
 export const getProductList = async (category:string, token:string):Promise<object>=>{
     const url = category === '' ? getProducts(null) : getProducWithCategory(category)
@@ -350,6 +350,45 @@ export const createDeliveryLocationRequest = async (token:string, bodyObject: cr
 
 }
 
-export const updateUser = (token:string) => {
-    
+export const updateUser = async (params: Record<string | 'token', any>) => {
+    const {token, ...rest} = params
+
+    const url = updateUserUrl(null);
+    try {
+        const {status, statusText, data} = await axios.put(url, 
+            {
+                ...rest
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            
+            }
+        )
+        return {
+            status, 
+            data, 
+            statusText
+        }
+        
+    } catch (error:any) {
+        if(error.response){
+            const {data, status} = error.response as AxiosResponse;
+            return {
+                status,
+                data: null,
+                statusText:data.detail
+            }
+        }
+        else {
+             return {
+                status: 500,
+                data: null,
+                statusText:'Error inesperado'
+            }
+        }
+        
+    }
+
 }
