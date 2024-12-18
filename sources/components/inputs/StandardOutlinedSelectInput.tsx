@@ -1,5 +1,5 @@
 import React, { Reducer, useReducer } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import RNPickerSelect from 'react-native-picker-select';
 import { basicInputState, defaultInputActionTypes, defaultInputStates, inputAction } from "../../constants/inputConstants";
@@ -92,6 +92,7 @@ const selectItems:selectItemsType[] = [
 
 const reducer: Reducer<basicInputState,actionObjectType> = (state, action)=> {
     const {type, payload} = action;
+    console.log(type, 'type')
     switch (type) {
         case defaultInputActionTypes.neutralize : {
             return {
@@ -100,6 +101,7 @@ const reducer: Reducer<basicInputState,actionObjectType> = (state, action)=> {
             }
         }
         case defaultInputActionTypes.activating : {
+            console.log('super activatingsß')
             return {
                 ...state,
                 machineState: defaultInputStates.active
@@ -123,6 +125,7 @@ const reducer: Reducer<basicInputState,actionObjectType> = (state, action)=> {
 
 const getContainerStyles = (state:basicInputState)=> {
     if(state.machineState  === defaultInputStates.active || state.machineState  === defaultInputStates.change ){
+        console.log('super activate activate')
         return {
             ...styles.selectContainer,
             ...styles.activeBorderStyles
@@ -142,13 +145,15 @@ const getContainerStyles = (state:basicInputState)=> {
 
 export const StandardOutlinedSelectInput = (props:props):JSX.Element=> {
 
-    const {placeholder, onChangeCallback, initialValue = '', inputName, data } = props;
+    const {placeholder, onChangeCallback, initialValue = '', data } = props;
 
     const [state, dispatch] = useReducer(reducer,{...initialState, value:initialValue });
 
-    const activate = ()=> dispatch({
-        type:defaultInputActionTypes.activating,
-    });
+    const activate = ()=> {
+        dispatch({
+            type:defaultInputActionTypes.activating,
+        });
+    }
 
     const neutralize = ()=> dispatch({
         type:defaultInputActionTypes.neutralize
@@ -203,6 +208,7 @@ export const StandardOutlinedSelectInput = (props:props):JSX.Element=> {
                         }
                         onValueChange={manageOnChange}
                         items={data}
+                        
                     /> 
                 </View>
             </Pressable>

@@ -169,7 +169,7 @@ export const StandardOutlinedDatePicker = (props:props):JSX.Element=> {
                         state.value === '' ? (
                             <Text style={styles.placeholderTextStyles}>{placeholder}</Text>
                         ): (
-                            <Text style={styles.valueStyles}>{state.value}</Text>
+                            <Text style={styles.placeholderTextStyles}>{state.value}</Text>
                         )
                     }
                    

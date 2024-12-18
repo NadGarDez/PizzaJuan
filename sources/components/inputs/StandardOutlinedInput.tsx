@@ -116,6 +116,7 @@ const formReducer: Reducer<basicInputState,formAction> = (state, action)=> {
 }
 
 const getContainerStyles = (state:basicInputState)=> {
+    console.log(state)
     if( state.machineState === defaultInputStates.active || state.machineState  === defaultInputStates.change ){
         return {
             ...styles.container,
@@ -150,6 +151,7 @@ export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCal
     }
 
     const onChange = (e:NativeSyntheticEvent<TextInputChangeEventData>)=> {
+        console.log('changing')
         const inputValue = e.nativeEvent.text;
         onChangeCallback(inputValue);
         dispatch(
@@ -175,21 +177,24 @@ export const StandardOutlinedInput = ({placeholder, initialValue="", onChangeCal
 
     useEffect(
         ()=> {
-            if(error !== undefined) {
-                dispatch({
-                    type: defaultInputActionTypes.failing,
-                    payload: {
-                        error
-                    }
-                })
-            }
-            else {
-                dispatch(
-                    {
-                        type: defaultInputActionTypes.activating,
-                        payload: {}
-                    }
-                )
+            if (state.machineState !== defaultInputStates.neutral) {
+                if(error !== undefined) {
+                    dispatch({
+                        type: defaultInputActionTypes.failing,
+                        payload: {
+                            error
+                        }
+                    })
+                }
+                else {
+                    console.log('activating')
+                    dispatch(
+                        {
+                            type: defaultInputActionTypes.activating,
+                            payload: {}
+                        }
+                    )
+                }
             }
         },
         [error]
