@@ -49,7 +49,7 @@ export const BuyButton = (props:props):JSX.Element=>{
     const {onPress, text = "", disabled}=props;
 
     return (
-        <Pressable onPress={onPress} disabled>
+        <Pressable onPress={onPress} disabled={disabled}>
             {
                 ({pressed})=> (
                         
