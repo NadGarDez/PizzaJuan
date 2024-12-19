@@ -6,6 +6,8 @@ import { UserInformationContainer } from "../../components/surfaces/UserInformat
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ModalForm } from "../../components/modal/ModalForm";
 import { useAuth0 } from "react-native-auth0";
+import { useAppSelector } from "../../redux/hooks";
+import { sessionTokenSelector } from "../../redux/SessionReducer";
 
 const styles = StyleSheet.create(
     {
@@ -18,11 +20,11 @@ const styles = StyleSheet.create(
 
 export const UserScreen = ():JSX.Element=>{
     const {user} = useAuth0();
+    const token = useAppSelector(sessionTokenSelector);
 
     const getUserConstants = async () => {
         try {
             const value = await AsyncStorage.getItem(user?.sub ?? '');
-            console.log(value, 'super value of get user constants')
         
           } catch (e) {
             // error reading valuea
@@ -32,7 +34,7 @@ export const UserScreen = ():JSX.Element=>{
 
     useEffect(
         () => {
-            getUserConstants()
+            getUserConstants();
         },
         []
     )

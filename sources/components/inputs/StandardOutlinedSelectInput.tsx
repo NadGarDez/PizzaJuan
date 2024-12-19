@@ -92,7 +92,6 @@ const selectItems:selectItemsType[] = [
 
 const reducer: Reducer<basicInputState,actionObjectType> = (state, action)=> {
     const {type, payload} = action;
-    console.log(type, 'type')
     switch (type) {
         case defaultInputActionTypes.neutralize : {
             return {
@@ -101,7 +100,6 @@ const reducer: Reducer<basicInputState,actionObjectType> = (state, action)=> {
             }
         }
         case defaultInputActionTypes.activating : {
-            console.log('super activatingsß')
             return {
                 ...state,
                 machineState: defaultInputStates.active
@@ -125,7 +123,6 @@ const reducer: Reducer<basicInputState,actionObjectType> = (state, action)=> {
 
 const getContainerStyles = (state:basicInputState)=> {
     if(state.machineState  === defaultInputStates.active || state.machineState  === defaultInputStates.change ){
-        console.log('super activate activate')
         return {
             ...styles.selectContainer,
             ...styles.activeBorderStyles

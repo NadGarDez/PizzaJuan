@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import { defaultApiResponse } from "../types/api/defaultTypes"
 
 interface requestStatus<T>  {

@@ -108,7 +108,7 @@ const styles = StyleSheet.create(
 )
 
 export const UserInformationContainer = ()=> {
-    const {givenName, familyName, email, picture = "https://cdn-icons-png.flaticon.com/512/5556/5556468.png"} = useAppSelector(sessionObjectSelector)
+    const {firstName, lastName, email, ci, birthDate, picture = "https://cdn-icons-png.flaticon.com/512/5556/5556468.png"} = useAppSelector(sessionObjectSelector)
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
@@ -131,7 +131,9 @@ export const UserInformationContainer = ()=> {
             <View style={styles.informationContainer}>
                 <View style={styles.textContainer}>
                         <Text style={styles.nameStyles}>
-                            {givenName} {familyName}
+                            {
+                                (firstName === null || lastName === null) ? 'No configurado' : `${firstName} ${lastName}`
+                            }
                         </Text>
                 </View> 
                 <View style={styles.row}>
@@ -149,24 +151,28 @@ export const UserInformationContainer = ()=> {
                 <View style={styles.row}>
                     <View style={styles.column}>
                             <Text style={styles.subtotalTextStyles}>
-                                Telefono
+                                Fecha de nacimiento
                             </Text>
                     </View>
                     <View style={styles.columnRight}>
                             <Text style={styles.subtotalTextStyles}>
-                                No asignado
+                                {
+                                    birthDate ?? 'No configurado'
+                                }
                             </Text>
                     </View>
                 </View>
                 <View style={styles.row}>
                     <View style={styles.column}>
                             <Text style={styles.subtotalTextStyles}>
-                                Direccion
+                                CI
                             </Text>
                     </View>
                     <View style={styles.columnRight}>
                             <Text style={styles.subtotalTextStyles}>
-                               Urbanizacion Guarico Apure
+                               {
+                                ci ?? 'No configurado'
+                               }
                             </Text>
                     </View>
                 </View>

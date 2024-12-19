@@ -100,10 +100,7 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
 
     const dispatch = useAppDispatch();
 
-    console.log(reducerStatus, responseObject, 'super');
-
     const onSelect = async (item:string) => {
-        console.log(item);
         const object = {
             activePayMethod: item
         }

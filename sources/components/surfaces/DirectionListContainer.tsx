@@ -91,7 +91,6 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
     const [itemSelected, setItem] = useState<string | null>(null);
 
     const onSelect = async (item:string) => {
-        console.log(item);
         const object = {
             activeLocation: item
         }

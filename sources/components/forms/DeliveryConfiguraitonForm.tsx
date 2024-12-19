@@ -142,7 +142,6 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
     }
 
     const onPressCancel = ()=> {
-        console.log('do something and then relocate');
         jumpTo('first');
     }
 

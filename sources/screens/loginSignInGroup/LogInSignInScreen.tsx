@@ -1,14 +1,13 @@
 import React, { useEffect } from "react"
 import { Image, StyleSheet, Text, View } from "react-native"
-import { HelloWorldComponent } from "../../components/HelloWorldComponent"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { LogInSignInStackPropType } from "../../navigation/Stacks/LogInSignInStack"
 import { useAuth0 } from "react-native-auth0"
-import { useAppDispatch } from "../../redux/hooks"
-import { setSession, setSessionObject } from "../../redux/SessionReducer"
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
+import { sessionObjectSelector, sessionTokenSelector, setSession, setSessionObject } from "../../redux/SessionReducer"
 import { colors } from "../../styles/colors"
-import { WhiteButton } from "../../components/buttons/WhiteButton"
 import { LoginButton } from "../../components/buttons/LoginButton"
+import { requestUserInformationSagasAction } from "../../sagas/userSagas"
 const image = require('../../../static/images/splash_screen.png');
 
 const styles = StyleSheet.create(
@@ -39,9 +38,11 @@ type LogInSignInScreenPropType = StackNavigationProp<LogInSignInStackPropType, "
 
 export const LogInSignInScreen = ():JSX.Element=>{
 
-    const {authorize,clearSession, user,getCredentials} = useAuth0();
+    const {authorize, user,getCredentials} = useAuth0();
+    const token = useAppSelector(sessionTokenSelector);
     const dispatch = useAppDispatch();
     
+
     const LoginSignInPanel=async ()=>{
         try {
             await authorize(
@@ -63,17 +64,18 @@ export const LogInSignInScreen = ():JSX.Element=>{
         ()=>{
             if (user !== null && user !== undefined){
                 getCre()
-                dispatch(setSessionObject({
-                    sub:user.sub ?? null,
-                    email:user.email ?? null,
-                    nickname:user.nickname ?? null,
-                    givenName:user.givenName ?? null,
-                    picture:user.picture?? null,
-                    familyName: user.familyName ?? null
-                }))
             }
         },
         [user, getCredentials]
+    );
+
+    useEffect(
+        () => {
+            if (token !== null) {
+                dispatch(requestUserInformationSagasAction());
+            }
+        },
+        [token]
     )
     
     return (

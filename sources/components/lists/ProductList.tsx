@@ -2,7 +2,7 @@ import React from "react";
 import { ActivityIndicator, FlatList, StyleSheet , Text, View} from "react-native";
 import { ProductItem } from "../surfaces/ProductItem";
 import {  useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { productGeneralReducerSelector, productReducersStaus, productsErrorTextSelector, productsSelector } from "../../redux/productsSlicer";
+import { productReducersStaus, productsErrorTextSelector, productsSelector } from "../../redux/productsSlicer";
 import { colors } from "../../styles/colors";
 import { ErrorModal } from "../modal/ErrorModal";
 
@@ -68,7 +68,7 @@ export const ProductList = ():JSX.Element=> {
     const products  = useAppSelector(productsSelector)
     const status = useAppSelector(productReducersStaus)
     const error = useAppSelector(productsErrorTextSelector)
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
     const manageNext = ()=> {
         if(status === 'SUCCESSED') {

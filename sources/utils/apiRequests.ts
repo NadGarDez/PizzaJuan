@@ -1,9 +1,9 @@
 import axios, { AxiosResponse} from "axios"
 import { urlFormatter } from "./apiUrlFormatter"
-import { createDeliveryLocaitonType, updateUserInformaiton } from "../types/api/deliveryLocation";
+import { createDeliveryLocaitonType, userDataRequestInterface } from "../types/api/deliveryLocation";
 import { defaultApiResponse } from "../types/api/defaultTypes";
 
-const {getProducts,getProducWithCategory, getCategory, createOrder, createPayMethod, createDeliveryLocation, deletePayMethod, deleteDeliveryLocation, updateUserUrl} = urlFormatter;
+const {getProducts,getProducWithCategory, getCategory, createOrder, createPayMethod, createDeliveryLocation, deletePayMethod, deleteDeliveryLocation, updateUserUrl, getUserInformationUrl } = urlFormatter;
 
 export const getProductList = async (category:string, token:string):Promise<object>=>{
     const url = category === '' ? getProducts(null) : getProducWithCategory(category)
@@ -135,6 +135,39 @@ export const getResourceList = async (token:string, resource: string): Promise<o
     }
 }
 
+export const getUserInformation = async (token: string): Promise<defaultApiResponse<userDataRequestInterface | null>>=> {
+    const url = getUserInformationUrl(null);
+    try {
+        const {status, data, statusText} = await axios.get<userDataRequestInterface>(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        return {
+            status,
+            data,
+            statusText
+        };
+        
+    } catch (error:any) {
+        if(error.response){
+            const {data, status} = error.response as AxiosResponse;
+            return {
+                status,
+                data: null,
+                statusText:data.detail
+            }
+        }
+        else {
+             return {
+                status: 500,
+                data: null,
+                statusText:'Error inesperado'
+            }
+        }
+    }
+}
+
 export const getNext = async (token:string, url:string):Promise<object> => {
     try {
         const {status, data, statusText} = await axios.get(url, {
@@ -206,7 +239,6 @@ export const createPayMethodRequest = async (token:string, bodyObject:any)=> {
     } catch (error:any) {
         if(error.response){
             const {data, status,} = error.response as AxiosResponse;
-            console.log(data)
             return {
                 status,
                 data: null,
@@ -222,11 +254,6 @@ export const createPayMethodRequest = async (token:string, bodyObject:any)=> {
         }
         
     }
-}
-
-interface paramsDelete {
-    token: string,
-    item: string
 }
 
 export const deletePayMethodRequest = async (params: Record<'token' | 'item', string>)=> {
@@ -251,7 +278,6 @@ export const deletePayMethodRequest = async (params: Record<'token' | 'item', st
     } catch (error:any) {
         if(error.response){
             const {data, status,} = error.response as AxiosResponse;
-            console.log(data)
             return {
                 status,
                 data: null,
@@ -291,7 +317,6 @@ export const deleteDeliveryLocationRequest = async (params: Record<'token' | 'it
     } catch (error:any) {
         if(error.response){
             const {data, status,} = error.response as AxiosResponse;
-            console.log(data)
             return {
                 status,
                 data: null,

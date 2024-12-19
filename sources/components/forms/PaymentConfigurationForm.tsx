@@ -97,7 +97,6 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
                         bank_code: values.bank,
                     }
                 })
-                console.log(status, 'super data ');
                 if(status === 201) {
                     dispatch(payMethodRequestSagasAction());
                     jumpTo('first');
@@ -119,7 +118,6 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
     }
 
     const onPressCancel = ()=> {
-        console.log('do something and then relocate');
         jumpTo('first');
     }
 

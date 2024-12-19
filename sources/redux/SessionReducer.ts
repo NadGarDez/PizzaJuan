@@ -3,33 +3,43 @@ import { RootState } from "./reduxTypes";
 
 // state type
 type sessionStateType = {
-    sessionToken: null | string,
-    sub:null|string,
-    email?:string | null,
-    nickname?:string|null,
-    givenName?:string|null,
-    picture?:string|null,
-    familyName:null | string
+    reducerStatus: 'INITIAL' | 'LOADING' | 'N_LOADING' | 'SUCCESSED' | 'ERROR',
+    sessionObject: {
+        sessionToken: null | string,
+        sub:null|string,
+        email:string | null,
+        firstName: string | null,
+        lastName: string | null,
+        birthDate: string | null,
+        genre: string | null,
+        ci:  string | null
+    }
+    error: string | null
 }
 
 type objectSessionType ={
-    sub:null | string,
-    email:null | string,
-    nickname:null | string,
-    givenName:null | string,
-    picture:null | string,
-    familyName:null | string
+    email:string | null,
+    firstName: string | null,
+    lastName: string | null,
+    birthDate: string | null,
+    genre: string | null,
+    ci:  string | null
 }
 
 //initial state
 const initialState: sessionStateType =  {
-    sessionToken:null,
-    sub:null,
-    email:null,
-    nickname:null,
-    givenName:null,
-    picture:null,
-    familyName:null
+    reducerStatus: 'INITIAL',
+    sessionObject: {
+        sessionToken:null,
+        sub:null,
+        email:null,
+        firstName: null,
+        lastName: null,
+        birthDate: null,
+        genre: 'male',
+        ci: null
+    },
+    error: null
 };
 
 
@@ -39,24 +49,42 @@ const sessionSlice = createSlice(
         name : "session",
         initialState: initialState,
         reducers : {
-            setSession: (state, action: PayloadAction<string>) => {
-                state.sessionToken = action.payload
+            startRequest: (state) => {
+                state.reducerStatus = 'LOADING'
             },
+            finishRequestSuccessfully:(state, action: PayloadAction<objectSessionType>)=>{
+                console.log(action.payload, 'super payload');
+                state.reducerStatus = 'SUCCESSED'
+                state.sessionObject.birthDate = action.payload.birthDate;
+                state.sessionObject.email = action.payload.email;
+                state.sessionObject.genre = action.payload.genre;
+                state.sessionObject.firstName = action.payload.firstName;
+                state.sessionObject.lastName = action.payload.lastName;
+                state.sessionObject.ci = action.payload.ci;
+            },
+
+            finishRequestWithError: (state, action: PayloadAction<string>) => {
+                state.reducerStatus = 'ERROR',
+                state.error = action.payload
+            },
+            setSession: (state, action: PayloadAction<string>) => {
+                state.sessionObject.sessionToken = action.payload
+            },
+
             setSessionObject:(state, action: PayloadAction<objectSessionType>)=>{
-                state.sub=action.payload.sub
-                state.email=action.payload.email
-                state.nickname=action.payload.nickname
-                state.givenName=action.payload.givenName
-                state.picture=action.payload.picture
-                state.familyName = action.payload.familyName
+                state.sessionObject.email=action.payload.email
+                state.sessionObject.birthDate = action.payload.birthDate
+                state.sessionObject.firstName = action.payload.firstName
+                state.sessionObject.lastName = action.payload.lastName
+                state.sessionObject.genre = action.payload.genre
             },
             resetSession: state => {
-                state.sub=null;
-                state.email=null;
-                state.nickname=null;
-                state.givenName=null;
-                state.picture=null;
-                state.sessionToken=null;
+                state.sessionObject.sub= null
+                state.sessionObject.email= null
+                state.sessionObject.birthDate = null
+                state.sessionObject.firstName = null
+                state.sessionObject.lastName = null
+                state.sessionObject.genre = null
             }
         },
     }
@@ -64,12 +92,12 @@ const sessionSlice = createSlice(
 
 //actions export
 
-export const {setSession, resetSession, setSessionObject} = sessionSlice.actions;
+export const {setSession, resetSession, setSessionObject, startRequest, finishRequestSuccessfully, finishRequestWithError} = sessionSlice.actions;
 
 //selector export
 
-export const sessionTokenSelector = (state:RootState): string | null => state.session.sessionToken;
-export const sessionObjectSelector = (state:RootState) => state.session;
+export const sessionTokenSelector = (state:RootState): string | null => state.session.sessionObject.sessionToken;
+export const sessionObjectSelector = (state:RootState) => state.session.sessionObject;
 
 // reducer export
 export default sessionSlice.reducer;
