@@ -145,7 +145,7 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
     useEffect(
         () => {
             initializeItem();
-            dispatch(payMethodRequestSagasAction());
+            // dispatch(payMethodRequestSagasAction());
         },
         []
     );

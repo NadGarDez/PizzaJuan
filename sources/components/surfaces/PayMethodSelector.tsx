@@ -99,14 +99,11 @@ const getMobilePayString = (data: object): string => {
    
 }
 
-
 export const PayMethodSelector = () => {
 
     const [itemSelected, setItem] = useState<
         Record<string,any>
      | undefined>(undefined);
-
-
 
     const dispatch = useAppDispatch();
     const {user} = useAuth0();
@@ -121,7 +118,6 @@ export const PayMethodSelector = () => {
         const info = await getUserConstants(user?.sub ?? '')
         if (info !== null) {
             const obj = JSON.parse(info);
-            console.log(obj)
             if ('activePayMethod' in obj ) {
                 const foundItem = paymethods.find(item => item.pk === obj.activePayMethod);
                 setItem(foundItem)
@@ -139,7 +135,7 @@ export const PayMethodSelector = () => {
     )
 
 
-     const onPress = ()=> {
+    const onPress = ()=> {
         dispatch(configure("DELIVERY_CONFIGURATION" as ModalFormNames))
         dispatch(activateWithoutValid());
     }

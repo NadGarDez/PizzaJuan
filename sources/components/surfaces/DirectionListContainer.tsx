@@ -137,7 +137,7 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
     useEffect(
         () => {
             initializeItem()
-            dispatch(deliveryLocationRequestSagasAction());
+            // dispatch(deliveryLocationRequestSagasAction());
         },
         []
     )
