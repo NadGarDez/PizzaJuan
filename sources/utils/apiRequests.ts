@@ -3,7 +3,7 @@ import { urlFormatter } from "./apiUrlFormatter"
 import { createDeliveryLocaitonType, userDataRequestInterface } from "../types/api/deliveryLocation";
 import { defaultApiResponse } from "../types/api/defaultTypes";
 
-const {getProducts,getProducWithCategory, getCategory, createOrder, createPayMethod, createDeliveryLocation, deletePayMethod, deleteDeliveryLocation, updateUserUrl, getUserInformationUrl } = urlFormatter;
+const {getProducts,getProducWithCategory, getCategory, createOrder, createPayMethod, createDeliveryLocation, deletePayMethod, deleteDeliveryLocation, updateUserUrl, getUserInformationUrl, getOrdersUrl } = urlFormatter;
 
 export const getProductList = async (category:string, token:string):Promise<object>=>{
     const url = category === '' ? getProducts(null) : getProducWithCategory(category)
@@ -94,6 +94,49 @@ export const getCategoryList = async (token:string): Promise<object>=> {
 
 export const getResourceList = async (token:string, resource: string): Promise<object>=> {
     const url = urlFormatter[resource](null);
+    try {
+        const {status, data, statusText} = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        return {
+            status,
+            data,
+            statusText
+        };
+        
+    } catch (error:any) {
+        if(error.response){
+            const {data, status} = error.response as AxiosResponse;
+            return {
+                status,
+                data: {
+                    count: 0, 
+                    next: null, 
+                    previous: null, 
+                    results: [], 
+                },
+                statusText:data.detail
+            }
+        }
+        else {
+             return {
+                status: 500,
+                data: {
+                    count: 0, 
+                    next: null, 
+                    previous: null, 
+                    results: [], 
+                },
+                statusText:'Error inesperado'
+            }
+        }
+    }
+}
+
+export const getOrderInformation = async (token: string, active: boolean): Promise<object> => {
+    const url = getOrdersUrl(null);
     try {
         const {status, data, statusText} = await axios.get(url, {
             headers: {

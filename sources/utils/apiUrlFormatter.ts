@@ -12,5 +12,6 @@ export const urlFormatter: Record<string,(param:any)=> string> = {
     deletePayMethod: (param:string)=>`${BASE_API_URL}/pay_method/delete/${param}/`,
     getDeliveryLocations: (param) => `${BASE_API_URL}/delivery_location/list/`,
     getPayMethods: (param) => `${BASE_API_URL}/pay_method/list/`,
-    updateUserUrl: (param) => `${BASE_API_URL}/user/save_information/`
+    updateUserUrl: (param) => `${BASE_API_URL}/user/save_information/`,
+    getOrdersUrl: (params) => `${BASE_API_URL}/order/list/<str:active>/`
 }
