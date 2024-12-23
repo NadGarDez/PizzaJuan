@@ -64,8 +64,11 @@ export const {startRequest, finishRequestSuccessfully, finishRequestWithError,fi
 
 //selector export
 
-export const payMethodSlicerSelector = (state:RootState): any[] | undefined => {
-    return state.payMethod.responseObject?.data.results
+
+const voidPayMethod:any[] = []
+
+export const payMethodSlicerSelector = (state:RootState): any[] => {
+    return state.payMethod.responseObject?.data.results ?? voidPayMethod
 }
 export const payMethodSlicerReducersStaus = (state:RootState) => state.payMethod.reducerStatus;
 export const payMethodSlicerGeneralReducerSelector = (state:RootState)=> state.payMethod;

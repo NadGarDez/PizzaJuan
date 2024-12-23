@@ -1,13 +1,10 @@
 import React from "react"
-import { Dimensions, Image, StyleSheet, Text, View, ScrollView, Platform } from "react-native"
+import { Dimensions, Image, StyleSheet, Text, View, Platform } from "react-native"
 import { colors } from "../../styles/colors"
 import { useAppSelector } from "../../redux/hooks"
 import { sessionObjectSelector } from "../../redux/SessionReducer"
 import { shadows } from "../../styles/shadow"
 import { ConfigurationList } from "../lists/ConfigurationList"
-
-
-
 
 
 const styles = StyleSheet.create(

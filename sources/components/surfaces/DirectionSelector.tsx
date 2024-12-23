@@ -109,7 +109,7 @@ export const DireactionSelector = () => {
         [deliveryLocationReducersStaus, visible]
     )
 
-    useEffect(
+    useEffect( // this effect should be deleted. The request of delivery location should occour when the application starts
         () => {
             if(deliveryLocationsStatus === 'INITIAL' ) {
                 dispatch(deliveryLocationRequestSagasAction());
