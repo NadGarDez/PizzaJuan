@@ -14,8 +14,9 @@ import { getOrderInformation } from "../../utils/apiRequests"
 import { useAuth0 } from "react-native-auth0"
 import { sessionTokenSelector } from "../../redux/SessionReducer"
 import { useAppSelector } from "../../redux/hooks"
-import { defaultApiResponse } from "../../types/api/defaultTypes"
+import { defaultApiResponse, ListResponse } from "../../types/api/defaultTypes"
 import { OrderFilterSelect } from "../../components/inputs/OrderFilterSelect"
+import { Order } from "../../types/api/deliveryLocation"
 
 const renderScene = SceneMap({
   first: InProgressShoppingList,
@@ -103,14 +104,19 @@ export const MyShoppingScreen = ():JSX.Element=>{
 
     const token = useAppSelector(sessionTokenSelector);
 
-    const [filter, setFilter] = useState<'all' | 'confirmed' | 'rejected' | 'finished' | 'created'>('all');
+    const [filter, setFilter] = useState<string>('all');
 
-    const {refetch, responseObject} = useLocalRequest<object>(getOrderInformation);
+    const {refetch, responseObject, clear} = useLocalRequest<defaultApiResponse<ListResponse<Order>>>(getOrderInformation);
 
-    console.log(responseObject?.data);
+    const onChange = (code:string) => {
+        setFilter(code);
+    }
+
+    console.log(responseObject?.data)
 
     useEffect(
         () => {
+            console.log('refetch')
             refetch(
                 {
                     token: token ?? '',
@@ -120,7 +126,16 @@ export const MyShoppingScreen = ():JSX.Element=>{
         },
         [filter]
     )
-    
+
+    const clearAndRefetch = () => {
+        clear();
+        refetch(
+            {
+                token: token ?? '',
+                filter
+            }
+        )
+    }
     
     return (
         <>  
@@ -129,14 +144,10 @@ export const MyShoppingScreen = ():JSX.Element=>{
             <View style={styles.container}>
                 <View style={styles.card}>
                     <OrderFilterSelect 
-                        onChange={(code: string)=>{
-                            console.log('code')
-                        }}
+                        onChange={onChange}
 
                         onReload={
-                            () => {
-                                console.log('reload')
-                            }
+                           clearAndRefetch
                         }
                     
                     />

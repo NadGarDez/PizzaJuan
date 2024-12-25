@@ -1,7 +1,7 @@
 import axios, { AxiosResponse} from "axios"
 import { urlFormatter } from "./apiUrlFormatter"
-import { createDeliveryLocaitonType, userDataRequestInterface } from "../types/api/deliveryLocation";
-import { defaultApiResponse } from "../types/api/defaultTypes";
+import { createDeliveryLocaitonType, Order, userDataRequestInterface } from "../types/api/deliveryLocation";
+import { defaultApiResponse, ListResponse } from "../types/api/defaultTypes";
 
 const {getProducts,getProducWithCategory, getCategory, createOrder, createPayMethod, createDeliveryLocation, deletePayMethod, deleteDeliveryLocation, updateUserUrl, getUserInformationUrl, getOrdersUrl } = urlFormatter;
 
@@ -135,7 +135,7 @@ export const getResourceList = async (token:string, resource: string): Promise<o
     }
 }
 
-export const getOrderInformation = async (params: Record<'token' | 'filter', string>): Promise<defaultApiResponse<object>> => {
+export const getOrderInformation = async (params: Record<'token' | 'filter', string>): Promise<defaultApiResponse<ListResponse<Order>>> => {
     
     const {token, filter} = params
     
@@ -146,6 +146,7 @@ export const getOrderInformation = async (params: Record<'token' | 'filter', str
                 'Authorization': `Bearer ${token}`
             }
         })
+
         return {
             status,
             data,

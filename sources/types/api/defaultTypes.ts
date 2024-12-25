@@ -3,3 +3,10 @@ export interface defaultApiResponse<T> {
     data:T,
     statusText:string
 }
+
+export interface ListResponse<T> {
+    count: number, 
+    next: null | string, 
+    previous: null | string, 
+    results: T[], 
+}

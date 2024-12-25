@@ -65,11 +65,11 @@ const styles = StyleSheet.create({
 });
 
 const data = [
-    { label: 'Todas las ordenes', value: '1' },
-    { label: 'Ordenes creadas', value: '2' },
-    { label: 'Ordenes Canceladas', value: '3' },
-    { label: 'Ordenes Entregadas', value: '4' },
-    { label: 'Ordenes Rechazadas', value: '5' },
+    { label: 'Todas las ordenes', value: 'all' },
+    { label: 'Ordenes creadas', value: 'created' },
+    { label: 'Ordenes Canceladas', value: 'canceled' },
+    { label: 'Ordenes Entregadas', value: 'finished' },
+    { label: 'Ordenes Rechazadas', value: 'rejected' },
   ];
 
 
@@ -80,7 +80,7 @@ interface props {
 
 export const OrderFilterSelect = (props: props):JSX.Element => {
 
-    const {onChange, onReload} = props;
+    const {onChange} = props;
 
     return (
         <View style={styles.container}>
@@ -99,9 +99,6 @@ export const OrderFilterSelect = (props: props):JSX.Element => {
                         valueField="value"
                         placeholder={'Filtros'}
                         searchPlaceholder="Search..."
-                        value={
-                            { label: 'Item 1', value: '1' }
-                        }
                         onChange={item => {
                             onChange(item.value)
                         }}
