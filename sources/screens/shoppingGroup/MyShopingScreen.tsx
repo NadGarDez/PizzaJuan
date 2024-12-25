@@ -1,5 +1,5 @@
-import React from "react"
-import { Dimensions, Platform, StyleSheet, Text, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import { Dimensions, FlatList, Platform, StyleSheet, Text, View } from "react-native"
 import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
 import { colors } from "../../styles/colors"
 import { shadows } from "../../styles/shadow"
@@ -8,6 +8,14 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import { FinishedShoppingList } from "../../components/lists/FinishedShoopingList"
 import { TransformedBottomCircle } from "../../components/surfaces/TransformedBottomCircle"
 import { DefaultAppTabBar } from "./DefaultAppTabBar"
+import { ShoppingItem } from "../../components/surfaces/ShoppingItem"
+import { useLocalRequest } from "../../hooks/useLocalRequest"
+import { getOrderInformation } from "../../utils/apiRequests"
+import { useAuth0 } from "react-native-auth0"
+import { sessionTokenSelector } from "../../redux/SessionReducer"
+import { useAppSelector } from "../../redux/hooks"
+import { defaultApiResponse } from "../../types/api/defaultTypes"
+import { OrderFilterSelect } from "../../components/inputs/OrderFilterSelect"
 
 const renderScene = SceneMap({
   first: InProgressShoppingList,
@@ -74,27 +82,77 @@ const styles = StyleSheet.create(
     }
 )
 
+const staticData = [
+    {
+        pedido:"78fdjals8hfds",
+        amount:50,
+        status:"Enviando",
+        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
+        lastAcutalization: new Date().toLocaleTimeString()
+    },
+    {
+        pedido:"HE34hhfjdkals",
+        amount:50,
+        status:"Procesando",
+        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
+        lastAcutalization: new Date().toLocaleTimeString()
+    },
+]
+
 export const MyShoppingScreen = ():JSX.Element=>{
 
-    const [index, setIndex] = React.useState(0);
-    const [routes] = React.useState([
-        { key: 'first', title: 'Ordenes Activas' },
-        { key: 'second', title: 'Ordenes Completadas' },
-    ]);
+    const token = useAppSelector(sessionTokenSelector);
 
+    const [filter, setFilter] = useState<'all' | 'confirmed' | 'rejected' | 'finished' | 'created'>('all');
+
+    const {refetch, responseObject} = useLocalRequest<object>(getOrderInformation);
+
+    console.log(responseObject?.data);
+
+    useEffect(
+        () => {
+            refetch(
+                {
+                    token: token ?? '',
+                    filter
+                }
+            )
+        },
+        [filter]
+    )
+    
+    
     return (
         <>  
             <TransformedSquare/> 
             <TransformedBottomCircle/>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <TabView 
-                        navigationState={{ index, routes }}
-                        renderScene={renderScene}
-                        onIndexChange={setIndex}
-                        initialLayout={{ width: Dimensions.get("screen").width - 32 }}
-                        renderTabBar={DefaultAppTabBar}
+                    <OrderFilterSelect 
+                        onChange={(code: string)=>{
+                            console.log('code')
+                        }}
+
+                        onReload={
+                            () => {
+                                console.log('reload')
+                            }
+                        }
                     
+                    />
+                    <FlatList
+                        data={staticData}
+                        showsVerticalScrollIndicator={false}
+                        renderItem={({item})=>(
+                            <ShoppingItem {...item}/>
+                        )}
+                                    
+                        ListFooterComponent={
+                            (
+                                <View style={{marginBottom:10}}>
+                                </View>
+                            )
+                        }
                     />
                     <View style={styles.bottomLine}>
 

@@ -84,7 +84,7 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
     const data = useAppSelector(deliveryLocationSelector);
     const status = useAppSelector(deliveryLocationReducersStaus);
     const error = useAppSelector(deliveryLocationErrorSelector);
-    const {refetch, clear, reducerStatus, responseObject} = useLocalRequest(deleteDeliveryLocationRequest);
+    const {refetch, clear, reducerStatus } = useLocalRequest(deleteDeliveryLocationRequest);
     const dispatch = useDispatch();
 
 

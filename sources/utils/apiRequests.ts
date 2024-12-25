@@ -135,8 +135,11 @@ export const getResourceList = async (token:string, resource: string): Promise<o
     }
 }
 
-export const getOrderInformation = async (token: string, active: boolean): Promise<object> => {
-    const url = getOrdersUrl(null);
+export const getOrderInformation = async (params: Record<'token' | 'filter', string>): Promise<defaultApiResponse<object>> => {
+    
+    const {token, filter} = params
+    
+    const url = getOrdersUrl(filter);
     try {
         const {status, data, statusText} = await axios.get(url, {
             headers: {
@@ -255,8 +258,7 @@ export const getNext = async (token:string, url:string):Promise<object> => {
 }
 
 export const createOrderRequest = (token:string, bodyObject:any)=>{
-    const url = createOrder(null)
-
+    const url = createOrder(null);
 }
 
 export const createPayMethodRequest = async (token:string, bodyObject:any)=> {
