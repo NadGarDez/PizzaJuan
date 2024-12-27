@@ -60,10 +60,12 @@ const styles = StyleSheet.create({
 
 const data = [
     { label: 'Todas las ordenes', value: 'all' },
-    { label: 'Ordenes creadas', value: 'created' },
+    { label: 'Ordenes Creadas', value: 'created' },
     { label: 'Ordenes Canceladas', value: 'canceled' },
     { label: 'Ordenes Entregadas', value: 'finished' },
     { label: 'Ordenes Rechazadas', value: 'rejected' },
+    { label: 'Ordenes Confirmadas', value: 'confirmed' },
+
   ];
 
 
