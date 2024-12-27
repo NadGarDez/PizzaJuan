@@ -1,27 +1,17 @@
 import React, { useEffect, useState } from "react"
-import { Dimensions, FlatList, Platform, StyleSheet, Text, View } from "react-native"
+import { FlatList, Platform, StyleSheet, View } from "react-native"
 import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
 import { colors } from "../../styles/colors"
 import { shadows } from "../../styles/shadow"
-import { InProgressShoppingList } from "../../components/lists/InProgressShoppingList"
-import { TabView, SceneMap } from 'react-native-tab-view';
-import { FinishedShoppingList } from "../../components/lists/FinishedShoopingList"
 import { TransformedBottomCircle } from "../../components/surfaces/TransformedBottomCircle"
-import { DefaultAppTabBar } from "./DefaultAppTabBar"
 import { ShoppingItem } from "../../components/surfaces/ShoppingItem"
 import { useLocalRequest } from "../../hooks/useLocalRequest"
 import { getOrderInformation } from "../../utils/apiRequests"
-import { useAuth0 } from "react-native-auth0"
 import { sessionTokenSelector } from "../../redux/SessionReducer"
 import { useAppSelector } from "../../redux/hooks"
-import { defaultApiResponse, ListResponse } from "../../types/api/defaultTypes"
+import { ListResponse } from "../../types/api/defaultTypes"
 import { OrderFilterSelect } from "../../components/inputs/OrderFilterSelect"
 import { Order } from "../../types/api/deliveryLocation"
-
-const renderScene = SceneMap({
-  first: InProgressShoppingList,
-  second: FinishedShoppingList,
-});
 
 const styles = StyleSheet.create(
     {
@@ -106,17 +96,14 @@ export const MyShoppingScreen = ():JSX.Element=>{
 
     const [filter, setFilter] = useState<string>('all');
 
-    const {refetch, responseObject, clear} = useLocalRequest<defaultApiResponse<ListResponse<Order>>>(getOrderInformation);
+    const {refetch, responseObject, clear} = useLocalRequest<ListResponse<Order>>(getOrderInformation);
 
     const onChange = (code:string) => {
         setFilter(code);
     }
 
-    console.log(responseObject?.data)
-
     useEffect(
         () => {
-            console.log('refetch')
             refetch(
                 {
                     token: token ?? '',
@@ -152,7 +139,7 @@ export const MyShoppingScreen = ():JSX.Element=>{
                     
                     />
                     <FlatList
-                        data={staticData}
+                        data={responseObject?.data.results ?? []}
                         showsVerticalScrollIndicator={false}
                         renderItem={({item})=>(
                             <ShoppingItem {...item}/>

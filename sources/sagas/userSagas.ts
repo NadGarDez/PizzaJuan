@@ -16,7 +16,6 @@ function* getUserInformationSagas() {
             yield put(finishRequestWithError(result.statusText ?? ''))
          } else {
             const {data} = result;
-            console.log('finishe request successfully')
             yield put(finishRequestSuccessfully({
                 email: data.user.email,
                 firstName: data.user.first_name,

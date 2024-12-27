@@ -53,7 +53,6 @@ const sessionSlice = createSlice(
                 state.reducerStatus = 'LOADING'
             },
             finishRequestSuccessfully:(state, action: PayloadAction<objectSessionType>)=>{
-                console.log(action.payload, 'super payload');
                 state.reducerStatus = 'SUCCESSED'
                 state.sessionObject.birthDate = action.payload.birthDate;
                 state.sessionObject.email = action.payload.email;

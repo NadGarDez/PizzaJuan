@@ -1,4 +1,5 @@
 import { deliveryConfigurationSchemaType } from "../forms/deliveryFormTypes";
+import { shoppingCarItemType } from "./productTypes";
 
 export type createDeliveryLocaitonType = deliveryConfigurationSchemaType & {
     owner:number
@@ -44,15 +45,28 @@ interface DeliveryLocation {
       code: string;
       name: string;
     };
+    updated_at: string;
   }
   
   export interface Order {
     delivery_location: DeliveryLocation;
-    items: Items;
+    order_skeleton: string;
     owner: number;
     pk: number;
     worker: OrderWorker;
   }
   
 
-  
+  interface TotalsInfo {
+    subtotal: number;
+}
+
+interface Totals {
+    info: Record<'subtotal' | string, number>;
+    total: number;
+}
+
+export interface OrderSkeleton {
+    products: Record<string, shoppingCarItemType>;
+    totals: Totals;
+}

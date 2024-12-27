@@ -6,6 +6,8 @@ import { LocationIcon } from "../icons/LocationIcon";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { MyShoppingStackProps } from "../../navigation/Stacks/MyShopingStack";
 import { useNavigation } from "@react-navigation/native";
+import { Order, OrderSkeleton } from "../../types/api/deliveryLocation";
+import { BASE_URL } from "../../constants/apiConstants";
 
 const styles = StyleSheet.create(
     {
@@ -96,7 +98,7 @@ const styles = StyleSheet.create(
         },
         dateStyles: {
             fontSize:12,
-            fontWeight: "200",
+            fontWeight: "400",
             color:colors.seconday_text
         }
     }
@@ -113,14 +115,25 @@ type props =  {
 type ProductListScreenPropType = StackNavigationProp<MyShoppingStackProps,"MY_SHOPING_SCREEN">;
 
 
-export const ShoppingItem = ({image, amount, pedido, lastAcutalization, status}:props):JSX.Element=>{
+const getImage = (value:string): string => {
+    const {products} = JSON.parse(value) as OrderSkeleton;
+    return `${BASE_URL}${Object.values(products)[0].principal_image}`
+}
 
-    const {navigate} = useNavigation<ProductListScreenPropType>()
+const getTotal = (value:string): number => {
+    const {totals: {total}} = JSON.parse(value) as OrderSkeleton;
+    return total
+}
+
+export const ShoppingItem = (props:Order):JSX.Element => { 
+
+    const {pk, order_skeleton,delivery_location, worker } = props;
+    const {navigate} = useNavigation<ProductListScreenPropType>();
 
     const nav = ()=> {
-        navigate("INVOICE_SCREEN", {orderId:pedido, aditionalInfo:pedido})
+        navigate("INVOICE_SCREEN", {orderId:`${pk}`, aditionalInfo:`${pk}`})
     }
-    
+
     return (
         <Pressable
            onPress={nav}
@@ -135,7 +148,7 @@ export const ShoppingItem = ({image, amount, pedido, lastAcutalization, status}:
                     }>
                         <View style={styles.flexRowStyles}>
                             <View style={styles.imageContainer}>
-                                <Image source={{uri:image}} style={styles.imageStyles}/> 
+                                <Image source={{uri:getImage(order_skeleton)}} style={styles.imageStyles} resizeMode='contain'/> 
                             </View>
                             <View style={styles.informationContainer}>
                                     
@@ -143,7 +156,7 @@ export const ShoppingItem = ({image, amount, pedido, lastAcutalization, status}:
                                     <View style={styles.titleContainerAndFavorite}>
                                         <View style={styles.titleContainer}>
                                             <Text style={styles.titleTextStyles}>
-                                                Pedido {pedido}
+                                                Pedido #{pk}
                                             </Text>
                                         </View>
                                     </View>
@@ -151,23 +164,21 @@ export const ShoppingItem = ({image, amount, pedido, lastAcutalization, status}:
                                     <IconWithTextElement
                                         color="#00000020"
                                         icon={<LocationIcon color={colors.white_card} size={14}/>}
-                                        text="Urbanizacion Guarico Apure, Calle Guarico, casa #9"
+                                        text={`${delivery_location.name}. ${delivery_location.description}\n#${delivery_location.plus_code}`}
                                     />
+                                    <Text style={styles.dateStyles}>Ultima actualizacion: {new Date(worker.updated_at).toLocaleTimeString()}</Text>
                                     <View style={styles.priceContainerAndCount}>
                                         <View style={styles.priceContainer}>
                                             <Text style={styles.dolarPrice}>
-                                                {amount}$
+                                                {getTotal(order_skeleton)}$
                                             </Text>
                                             <Text style={styles.bsPrice}>
-                                                Ref. {amount*36}Bs
+                                                Ref. {getTotal(order_skeleton)*36}Bs
                                             </Text>
                                         </View>
                                         <View style={styles.countSelector}>
                                             <View style={styles.statusContainer}>
-                                                <Text style={styles.statusTextStyle}>{status}</Text>
-                                                <Text style={styles.dateStyles}>
-                                                   {lastAcutalization}
-                                                </Text>
+                                                <Text style={styles.statusTextStyle}>{worker.order_status.name}</Text>
                                             </View>
                                         </View>
                                     </View> 

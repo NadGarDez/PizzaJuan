@@ -6,7 +6,6 @@ import { ImageCarousel } from "./ImageCarousel";
 import { colors } from "../../styles/colors";
 import { baseProduct } from "../../types/api/productTypes";
 import { getImagesFromBaseProduct } from "../../utils/complexSelectors";
-import LinearGradient from "react-native-linear-gradient";
 
 const styles = StyleSheet.create(
     {

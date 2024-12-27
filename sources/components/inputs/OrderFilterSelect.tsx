@@ -1,8 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { colors } from '../../styles/colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { ReloadIcon } from '../icons/ReloadIcon';
 import { Dropdown } from 'react-native-element-dropdown';
 
 
@@ -38,7 +36,7 @@ const styles = StyleSheet.create({
     dropdown: {
         height: 50,
         borderColor: colors.seconday_text + "30",
-        borderWidth: 0.5,
+        borderWidth: 1,
         borderRadius: 8,
         paddingHorizontal: 8,
         width: '100%'
@@ -57,10 +55,6 @@ const styles = StyleSheet.create({
     iconStyle: {
         width: 20,
         height: 20,
-    },
-    inputSearchStyle: {
-        height: 40,
-        fontSize: 16,
     },
 });
 
@@ -91,7 +85,6 @@ export const OrderFilterSelect = (props: props):JSX.Element => {
                         style={styles.dropdown}
                         placeholderStyle={styles.placeholderStyle}
                         selectedTextStyle={styles.selectedTextStyle}
-                        inputSearchStyle={styles.inputSearchStyle}
                         iconStyle={styles.iconStyle}
                         data={data}
                         maxHeight={300}

@@ -7,7 +7,6 @@ import { colors } from "../../styles/colors"
 import { baseProduct } from "../../types/api/productTypes"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import {  activeVariantSeelector } from "../../redux/activeProductSlice"
-import { useAnimatedProps } from "react-native-reanimated"
 import { setProduct } from "../../redux/shoppingCardSlice"
 import { NotificationModal } from "../modal/NotificationModal"
 
@@ -134,25 +133,26 @@ type props = {
 
 export const ProductInformationCard = (props:baseProduct & props)=> {
 
-    const {name, description, base_price,recomendations, compressed, variants} = props;
+    const {name, description,recomendations, compressed, variants} = props;
     const [productAmount, setProductAmount] = useState<number>(1);
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const activeVariant = useAppSelector(activeVariantSeelector);
     const dispatch = useAppDispatch()
-
+    
     const plusLessManager = (counter:number)=>setProductAmount(counter);
 
     const addProductToStore = ()=> {
 
-        const {variants,compressed,...rest } = props
+        const {variants,compressed,description,category,...rest } = props
         const key = `${props.pk}.${variants[activeVariant].pk}`
-
+        const {images, ...variant} =  variants[activeVariant];
+        
         dispatch(
             setProduct({
                 item: {
                     ...rest,
-                    variant: variants[activeVariant],
+                    variant,
                     numberOfItems: productAmount
                 },
                 key

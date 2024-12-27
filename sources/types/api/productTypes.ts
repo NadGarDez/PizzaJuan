@@ -40,15 +40,10 @@ export interface baseProduct {
 export type shoppingCarItemType =  {
     pk:number,
     name:string,
-    description:string,
     short_description:string,
     recomendations:number, 
     principal_image:string,
     base_price:number,
-    variant: productVariant,
+    variant: Omit<productVariant, 'images'>,
     numberOfItems:number
-    category: {
-        pk:number,
-        name:categorires
-    }
 }

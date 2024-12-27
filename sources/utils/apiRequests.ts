@@ -258,10 +258,6 @@ export const getNext = async (token:string, url:string):Promise<object> => {
     }
 }
 
-export const createOrderRequest = (token:string, bodyObject:any)=>{
-    const url = createOrder(null);
-}
-
 export const createPayMethodRequest = async (token:string, bodyObject:any)=> {
     const url = createPayMethod(null);
     try {
@@ -382,6 +378,48 @@ export const deleteDeliveryLocationRequest = async (params: Record<'token' | 'it
 
 export const createDeliveryLocationRequest = async (token:string, bodyObject: createDeliveryLocaitonType): Promise<defaultApiResponse< object | null>> => {
     const url =  createDeliveryLocation(null)
+    try {
+        const {status, statusText, data} = await axios.post(url, 
+            {
+                ...bodyObject
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            
+            }
+        )
+        return {
+            status, 
+            data, 
+            statusText
+        }
+        
+    } catch (error:any) {
+        if(error.response){
+            const {data, status} = error.response as AxiosResponse;
+            return {
+                status,
+                data: null,
+                statusText:data.detail
+            }
+        }
+        else {
+             return {
+                status: 500,
+                data: null,
+                statusText:'Error inesperado'
+            }
+        }
+        
+    }
+
+}
+
+export const createOrderRequest = async (params: Record<'token' | 'bodyObject', any>): Promise< object | null>=> {
+    const {bodyObject, token} = params
+    const url = createOrder(null);
     try {
         const {status, statusText, data} = await axios.post(url, 
             {

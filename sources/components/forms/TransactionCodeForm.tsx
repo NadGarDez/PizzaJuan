@@ -1,14 +1,18 @@
-import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useFormik } from "formik";
-import { personalConfigurationMetadata, transcValidationMetadata } from "../../constants/form/formConstants";
+import { transcValidationMetadata } from "../../constants/form/formConstants";
 import { colors } from "../../styles/colors";
 import { inputSelector } from "../../utils/inputSelector";
 import { ModalFormHeader } from "../surfaces/ModalFormHeader";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { hide, modalFormSelector } from "../../redux/ModalFormReducer";
+import { hide } from "../../redux/ModalFormReducer";
 import { ModalFormNames } from "../../types/forms/generalFormTypes";
 import { transcValidationMetadataType, transcValidationSchema, transcValidationSchemaType } from "../../types/forms/transcValidationFormTypes";
+import { useLocalRequest } from "../../hooks/useLocalRequest";
+import { createOrderRequest } from "../../utils/apiRequests";
+import { sessionTokenSelector } from "../../redux/SessionReducer";
+import { shoppingCardSelector } from "../../redux/shoppingCardSlice";
 
 
 const styles = StyleSheet.create({
@@ -35,6 +39,14 @@ const styles = StyleSheet.create({
         fontSize:16,
         fontWeight: "200",
         color:colors.seconday_text,
+    },
+    loading: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 200,
+        marginBottom: 16
     }
 })
 
@@ -44,13 +56,32 @@ const defaultValue : transcValidationSchemaType = {
 
 export const TransactionCodeForm = (): JSX.Element=> {
 
-    const {valid} = useAppSelector(modalFormSelector);
-    const { setFieldValue, errors, values } = useFormik(
+    const token = useAppSelector(sessionTokenSelector);
+
+    const car = useAppSelector(shoppingCardSelector);
+
+    const {refetch, responseObject, reducerStatus, clear} = useLocalRequest(createOrderRequest);
+
+    const { setFieldValue, errors, values, submitForm } = useFormik(
         {
             initialValues: defaultValue,
             validationSchema:transcValidationSchema,
             onSubmit: values => {
-                console.log(values)
+                refetch(
+                    {
+                        token: token ?? '',
+                        bodyObject: {
+                            deliveryLocation: 59,
+                            paymentInformation:{
+                                reference: "4321",
+                                payMethod: 42,
+                                amount:1000
+                            },
+                            orderSkeleton: JSON.stringify(car)
+
+                        }
+                    }
+                )
             },
         },
     );
@@ -59,12 +90,23 @@ export const TransactionCodeForm = (): JSX.Element=> {
     const dispatch = useAppDispatch();
 
     const onSave = ()=> {
-        dispatch(hide());
+        submitForm();
+        // dispatch(hide());
     }
 
     const onCancel = ()=> {
         dispatch(hide());
     }
+
+    useEffect(
+        () => {
+            if(reducerStatus === 'SUCCESSED') {
+                dispatch(hide());
+                clear();
+            }
+        },
+        [reducerStatus]
+    )
 
     return (
         <>
@@ -80,8 +122,9 @@ export const TransactionCodeForm = (): JSX.Element=> {
                         Ingresa la referencia de pago en el siguiente formulario
                     </Text>
                 </View>
+
                     {
-                        Object.keys(defaultValue).map(
+                        reducerStatus === 'INITIAL' ? Object.keys(defaultValue).map(
                             (item, index) => {
                                 const {placeholder = '', inputType, name, aditionalData} = transcValidationMetadata[item as keyof transcValidationMetadataType];
                                 return (
@@ -104,7 +147,14 @@ export const TransactionCodeForm = (): JSX.Element=> {
                                     </View>
                                 )
                             }
-                        )
+                        ) : null
+                    }
+                    {
+                        reducerStatus !== 'INITIAL' ? (
+                            <View style={styles.loading}>
+                                <ActivityIndicator size={60} color={colors.principal}/>
+                            </View>
+                        ): null
                     }
             </ScrollView>
         </>

@@ -2,7 +2,6 @@ import React from "react"
 import { Platform, StyleSheet, View } from "react-native"
 import { CarStackProp } from "../../navigation/Stacks/CarStack"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { useNavigation } from "@react-navigation/native"
 import { AmountContainer } from "../../components/surfaces/AmountContainer"
 import { PayMethodSelector } from "../../components/surfaces/PayMethodSelector"
 import { useAppDispatch } from "../../redux/hooks"
@@ -36,25 +35,12 @@ const styles = StyleSheet.create(
     }
 )
 
-type CarScreenPropType = StackNavigationProp<CarStackProp, "PAY_SCREEN">
-
 export const PayScreen = ():JSX.Element=>{
 
     const dispatch = useAppDispatch();
     
-    const {navigate} = useNavigation<CarScreenPropType>()
-
-    const onPress = ():void=>{
-        navigate("TRANSC_VALIDATION_SCREEN", {transactionCode:"123abc"});
-    }
-
     const openConfirmModal = ()=> {
         dispatch(configure(ModalFormNames.TRANSACTION_CODE_FORM));
-        dispatch(activateWithoutValid());
-    }
-
-    const openPayMethodModal = ()=> {
-        dispatch(configure(ModalFormNames.PAYMENT_CONFIGURATION));
         dispatch(activateWithoutValid());
     }
 
@@ -62,12 +48,13 @@ export const PayScreen = ():JSX.Element=>{
         <>
             <View style={styles.container}>
                 <AmountContainer />
-                <PayMethodSelector onPress={openPayMethodModal}/>
+                <PayMethodSelector />
                 <View style={styles.tabContainer}>
                     <StorePaymentDataTab />
                 </View>
                 <View style={styles.buttonContainer}>
                     <BuyButton 
+                        disabled={false}
                         onPress={openConfirmModal}
                         text="Registrar codigo de referencia"
                     />

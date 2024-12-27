@@ -146,7 +146,7 @@ export const CarItem = (props:props):JSX.Element=>{
 
     const {
         product: {
-            principal_image, name, variant: {price, pk:variantPk}, description, numberOfItems, pk
+            principal_image, name, variant: {price, pk:variantPk}, short_description, numberOfItems, pk
         }, 
         onPressItem, 
         last, 
@@ -217,7 +217,7 @@ export const CarItem = (props:props):JSX.Element=>{
                                     </View>
                                     <View style={styles.ingredientsDescriptionContainer}>
                                         <Text style={styles.descriptionTextStyles} numberOfLines={3}>
-                                            {description}
+                                            {short_description}
                                         </Text>
                                     </View>
                                     <View style={styles.priceContainerAndCount}>
