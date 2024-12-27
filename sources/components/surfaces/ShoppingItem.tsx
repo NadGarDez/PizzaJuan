@@ -6,8 +6,8 @@ import { LocationIcon } from "../icons/LocationIcon";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { MyShoppingStackProps } from "../../navigation/Stacks/MyShopingStack";
 import { useNavigation } from "@react-navigation/native";
-import { Order, OrderSkeleton } from "../../types/api/deliveryLocation";
-import { BASE_URL } from "../../constants/apiConstants";
+import { Order } from "../../types/api/deliveryLocation";
+import { getImageFromOrderSkeleton, getTotalFromOrderSkeleton } from "../../utils/complexSelectors";
 
 const styles = StyleSheet.create(
     {
@@ -114,24 +114,13 @@ type props =  {
 
 type ProductListScreenPropType = StackNavigationProp<MyShoppingStackProps,"MY_SHOPING_SCREEN">;
 
-
-const getImage = (value:string): string => {
-    const {products} = JSON.parse(value) as OrderSkeleton;
-    return `${BASE_URL}${Object.values(products)[0].principal_image}`
-}
-
-const getTotal = (value:string): number => {
-    const {totals: {total}} = JSON.parse(value) as OrderSkeleton;
-    return total
-}
-
 export const ShoppingItem = (props:Order):JSX.Element => { 
 
     const {pk, order_skeleton,delivery_location, worker } = props;
     const {navigate} = useNavigation<ProductListScreenPropType>();
 
     const nav = ()=> {
-        navigate("INVOICE_SCREEN", {orderId:`${pk}`, aditionalInfo:`${pk}`})
+        navigate("INVOICE_SCREEN", props)
     }
 
     return (
@@ -148,7 +137,7 @@ export const ShoppingItem = (props:Order):JSX.Element => {
                     }>
                         <View style={styles.flexRowStyles}>
                             <View style={styles.imageContainer}>
-                                <Image source={{uri:getImage(order_skeleton)}} style={styles.imageStyles} resizeMode='contain'/> 
+                                <Image source={{uri:getImageFromOrderSkeleton(order_skeleton)}} style={styles.imageStyles} resizeMode='contain'/> 
                             </View>
                             <View style={styles.informationContainer}>
                                     
@@ -170,10 +159,10 @@ export const ShoppingItem = (props:Order):JSX.Element => {
                                     <View style={styles.priceContainerAndCount}>
                                         <View style={styles.priceContainer}>
                                             <Text style={styles.dolarPrice}>
-                                                {getTotal(order_skeleton)}$
+                                                {getTotalFromOrderSkeleton(order_skeleton)}$
                                             </Text>
                                             <Text style={styles.bsPrice}>
-                                                Ref. {getTotal(order_skeleton)*36}Bs
+                                                Ref. {getTotalFromOrderSkeleton(order_skeleton)*36}Bs
                                             </Text>
                                         </View>
                                         <View style={styles.countSelector}>

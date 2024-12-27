@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { LocationIcon } from "../icons/LocationIcon";
 import { GoFoward } from "../icons/GoFoward";
+import { DeliveryLocation } from "../../types/api/deliveryLocation";
 
 
 const styles = StyleSheet.create({
@@ -57,9 +58,13 @@ const styles = StyleSheet.create({
 })
 
 type props= {
+    deliveryLocation:DeliveryLocation
 }
 
-export const RenderInvoiceDirection = () => {
+export const RenderInvoiceDirection = (props:props) => {
+
+    const {deliveryLocation: {name, description}} = props
+
     return (
         <View style={{
             ...styles.container,
@@ -73,11 +78,15 @@ export const RenderInvoiceDirection = () => {
                     </View>
                 </View>
                 <View style={styles.directionContainer}>
-                        <Text style={styles.firstLineDirection}>
-                            Urbanizacion Guarico Apure, casa #9
+                         <Text style={styles.firstLineDirection}>
+                            {
+                                name
+                            }
                         </Text>
                         <Text style={styles.secondLineDirection}>
-                            Calabozo edo Guarico
+                            {
+                                description
+                            }
                         </Text>
                 </View>
                 <View style={styles.buttonContainer}>

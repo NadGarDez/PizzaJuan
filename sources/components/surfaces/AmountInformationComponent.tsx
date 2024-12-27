@@ -4,8 +4,7 @@ import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
 import { DireactionSelector } from "./DirectionSelector";
 import { RenderInvoiceDirection } from "./RenderInvoiceDirection";
-import { useAppSelector } from "../../redux/hooks";
-import { shoppingCardSelector } from "../../redux/shoppingCardSlice";
+import { DeliveryLocation, Totals } from "../../types/api/deliveryLocation";
 
 
 const styles = StyleSheet.create({
@@ -90,22 +89,23 @@ const styles = StyleSheet.create({
 })
 
 type props = {
-    readonly?:boolean
+    deliveryLocation?:DeliveryLocation,
+    totals: Totals
 }
 
 
-export const AmountInformationComponent = ({ readonly = false}:props)=> {
+export const AmountInformationComponent = ({ deliveryLocation, totals}:props)=> {
 
-    const {totals: {info: {subtotal = 0, ...rest}, total}} = useAppSelector(shoppingCardSelector);
+    const {info: {subtotal = 0, ...rest}, total} = totals;
 
     const restKeys = Object.keys(rest);
 
     return (
         <View style={styles.container}>
             {
-                !readonly ? (
-                    <DireactionSelector />
-                ) : <RenderInvoiceDirection />
+                deliveryLocation !== undefined? (
+                    <RenderInvoiceDirection deliveryLocation={deliveryLocation}/>
+                ) : <DireactionSelector />
             }
             <ScrollView showsVerticalScrollIndicator>
                 <View style={styles.row}>

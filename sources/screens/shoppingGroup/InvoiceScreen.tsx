@@ -7,6 +7,7 @@ import { colors } from "../../styles/colors";
 import { productInstance } from "../../constants/productConstants";
 import { MyShoppingStackProps } from "../../navigation/Stacks/MyShopingStack";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { getProductsFomOrderSkeleton, getTotalsFromOrderSkeleton } from "../../utils/complexSelectors";
 
 const styles = StyleSheet.create(
     {
@@ -116,7 +117,7 @@ const staticData:productInstance[] = [
 type props = NativeStackScreenProps<MyShoppingStackProps, 'INVOICE_SCREEN'>;
 
 export const InvoiceScreen = (props: props)=> {
-    const {route: {params: {orderId}}} = props;
+    const {route: {params: {pk, order_skeleton,delivery_location }}} = props;
 
     const onPress = ()=> {
 
@@ -127,20 +128,20 @@ export const InvoiceScreen = (props: props)=> {
             <TransformedSquare />
             <View style={styles.titleContainer}>
                 <Text style={styles.titleStyles}>
-                    Pedido #{orderId}
+                    Pedido #{pk}
                 </Text>
             </View>
             <View style={styles.container}>
                 <CarProductList 
-                    data={[]}
+                    data={getProductsFomOrderSkeleton(order_skeleton)}
                     onPress={onPress}
                     readonly
                     expand
                 />
                 <View style={styles.calculatorContainer}>
                     <AmountInformationComponent 
-                        readonly
-                        onPressLocation={onPress}
+                        totals={getTotalsFromOrderSkeleton(order_skeleton)}
+                        deliveryLocation={delivery_location}
                     />
                 </View>
             </View>

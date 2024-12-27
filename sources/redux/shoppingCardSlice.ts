@@ -1,24 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./reduxTypes";
 import { shoppingCarItemType } from "../types/api/productTypes";
+import { ShoppingCartType, Totals } from "../types/api/deliveryLocation";
 
 // state type
 
 
-export interface totals {
-    total: number,
-    info:Record<string, number>,
-}
- 
-
-interface shoppingCartType {
-    products: Record<string,shoppingCarItemType>,
-    totals:totals
-}
-
 
 //initial state
-const initialState: shoppingCartType = {
+const initialState: ShoppingCartType = {
    products: {
    },
    totals: {
@@ -75,7 +65,7 @@ const shoppingCardSlice = createSlice(
             },
             setTotals:(
                 state,
-                action:PayloadAction<totals>
+                action:PayloadAction<Totals>
             )=> {
                 state.totals = action.payload;
             }

@@ -4,13 +4,11 @@ import { InitialStackScreenHeader } from "../../components/headers/InitialStackS
 import { MyShoppingScreen } from "../../screens/shoppingGroup/MyShopingScreen";
 import { InvoiceScreen } from "../../screens/shoppingGroup/InvoiceScreen";
 import { NormalStackScreenHeader } from "../../components/headers/NormalStackScreenHeader";
+import { Order } from "../../types/api/deliveryLocation";
 
 export type MyShoppingStackProps = {
     MY_SHOPING_SCREEN: undefined,
-    INVOICE_SCREEN: {
-        orderId:string,
-        aditionalInfo: string
-    }
+    INVOICE_SCREEN: Order
 };
 
 const Stack = createNativeStackNavigator<MyShoppingStackProps>()

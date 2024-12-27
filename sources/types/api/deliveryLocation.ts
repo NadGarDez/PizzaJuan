@@ -27,7 +27,7 @@ export interface updateUserInformaiton {
     token:string
 }
 
-interface DeliveryLocation {
+export interface DeliveryLocation {
     description: string;
     name: string;
     owner: number;
@@ -54,19 +54,14 @@ interface DeliveryLocation {
     owner: number;
     pk: number;
     worker: OrderWorker;
-  }
-  
-
-  interface TotalsInfo {
-    subtotal: number;
 }
-
-interface Totals {
+  
+export interface Totals {
     info: Record<'subtotal' | string, number>;
     total: number;
 }
 
-export interface OrderSkeleton {
+export interface ShoppingCartType {
     products: Record<string, shoppingCarItemType>;
     totals: Totals;
 }

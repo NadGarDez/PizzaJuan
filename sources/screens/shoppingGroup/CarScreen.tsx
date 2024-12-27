@@ -58,7 +58,7 @@ export const CarScreen = ():JSX.Element=>{
 
     const {navigate} = useNavigation<CarScreenPropType>();
 
-    const { products } = useAppSelector(shoppingCardSelector);
+    const { products, totals } = useAppSelector(shoppingCardSelector);
 
     const deliveryLocations = useAppSelector(deliveryLocationSelector);
 
@@ -116,7 +116,9 @@ export const CarScreen = ():JSX.Element=>{
                             />
                             
                             <View style={styles.calculatorContainer}>
-                                <AmountInformationComponent />
+                                <AmountInformationComponent 
+                                    totals={totals}
+                                />
                             </View>
                             
                             <View style={styles.buttonContainer}>
