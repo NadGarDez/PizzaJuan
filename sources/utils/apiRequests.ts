@@ -258,6 +258,51 @@ export const getNext = async (token:string, url:string):Promise<object> => {
     }
 }
 
+export const loadMoreRequest =  async (params: Record<'token' | 'url', string>):Promise<defaultApiResponse<ListResponse<object>>> => {
+    const {token, url} = params;
+    
+    try {
+        const {status, data, statusText} = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        return {
+            status,
+            data,
+            statusText
+        };
+        
+    } catch (error:any) {
+        if(error.response){
+            const {data, status} = error.response as AxiosResponse;
+            return {
+                status,
+                data: {
+                    count: 0, 
+                    next: null, 
+                    previous: null, 
+                    results: [], 
+                },
+                statusText:data.detail
+            }
+        }
+        else {
+             return {
+                status: 500,
+                data: {
+                    count: 0, 
+                    next: null, 
+                    previous: null, 
+                    results: [], 
+                },
+                statusText:'Error inesperado'
+            }
+        }
+        
+    }
+}
+
 export const createPayMethodRequest = async (token:string, bodyObject:any)=> {
     const url = createPayMethod(null);
     try {

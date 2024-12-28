@@ -1,15 +1,16 @@
 import { useReducer } from "react";
-import { defaultApiResponse } from "../types/api/defaultTypes"
+import { defaultApiResponse, ListResponse } from "../types/api/defaultTypes"
 import { loadMoreRequest } from "../utils/apiRequests";
 
 interface requestStatus<T>  {
     reducerStatus: 'INITIAL' | 'LOADING' | 'SUCCESSED' | 'ERROR',
-    responseObject: defaultApiResponse<T> | null,
+    responseObject: defaultApiResponse<ListResponse<T>> | null,
 } 
 
 interface methods {
     refetch: (params:Record<string,any>)=>Promise<any>
     clear: () => void,
+    loadMore: (params:Record<string,any>) => Promise<any>
 }
 
 
@@ -42,6 +43,40 @@ function reducer<T extends object>(state: requestStatus<T>, action:action ): req
             }
         }
 
+        case 'finishLoadMoreRequestSuccessfully': {
+            if (state.responseObject !== null) {
+
+                const payloadCopy = {...action.payload} as defaultApiResponse<ListResponse<T>> ;
+
+                console.log(payloadCopy)
+
+                return {
+                    ...state,
+                    reducerStatus: 'SUCCESSED',
+                    responseObject: {
+                       ...payloadCopy,
+                       data: {
+                        ...payloadCopy.data,
+                        results: [
+                            ...state.responseObject.data.results,
+                            ...payloadCopy.data.results,
+                        ]
+                       }
+                    }
+                }
+            }
+            return state
+        }
+
+        case 'finishLoadMoreRequestWithError': {
+            return {
+                ...state,
+                reducerStatus: 'ERROR',
+                responseObject: action.payload
+            }
+        }
+
+
         case 'clear': {
             return {
                 reducerStatus: 'INITIAL',
@@ -55,7 +90,7 @@ function reducer<T extends object>(state: requestStatus<T>, action:action ): req
 }
 
 
-export const useLocalRequest = <T extends object>(request: (params:Record<string,any>)=>Promise<any>):requestStatus<T> & methods => {
+export const useListLocalRequest = <T extends object>(request: (params:Record<string,any>)=>Promise<any>):requestStatus<T> & methods => {
     
     const [state, dispatch] = useReducer(reducer<T>, {
         reducerStatus: 'INITIAL',
@@ -95,6 +130,39 @@ export const useLocalRequest = <T extends object>(request: (params:Record<string
         }
     }
 
+    const loadMore =  async (params:Record<string,any>) => {
+        dispatch({
+            name: 'startRequest',
+            payload: undefined
+        })
+        try {
+            const result = await loadMoreRequest(params);
+            if (result.status > 299) {
+                dispatch(
+                    {
+                        name: 'finishLoadMoreRequestWithError',
+                        payload: result
+                    }
+                )
+            } else {
+                dispatch(
+                    {
+                        name: 'finishLoadMoreRequestSuccessfully',
+                        payload: result
+                    }
+                )
+            }
+            
+        } catch (e) {
+            dispatch(
+                {
+                    name: 'finishLoadMoreRequestWithError',
+                    payload: 'Unexpected error'
+                }
+            )
+        }
+    } 
+
     const clear =() => {
         dispatch(
             {
@@ -108,5 +176,6 @@ export const useLocalRequest = <T extends object>(request: (params:Record<string
         ...state,
         refetch,
         clear,
+        loadMore
    };
 }

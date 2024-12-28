@@ -36,7 +36,6 @@ const expandedAnimatedValue = Dimensions.get("window").height * (ScreenHeight>70
 export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =>{
 
     const product = useAppSelector(activeProductSelector);
-    const car = useAppSelector(shoppingCardSelector)
 
     const dispatch  = useAppDispatch();
 

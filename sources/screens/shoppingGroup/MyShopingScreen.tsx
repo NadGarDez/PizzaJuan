@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react"
-import { FlatList, Platform, StyleSheet, View } from "react-native"
+import { ActivityIndicator, FlatList, Platform, StyleSheet, View } from "react-native"
 import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
 import { colors } from "../../styles/colors"
 import { shadows } from "../../styles/shadow"
 import { TransformedBottomCircle } from "../../components/surfaces/TransformedBottomCircle"
 import { ShoppingItem } from "../../components/surfaces/ShoppingItem"
-import { useLocalRequest } from "../../hooks/useLocalRequest"
 import { getOrderInformation } from "../../utils/apiRequests"
 import { sessionTokenSelector } from "../../redux/SessionReducer"
 import { useAppSelector } from "../../redux/hooks"
-import { ListResponse } from "../../types/api/defaultTypes"
 import { OrderFilterSelect } from "../../components/inputs/OrderFilterSelect"
 import { Order } from "../../types/api/deliveryLocation"
+import { useListLocalRequest } from "../../hooks/useListLocalRequest"
 
 const styles = StyleSheet.create(
     {
@@ -67,28 +66,19 @@ const styles = StyleSheet.create(
             borderRightColor: "transparent",
             borderTopColor: colors.seconday_text + "30",
             borderWidth: 1,
-        }
+        },
+        loading: {
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 400,
+            marginBottom: 16
+        },
         
        
     }
-)
-
-const staticData = [
-    {
-        pedido:"78fdjals8hfds",
-        amount:50,
-        status:"Enviando",
-        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-        lastAcutalization: new Date().toLocaleTimeString()
-    },
-    {
-        pedido:"HE34hhfjdkals",
-        amount:50,
-        status:"Procesando",
-        image:"https://media02.stockfood.com/largepreviews/MzQ2MTY2OTI1/11166675-Veggie-Pizza-Sliced-Once-on-a-White-Background-From-Above.jpg",
-        lastAcutalization: new Date().toLocaleTimeString()
-    },
-]
+);
 
 export const MyShoppingScreen = ():JSX.Element=>{
 
@@ -96,7 +86,7 @@ export const MyShoppingScreen = ():JSX.Element=>{
 
     const [filter, setFilter] = useState<string>('all');
 
-    const {refetch, responseObject, clear} = useLocalRequest<ListResponse<Order>>(getOrderInformation);
+    const {refetch, responseObject, clear, reducerStatus, loadMore} =  useListLocalRequest<Order>(getOrderInformation);
 
     const onChange = (code:string) => {
         setFilter(code);
@@ -123,6 +113,15 @@ export const MyShoppingScreen = ():JSX.Element=>{
             }
         )
     }
+
+    const onRefresh = () => {
+        if(reducerStatus !== 'LOADING' &&  !!responseObject?.data.next) {
+            loadMore({
+                token: token ?? '',
+                url: responseObject.data.next
+            })
+        }
+    }
     
     return (
         <>  
@@ -144,11 +143,24 @@ export const MyShoppingScreen = ():JSX.Element=>{
                         renderItem={({item})=>(
                             <ShoppingItem {...item}/>
                         )}
+
+                        onEndReached={onRefresh}
                                     
                         ListFooterComponent={
                             (
-                                <View style={{marginBottom:10}}>
-                                </View>
+                                <>
+                                     {
+                                        reducerStatus === 'INITIAL' || reducerStatus === 'LOADING' ? (
+                                            <View style={styles.loading}>
+                                                <ActivityIndicator size={120} color={colors.principal}/>
+                                            </View>
+                                        ) : (
+                                            <View style={{marginBottom:10}}>
+                                            </View>
+                                        )
+                                    }
+                                
+                                </>
                             )
                         }
                     />
