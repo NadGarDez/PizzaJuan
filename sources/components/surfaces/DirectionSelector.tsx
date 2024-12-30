@@ -109,14 +109,14 @@ export const DireactionSelector = () => {
         [deliveryLocationReducersStaus, visible]
     )
 
-    useEffect( // this effect should be deleted. The request of delivery location should occour when the application starts
-        () => {
-            if(deliveryLocationsStatus === 'INITIAL' ) {
-                dispatch(deliveryLocationRequestSagasAction());
-            }
-        },
-        []
-    )
+    // useEffect( // this effect should be deleted. The request of delivery location should occour when the application starts
+    //     () => {
+    //         if(deliveryLocationsStatus === 'INITIAL' ) {
+    //             dispatch(deliveryLocationRequestSagasAction());
+    //         }
+    //     },
+    //     []
+    // )
 
     const onPress = ()=> {
         dispatch(configure("DELIVERY_CONFIGURATION" as ModalFormNames))
@@ -125,14 +125,6 @@ export const DireactionSelector = () => {
 
     return (
         <>
-            {
-                deliveryLocationsStatus === 'INITIAL' || deliveryLocationsStatus === 'LOADING' ? (
-                    <View style={styles.loading}>
-                        <ActivityIndicator size={60} color={colors.principal}/>
-                    </View>
-                ) : null
-            }
-
             { 
                 deliveryLocationsStatus === 'ERROR' ? (
                     <ErrorModal 

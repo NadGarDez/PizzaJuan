@@ -87,7 +87,6 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
     const {refetch, clear, reducerStatus } = useLocalRequest(deleteDeliveryLocationRequest);
     const dispatch = useDispatch();
 
-
     const [itemSelected, setItem] = useState<string | null>(null);
 
     const onSelect = async (item:string) => {
@@ -157,6 +156,16 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
         jumpTo("second");
     }
 
+    const manageNext = ()=> {
+        if(status !== 'LOADING' && status !== 'N_LOADING') {
+            dispatch({
+                type: 'N_REQUEST_DELIVERY_LOCATIONS',
+            })
+        }   
+    }
+
+    const isLoading = () =>  status === 'INITIAL' || status === 'LOADING' || status === 'N_LOADING'
+
     return (
        <View style={styles.container}>
             <View style={styles.subtitleContainer}>
@@ -165,15 +174,7 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
                 </Text>
             </View>
             {
-                status === 'INITIAL' || status === 'LOADING' ? (
-                    <View style={styles.loading}>
-                        <ActivityIndicator size={60} color={colors.principal}/>
-                    </View>
-                ) : null
-            }
-
-            {
-                status === 'SUCCESSED' ? (
+                status !== 'ERROR' ? (
                     <>
                         <ToggableList 
                             onDelete={onDelete}
@@ -181,6 +182,8 @@ export const DirectionListContainer = (props:props): JSX.Element=> {
                             data={transformResults(data)} 
                             voidMessage="No hay direcciones disponibles"
                             itemSelected={itemSelected}
+                            onReachEnd={manageNext}
+                            loading={isLoading()}
                         /> 
                         <PrincipalButton onPress={onPressCreate} radius={5}>
                             <View style={styles.textContainer}>

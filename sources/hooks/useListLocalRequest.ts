@@ -48,8 +48,6 @@ function reducer<T extends object>(state: requestStatus<T>, action:action ): req
 
                 const payloadCopy = {...action.payload} as defaultApiResponse<ListResponse<T>> ;
 
-                console.log(payloadCopy)
-
                 return {
                     ...state,
                     reducerStatus: 'SUCCESSED',

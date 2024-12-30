@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
 import { ToggableItem } from "../surfaces/ToggableItem";
 import { colors } from "../../styles/colors";
 import { toggableListItem } from "../../types/forms/generalFormTypes";
@@ -33,6 +33,14 @@ const styles =  StyleSheet.create(
             fontWeight: "200",
             color:colors.seconday_text + 95
         },
+        loading: {
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 200,
+            marginBottom: 16
+        },
     }
 );
 
@@ -41,11 +49,13 @@ type props = {
     voidMessage:string,
     onSelect: (itemId: string)=> void,
     onDelete: (item:string) => void,
-    itemSelected: string | null
+    itemSelected: string | null,
+    onReachEnd: () => void,
+    loading: boolean
 }
 
 
-export const ToggableList = ({data, voidMessage, onDelete, onSelect, itemSelected}:props): JSX.Element => {
+export const ToggableList = ({data, voidMessage, onDelete, onSelect, loading, itemSelected, onReachEnd}:props): JSX.Element => {
 
 
     const voidList = ()=> (
@@ -60,6 +70,9 @@ export const ToggableList = ({data, voidMessage, onDelete, onSelect, itemSelecte
                 data={data}
                 showsVerticalScrollIndicator={false}
                 ListEmptyComponent={voidList}
+                style={{
+                    minHeight: 400
+                }}
                 renderItem={
                     ({item, index})=> (
                         <ToggableItem 
@@ -72,9 +85,17 @@ export const ToggableList = ({data, voidMessage, onDelete, onSelect, itemSelecte
                         />
                     )
                 }
+                onEndReached={onReachEnd}
                 ListFooterComponent={
                     (
                         <View style={{marginBottom:10}}>
+                            {
+                                loading === true ? (
+                                    <View style={styles.loading}>
+                                    <ActivityIndicator size={60} color={colors.principal}/>
+                                </View>
+                                ) : null
+                            }
                         </View>
                     )
                 }

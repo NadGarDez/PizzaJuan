@@ -166,6 +166,14 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
         jumpTo("second");
     }
 
+    const manageNext = ()=> {
+        if(status === 'SUCCESSED') {
+            dispatch({
+                type: 'N_REQUEST_PAY_METHOD',
+            })
+        }   
+    }
+    const isLoading = () =>  status === 'INITIAL' || status === 'LOADING' || status === 'N_LOADING';
     return (
        <View style={styles.container}>
             <View style={styles.subtitleContainer}>
@@ -173,17 +181,10 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
                     Metodos de Pago Disponibles
                 </Text>
             </View>
-            {
-                status === 'INITIAL' || status === 'LOADING' ? (
-                    <View style={styles.loading}>
-                        <ActivityIndicator size={60} color={colors.principal}/>
-                    </View>
-                ) : null
-            }
              {
-                status === 'SUCCESSED' ? (
+                status !=='ERROR' ? (
                     <>
-                        <ToggableList onSelect={onSelect} onDelete={onDelete} data={transformResults(results ?? [])} voidMessage="No hay metodos de pago disponibles" itemSelected={itemSelected}/> 
+                        <ToggableList onSelect={onSelect} onDelete={onDelete} data={transformResults(results ?? [])} onReachEnd={manageNext} voidMessage="No hay metodos de pago disponibles" itemSelected={itemSelected} loading={isLoading()}/> 
                         <PrincipalButton onPress={onPressCreate} radius={5}>
                             <View style={styles.textContainer}>
                                 <Text style={styles.textStyles}>

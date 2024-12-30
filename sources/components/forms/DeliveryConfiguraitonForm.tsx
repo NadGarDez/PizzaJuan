@@ -8,7 +8,6 @@ import { PrincipalButton } from "../buttons/PrincipalButton";
 import { OutlinedButton } from "../buttons/OutlinedButton";
 import { tabViewSceneProps } from "../../constants/sustituteTypes";
 import { deliveryConfigurationSchema, deliveryConfigurationSchemaType } from "../../types/forms/deliveryFormTypes";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { createDeliveryLocationRequest } from "../../utils/apiRequests";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
