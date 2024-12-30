@@ -53,6 +53,9 @@ const payMethodSlicer = createSlice(
             finishRequestWithError: (state, action: PayloadAction<defaultApiResponse<data> | undefined>) => {
                 state.reducerStatus = 'ERROR',
                 state.responseObject = action.payload || null
+            },
+            clearReducer: (state, action) => {
+                state = initialState
             }
         },
     }
@@ -60,7 +63,7 @@ const payMethodSlicer = createSlice(
 
 //actions export
 
-export const {startRequest, finishRequestSuccessfully, finishRequestWithError,finishNRequestSuccessfully, startNRequest } = payMethodSlicer.actions;
+export const {startRequest, finishRequestSuccessfully, finishRequestWithError,finishNRequestSuccessfully, startNRequest, clearReducer } = payMethodSlicer.actions;
 
 //selector export
 

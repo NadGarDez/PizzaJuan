@@ -12,7 +12,8 @@ import { transcValidationMetadataType, transcValidationSchema, transcValidationS
 import { useLocalRequest } from "../../hooks/useLocalRequest";
 import { createOrderRequest } from "../../utils/apiRequests";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
-import { shoppingCardSelector } from "../../redux/shoppingCardSlice";
+import { cleanReducer, shoppingCardSelector } from "../../redux/shoppingCardSlice";
+import { CommonActions, DrawerActions, useNavigation, useRoute } from "@react-navigation/native";
 
 
 const styles = StyleSheet.create({
@@ -60,6 +61,9 @@ export const TransactionCodeForm = (): JSX.Element=> {
 
     const car = useAppSelector(shoppingCardSelector);
 
+    const navigation  = useNavigation();
+    const route = useRoute()
+
     const {refetch, responseObject, reducerStatus, clear} = useLocalRequest(createOrderRequest);
 
     const { setFieldValue, errors, values, submitForm } = useFormik(
@@ -98,11 +102,21 @@ export const TransactionCodeForm = (): JSX.Element=> {
         dispatch(hide());
     }
 
+    const jump = ()=> {
+        navigation.goBack()
+        navigation.dispatch(DrawerActions.openDrawer())
+        setTimeout(() => {
+            navigation.dispatch(DrawerActions.jumpTo('MY_SHOPPING'))
+        }, 500);
+    }
+
     useEffect(
         () => {
             if(reducerStatus === 'SUCCESSED') {
-                dispatch(hide());
                 clear();
+                dispatch(cleanReducer());
+                dispatch(hide());
+                jump();
             }
         },
         [reducerStatus]

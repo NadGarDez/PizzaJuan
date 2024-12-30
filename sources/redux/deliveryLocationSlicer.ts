@@ -53,6 +53,9 @@ const deliveryLocationSlicer = createSlice(
             finishRequestWithError: (state, action: PayloadAction<defaultApiResponse<data> | undefined>) => {
                 state.reducerStatus = 'ERROR',
                 state.responseObject = action.payload || null
+            },
+            clearReducer: (state, action) => {
+                state = initialState
             }
         },
     }
@@ -60,7 +63,7 @@ const deliveryLocationSlicer = createSlice(
 
 //actions export
 
-export const {startRequest, finishRequestSuccessfully, finishRequestWithError,finishNRequestSuccessfully, startNRequest } = deliveryLocationSlicer.actions;
+export const {startRequest, finishRequestSuccessfully, finishRequestWithError,finishNRequestSuccessfully, startNRequest, clearReducer } = deliveryLocationSlicer.actions;
 
 //selector export
 

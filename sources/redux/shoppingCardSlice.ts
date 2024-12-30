@@ -5,8 +5,6 @@ import { ShoppingCartType, Totals } from "../types/api/deliveryLocation";
 
 // state type
 
-
-
 //initial state
 const initialState: ShoppingCartType = {
    products: {
@@ -68,15 +66,23 @@ const shoppingCardSlice = createSlice(
                 action:PayloadAction<Totals>
             )=> {
                 state.totals = action.payload;
-            }
+            },
+            cleanReducer: (state) => {
+                console.log('cleaning reducer')
+                state.products = {}
+                state.totals = {
+                    total:0,
+                    info: {}
+               }
 
+            }
         },
     }
 );
 
 //actions export
 
-export const {setProduct, incrementItem, decrementItem, deleteItem, setNumberOfItems, setTotals} = shoppingCardSlice.actions;
+export const {setProduct, incrementItem, cleanReducer, decrementItem, deleteItem, setNumberOfItems, setTotals} = shoppingCardSlice.actions;
 
 //selector export
 
