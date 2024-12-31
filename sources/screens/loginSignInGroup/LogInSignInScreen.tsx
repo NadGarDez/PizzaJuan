@@ -42,7 +42,6 @@ export const LogInSignInScreen = ():JSX.Element=>{
 
     const {authorize, user,getCredentials} = useAuth0();
     const token = useAppSelector(sessionTokenSelector);
-    console.log(token)
     const dispatch = useAppDispatch();
     
 

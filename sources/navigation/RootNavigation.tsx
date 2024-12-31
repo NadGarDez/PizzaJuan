@@ -8,7 +8,7 @@ import {  sessionTokenSelector } from "../redux/SessionReducer";
 export const RootNavigation = ():JSX.Element=>{
 
     const token = useAppSelector(sessionTokenSelector);
-    
+
     return (
         <>
              {

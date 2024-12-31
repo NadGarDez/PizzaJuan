@@ -84,6 +84,7 @@ const sessionSlice = createSlice(
                 state.sessionObject.firstName = null
                 state.sessionObject.lastName = null
                 state.sessionObject.genre = null
+                state.sessionObject.sessionToken = null
             }
         },
     }

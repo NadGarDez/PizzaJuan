@@ -16,10 +16,15 @@ const styles = StyleSheet.create(
     {
         container : {
             flex:1,
+            backgroundColor: "transparent",
             paddingHorizontal:16,
-            paddingVertical:Platform.select({
+            paddingTop:Platform.select({
                 android: 56,
                 ios: 93
+            }),
+            paddingBottom: Platform.select({
+                android: 16,
+                ios: 32
             }),
         },
         card: {
