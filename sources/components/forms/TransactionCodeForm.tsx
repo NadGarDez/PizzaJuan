@@ -13,7 +13,7 @@ import { useLocalRequest } from "../../hooks/useLocalRequest";
 import { createOrderRequest } from "../../utils/apiRequests";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
 import { cleanReducer, shoppingCardSelector } from "../../redux/shoppingCardSlice";
-import { CommonActions, DrawerActions, useNavigation, useRoute } from "@react-navigation/native";
+import { DrawerActions, useNavigation } from "@react-navigation/native";
 
 
 const styles = StyleSheet.create({
@@ -62,7 +62,6 @@ export const TransactionCodeForm = (): JSX.Element=> {
     const car = useAppSelector(shoppingCardSelector);
 
     const navigation  = useNavigation();
-    const route = useRoute()
 
     const {refetch, responseObject, reducerStatus, clear} = useLocalRequest(createOrderRequest);
 

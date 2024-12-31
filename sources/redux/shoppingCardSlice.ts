@@ -30,6 +30,11 @@ const shoppingCardSlice = createSlice(
             ) => {
                 state.products[action.payload.key] = action.payload.item;
             },
+            setShoppingCar : (state, action: PayloadAction<ShoppingCartType>) => {
+                state.products = action.payload.products;
+                state.totals = action.payload.totals
+            },
+
             incrementItem: (
                 state, 
                 action:PayloadAction<string>
@@ -68,7 +73,6 @@ const shoppingCardSlice = createSlice(
                 state.totals = action.payload;
             },
             cleanReducer: (state) => {
-                console.log('cleaning reducer')
                 state.products = {}
                 state.totals = {
                     total:0,
@@ -82,7 +86,7 @@ const shoppingCardSlice = createSlice(
 
 //actions export
 
-export const {setProduct, incrementItem, cleanReducer, decrementItem, deleteItem, setNumberOfItems, setTotals} = shoppingCardSlice.actions;
+export const { setShoppingCar, setProduct, incrementItem, cleanReducer, decrementItem, deleteItem, setNumberOfItems, setTotals} = shoppingCardSlice.actions;
 
 //selector export
 
