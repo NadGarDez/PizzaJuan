@@ -1,10 +1,13 @@
 import React from "react"
-import { Dimensions, Image, StyleSheet, Text, View, Platform } from "react-native"
+import { Dimensions, Image, StyleSheet, Text, View, Platform, ImageRequireSource } from "react-native"
 import { colors } from "../../styles/colors"
 import { useAppSelector } from "../../redux/hooks"
 import { sessionObjectSelector } from "../../redux/SessionReducer"
 import { shadows } from "../../styles/shadow"
 import { ConfigurationList } from "../lists/ConfigurationList"
+import manAvatar from '../../../static/images/manAvatar.png';
+import womenAvatar from '../../../static/images/womenAvatar.png'
+import neutralAvatar from '../../../static/images/neutralAvatar.png'
 
 
 const styles = StyleSheet.create(
@@ -104,8 +107,19 @@ const styles = StyleSheet.create(
     }
 )
 
+
+const getSource = (genre:string | null):ImageRequireSource => {
+    if (genre === 'male' || genre === null || genre === 'otre') {
+        return manAvatar
+    }
+
+    else {
+        return womenAvatar
+    }
+}
+
 export const UserInformationContainer = ()=> {
-    const {firstName, lastName, email, ci, birthDate, picture = "https://cdn-icons-png.flaticon.com/512/5556/5556468.png"} = useAppSelector(sessionObjectSelector)
+    const {firstName, lastName, email, ci, birthDate, genre} = useAppSelector(sessionObjectSelector)
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
@@ -113,10 +127,9 @@ export const UserInformationContainer = ()=> {
                 <View style={{...shadows.principalShadow}}>
                     <View style={styles.avatarContainer}>
                         <Image 
+                            resizeMode='contain'
                             style={styles.imageStyles}
-                            source={{
-                                uri: "https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=1457"
-                            }}
+                            source={getSource(genre)}
                         />
                     </View>
                 </View>

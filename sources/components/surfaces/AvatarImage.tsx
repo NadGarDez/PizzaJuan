@@ -1,6 +1,7 @@
 import React from "react"
-import { Image, StyleSheet, View } from "react-native"
+import { Image, ImageRequireSource, StyleSheet, View } from "react-native"
 import { colors } from "../../styles/colors"
+import { shadows } from "../../styles/shadow"
 
 const styles = StyleSheet.create(
     {
@@ -14,8 +15,10 @@ const styles = StyleSheet.create(
             borderRadius:50,
             borderStyle: "solid",
             borderWidth:3,
-            borderColor:colors.black_thin,
-            overflow:"hidden"
+            borderColor:colors.white_card,
+            overflow:"hidden",
+            backgroundColor: colors.white_card,
+            ...shadows.principalShadow
         },
         imageStyles: {
             width:"100%",
@@ -24,14 +27,15 @@ const styles = StyleSheet.create(
     }
 )
 
+
 type props = {
-    imageSrc?:string
+    source: ImageRequireSource
 }
 
-export const AvatarImage = ({imageSrc="https://cdn-icons-png.flaticon.com/512/5556/5556468.png"}:props):JSX.Element=> {
+export const AvatarImage = ({source}:props):JSX.Element=> {
     return (
         <View style={styles.container}>
-            <Image source={{uri: imageSrc}} style={styles.imageStyles}/>
+            <Image source={source} style={styles.imageStyles} resizeMode='contain'/>
         </View>
     )
 

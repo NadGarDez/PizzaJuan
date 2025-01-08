@@ -4,7 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { LogInSignInStackPropType } from "../../navigation/Stacks/LogInSignInStack"
 import { useAuth0 } from "react-native-auth0"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
-import { sessionObjectSelector, sessionTokenSelector, setSession, setSessionObject } from "../../redux/SessionReducer"
+import { sessionTokenSelector, setSession } from "../../redux/SessionReducer"
 import { colors } from "../../styles/colors"
 import { LoginButton } from "../../components/buttons/LoginButton"
 import { requestUserInformationSagasAction } from "../../sagas/userSagas"
@@ -62,6 +62,8 @@ export const LogInSignInScreen = ():JSX.Element=>{
         }
     }
 
+    console.log(user)
+
     useEffect(
         ()=>{
             if (user !== null && user !== undefined){
@@ -85,7 +87,6 @@ export const LogInSignInScreen = ():JSX.Element=>{
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer} >
-                {/* <HelloWorldComponent sectionMessage="Ventana de inicio de sesion" onPress={LoginSignInPanel} buttonText="Login"/> */}
                 <Image 
                     source={image}
                     width={382}

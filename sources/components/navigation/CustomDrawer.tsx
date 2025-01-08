@@ -1,6 +1,6 @@
 import { DrawerContentScrollView,DrawerContentComponentProps, } from "@react-navigation/drawer";
 import React, { useEffect } from "react";
-import { StyleSheet, Text , View} from "react-native";
+import { ImageRequireSource, StyleSheet, Text , View} from "react-native";
 import { colors } from "../../styles/colors";
 import { AvatarImage } from "../surfaces/AvatarImage";
 import { useAuth0 } from "react-native-auth0";
@@ -10,6 +10,9 @@ import { CustomDrawerItemList } from "./CustomDrawerItemList";
 import { DrawerItem } from "../buttons/DrawerItem";
 import { drawerIconSelector } from "../../utils/drawerIconSelector";
 import { useAppSelector } from "../../redux/hooks";
+
+import manAvatar from '../../../static/images/manAvatar.png';
+import womenAvatar from '../../../static/images/womenAvatar.png'
 
 
 const styles = StyleSheet.create({
@@ -63,10 +66,20 @@ const styles = StyleSheet.create({
     }
 })
 
+const getSource = (genre:string | null): ImageRequireSource => {
+    if (genre === 'male' || genre === null || genre === 'otre') {
+        return manAvatar
+    }
+
+    else {
+        return womenAvatar
+    }
+}
+
 export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
     const {clearSession, user} = useAuth0();
     const dispatch = useDispatch();
-    const {firstName, email, picture} = useAppSelector(sessionObjectSelector);
+    const {firstName, email, genre} = useAppSelector(sessionObjectSelector);
 
     const logout = async ():Promise<void>=> {
         await clearSession()
@@ -87,7 +100,7 @@ export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
                <View style={styles.avatarContainer}>
                     <View style={styles.avatarImage}>
                         <AvatarImage 
-                           
+                           source={getSource(genre)}
                         />
                     </View>
                     <View style={styles.avatarGreatings}>
