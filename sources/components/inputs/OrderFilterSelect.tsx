@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { colors } from '../../styles/colors';
 import { Dropdown } from 'react-native-element-dropdown';
+import { ReloadIcon } from '../icons/ReloadIcon';
 
 
 
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     selectContainer: {
+        display: 'flex',
        flexDirection: 'row',
     },
     dropdown: {
@@ -39,8 +41,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 8,
         paddingHorizontal: 8,
-        width: '100%'
-        
+        flex: 1,
     },
     placeholderStyle: {
         fontSize:20,
@@ -56,6 +57,23 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
     },
+    reloadContainer: {
+        height: 50,
+        marginLeft: 4,
+        borderColor: colors.seconday_text + "30",
+        borderWidth: 1,
+        borderRadius: 8,
+        width: 50
+    },
+    reloadButtonStyles: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems:'center',
+        justifyContent: 'center',
+    }
+
 });
 
 const data = [
@@ -76,7 +94,7 @@ interface props {
 
 export const OrderFilterSelect = (props: props):JSX.Element => {
 
-    const {onChange} = props;
+    const {onChange, onReload} = props;
 
     return (
         <View style={styles.container}>
@@ -98,6 +116,11 @@ export const OrderFilterSelect = (props: props):JSX.Element => {
                             onChange(item.value)
                         }}
                     />
+                    <View style={styles.reloadContainer}>
+                        <TouchableOpacity style={styles.reloadButtonStyles} onPress={onReload}>
+                            <ReloadIcon  color={colors.seconday_text + '60'} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 
             </View>

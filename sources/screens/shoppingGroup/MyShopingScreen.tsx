@@ -119,7 +119,7 @@ export const MyShoppingScreen = ():JSX.Element=>{
         )
     }
 
-    const onRefresh = () => {
+    const onReachEnd = () => {
         if(reducerStatus !== 'LOADING' &&  !!responseObject?.data.next) {
             loadMore({
                 token: token ?? '',
@@ -127,6 +127,12 @@ export const MyShoppingScreen = ():JSX.Element=>{
             })
         }
     }
+
+
+    const onRefresh = () => {
+        setFilter('all');
+    }
+
     
     return (
         <>  
@@ -149,7 +155,7 @@ export const MyShoppingScreen = ():JSX.Element=>{
                             <ShoppingItem {...item}/>
                         )}
 
-                        onEndReached={onRefresh}
+                        onEndReached={onReachEnd}
                                     
                         ListFooterComponent={
                             (
