@@ -12,7 +12,7 @@ import { personalConfigurationSchema, personalConfigurationSchemaType } from "..
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useLocalRequest } from "../../hooks/useLocalRequest";
 import { updateUser } from "../../utils/apiRequests";
-import { sessionTokenSelector } from "../../redux/SessionReducer";
+import { sessionObjectSelector, sessionTokenSelector } from "../../redux/SessionReducer";
 import { ErrorModal } from "../modal/ErrorModal";
 
 
@@ -58,9 +58,17 @@ const hasChanged = (defaultValues: object, currentValues:object) => JSON.stringi
 export const PersonalConfigurationForm = (): JSX.Element=> {
     const token = useAppSelector(sessionTokenSelector)
     const {refetch, reducerStatus, responseObject } = useLocalRequest(updateUser);
+    const {firstName, lastName, email, ci, birthDate, genre} = useAppSelector(sessionObjectSelector)
     const { setFieldValue,values , submitForm, errors, isValid} = useFormik(
         {
-            initialValues: defaultValue,
+            initialValues: {
+                name: firstName,
+                lastName,
+                email,
+                genre,
+                birthDate: birthDate,
+                ci
+            } ,
             validationSchema:personalConfigurationSchema,
             onSubmit: values => {
                 refetch(
@@ -132,6 +140,7 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
                                                     setFieldValue(item, text);
                                                 },
                                                 inputName:name,
+                                                initialValue: values[item as keyof object],
                                                 error: errors[item as keyof object],
                                                 ...aditionalData
                                             })

@@ -7,7 +7,6 @@ import { shadows } from "../../styles/shadow"
 import { ConfigurationList } from "../lists/ConfigurationList"
 import manAvatar from '../../../static/images/manAvatar.png';
 import womenAvatar from '../../../static/images/womenAvatar.png'
-import neutralAvatar from '../../../static/images/neutralAvatar.png'
 
 
 const styles = StyleSheet.create(
