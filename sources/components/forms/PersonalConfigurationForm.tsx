@@ -14,6 +14,7 @@ import { useLocalRequest } from "../../hooks/useLocalRequest";
 import { updateUser } from "../../utils/apiRequests";
 import { sessionObjectSelector, sessionTokenSelector } from "../../redux/SessionReducer";
 import { ErrorModal } from "../modal/ErrorModal";
+import { requestUserInformationSagasAction } from "../../sagas/userSagas";
 
 
 const styles = StyleSheet.create({
@@ -101,6 +102,7 @@ export const PersonalConfigurationForm = (): JSX.Element=> {
         () => {
             if (reducerStatus === 'SUCCESSED') {
                 dispatch(hide());
+                dispatch(requestUserInformationSagasAction())
             }
         },
         [reducerStatus]

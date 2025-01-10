@@ -1,5 +1,5 @@
 import React, {  useEffect } from "react";
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native"; 
+import { StyleSheet, Text, View } from "react-native"; 
 import { colors } from "../../styles/colors";
 import { payMethodConfigurationMetadata, } from "../../constants/form/formConstants";
 import { useFormik } from "formik";
@@ -13,6 +13,7 @@ import { createPayMethodRequest } from "../../utils/apiRequests";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
 import { payMethodRequestSagasAction } from "../../sagas/paymethodSagas";
+import { useLocalRequest } from "../../hooks/useLocalRequest";
 
 const styles = StyleSheet.create({
     container: {
@@ -85,26 +86,30 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
     const dispatch = useAppDispatch();
     const {jumpTo} = props;
 
-    const {values, setFieldValue, handleSubmit, errors,} = useFormik(
+    const {reducerStatus, refetch, clear} = useLocalRequest(createPayMethodRequest);
+
+    const {values, setFieldValue, handleSubmit, errors,resetForm} = useFormik(
         {
             initialValues: defaultValue,
             validationSchema:payMethodConfigurationSchema,
-            onSubmit: async (values, {resetForm}) => {
-                const {status, data} = await createPayMethodRequest(token || '', {
-                    mobile_pay: {
-                        ci: values.ci,
-                        phone_number: values.phone,
-                        bank_code: values.bank,
+            onSubmit: async (values) => {
+
+                refetch(
+                    {
+                        token: token || '',
+                        bodyObject: {
+                            mobile_pay: {
+                                ci: values.ci,
+                                phone_number: values.phone,
+                                bank_code: values.bank,
+                            }
+                        }
                     }
-                })
-                if(status === 201) {
-                    dispatch(payMethodRequestSagasAction());
-                    jumpTo('first');
-                }
+                );
             },
         },
     );
-    
+
     useEffect(
         ()=> {
             const errorKeys = Object.keys(errors);
@@ -112,6 +117,18 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
         },
         [errors]
     );
+
+    useEffect(
+        () => {
+            if(reducerStatus === 'SUCCESSED') {
+                    jumpTo('first');
+                    resetForm();
+                    clear();
+                    dispatch(payMethodRequestSagasAction());
+            }
+        },
+        [reducerStatus]
+    )
 
     const onPress= ()=> {
         handleSubmit()
@@ -131,7 +148,9 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
                     </Text>
                 </View>
                 <View style={styles.inputList}>
+
                     {
+                        reducerStatus !== 'SUCCESSED' ?
                         Object.keys(defaultValue).map(
                             (item, index) => {
                                 const {placeholder = '', inputType, name, aditionalData} = payMethodConfigurationMetadata[item as keyof payMethodConfigurationSchemaType];
@@ -155,7 +174,7 @@ export const PaymentConfigurationForm = (props:props): JSX.Element=> {
                                     </View>
                                 )
                             }
-                        )
+                        ) : null
                     }
                 </View>
                 <PrincipalButton onPress={onPress} radius={5}>

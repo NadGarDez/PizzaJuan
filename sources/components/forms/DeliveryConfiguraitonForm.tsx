@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native"; 
 import { colors } from "../../styles/colors";
 import { deliveryConfigurationMetadata } from "../../constants/form/formConstants";
@@ -12,9 +12,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { createDeliveryLocationRequest } from "../../utils/apiRequests";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
-import { useAuth0 } from "react-native-auth0";
-import { getUserConstants, storeData } from "../../utils/asyncStore";
 import { deliveryLocationRequestSagasAction } from "../../sagas/deliveryLocationSagas";
+import { useLocalRequest } from "../../hooks/useLocalRequest";
 
 const styles = StyleSheet.create({
     container: {
@@ -84,39 +83,22 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
 
     const token = useAppSelector(sessionTokenSelector);
     const dispatch = useAppDispatch();
-    const {user} = useAuth0();
     const {jumpTo} = props;
 
-    const onCreateItem = async (id: string)=>{  
-        const object = {
-            activeLocation: id
-        }
-        const value = getUserConstants(user?.sub ?? '');
-        if (value !== null) {
-        // value previously stored
-            await storeData(user?.sub ?? '', JSON.stringify(object))
-        } else {
-            const parsedValue = JSON.parse(value);
-            await storeData(user?.sub ?? '', JSON.stringify({
-                ...parsedValue,
-                ...object
-            }))
-        }
-    }
+    const {refetch, reducerStatus, clear} = useLocalRequest(createDeliveryLocationRequest)
 
-    const { setFieldValue, handleSubmit, errors, setFieldTouched, touched } = useFormik(
+    const { setFieldValue, handleSubmit, errors, setFieldTouched, touched, resetForm } = useFormik(
         {
             initialValues: defaultValue,
             validationSchema:deliveryConfigurationSchema,
-            onSubmit: async (values, {resetForm}) => {
-               const {status, data} = await createDeliveryLocationRequest(token || '', {
-                    ...values,
-                    owner:7
-                })
-                if(status === 201) {
-                    dispatch(deliveryLocationRequestSagasAction());
-                    jumpTo('first');
-                }
+            onSubmit: async (values) => {
+                refetch({
+                    token: token || '',
+                    bodyObject: {
+                        ...values,
+                        owner:7
+                    }
+                });
             },
         },
     );
@@ -144,6 +126,19 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
         jumpTo('first');
     }
 
+
+    useEffect(
+        () => {
+            if(reducerStatus === 'SUCCESSED'){
+                    resetForm();
+                    clear();
+                    jumpTo('first');
+                    dispatch(deliveryLocationRequestSagasAction());
+            }
+        },
+        [reducerStatus]
+    )
+
     return (
         <KeyboardAwareScrollView
             style={styles.container}
@@ -155,6 +150,7 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
                 </View>
                 <View style={styles.inputList}>
                     {
+                        reducerStatus !== 'SUCCESSED' ?
                         Object.keys(defaultValue).map(
                             (item, index) => {
                                 const {placeholder = '', inputType, name, aditionalData = {}} = deliveryConfigurationMetadata[item as keyof deliveryConfigurationSchemaType];
@@ -181,7 +177,7 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
                                     </View>
                                 )
                             }
-                        )
+                        ): null
                     }
                 </View>
                 <PrincipalButton onPress={onPress} radius={5}>

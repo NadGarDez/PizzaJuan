@@ -303,8 +303,11 @@ export const loadMoreRequest =  async (params: Record<'token' | 'url', string>):
     }
 }
 
-export const createPayMethodRequest = async (token:string, bodyObject:any)=> {
+export const createPayMethodRequest = async (params: Record<'token' | 'bodyObject', any>)=> {
+
     const url = createPayMethod(null);
+    const {bodyObject, token} = params;
+    
     try {
         const {status, statusText, data} = await axios.post(url, 
             {
@@ -421,8 +424,11 @@ export const deleteDeliveryLocationRequest = async (params: Record<'token' | 'it
     }
 }
 
-export const createDeliveryLocationRequest = async (token:string, bodyObject: createDeliveryLocaitonType): Promise<defaultApiResponse< object | null>> => {
+export const createDeliveryLocationRequest = async (params: Record<'token' | 'bodyObject', any>): Promise<defaultApiResponse< object | null>> => {
+    
     const url =  createDeliveryLocation(null)
+    const {bodyObject, token} = params;
+
     try {
         const {status, statusText, data} = await axios.post(url, 
             {

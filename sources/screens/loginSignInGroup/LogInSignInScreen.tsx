@@ -62,8 +62,6 @@ export const LogInSignInScreen = ():JSX.Element=>{
         }
     }
 
-    console.log(user)
-
     useEffect(
         ()=>{
             if (user !== null && user !== undefined){

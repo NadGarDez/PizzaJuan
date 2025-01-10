@@ -3,7 +3,7 @@ import { call, put, select, takeEvery } from "redux-saga/effects";
 import { sessionTokenSelector } from "../redux/SessionReducer";
 import { getNext, getResourceList } from "../utils/apiRequests";
 import { defaultApiResponse } from "../types/api/defaultTypes";
-import { finishRequestSuccessfully, finishRequestWithError, payMethodSlicerNextSelector, startRequest, startNRequest, finishNRequestSuccessfully } from "../redux/payMethodSlicer";
+import { finishRequestSuccessfully, finishRequestWithError, payMethodSlicerNextSelector, startRequest, startNRequest, finishNRequestSuccessfully, clearReducer } from "../redux/payMethodSlicer";
 
 interface data {
    results: any[],
