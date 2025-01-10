@@ -5,7 +5,7 @@ export type genre = 'male' | 'female' | 'other' ;
 
 export const personalConfigurationSchema = object(
     {
-        name: string().required().min(2),
+        name: string().required().min(2).max(10),
         lastName: string().required().min(2),
         email: string().email().required(),
         genre: string<genre>().required(),

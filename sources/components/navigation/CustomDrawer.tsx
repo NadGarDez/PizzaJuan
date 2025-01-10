@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
     avatarContainer: {
         display: "flex",
         flexDirection: "row",
-        paddingLeft:16,
-        height:100,
+        flexWrap: 'wrap',
+        paddingHorizontal:16,
         marginBottom:16,
+        height: 120,
         marginTop:8
     },
     itemContainers:{
@@ -40,15 +41,20 @@ const styles = StyleSheet.create({
         paddingHorizontal:8
     },
     avatarImage: {
-        marginRight:8
+        marginRight:8,
+        display:'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: '100%'
     },
     avatarGreatings: {
         display: "flex",
         flexDirection: "column",
         height: "100%",
         justifyContent:"center",
+        flexWrap: 'wrap',
         marginBottom:16,
-        marginTop:8
+        marginTop:8,
     },
     greetingsText: {
         fontSize:20,
@@ -56,13 +62,18 @@ const styles = StyleSheet.create({
         fontWeight: "400"
     },
     nameText: {
-        fontSize:34,
+        fontSize:25,
         color: colors.black,
         fontWeight: "700"
     },
     logoutContainer:{
         marginBottom:32,
         paddingLeft:16
+    },
+    nameContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     }
 })
 
@@ -107,9 +118,11 @@ export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
                         <Text style={styles.greetingsText}>
                             Buenas Tardes,
                         </Text>
-                        <Text style={styles.nameText}>
-                            {firstName ?? email}
-                        </Text>
+                        <View style={styles.nameContainer}>
+                            <Text style={styles.nameText} numberOfLines={1}>
+                                {firstName ?? email}
+                            </Text>
+                        </View>
                     </View>
                </View>
                <View style={styles.itemContainers}>
