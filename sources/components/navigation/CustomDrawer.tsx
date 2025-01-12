@@ -115,14 +115,25 @@ export const CustomDrawer = (props:DrawerContentComponentProps):JSX.Element => {
                         />
                     </View>
                     <View style={styles.avatarGreatings}>
-                        <Text style={styles.greetingsText}>
-                            Buenas Tardes,
-                        </Text>
-                        <View style={styles.nameContainer}>
-                            <Text style={styles.nameText} numberOfLines={1}>
-                                {firstName ?? email}
-                            </Text>
-                        </View>
+                        {
+                            firstName !== null && firstName.length > 0 ? (
+                                <>
+                                    <Text style={styles.greetingsText}>
+                                        Buenas Tardes,
+                                    </Text>
+                                    <View style={styles.nameContainer}>
+                                        <Text style={styles.nameText} numberOfLines={1}>
+                                            {firstName}
+                                        </Text>
+                                    </View>
+                                </>
+                            ) : (
+                                <Text style={styles.greetingsText}>
+                                    Buenas Tardes
+                                </Text>
+                            )
+                        }
+                        
                     </View>
                </View>
                <View style={styles.itemContainers}>

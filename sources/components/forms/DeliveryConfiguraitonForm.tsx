@@ -85,7 +85,7 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
     const dispatch = useAppDispatch();
     const {jumpTo} = props;
 
-    const {refetch, reducerStatus, clear} = useLocalRequest(createDeliveryLocationRequest)
+    const {refetch, reducerStatus, responseObject, clear} = useLocalRequest(createDeliveryLocationRequest)
 
     const { setFieldValue, handleSubmit, errors, setFieldTouched, touched, resetForm } = useFormik(
         {
@@ -102,6 +102,8 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
             },
         },
     );
+
+    console.log(reducerStatus, responseObject)
 
     const isItemTouched = (item:string) => {
         const touchedRecord = touched as Record<string, boolean>;

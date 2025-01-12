@@ -114,7 +114,7 @@ export const AmountContainer = ()=> {
                     Monto a pagar en Bolivares
                     </Text>
                     <Text style={styles.amoutText}>
-                        {total * 36}VES
+                        {(total * 36).toFixed(2)}VES
                     </Text>
                 </View>
             </View>

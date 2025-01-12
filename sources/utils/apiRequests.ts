@@ -20,6 +20,7 @@ export const getProductList = async (category:string, token:string):Promise<obje
         };
         
     } catch (error:any) {
+        console.log(error)
         if(error.response){
             const {data, status} = error.response as AxiosResponse;
             return {
@@ -425,7 +426,7 @@ export const deleteDeliveryLocationRequest = async (params: Record<'token' | 'it
 }
 
 export const createDeliveryLocationRequest = async (params: Record<'token' | 'bodyObject', any>): Promise<defaultApiResponse< object | null>> => {
-    
+
     const url =  createDeliveryLocation(null)
     const {bodyObject, token} = params;
 

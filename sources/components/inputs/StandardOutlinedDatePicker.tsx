@@ -122,7 +122,13 @@ const getContainerStyles = (state:basicInputState)=> {
     };
 };
 
-const getDateFromString = (string:string) => string.length < 1 ? new Date() : new Date(string);
+const getDateFromString = (string:string) => {
+    try {
+       return string.length < 1 ? new Date() : new Date(string);
+    } catch (error) {
+        return new Date()
+    }
+}
 
 export const StandardOutlinedDatePicker = (props:props):JSX.Element=> {
 

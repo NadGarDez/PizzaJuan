@@ -117,6 +117,8 @@ const getSource = (genre:string | null):ImageRequireSource => {
     }
 }
 
+const validString = (value: string | null) => value !== null && value.length > 0
+
 export const UserInformationContainer = ()=> {
     const {firstName, lastName, email, ci, birthDate, genre} = useAppSelector(sessionObjectSelector)
     return (
@@ -141,7 +143,7 @@ export const UserInformationContainer = ()=> {
                 <View style={styles.textContainer}>
                         <Text style={styles.nameStyles}>
                             {
-                                (firstName === null || lastName === null) ? 'No configurado' : `${firstName} ${lastName}`
+                                (validString(firstName) && validString(lastName)) ? `${firstName} ${lastName}` : 'Usuario no configurado'
                             }
                         </Text>
                 </View> 
@@ -153,7 +155,7 @@ export const UserInformationContainer = ()=> {
                     </View>
                     <View style={styles.columnRight}>
                             <Text style={styles.subtotalTextStyles}>
-                                {email}
+                                {validString(email) ? email : 'No configurado'}
                             </Text>
                     </View>
                 </View>
@@ -166,7 +168,7 @@ export const UserInformationContainer = ()=> {
                     <View style={styles.columnRight}>
                             <Text style={styles.subtotalTextStyles}>
                                 {
-                                    birthDate ?? 'No configurado'
+                                    validString(birthDate) ? birthDate : 'No configurado'
                                 }
                             </Text>
                     </View>
@@ -180,7 +182,7 @@ export const UserInformationContainer = ()=> {
                     <View style={styles.columnRight}>
                             <Text style={styles.subtotalTextStyles}>
                                {
-                                ci ?? 'No configurado'
+                                validString(ci) ? ci : 'No configurado'
                                }
                             </Text>
                     </View>

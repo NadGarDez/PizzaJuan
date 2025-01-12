@@ -116,7 +116,7 @@ export const AmountInformationComponent = ({ deliveryLocation, totals}:props)=> 
                     </View>
                     <View style={styles.columnRight}>
                             <Text style={styles.subtotalTextStyles}>
-                                {subtotal}$
+                                {subtotal.toFixed(2)}$
                             </Text>
                     </View>
                 </View>

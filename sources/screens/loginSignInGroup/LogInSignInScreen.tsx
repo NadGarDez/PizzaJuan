@@ -7,9 +7,6 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import { sessionTokenSelector, setSession } from "../../redux/SessionReducer"
 import { colors } from "../../styles/colors"
 import { LoginButton } from "../../components/buttons/LoginButton"
-import { requestUserInformationSagasAction } from "../../sagas/userSagas"
-import { deliveryLocationRequestSagasAction } from "../../sagas/deliveryLocationSagas"
-import { payMethodRequestSagasAction } from "../../sagas/paymethodSagas"
 const image = require('../../../static/images/splash_screen.png');
 
 const styles = StyleSheet.create(
@@ -43,7 +40,6 @@ export const LogInSignInScreen = ():JSX.Element=>{
     const {authorize, user,getCredentials} = useAuth0();
     const token = useAppSelector(sessionTokenSelector);
     const dispatch = useAppDispatch();
-    
 
     const LoginSignInPanel=async ()=>{
         try {
@@ -71,16 +67,6 @@ export const LogInSignInScreen = ():JSX.Element=>{
         [user, getCredentials]
     );
 
-    useEffect(
-        () => {
-            if (token !== null) {
-                dispatch(requestUserInformationSagasAction());
-                dispatch(deliveryLocationRequestSagasAction());
-                dispatch(payMethodRequestSagasAction())
-            }
-        },
-        [token]
-    )
     
     return (
         <View style={styles.container}>

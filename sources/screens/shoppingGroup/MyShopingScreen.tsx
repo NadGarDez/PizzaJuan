@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { ActivityIndicator, FlatList, Platform, StyleSheet, View } from "react-native"
+import { ActivityIndicator, FlatList, Platform, StyleSheet, Text, View } from "react-native"
 import { TransformedSquare } from "../../components/surfaces/TransformedSquare"
 import { colors } from "../../styles/colors"
 import { shadows } from "../../styles/shadow"
@@ -80,10 +80,30 @@ const styles = StyleSheet.create(
             height: 400,
             marginBottom: 16
         },
+
+        voidContainer: {
+            width: '100%',
+            flex:1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+        },
+
+        text: {
+            fontSize:16,
+            fontWeight: "200",
+            color:colors.seconday_text,
+        },
         
        
     }
 );
+
+const voidList = ()=> (
+    <View style={styles.voidContainer}>
+        <Text style={styles.text}>La lista de ordenes esta vacía</Text>
+    </View>
+)
 
 export const MyShoppingScreen = ():JSX.Element=>{
 
@@ -133,6 +153,7 @@ export const MyShoppingScreen = ():JSX.Element=>{
         setFilter('all');
     }
 
+
     
     return (
         <>  
@@ -149,8 +170,10 @@ export const MyShoppingScreen = ():JSX.Element=>{
                     
                     />
                     <FlatList
+                        contentContainerStyle={{flex:1}}
                         data={responseObject?.data.results ?? []}
                         showsVerticalScrollIndicator={false}
+                        ListEmptyComponent={voidList}
                         renderItem={({item})=>(
                             <ShoppingItem {...item}/>
                         )}
