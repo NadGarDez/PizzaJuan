@@ -1,4 +1,11 @@
-import React, {useEffect} from "react";
+import 'react-native-get-random-values';
+
+import { english, generateMnemonic } from 'viem/accounts'
+
+const mnemonic = generateMnemonic(english)
+
+console.log('super mnemonic', mnemonic);
+import React, { useEffect } from "react";
 import { View, StyleSheet, StatusBar } from "react-native";
 import { colors } from "./sources/styles/colors";
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,11 +17,11 @@ import * as SplashScreen from 'expo-splash-screen';
 
 const styles = StyleSheet.create(
     {
-        container:{
-            flex:1,
-            justifyContent:"center",
-            alignItems:"center",
-            backgroundColor:colors.black
+        container: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: colors.black
         },
     }
 )
@@ -23,10 +30,10 @@ const STYLES = ['default', 'dark-content', 'light-content'] as const;
 
 SplashScreen.preventAutoHideAsync()
 
-export const App = (): JSX.Element=>{
+export const App = (): JSX.Element => {
 
     useEffect(
-        ()=>{
+        () => {
             const stopSplash = async () => {
                 await SplashScreen.hideAsync()
             }
@@ -36,8 +43,8 @@ export const App = (): JSX.Element=>{
     )
 
     return (
-        <View style={{flex:1}}>
-            <StatusBar barStyle={STYLES[0]} backgroundColor={colors.principal}/>
+        <View style={{ flex: 1 }}>
+            <StatusBar barStyle={STYLES[0]} backgroundColor={colors.principal} />
             <Auth0Provider domain="https://dev-2cvrxuuk3gmg1ihr.us.auth0.com" clientId="jATdHDLzYCMrzlPSkUnCegU6Q54qjblH">
                 <Provider store={store}>
                     <NavigationContainer>

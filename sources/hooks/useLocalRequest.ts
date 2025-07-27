@@ -1,6 +1,5 @@
 import { useReducer } from "react";
-import { defaultApiResponse } from "../types/api/defaultTypes"
-import { loadMoreRequest } from "../utils/apiRequests";
+import { type defaultApiResponse } from "../types/api/defaultTypes"
 
 interface requestStatus<T>  {
     reducerStatus: 'INITIAL' | 'LOADING' | 'SUCCESSED' | 'ERROR',
@@ -62,7 +61,7 @@ export const useLocalRequest = <T extends object>(request: (params:Record<string
         responseObject:null,
     })
 
-    const refetch = async (params:Record<string,any>) => {
+    const refetch = async (params:Record<string,any>): Promise<undefined> => {
         dispatch({
             name: 'startRequest',
             payload: undefined
@@ -95,7 +94,7 @@ export const useLocalRequest = <T extends object>(request: (params:Record<string
         }
     }
 
-    const clear =() => {
+    const clear =():undefined => {
         dispatch(
             {
                 name: 'clear',
