@@ -13,6 +13,8 @@ import { useAuth0 } from "react-native-auth0";
 import { useLocalRequest } from "../../hooks/useLocalRequest";
 import { deletePayMethodRequest } from "../../utils/apiRequests";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
+import { MobilePay, Paymethod, WalletPay } from "../../types/api/paymethod";
+import { isMobilePay } from "../../utils/typeGuard";
 
 const styles = StyleSheet.create({
     container: {
@@ -65,23 +67,29 @@ type aditionalProps = {
 
 type props = tabViewSceneProps & aditionalProps
 
-const transformResults = (data: Record<string, any>[]) => data.map(
+const transformResults = (data: Paymethod[]) => data.map(
     item => {
-        if(item['mobile_pay'] !== null) {
+
+        const {content_object, id} = item;
+
+        if(isMobilePay(content_object)) {
+
+            const mobilePay = content_object as MobilePay
+
             return {
-                name: `Pago Móvil ${item['mobile_pay'].pk}`,
-                ['ID']: item.pk,
-                ['Numero de telefono']: item['mobile_pay'].phone_number,
-                ['CI']: item['mobile_pay'].ci,
-                ['Código del banco']: item['mobile_pay'].bank_code,
+                name: `Pago Móvil ${id ?? ''}`,
+                ['ID']: String(id),
+                ['Numero de telefono']: mobilePay.phone_number,
+                ['CI']: mobilePay.ci,
+                ['Código del banco']: mobilePay.bank_code,
             }
         }
         else {
+            const walletPay = content_object as WalletPay
             return {
-                name: `Wallet ${item['wallet_pay'].pk ?? ''}`,
-                ['ID']: item.pk,
-                ['Clave Pública']: item['wallet_pay'].address,
-                ['Dirección de wallet']: item['wallet_pay'].public_key,
+                name: `Wallet ${id ?? ''}`,
+                ['ID']: String(id),
+                ['Dirección de wallet']: walletPay.address,
             }
         }
     }
@@ -101,9 +109,11 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
     const dispatch = useAppDispatch();
 
     const onSelect = async (item:string) => {
+
         const object = {
             activePayMethod: item
         }
+
         const value = await getUserConstants(user?.sub ?? '');
         if (value === null) {
         // value previously stored
@@ -174,6 +184,7 @@ export const PayMethodContainer = (props:props): JSX.Element=> {
         }   
     }
     const isLoading = () =>  status === 'INITIAL' || status === 'LOADING' || status === 'N_LOADING';
+
     return (
        <View style={styles.container}>
             <View style={styles.subtitleContainer}>

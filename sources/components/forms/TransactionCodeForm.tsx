@@ -80,7 +80,7 @@ export const TransactionCodeForm = (): JSX.Element=> {
                                 payMethod: 42,
                                 amount:1000
                             },
-                            orderSkeleton: JSON.stringify(car)
+                            products: JSON.stringify(car)
 
                         }
                     }

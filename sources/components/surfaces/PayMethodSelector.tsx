@@ -11,6 +11,9 @@ import { payMethodSlicerErrorSelector, payMethodSlicerReducersStaus, payMethodSl
 import { getUserConstants } from "../../utils/asyncStore";
 import { ModalFormNames } from "../../types/forms/generalFormTypes";
 import { ErrorModal } from "../modal/ErrorModal";
+import { Paymethod } from "../../types/api/paymethod";
+import { isWalletPay } from "../../utils/typeGuard";
+import { shortWalletAddress } from "../../utils/textFormatting";
 
 const styles = StyleSheet.create({
     floatingContainer: {
@@ -89,10 +92,17 @@ interface CustomerData {
 
 const validCase = (data: any[], activeItem: string | undefined) => data.length > 0 && activeItem !== undefined;
 const errorCase = (data: any[], activeItem: string | undefined) => data.length === 0 || activeItem === undefined;
-const getMobilePayString = (data: object): string => {
+
+const getMobilePayString = (data: Paymethod): string => {
     try {
-        const parsedData = data as CustomerData;
-        return `${parsedData.ci} - ${parsedData.phone_number} - ${parsedData.bank_code}`
+        const parsedData = data as Paymethod;
+        if(isWalletPay(parsedData.content_object)) {
+            return `wallet address: ${shortWalletAddress(parsedData.content_object.address)}`;
+
+        } else {
+            const mobilePay = parsedData.content_object;
+            return `Pago Móvil: ${mobilePay.ci} - ${mobilePay.phone_number} - ${mobilePay.bank_code}`
+        }
     } catch (error) {
         return ''
     }
@@ -118,8 +128,9 @@ export const PayMethodSelector = () => {
         const info = await getUserConstants(user?.sub ?? '')
         if (info !== null) {
             const obj = JSON.parse(info);
+
             if ('activePayMethod' in obj ) {
-                const foundItem = paymethods.find(item => item.pk === obj.activePayMethod);
+                const foundItem = paymethods.find(item => String(item.id) === String(obj.activePayMethod));
                 setItem(foundItem)
             }
         }
@@ -136,7 +147,7 @@ export const PayMethodSelector = () => {
 
 
     const onPress = ()=> {
-        dispatch(configure("DELIVERY_CONFIGURATION" as ModalFormNames))
+        dispatch(configure("PAYMENT_CONFIGURATION" as ModalFormNames))
         dispatch(activateWithoutValid());
     }
 
@@ -174,7 +185,7 @@ export const PayMethodSelector = () => {
 
 
                                         {
-                                            validCase(paymethods, itemSelected?.pk) ? (
+                                            validCase(paymethods, itemSelected?.id) ? (
                                                 <View style={styles.informationContainerAndButton}>
                                                 <View style={styles.iconContainer}>
                                                     <View style={styles.semiTransparentCircle}>
@@ -184,12 +195,12 @@ export const PayMethodSelector = () => {
                                                 <View style={styles.directionContainer}>
                                                         <Text style={styles.firstLineDirection}>
                                                         {
-                                                            ` Metodo de Pago #${itemSelected?.pk}`
+                                                            ` Metodo de Pago #${itemSelected?.id}`
                                                         }
                                                         </Text>
                                                         <Text style={styles.secondLineDirection}>
                                                             {
-                                                                getMobilePayString(itemSelected?.mobile_pay ?? {} )
+                                                                getMobilePayString(itemSelected as Paymethod) 
                                                             }
                                                         </Text>
                                                 </View>
@@ -201,7 +212,7 @@ export const PayMethodSelector = () => {
                                         }
 
                                     {
-                                        errorCase(paymethods, itemSelected?.pk) ? (
+                                        errorCase(paymethods, itemSelected?.id) ? (
                                             <View style={styles.informationContainerAndButton}>
                                             <View style={styles.iconContainer}>
                                                 <View style={styles.semiTransparentCircle}>
