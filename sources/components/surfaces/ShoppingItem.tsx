@@ -8,6 +8,7 @@ import { MyShoppingStackProps } from "../../navigation/Stacks/MyShopingStack";
 import { useNavigation } from "@react-navigation/native";
 import { Order } from "../../types/api/deliveryLocation";
 import { getImageFromOrderItems, getImageFromOrderSkeleton, getTotalFromOrderSkeleton } from "../../utils/complexSelectors";
+import { orderCalculation, OrderTotal } from "../../utils/calculations";
 
 const styles = StyleSheet.create(
     {
@@ -162,10 +163,10 @@ export const ShoppingItem = (props: Order): JSX.Element => {
                                     <View style={styles.priceContainerAndCount}>
                                         <View style={styles.priceContainer}>
                                             <Text style={styles.dolarPrice}>
-                                                20$
+                                               {OrderTotal(order_items).toFixed(2)}$
                                             </Text>
                                             <Text style={styles.bsPrice}>
-                                                Ref. {20*36}Bs
+                                                Ref. {(Number(OrderTotal(order_items).toFixed(2)) * 36).toFixed(2)}Bs
                                             </Text>
                                         </View>
                                         <View style={styles.countSelector}>
