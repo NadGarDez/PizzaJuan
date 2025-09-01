@@ -18,7 +18,7 @@ const styles = StyleSheet.create(
             zIndex:50,
             borderRadius:30,
             left:0,
-            width: Dimensions.get("screen").width,
+            width: "100%",
             backgroundColor: colors.white_card,
             overflow:"hidden",
 
@@ -91,7 +91,7 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
     if(product === null) return <></>
 
     return (
-        <>
+        <View style={{flex:1,}}>
             <CarouselProductComplexComponent 
                 availablePan={!expanded}
                 product={product}
@@ -101,16 +101,18 @@ export const ProductScreen = ({navigation}:ProductScreenPropTypes):JSX.Element =
                         style={{
                             ...styles.floatingContainer,
                             bottom:0,
-                            height: animation
+                            height: animation,
+                            backgroundColor:'red'
                         }}
                 >
-                    <Pressable
+                    <Pressable // hay que poner un contenedor con un width del 100% para que el pressable ocupe todo el espacio
+                        style={{flex:1}}
                         onPress={onPressInformation}
                     >
                         <ProductInformationCard {...product} compressed={!expanded}/>
                     </Pressable>
                 </Animated.View>
             </View>
-        </>
+        </View>
     )
 }

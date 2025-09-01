@@ -12,12 +12,11 @@ import { NotificationModal } from "../modal/NotificationModal"
 
 const styles = StyleSheet.create({
     informationContainer: {
-        width: '100%',
         backgroundColor:colors.white_card,
         borderRadius:30,
         paddingVertical:16,
         paddingBottom:50,
-        flex:1
+        flex:1,
     },
    
     titleContainer: {
