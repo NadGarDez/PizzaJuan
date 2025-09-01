@@ -5,6 +5,7 @@ import { CarItem } from "../surfaces/CarItem";
 import { shadows } from "../../styles/shadow";
 import { shoppingCarItemType } from "../../types/api/productTypes";
 import { OrderItem } from "../../types/api/deliveryLocation";
+import { BoughtItem } from "../surfaces/BoughtItem";
 
 const styles = StyleSheet.create(
     {
@@ -56,12 +57,11 @@ const styles = StyleSheet.create(
 
 type listProps = {
     onPress:()=>void,
-    data: shoppingCarItemType[],
-    readonly?:boolean,
+    data: OrderItem[],
     expand?:boolean
 };
 
-export const CarProductList = ({onPress, data, readonly = false, expand = false}:listProps):JSX.Element=> {
+export const BoughtProductsList = ({onPress, data, expand = false}:listProps):JSX.Element=> {
 
     const onPressItem = (index:number)=>{
         onPress()
@@ -79,8 +79,8 @@ export const CarProductList = ({onPress, data, readonly = false, expand = false}
                     data={data}
                     showsVerticalScrollIndicator={false}
                     renderItem={(props)=>(
-                        <CarItem 
-                            product={props.item} onPressItem={onPressItem} last={props.index === (data.length - 1 )} readonly={readonly}
+                        <BoughtItem 
+                            product={props.item} last={props.index === (data.length - 1 )} 
                         />
                     )}
                     

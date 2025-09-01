@@ -91,3 +91,16 @@ export const OrderTotal = (order_items: OrderItem[]): number => {
     const total = totalCalculation({ subtotal, ...taxes })
     return total;
 }
+
+export const orderTotals = (order_items: OrderItem[]): Totals => {
+    const subtotal = subtotalCalculation(order_items);
+    const taxes = taxesClculation(order_items);
+    const total = totalCalculation({ subtotal, ...taxes })
+    return {
+        info: {
+            subtotal,
+            ...taxes,
+        },
+        total
+    }
+}   

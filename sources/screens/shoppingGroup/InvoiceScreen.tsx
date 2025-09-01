@@ -1,13 +1,12 @@
 import React from "react";
 import { Platform, StyleSheet, Text, View } from "react-native"
 import { TransformedSquare } from "../../components/surfaces/TransformedSquare";
-import { CarProductList } from "../../components/lists/CarProductList";
 import { AmountInformationComponent } from "../../components/surfaces/AmountInformationComponent";
 import { colors } from "../../styles/colors";
-import { productInstance } from "../../constants/productConstants";
 import { MyShoppingStackProps } from "../../navigation/Stacks/MyShopingStack";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { getProductsFomOrderSkeleton, getTotalsFromOrderSkeleton } from "../../utils/complexSelectors";
+import { orderTotals } from "../../utils/calculations";
+import { BoughtProductsList } from "../../components/lists/BoughtProductsList";
 
 const styles = StyleSheet.create(
     {
@@ -63,8 +62,9 @@ const styles = StyleSheet.create(
 
 type props = NativeStackScreenProps<MyShoppingStackProps, 'INVOICE_SCREEN'>;
 
+
 export const InvoiceScreen = (props: props)=> {
-    const {route: {params: {pk, order_skeleton,delivery_location }}} = props;
+    const {route: {params: {pk, order_items,delivery_location }}} = props;
 
     const onPress = ()=> {
 
@@ -79,15 +79,14 @@ export const InvoiceScreen = (props: props)=> {
                 </Text>
             </View>
             <View style={styles.container}>
-                <CarProductList 
-                    data={getProductsFomOrderSkeleton(order_skeleton)}
+                <BoughtProductsList 
+                    data={order_items}
                     onPress={onPress}
-                    readonly
                     expand
                 />
                 <View style={styles.calculatorContainer}>
                     <AmountInformationComponent 
-                        totals={getTotalsFromOrderSkeleton(order_skeleton)}
+                        totals={orderTotals(order_items)}
                         deliveryLocation={delivery_location}
                     />
                 </View>

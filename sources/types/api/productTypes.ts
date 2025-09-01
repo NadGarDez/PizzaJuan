@@ -17,7 +17,6 @@ export interface productVariant {
     price:number,
     disponibility:number,
     images:image[],
-    total_with_taxes:number,
     taxes:tax[],
     pk:number
 }
