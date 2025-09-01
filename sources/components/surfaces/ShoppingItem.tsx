@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { IconWithTextElement } from "./IconWithTextElement";
 import { LocationIcon } from "../icons/LocationIcon";
@@ -7,8 +7,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { MyShoppingStackProps } from "../../navigation/Stacks/MyShopingStack";
 import { useNavigation } from "@react-navigation/native";
 import { Order } from "../../types/api/deliveryLocation";
-import { getImageFromOrderItems, getImageFromOrderSkeleton, getTotalFromOrderSkeleton } from "../../utils/complexSelectors";
-import { orderCalculation, OrderTotal } from "../../utils/calculations";
+import { getImageFromOrderItems } from "../../utils/complexSelectors";
+import {  OrderTotal } from "../../utils/calculations";
 
 const styles = StyleSheet.create(
     {
@@ -123,8 +123,6 @@ export const ShoppingItem = (props: Order): JSX.Element => {
     const nav = () => {
         navigate("INVOICE_SCREEN", props)
     }
-
-    console.log(getImageFromOrderItems(order_items), 'image order item')
 
     return (
        <View style={styles.container}>

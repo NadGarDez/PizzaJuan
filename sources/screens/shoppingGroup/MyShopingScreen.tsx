@@ -171,7 +171,6 @@ export const MyShoppingScreen = ():JSX.Element=>{
                     
                     />
                     <FlatList
-                        contentContainerStyle={{flex:1}}
                         data={responseObject?.data.results ?? []}
                         showsVerticalScrollIndicator={false}
                         ListEmptyComponent={voidList}
