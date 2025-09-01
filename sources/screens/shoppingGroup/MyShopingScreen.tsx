@@ -140,12 +140,13 @@ export const MyShoppingScreen = ():JSX.Element=>{
     }
 
     const onReachEnd = () => {
-        if(reducerStatus !== 'LOADING' &&  !!responseObject?.data.next) {
-            loadMore({
-                token: token ?? '',
-                url: responseObject.data.next
-            })
-        }
+        // console.log('reach end')
+        // if(reducerStatus !== 'LOADING' &&  !!responseObject?.data.next) {
+        //     loadMore({
+        //         token: token ?? '',
+        //         url: responseObject.data.next
+        //     })
+        // }
     }
 
 
@@ -153,8 +154,8 @@ export const MyShoppingScreen = ():JSX.Element=>{
         setFilter('all');
     }
 
+    console.log(responseObject?.data.results, 'orders')
 
-    
     return (
         <>  
             <TransformedSquare/> 

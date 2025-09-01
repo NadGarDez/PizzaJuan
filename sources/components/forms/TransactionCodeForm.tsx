@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useFormik } from "formik";
 import { transcValidationMetadata } from "../../constants/form/formConstants";
@@ -14,32 +14,35 @@ import { createOrderRequest } from "../../utils/apiRequests";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
 import { cleanReducer, shoppingCardSelector } from "../../redux/shoppingCardSlice";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { payMethodSlicerSelector } from "../../redux/payMethodSlicer";
+import { getUserConstants } from "../../utils/asyncStore";
+import { useAuth0 } from "react-native-auth0";
 
 
 const styles = StyleSheet.create({
     container: {
-        flex:1
+        flex: 1
     },
     inputContainer: {
-        marginBottom:8,
-        width:'100%'
+        marginBottom: 8,
+        width: '100%'
     },
     titleInputStyles: {
-        fontSize:14,
+        fontSize: 14,
         fontWeight: "400",
-        color:colors.principal,
+        color: colors.principal,
     },
     titleContainer: {
-        marginBottom:4
+        marginBottom: 4
     },
     subtitleContainer: {
         width: "100%",
         marginBottom: 8
     },
     subtitleText: {
-        fontSize:16,
+        fontSize: 16,
         fontWeight: "200",
-        color:colors.seconday_text,
+        color: colors.seconday_text,
     },
     loading: {
         width: '100%',
@@ -51,36 +54,64 @@ const styles = StyleSheet.create({
     }
 })
 
-const defaultValue : transcValidationSchemaType = {
-   transactionCode: ''
-}   
+const defaultValue: transcValidationSchemaType = {
+    transactionCode: ''
+}
 
-export const TransactionCodeForm = (): JSX.Element=> {
+export const TransactionCodeForm = (): JSX.Element => {
 
     const token = useAppSelector(sessionTokenSelector);
 
+    const { user } = useAuth0();
+
     const car = useAppSelector(shoppingCardSelector);
 
-    const navigation  = useNavigation();
+    const paymethods = useAppSelector(payMethodSlicerSelector);
 
-    const {refetch, responseObject, reducerStatus, clear} = useLocalRequest(createOrderRequest);
+    const [selectedPayMethod, setSelectedPayMethod] = useState<string | null>(null)
+    const [deliveryLocation, setDeliveryLocation] = useState<number | null>(null)
+
+    const navigation = useNavigation();
+
+    const { refetch, responseObject, reducerStatus, clear } = useLocalRequest(createOrderRequest);
+
+    const initializeItem = async () => {
+        const info = await getUserConstants(user?.sub ?? '')
+        if (info !== null) {
+            const obj = JSON.parse(info);
+
+            if ('activePayMethod' in obj) {
+                setSelectedPayMethod(obj.activePayMethod);
+            }
+            if ('activeLocation' in obj) {
+                setDeliveryLocation(obj.activeLocation);    
+            }
+        }
+    }
+
+    useEffect(
+        () => {
+            initializeItem();
+            },
+        [initializeItem, paymethods]
+    )
 
     const { setFieldValue, errors, values, submitForm } = useFormik(
         {
             initialValues: defaultValue,
-            validationSchema:transcValidationSchema,
+            validationSchema: transcValidationSchema,
             onSubmit: values => {
                 refetch(
                     {
                         token: token ?? '',
                         bodyObject: {
-                            deliveryLocation: 59,
-                            paymentInformation:{
-                                reference: "4321",
-                                payMethod: 42,
-                                amount:1000
+                            deliveryLocation: deliveryLocation, // hay que cambiar esto
+                            paymentInformation: { 
+                                reference: values.transactionCode,
+                                payMethod: selectedPayMethod,
+                                amount: car.totals.total
                             },
-                            products: JSON.stringify(car)
+                            products: car.products
 
                         }
                     }
@@ -92,16 +123,16 @@ export const TransactionCodeForm = (): JSX.Element=> {
 
     const dispatch = useAppDispatch();
 
-    const onSave = ()=> {
+    const onSave = () => {
         submitForm();
         // dispatch(hide());
     }
 
-    const onCancel = ()=> {
+    const onCancel = () => {
         dispatch(hide());
     }
 
-    const jump = ()=> {
+    const jump = () => {
         navigation.goBack()
         navigation.dispatch(DrawerActions.openDrawer())
         setTimeout(() => {
@@ -111,7 +142,7 @@ export const TransactionCodeForm = (): JSX.Element=> {
 
     useEffect(
         () => {
-            if(reducerStatus === 'SUCCESSED') {
+            if (reducerStatus === 'SUCCESSED') {
                 clear();
                 dispatch(cleanReducer());
                 dispatch(hide());
@@ -123,7 +154,7 @@ export const TransactionCodeForm = (): JSX.Element=> {
 
     return (
         <>
-            <ModalFormHeader 
+            <ModalFormHeader
                 formKey={ModalFormNames.TRANSACTION_CODE_FORM}
                 isFormValid={Object.keys(errors).length === 0 && values.transactionCode !== defaultValue.transactionCode}
                 onCancel={onCancel}
@@ -136,41 +167,41 @@ export const TransactionCodeForm = (): JSX.Element=> {
                     </Text>
                 </View>
 
-                    {
-                        reducerStatus === 'INITIAL' ? Object.keys(defaultValue).map(
-                            (item, index) => {
-                                const {placeholder = '', inputType, name, aditionalData} = transcValidationMetadata[item as keyof transcValidationMetadataType];
-                                return (
-                                    <View style={styles.inputContainer} key={`input-${item}-${index}`}>
-                                        <View style={styles.titleContainer}>
-                                            <Text style={styles.titleInputStyles}>
-                                                {name}
-                                            </Text>
-                                        </View>
-                                        {
-                                            inputSelector[inputType]({
-                                                placeholder,
-                                                onChangeCallback:(text:string)=> {
-                                                    setFieldValue(item, text);
-                                                },
-                                                inputName:name,
-                                                ...aditionalData
-                                            })
-                                        }
+                {
+                    reducerStatus === 'INITIAL' ? Object.keys(defaultValue).map(
+                        (item, index) => {
+                            const { placeholder = '', inputType, name, aditionalData } = transcValidationMetadata[item as keyof transcValidationMetadataType];
+                            return (
+                                <View style={styles.inputContainer} key={`input-${item}-${index}`}>
+                                    <View style={styles.titleContainer}>
+                                        <Text style={styles.titleInputStyles}>
+                                            {name}
+                                        </Text>
                                     </View>
-                                )
-                            }
-                        ) : null
-                    }
-                    {
-                        reducerStatus !== 'INITIAL' ? (
-                            <View style={styles.loading}>
-                                <ActivityIndicator size={60} color={colors.principal}/>
-                            </View>
-                        ): null
-                    }
+                                    {
+                                        inputSelector[inputType]({
+                                            placeholder,
+                                            onChangeCallback: (text: string) => {
+                                                setFieldValue(item, text);
+                                            },
+                                            inputName: name,
+                                            ...aditionalData
+                                        })
+                                    }
+                                </View>
+                            )
+                        }
+                    ) : null
+                }
+                {
+                    reducerStatus !== 'INITIAL' ? (
+                        <View style={styles.loading}>
+                            <ActivityIndicator size={60} color={colors.principal} />
+                        </View>
+                    ) : null
+                }
             </ScrollView>
         </>
-       
+
     )
 }

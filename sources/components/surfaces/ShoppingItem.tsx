@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Image, Pressable, StyleSheet,Text,View } from "react-native";
+import { Dimensions, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { IconWithTextElement } from "./IconWithTextElement";
 import { LocationIcon } from "../icons/LocationIcon";
@@ -7,123 +7,127 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { MyShoppingStackProps } from "../../navigation/Stacks/MyShopingStack";
 import { useNavigation } from "@react-navigation/native";
 import { Order } from "../../types/api/deliveryLocation";
-import { getImageFromOrderSkeleton, getTotalFromOrderSkeleton } from "../../utils/complexSelectors";
+import { getImageFromOrderItems, getImageFromOrderSkeleton, getTotalFromOrderSkeleton } from "../../utils/complexSelectors";
 
 const styles = StyleSheet.create(
     {
         container: {
-            width:Dimensions.get("screen").width - 32,
-            paddingVertical:16,
-            paddingHorizontal:8,
+            width: '100%',
+            paddingVertical: 16,
+            paddingHorizontal: 8,
             display: "flex",
             flexDirection: "column",
-            borderStyle:"solid",
-            borderWidth:1,
-            borderTopColor:"transparent",
-            borderLeftColor:"transparent",
-            borderRightColor:"transparent",
-            borderBottomColor:colors.seconday_text + "30",
+            borderStyle: "solid",
+            borderWidth: 1,
+            borderTopColor: "transparent",
+            borderLeftColor: "transparent",
+            borderRightColor: "transparent",
+            borderBottomColor: colors.seconday_text + "30",
         },
         imageContainer: {
-            flex:1,
-            padding:4,
-            justifyContent: "center"
+            display: "flex",
+            flexGrow: 2,
+            padding: 4,
         },
         informationContainer: {
-            flex:2,
-            paddingRight:4
+           display: "flex",
+           flexGrow:1,
+            paddingRight: 4
         },
         imageStyles: {
-           height:110
+            height: 110
         },
         titleContainerAndFavorite: {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-        },  
+        },
         titleContainer: {
-            flex:8
+            flex: 8
         },
         priceContainerAndCount: {
-            display:"flex",
+            display: "flex",
             flexDirection: "row",
-            alignItems:"center",
-            marginTop:8
+            alignItems: "center",
+            marginTop: 8
         },
         priceAndFavoriteContainer: {
-            flex:1,
-            justifyContent:"center"
+            flex: 1,
+            justifyContent: "center"
         },
         titleTextStyles: {
-            fontSize:18,
+            fontSize: 18,
             fontWeight: "700",
-            color:colors.principal,
+            color: colors.principal,
         },
         dolarPrice: {
-            marginRight:4,
-            fontSize:14,
+            marginRight: 4,
+            fontSize: 14,
             fontWeight: "600",
-            color:colors.seconday_text
+            color: colors.seconday_text
         },
         bsPrice: {
-            fontSize:12,
+            fontSize: 12,
             fontWeight: "300",
-            color:colors.seconday_text
+            color: colors.seconday_text
         },
         flexRowStyles: {
-            flex:1,
             flexDirection: "row",
         },
-        priceContainer:{
-            flex:1,
-            flexDirection:"row",
-            alignItems:"baseline"
+        priceContainer: {
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "baseline"
         },
         countSelector: {
             display: "flex",
-            justifyContent:"flex-end",
-            flexDirection:"row"
+            justifyContent: "flex-end",
+            flexDirection: "row"
         },
         statusTextStyle: {
-            fontSize:12,
+            fontSize: 12,
             fontWeight: "400",
-            textAlign:"center",
-            color:colors.seconday_text,
+            textAlign: "center",
+            color: colors.seconday_text,
         },
         statusContainer: {
-            borderRadius:12,
-            borderWidth:1,
+            borderRadius: 12,
+            borderWidth: 1,
             borderColor: colors.seconday_text + "30",
-            padding:8
+            padding: 8
         },
         dateStyles: {
-            fontSize:12,
+            fontSize: 12,
             fontWeight: "400",
-            color:colors.seconday_text
+            color: colors.seconday_text
         }
     }
 )
 
-type props =  {
-    pedido:string,
-    amount:number,
-    status:string,
-    image:string,
+type props = {
+    pedido: string,
+    amount: number,
+    status: string,
+    image: string,
     lastAcutalization: string
 }
 
-type ProductListScreenPropType = StackNavigationProp<MyShoppingStackProps,"MY_SHOPING_SCREEN">;
+type ProductListScreenPropType = StackNavigationProp<MyShoppingStackProps, "MY_SHOPING_SCREEN">;
 
-export const ShoppingItem = (props:Order):JSX.Element => { 
+export const ShoppingItem = (props: Order): JSX.Element => {
 
-    const {pk, order_skeleton,delivery_location, worker } = props;
-    const {navigate} = useNavigation<ProductListScreenPropType>();
+    const { pk, delivery_location, worker, order_items } = props;
+    const { navigate } = useNavigation<ProductListScreenPropType>();
 
-    const nav = ()=> {
+    const nav = () => {
         navigate("INVOICE_SCREEN", props)
     }
 
+    console.log(getImageFromOrderItems(order_items), 'image order item')
+
     return (
+       <View style={styles.container}>
+
         <Pressable
            onPress={nav}
         >
@@ -131,16 +135,15 @@ export const ShoppingItem = (props:Order):JSX.Element => {
                 ({pressed})=>(
                     <View style={
                         {
-                            ...styles.container,
                             opacity: pressed ? 0.7 : 1
                         }
                     }>
                         <View style={styles.flexRowStyles}>
                             <View style={styles.imageContainer}>
-                                <Image source={{uri:getImageFromOrderSkeleton(order_skeleton)}} style={styles.imageStyles} resizeMode='contain'/> 
+                                <Image source={{uri:getImageFromOrderItems(order_items)}} style={styles.imageStyles} resizeMode='contain'/>  
                             </View>
                             <View style={styles.informationContainer}>
-                                    
+
                                 <View style={styles.priceAndFavoriteContainer}>
                                     <View style={styles.titleContainerAndFavorite}>
                                         <View style={styles.titleContainer}>
@@ -149,7 +152,7 @@ export const ShoppingItem = (props:Order):JSX.Element => {
                                             </Text>
                                         </View>
                                     </View>
-                                    
+
                                     <IconWithTextElement
                                         color="#00000020"
                                         icon={<LocationIcon color={colors.white_card} size={14}/>}
@@ -159,10 +162,10 @@ export const ShoppingItem = (props:Order):JSX.Element => {
                                     <View style={styles.priceContainerAndCount}>
                                         <View style={styles.priceContainer}>
                                             <Text style={styles.dolarPrice}>
-                                                {getTotalFromOrderSkeleton(order_skeleton)}$
+                                                20$
                                             </Text>
                                             <Text style={styles.bsPrice}>
-                                                Ref. {getTotalFromOrderSkeleton(order_skeleton)*36}Bs
+                                                Ref. {20*36}Bs
                                             </Text>
                                         </View>
                                         <View style={styles.countSelector}>
@@ -172,13 +175,13 @@ export const ShoppingItem = (props:Order):JSX.Element => {
                                         </View>
                                     </View> 
                                 </View>
-                                        
                             </View>
-                                    
-                        </View>
+                       </View>
                     </View>
                 )
             }
         </Pressable>
+       </View>
+
     )
 }

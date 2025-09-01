@@ -1,5 +1,5 @@
 import { BASE_URL } from "../constants/apiConstants";
-import { ShoppingCartType, Totals } from "../types/api/deliveryLocation";
+import { OrderItem, ShoppingCartType, Totals } from "../types/api/deliveryLocation";
 import { baseProduct, productVariant, shoppingCarItemType } from "../types/api/productTypes";
 
 
@@ -27,6 +27,16 @@ export const getImageFromOrderSkeleton = (value:string): string => {
     const {products} = JSON.parse(value) as ShoppingCartType;
     return `${BASE_URL}${Object.values(products)[0].principal_image}`
 }
+
+export const getImageFromOrderItems= (orderItems: OrderItem[]): string => {
+    return `${BASE_URL}${orderItems[0].variant.base_product.principal_image}`
+    // return `${BASE_URL}${orderItem.variant.images[0].image}`
+}
+
+// export const getTotalsFromOrderItems = (orderItems: OrderItem[]): number => {
+
+//     return orderItems
+// }
 
 export const getTotalFromOrderSkeleton = (value:string): number => {
     const {totals: {total}} = JSON.parse(value) as ShoppingCartType;
