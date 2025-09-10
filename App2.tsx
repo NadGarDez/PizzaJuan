@@ -1,10 +1,3 @@
-import 'react-native-get-random-values';
-
-import { english, generateMnemonic } from 'viem/accounts'
-
-const mnemonic = generateMnemonic(english)
-
-console.log('super mnemonic', mnemonic);
 import React, { useEffect } from "react";
 import { View, StyleSheet, StatusBar } from "react-native";
 import { colors } from "./sources/styles/colors";

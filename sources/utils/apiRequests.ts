@@ -20,7 +20,6 @@ export const getProductList = async (category:string, token:string):Promise<obje
         };
         
     } catch (error:any) {
-        console.log(error)
         if(error.response){
             const {data, status} = error.response as AxiosResponse;
             return {

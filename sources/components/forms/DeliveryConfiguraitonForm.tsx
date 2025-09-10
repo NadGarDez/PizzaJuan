@@ -103,8 +103,6 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
         },
     );
 
-    console.log(reducerStatus, responseObject)
-
     const isItemTouched = (item:string) => {
         const touchedRecord = touched as Record<string, boolean>;
         return touchedRecord[item];

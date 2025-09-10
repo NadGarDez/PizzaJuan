@@ -12,12 +12,10 @@ function* getUserInformationSagas() {
       if(token!==null){
           yield put(startRequest())
          const result: defaultApiResponse<userDataRequestInterface> = yield call(getUserInformation, token);
-         console.log(result, 'super results')
          if(result.status !== 200){
             yield put(finishRequestWithError(result.statusText ?? ''))
          } else {
             const {data} = result;
-            console.log(result, 'super results')
             yield put(finishRequestSuccessfully({
                 email: data.user.email,
                 firstName: data.user.first_name,

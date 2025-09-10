@@ -15,7 +15,6 @@ export const RootNavigation = ():JSX.Element=>{
 
     useEffect(
         () => {
-            console.log('token', token)
             if (token !== null) {
                 dispatch(requestUserInformationSagasAction());
                 dispatch(deliveryLocationRequestSagasAction());

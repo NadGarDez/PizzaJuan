@@ -15,7 +15,7 @@ import { sessionTokenSelector } from "../../redux/SessionReducer";
 import { cleanReducer, shoppingCardSelector } from "../../redux/shoppingCardSlice";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { payMethodSlicerSelector } from "../../redux/payMethodSlicer";
-import { getUserConstants } from "../../utils/asyncStore";
+import { getUserConstants, storeData } from "../../utils/asyncStore";
 import { useAuth0 } from "react-native-auth0";
 
 
@@ -62,6 +62,8 @@ export const TransactionCodeForm = (): JSX.Element => {
 
     const token = useAppSelector(sessionTokenSelector);
 
+
+
     const { user } = useAuth0();
 
     const car = useAppSelector(shoppingCardSelector);
@@ -84,7 +86,7 @@ export const TransactionCodeForm = (): JSX.Element => {
                 setSelectedPayMethod(obj.activePayMethod);
             }
             if ('activeLocation' in obj) {
-                setDeliveryLocation(obj.activeLocation);    
+                setDeliveryLocation(obj.activeLocation);
             }
         }
     }
@@ -92,7 +94,7 @@ export const TransactionCodeForm = (): JSX.Element => {
     useEffect(
         () => {
             initializeItem();
-            },
+        },
         [initializeItem, paymethods]
     )
 
@@ -106,7 +108,7 @@ export const TransactionCodeForm = (): JSX.Element => {
                         token: token ?? '',
                         bodyObject: {
                             deliveryLocation: deliveryLocation, // hay que cambiar esto
-                            paymentInformation: { 
+                            paymentInformation: {
                                 reference: values.transactionCode,
                                 payMethod: selectedPayMethod,
                                 amount: car.totals.total
@@ -140,10 +142,31 @@ export const TransactionCodeForm = (): JSX.Element => {
         }, 500);
     }
 
+    const clearCarFromAsyncStorage = async () => {
+        const info = await getUserConstants(user?.sub ?? '')
+        if (info !== null) {
+            const obj = JSON.parse(info);
+            if ('shoppingCar' in obj) {
+                await storeData(user?.sub ?? '', JSON.stringify({
+                    ...obj,
+                    shoppingCar: {
+                        products: {
+                        },
+                        totals: {
+                            total: 0,
+                            info: {}
+                        }
+                    }
+                }));
+            }
+        }
+    }
+
     useEffect(
         () => {
             if (reducerStatus === 'SUCCESSED') {
                 clear();
+                clearCarFromAsyncStorage();
                 dispatch(cleanReducer());
                 dispatch(hide());
                 jump();

@@ -154,8 +154,6 @@ export const MyShoppingScreen = ():JSX.Element=>{
         setFilter('all');
     }
 
-    console.log(responseObject?.data.results, 'orders')
-
     return (
         <>  
             <TransformedSquare/> 
