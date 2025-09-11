@@ -29,6 +29,7 @@ export const getImageFromOrderSkeleton = (value:string): string => {
 }
 
 export const getImageFromOrderItems= (orderItems: OrderItem[]): string => {
+    console.log(orderItems)
     return `${BASE_URL}${orderItems[0].variant.base_product.principal_image}`
     // return `${BASE_URL}${orderItem.variant.images[0].image}`
 }

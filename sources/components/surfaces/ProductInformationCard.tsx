@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
         paddingRight: 18,
         display: "flex",
         flexDirection: "row",
+        alignItems: "center",
         flexGrow:1,
         paddingLeft:16,
         paddingTop:8
@@ -54,7 +55,6 @@ const styles = StyleSheet.create({
         fontSize:16,
         fontWeight: "200",
         color:colors.seconday_text,
-        marginRight:4,
     },
     dolarPrice: {
         marginRight:4,
@@ -168,16 +168,22 @@ export const ProductInformationCard = (props:baseProduct & props)=> {
                 <View style={styles.titleLikesContainer}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.titleStyles}>
-                            {name}
+                            {name}: {variants[activeVariant].name}
                         </Text>
+
                     </View>
 
 
                     <View style={styles.likeButtonContainer}>
-                        <Text style={styles.likeNumberContainer}>
-                            {recomendations} han reaccionado con
+                        <Text style={{...styles.likeNumberContainer, marginTop:0, marginRight:4}}>
+                                {variants[activeVariant].disponibility} Unidades disponibles
                         </Text>
-                        <HeartIconFilled color={colors.pink}/>
+                        {/* <Text style={[styles.likeNumberContainer, {marginLeft:10}]}>
+                            {recomendations}
+                            </Text>
+                       <HeartIconFilled color={colors.pink}/> */}
+                        
+                       
                     </View>
                 </View>
                 <View style={styles.descriptionContainer}>
@@ -201,6 +207,8 @@ export const ProductInformationCard = (props:baseProduct & props)=> {
                     
                 </View>
 
+                
+
                 <View style={styles.buttonAndOrderContainer}>
                     <View style={styles.amountButtonContainerAndPrice}>
                         <View style={styles.priceContainer}>
@@ -212,7 +220,7 @@ export const ProductInformationCard = (props:baseProduct & props)=> {
                             </Text>
                         </View>
                         <View style={styles.orderContiner}>
-                            <PlusLessButton onChange={plusLessManager} initialValue={1}/>
+                            <PlusLessButton onChange={plusLessManager} initialValue={0} limit={variants[activeVariant].disponibility}/>
                         </View>
                     </View>
                     <View style={styles.buttonAddContainer}>

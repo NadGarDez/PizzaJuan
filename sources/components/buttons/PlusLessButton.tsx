@@ -6,75 +6,76 @@ import { shadows } from "../../styles/shadow";
 
 const styles = StyleSheet.create(
     {
-        buttonContainer : {
-            display:"flex",
+        buttonContainer: {
+            display: "flex",
             flexDirection: "row",
-            justifyContent:"center",
-            alignItems:"center",
+            justifyContent: "center",
+            alignItems: "center",
             backgroundColor: colors.white_card,
-            borderRadius:12,
+            borderRadius: 12,
             borderStyle: "solid",
-            borderColor: colors.seconday_text+"50",
+            borderColor: colors.seconday_text + "50",
             borderWidth: 1,
-            overflow:"hidden"
+            overflow: "hidden"
         },
         leftButton: {
-            height:40,
-            width:40,
+            height: 40,
+            width: 40,
             flexDirection: "row",
-            justifyContent:"center",
-            alignItems:"center",
-            padding:6,
-            borderTopLeftRadius:12,
-            borderBottomLeftRadius:12
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 6,
+            borderTopLeftRadius: 12,
+            borderBottomLeftRadius: 12
         },
-        centerNumber:{
-            height:40,
-            width:40,
+        centerNumber: {
+            height: 40,
+            width: 40,
             flexDirection: "row",
-            justifyContent:"center",
-            alignItems:"center",
-            padding:6,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 6,
         },
         rightButton: {
-            height:40,
-            width:40,
+            height: 40,
+            width: 40,
             flexDirection: "row",
-            justifyContent:"center",
-            alignItems:"center",
-            padding:6,
-            borderTopRightRadius:12,
-            borderBottomRightRadius:12
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 6,
+            borderTopRightRadius: 12,
+            borderBottomRightRadius: 12
         },
         textStyles: {
-            fontSize:14,
+            fontSize: 14,
             fontWeight: "400",
-            color:colors.black_thin,
+            color: colors.black_thin,
         }
     }
 )
 
 type props = {
-    onChange: (value:number)=>void,
-    initialValue:number,
-    readonly?:boolean
+    onChange: (value: number) => void,
+    initialValue: number,
+    readonly?: boolean,
+    limit: number
 }
 
-export const PlusLessButton = (props:props):JSX.Element=>{
-    const { onChange, initialValue, readonly = false}=props;
+export const PlusLessButton = (props: props): JSX.Element => {
+    const { onChange, initialValue, readonly = false, limit } = props;
 
     const [counter, setCounter] = useState<number>(
         initialValue
     )
-    
-    const addCounter = ()=>setCounter(counter + 1)
-    const restCounter = ()=>{
+
+    const addCounter = () => { if (counter < limit) setCounter(counter + 1) }
+    const restCounter = () => {
         if (counter > 0) setCounter(counter - 1)
     }
 
     useEffect(
-        ()=>{
-            if(counter !== initialValue){
+        () => {
+            if (counter !== initialValue) {
                 onChange(counter)
             }
         },
@@ -90,8 +91,8 @@ export const PlusLessButton = (props:props):JSX.Element=>{
                         onPress={restCounter}
                     >
                         {
-                            ({pressed})=>(
-                                <View style={{...styles.leftButton, backgroundColor: pressed ? colors.seconday_text + "30" : colors.white_card}}>
+                            ({ pressed }) => (
+                                <View style={{ ...styles.leftButton, backgroundColor: pressed ? colors.seconday_text + "30" : colors.white_card }}>
                                     <Text style={styles.textStyles}>
                                         -
                                     </Text>
@@ -101,7 +102,7 @@ export const PlusLessButton = (props:props):JSX.Element=>{
                     </Pressable>
                 ) : null
             }
-            
+
             <View style={styles.centerNumber}>
                 <Text style={styles.textStyles}>
                     {counter}
@@ -114,8 +115,8 @@ export const PlusLessButton = (props:props):JSX.Element=>{
                         onPress={addCounter}
                     >
                         {
-                            ({pressed})=>(
-                                <View style={{...styles.rightButton, backgroundColor: pressed ? colors.seconday_text + "30" : colors.white_card}}>
+                            ({ pressed }) => (
+                                <View style={{ ...styles.rightButton, backgroundColor: pressed ? colors.seconday_text + "30" : colors.white_card }}>
                                     <Text style={styles.textStyles}>
                                         +
                                     </Text>
