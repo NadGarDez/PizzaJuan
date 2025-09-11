@@ -140,7 +140,7 @@ export const MyShoppingScreen = ():JSX.Element=>{
     }
 
     const onReachEnd = () => {
-        // console.log('reach end')
+        console.log('reach end')
         // if(reducerStatus !== 'LOADING' &&  !!responseObject?.data.next) {
         //     loadMore({
         //         token: token ?? '',
@@ -153,6 +153,8 @@ export const MyShoppingScreen = ():JSX.Element=>{
     const onRefresh = () => {
         setFilter('all');
     }
+
+    console.log(responseObject?.data.results, 'responseObject')
 
     return (
         <>  

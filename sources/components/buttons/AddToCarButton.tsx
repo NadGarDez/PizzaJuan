@@ -4,7 +4,6 @@ import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
 import { CarIcon } from "../icons/CarIcon";
 
-
 const styles = StyleSheet.create(
     {
         buttonContainer : {
@@ -21,30 +20,42 @@ const styles = StyleSheet.create(
         },
         textStyles: {
             color:colors.text_contrast
+        },
+        disabledButton: {
+            backgroundColor: colors.principal,
+            opacity: 0.5
+        },
+        disabledText: {
+            color: colors.text_contrast,
+            opacity: 0.5
         }
     }
 )
 
 type props = {
     onPress: ()=>void,
+    disabled?:boolean
 }
 
-const pressedStyles= (pressed:boolean)=>pressed ? {...styles.buttonContainer, ...shadows.lightShadow, backgroundColor: colors.hightLightPrincipal } : {...styles.buttonContainer, ...shadows.principalShadow}
+const pressedStyles= (pressed:boolean, disabled:boolean)=> {
+    if (disabled) {
+        return {...styles.buttonContainer, ...styles.disabledButton};
+    }
+    return pressed ? {...styles.buttonContainer, ...shadows.lightShadow, backgroundColor: colors.hightLightPrincipal } : {...styles.buttonContainer, ...shadows.principalShadow};
+};
 
 export const AddToCarButton = (props:props):JSX.Element=>{
-    const {onPress}=props;
-
-
+    const {onPress, disabled = false}=props;
 
     return (
-        <Pressable onPress={onPress}>
+        <Pressable onPress={onPress} disabled={disabled}>
             {
                 ({pressed})=> (
-                    <View style={pressedStyles(pressed)}>
-                        <Text style={styles.textStyles}>
-                            Aggregar al carrito
+                    <View style={pressedStyles(pressed, disabled)}>
+                        <Text style={[styles.textStyles, disabled && styles.disabledText]}>
+                            Agregar al carrito
                         </Text>
-                        <CarIcon color={colors.text_contrast}/>
+                        <CarIcon color={disabled ? "rgba(255, 255, 255, 0.5)" : colors.text_contrast}/>
                     </View>
                 )
             }
