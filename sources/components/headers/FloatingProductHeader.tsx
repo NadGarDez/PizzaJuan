@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { activeProductSelector, updateActiveRecommendedProduct } from "../../redux/activeProductSlice";
 import { updateProductRecommendation } from "../../utils/apiRequests";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
+import { updateProductItemInList } from "../../redux/productsSlicer";
 
 
 const styles = StyleSheet.create(
@@ -84,14 +85,15 @@ export const FloatingProductHeader = ({ navigation }: NativeStackHeaderProps): J
                 return;
             }
             const response = await updateProductRecommendation(product.pk, token ?? '');
-            console.log("Recommendation response: ", response);
             if (response.status === 200) {
                 const data = response.data as { message?: string };
                 if (data.message === 'Product recommended successfully') {
                     dispatch(updateActiveRecommendedProduct(true));
+                    dispatch(updateProductItemInList({ id: product.pk, item: { ...product, is_recommended_by_user: true }}));
                 }
                 else {
                     dispatch(updateActiveRecommendedProduct(false));
+                     dispatch(updateProductItemInList({ id: product.pk, item: { ...product, is_recommended_by_user: false }}));
                 }
             }
 

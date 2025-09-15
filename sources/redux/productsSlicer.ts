@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./reduxTypes";
 import { type defaultApiResponse } from "../types/api/defaultTypes";
+import { baseProduct } from "../types/api/productTypes";
 
 // state type
 
@@ -54,14 +55,31 @@ const productsSlice = createSlice(
             finishRequestWithError: (state, action: PayloadAction<defaultApiResponse<data> | undefined>) => {
                 state.reducerStatus = 'ERROR',
                 state.responseObject = action.payload || null
-            }
+            },
+            updateProductItemInList: (
+                state, 
+                action:PayloadAction<{
+                    item: baseProduct,
+                    id:number
+                }>
+            ) => {
+                if(state.responseObject) {
+
+                    const currentList = [...state.responseObject.data.results];
+                    const index = currentList.findIndex((prod)=> prod.pk === action.payload.id);
+                    if(index === -1) return;
+                    currentList[index] = action.payload.item;
+                    state.responseObject.data.results = currentList;
+                }
+            }   
+
         },
     }
 );
 
 //actions export
 
-export const {startRequest, finishRequestSuccessfully, finishRequestWithError, startNRequest, finishNRequestSuccessfully} = productsSlice.actions;
+export const {updateProductItemInList, startRequest, finishRequestSuccessfully, finishRequestWithError, startNRequest, finishNRequestSuccessfully} = productsSlice.actions;
 
 //selector export
 
