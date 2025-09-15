@@ -144,7 +144,7 @@ type props = {
 
 export const ProductInformationCard = (props: baseProduct & props) => {
 
-    const { name, description, recomendations, compressed, variants } = props;
+    const { name, description, recomendations_count, compressed, variants } = props;
     const [productAmount, setProductAmount] = useState<number>(0);
     const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -187,7 +187,7 @@ export const ProductInformationCard = (props: baseProduct & props) => {
 
                         <View style={styles.likeButtonContainer}>
                             <Text style={[styles.likeNumberContainer, { marginLeft: 10 }]}>
-                                {recomendations}
+                                {recomendations_count}
                             </Text>
                             <HeartIconFilled color={colors.pink} />
                         </View>

@@ -4,44 +4,48 @@ import { Platform, StyleSheet, View } from "react-native";
 import { IconButton } from "../buttons/IconButton";
 import { BackIcon } from "../icons/BackIcon";
 import { HeartButton } from "../buttons/HeartButton";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { activeProductSelector, updateActiveRecommendedProduct } from "../../redux/activeProductSlice";
+import { updateProductRecommendation } from "../../utils/apiRequests";
+import { sessionTokenSelector } from "../../redux/SessionReducer";
 
 
-const styles  = StyleSheet.create(
+const styles = StyleSheet.create(
     {
-        container : {
-            paddingTop:Platform.select({
-                ios:47,
-                android:10
+        container: {
+            paddingTop: Platform.select({
+                ios: 47,
+                android: 10
             }),
-            paddingBottom:16,
-            width:"100%",
-            backgroundColor:"#FFFFFF00",
-            display:"flex",
-            flexDirection:"row",
+            paddingBottom: 16,
+            width: "100%",
+            backgroundColor: "#FFFFFF00",
+            display: "flex",
+            flexDirection: "row",
             position: "absolute",
-            top:0,
-            zIndex:25
+            top: 0,
+            zIndex: 25
         },
         leftContainer: {
-            display:"flex",
-            flexGrow:1,
-            flexDirection:"row",
-            justifyContent:"flex-start",
-            paddingLeft:16
+            display: "flex",
+            flexGrow: 1,
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            paddingLeft: 16
         },
         centerContainer: {
-            display:"flex",
-            flexGrow:1,
-            flexDirection:"row",
-            justifyContent:"center",
-            paddingHorizontal:4
+            display: "flex",
+            flexGrow: 1,
+            flexDirection: "row",
+            justifyContent: "center",
+            paddingHorizontal: 4
         },
         righContainer: {
-            display:"flex",
-            flexGrow:1,
-            flexDirection:"row",
-            justifyContent:"flex-end",
-            paddingRight:16
+            display: "flex",
+            flexGrow: 1,
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            paddingRight: 16
         },
         semiTransparentCircle: {
             width: 40,
@@ -58,10 +62,47 @@ const styles  = StyleSheet.create(
 )
 
 
-export const FloatingProductHeader = ({navigation}:NativeStackHeaderProps):JSX.Element=> {
+export const FloatingProductHeader = ({ navigation }: NativeStackHeaderProps): JSX.Element => {
 
-    const back = ()=> {
+    const product = useAppSelector(activeProductSelector);
+    const [loadingRecommendation, setLoadingRecommendation] = React.useState<boolean>(false);
+    const token = useAppSelector(sessionTokenSelector);
+    const dispatch = useAppDispatch();
+
+
+    const back = () => {
         navigation.goBack()
+    }
+
+    const updateRecommendationRequest = async (): Promise<void> => {
+        if (loadingRecommendation) {
+            return;
+        }
+        setLoadingRecommendation(true);
+        try {
+            if (!product) {
+                return;
+            }
+            const response = await updateProductRecommendation(product.pk, token ?? '');
+            console.log("Recommendation response: ", response);
+            if (response.status === 200) {
+                const data = response.data as { message?: string };
+                if (data.message === 'Product recommended successfully') {
+                    dispatch(updateActiveRecommendedProduct(true));
+                }
+                else {
+                    dispatch(updateActiveRecommendedProduct(false));
+                }
+            }
+
+        } catch (error) {
+            console.log("Error updating recommendation: ", error);
+        }
+        setLoadingRecommendation(false);
+    }
+
+    if (!product) {
+        return <></>
     }
 
     return (
@@ -69,15 +110,15 @@ export const FloatingProductHeader = ({navigation}:NativeStackHeaderProps):JSX.E
             <View style={styles.leftContainer}>
                 <View style={styles.semiTransparentCircle}>
                     <IconButton onPress={back}>
-                    <BackIcon />
+                        <BackIcon />
                     </IconButton>
                 </View>
-                
+
             </View>
-            <View style={styles.centerContainer}/>
+            <View style={styles.centerContainer} />
             <View style={styles.righContainer}>
                 <View style={styles.semiTransparentCircle}>
-                    <HeartButton onPress={()=>{}} pressed={false}/>
+                    <HeartButton onPress={updateRecommendationRequest} pressed={product.is_recommended_by_user} />
                 </View>
             </View>
         </View>

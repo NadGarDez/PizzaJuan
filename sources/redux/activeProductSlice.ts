@@ -29,14 +29,19 @@ const activeProductSlice = createSlice(
             },
             setActiveVariant: (state, action:PayloadAction<number>)=> {
                 state.activeVariant = action.payload
-            }   
+            },
+            updateActiveRecommendedProduct: (state, action:PayloadAction<boolean>)=> {
+                if(state.product) {
+                    state.product.is_recommended_by_user = action.payload
+                }   
+            }
         },
     }
 );
 
 //actions export
 
-export const {setActiveProduct, resetActiveProduct, setActiveVariant } = activeProductSlice.actions;
+export const {setActiveProduct, resetActiveProduct, setActiveVariant, updateActiveRecommendedProduct } = activeProductSlice.actions;
 
 //selector export
 

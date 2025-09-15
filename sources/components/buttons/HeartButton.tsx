@@ -8,46 +8,46 @@ import { HeartIconOutlined } from "../icons/HeartIconOutlined";
 
 const styles = StyleSheet.create(
     {
-        buttonContainer : {
-            display:"flex",
+        buttonContainer: {
+            display: "flex",
             flexDirection: "row",
-            justifyContent:"center",
-            alignItems:"center",
-            width:30,
-            height:30,
-            borderRadius:20,
+            justifyContent: "center",
+            alignItems: "center",
+            width: 30,
+            height: 30,
+            borderRadius: 20,
         }
     }
 )
 
 type props = {
-    onPress: (value:boolean)=>void,
-    pressed:boolean
+    onPress: () => Promise<void>,
+    pressed: boolean
 }
 
-export const HeartButton = (props:props):JSX.Element=>{
-    const { onPress, pressed}=props;
+export const HeartButton = (props: props): JSX.Element => {
+    const { onPress, pressed } = props;
 
-    const [pressedState, setPressed] = useState<boolean>(pressed);
+    const [pressedState, setPressed] = useState<boolean>(false);
 
     useEffect(
-        ()=>{
-            onPress(pressedState);
+        () => {
+            setPressed(pressed);
         },
-        [pressedState]
+        [pressed]
     )
 
 
     return (
-        <TouchableOpacity 
-            onPress={()=>{
-                setPressed(!pressedState)
+        <TouchableOpacity
+            onPress={async () => {
+                await onPress();
             }}
         >
             <View style={styles.buttonContainer}>
                 {
                     pressedState ? (
-                        <HeartIconFilled color={colors.pink}/>
+                        <HeartIconFilled color={colors.pink} />
                     ) : (
                         <HeartIconOutlined />
                     )

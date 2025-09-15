@@ -128,7 +128,7 @@ type ProductListScreenPropType = NativeStackScreenProps<ProductStackType,"PRODUC
 
 export const ProductItem = (props:baseProduct):JSX.Element=>{
 
-    const {principal_image, recomendations, name, base_price, short_description, pk } = props;
+    const {principal_image, recomendations_count, name, base_price, short_description, pk, is_recommended_by_user } = props;
     const {navigate} = useNavigation<ProductListScreenPropType['navigation']>();
     const dispatch = useAppDispatch();
 
@@ -162,10 +162,10 @@ export const ProductItem = (props:baseProduct):JSX.Element=>{
                                     
                                     <View style={styles.likeContainer}>
                                         <Text style={styles.likeNumberContainer}>
-                                            {recomendations}
+                                            {recomendations_count}
                                         </Text>
                                         {
-                                            true ? <HeartIconFilled  size={14} color={colors.pink} /> : <HeartIconOutlined size={14} />
+                                            is_recommended_by_user ? <HeartIconFilled  size={14} color={colors.pink} /> : <HeartIconOutlined size={14} />
                                         }
                                     </View>
                                 </View>

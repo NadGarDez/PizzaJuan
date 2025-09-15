@@ -26,7 +26,8 @@ export interface baseProduct {
     name:string,
     description:string,
     short_description:string,
-    recomendations:number, 
+    recomendations_count:number, 
+    is_recommended_by_user: boolean
     principal_image:string,
     base_price:number,
     variants: productVariant[],
@@ -40,7 +41,7 @@ export type shoppingCarItemType =  {
     pk:number,
     name:string,
     short_description:string,
-    recomendations:number, 
+    recomendations_count:number, 
     principal_image:string,
     base_price:number,
     variant: Omit<productVariant, 'images'>,

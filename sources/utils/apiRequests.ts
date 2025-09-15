@@ -552,3 +552,42 @@ export const updateUser = async (params: Record<string | 'token', any>) => {
     }
 
 }
+
+export const updateProductRecommendation = async (pk: number, token: string): Promise<defaultApiResponse< object | null>> => {
+    const url = urlFormatter.recommendProduct(pk);
+    console.log(token, 'token in recommendation')
+    try {
+        const {status, statusText, data} = await axios.post(url, {},
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            
+            }
+        )
+        return {
+            status, 
+            data, 
+            statusText
+        }
+        
+    } catch (error:any) {
+        if(error.response){
+            const {data, status} = error.response as AxiosResponse;
+            return {
+                status,
+                data: null,
+                statusText:data.detail
+            }
+        }
+        else {
+             return {
+                status: 500,
+                data: null,
+                statusText:'Error inesperado'
+            }
+        }
+        
+    }
+
+}

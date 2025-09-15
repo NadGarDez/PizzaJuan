@@ -63,7 +63,7 @@ export type OrderItem = {
       pk: number;
       name: string;
       short_description: string;
-      recomendations: number;
+      recomendations_count: number;
       principal_image: string;
     }
   };

@@ -13,5 +13,6 @@ export const urlFormatter: Record<string,(param:any)=> string> = {
     getDeliveryLocations: (param) => `${BASE_API_URL}/delivery_location/list/`,
     getPayMethods: (param) => `${BASE_API_URL}/pay_method/list/`,
     updateUserUrl: (param) => `${BASE_API_URL}/user/save_information/`,
-    getOrdersUrl: (params:string) => `${BASE_API_URL}/order/list/${params}/`
+    getOrdersUrl: (params:string) => `${BASE_API_URL}/order/list/${params}/`,
+    recommendProduct: (pk:number) => `${BASE_API_URL}/product/recommend/${pk}/`
 }
