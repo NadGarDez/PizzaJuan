@@ -33,6 +33,7 @@ const activeProductSlice = createSlice(
             updateActiveRecommendedProduct: (state, action:PayloadAction<boolean>)=> {
                 if(state.product) {
                     state.product.is_recommended_by_user = action.payload
+                    state.product.recomendations_count += action.payload ? 1 : -1
                 }   
             }
         },

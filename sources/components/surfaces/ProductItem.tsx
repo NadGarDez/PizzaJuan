@@ -148,7 +148,7 @@ export const ProductItem = (props:baseProduct):JSX.Element=>{
                     }>
                     <View style={styles.flexRowStyles}>
                         <View style={styles.imageContainer}>
-                            <Image source={{uri:`${BASE_URL}${principal_image}`}} style={styles.imageStyles} resizeMode='contain' />
+                            <Image source={{uri:principal_image}} style={styles.imageStyles} resizeMode='contain' />
                         </View>
                         <View style={styles.informationContainer}>
                         

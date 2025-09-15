@@ -140,7 +140,6 @@ export const MyShoppingScreen = ():JSX.Element=>{
     }
 
     const onReachEnd = () => {
-        console.log('reach end')
         // if(reducerStatus !== 'LOADING' &&  !!responseObject?.data.next) {
         //     loadMore({
         //         token: token ?? '',

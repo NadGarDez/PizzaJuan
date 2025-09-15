@@ -70,7 +70,6 @@ export const FloatingProductHeader = ({ navigation }: NativeStackHeaderProps): J
     const token = useAppSelector(sessionTokenSelector);
     const dispatch = useAppDispatch();
 
-
     const back = () => {
         navigation.goBack()
     }
@@ -89,11 +88,13 @@ export const FloatingProductHeader = ({ navigation }: NativeStackHeaderProps): J
                 const data = response.data as { message?: string };
                 if (data.message === 'Product recommended successfully') {
                     dispatch(updateActiveRecommendedProduct(true));
-                    dispatch(updateProductItemInList({ id: product.pk, item: { ...product, is_recommended_by_user: true }}));
+                    const recomendations_count = product.recomendations_count ? product.recomendations_count + 1 : 1;
+                    dispatch(updateProductItemInList({ id: product.pk, item: { ...product, is_recommended_by_user: true, recomendations_count } }) );
                 }
                 else {
                     dispatch(updateActiveRecommendedProduct(false));
-                     dispatch(updateProductItemInList({ id: product.pk, item: { ...product, is_recommended_by_user: false }}));
+                    const recomendations_count = product.recomendations_count ? Math.max(0, product.recomendations_count - 1) : 0;
+                     dispatch(updateProductItemInList({ id: product.pk, item: { ...product, is_recommended_by_user: false , recomendations_count}}));
                 }
             }
 

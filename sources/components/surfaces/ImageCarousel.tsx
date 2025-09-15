@@ -123,7 +123,7 @@ export const ImageCarousel = ({data, focused,dx, released, setFocus}:props):JSX.
                                 <Image
                                     key={`${index}-image-carousel`}
                                     source={{
-                                        uri: BASE_URL + item,
+                                        uri: item,
                                         cache: 'force-cache',
                                     }}
                                     style={{
