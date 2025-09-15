@@ -14,11 +14,11 @@ import { useListLocalRequest } from "../../hooks/useListLocalRequest"
 
 const styles = StyleSheet.create(
     {
-        container : {
-            flex:1,
+        container: {
+            flex: 1,
             backgroundColor: "transparent",
-            paddingHorizontal:16,
-            paddingTop:Platform.select({
+            paddingHorizontal: 16,
+            paddingTop: Platform.select({
                 android: 56,
                 ios: 93
             }),
@@ -28,46 +28,46 @@ const styles = StyleSheet.create(
             }),
         },
         card: {
-            flex:1,
-            backgroundColor:colors.white_card,
-            borderRadius:12,
+            flex: 1,
+            backgroundColor: colors.white_card,
+            borderRadius: 12,
             ...shadows.principalShadow
         },
         titleContainer: {
             display: "flex",
-            width:'100%',
+            width: '100%',
             paddingVertical: 8,
             justifyContent: "center",
             flexDirection: "row",
-            borderStyle:'solid',
+            borderStyle: 'solid',
             borderTopColor: "transparent",
             borderRightColor: "transparent",
             borderLeftColor: "transparent",
-            borderBottomColor:colors.seconday_text + "30",
-            borderWidth:1
+            borderBottomColor: colors.seconday_text + "30",
+            borderWidth: 1
         },
         section: {
-            flex:1,
-            flexDirection:"row",
+            flex: 1,
+            flexDirection: "row",
             justifyContent: "center"
-        }  ,
+        },
         titleFonts: {
-            fontSize:16,
+            fontSize: 16,
             fontWeight: "200",
-            color:colors.seconday_text,
-            textAlign:"center"
+            color: colors.seconday_text,
+            textAlign: "center"
         },
         tabBarStyle: {
-            backgroundColor: colors.white_card , 
-            height:40,
-            borderTopEndRadius:12,
-            borderTopLeftRadius:12
+            backgroundColor: colors.white_card,
+            height: 40,
+            borderTopEndRadius: 12,
+            borderTopLeftRadius: 12
         },
         bottomLine: {
-            height:20,
+            height: 20,
             borderStyle: "solid",
             borderBottomColor: "transparent",
-            borderLeftColor:"transparent",
+            borderLeftColor: "transparent",
             borderRightColor: "transparent",
             borderTopColor: colors.seconday_text + "30",
             borderWidth: 1,
@@ -83,37 +83,38 @@ const styles = StyleSheet.create(
 
         voidContainer: {
             width: '100%',
-            flex:1,
+            flex: 1,
             flexDirection: 'row',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            paddingTop: 16
         },
 
         text: {
-            fontSize:16,
+            fontSize: 16,
             fontWeight: "200",
-            color:colors.seconday_text,
+            color: colors.seconday_text,
         },
-        
-       
+
+
     }
 );
 
-const voidList = ()=> (
+const voidList = () => (
     <View style={styles.voidContainer}>
         <Text style={styles.text}>La lista de ordenes esta vacía</Text>
     </View>
 )
 
-export const MyShoppingScreen = ():JSX.Element=>{
+export const MyShoppingScreen = (): JSX.Element => {
 
     const token = useAppSelector(sessionTokenSelector);
 
     const [filter, setFilter] = useState<string>('all');
 
-    const {refetch, responseObject, clear, reducerStatus, loadMore} =  useListLocalRequest<Order>(getOrderInformation);
+    const { refetch, responseObject, clear, reducerStatus, loadMore } = useListLocalRequest<Order>(getOrderInformation);
 
-    const onChange = (code:string) => {
+    const onChange = (code: string) => {
         setFilter(code);
     }
 
@@ -153,46 +154,44 @@ export const MyShoppingScreen = ():JSX.Element=>{
         setFilter('all');
     }
 
-    console.log(responseObject?.data.results, 'responseObject')
-
     return (
-        <>  
-            <TransformedSquare/> 
-            <TransformedBottomCircle/>
+        <>
+            <TransformedSquare />
+            <TransformedBottomCircle />
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <OrderFilterSelect 
+                    <OrderFilterSelect
                         onChange={onChange}
 
                         onReload={
-                           clearAndRefetch
+                            clearAndRefetch
                         }
-                    
+
                     />
                     <FlatList
                         data={responseObject?.data.results ?? []}
                         showsVerticalScrollIndicator={false}
                         ListEmptyComponent={voidList}
-                        renderItem={({item})=>(
-                            <ShoppingItem {...item}/>
+                        renderItem={({ item }) => (
+                            <ShoppingItem {...item} />
                         )}
 
                         onEndReached={onReachEnd}
-                                    
+
                         ListFooterComponent={
                             (
                                 <>
-                                     {
+                                    {
                                         reducerStatus === 'INITIAL' || reducerStatus === 'LOADING' ? (
                                             <View style={styles.loading}>
-                                                <ActivityIndicator size={120} color={colors.principal}/>
+                                                <ActivityIndicator size={120} color={colors.principal} />
                                             </View>
                                         ) : (
-                                            <View style={{marginBottom:10}}>
+                                            <View style={{ marginBottom: 10 }}>
                                             </View>
                                         )
                                     }
-                                
+
                                 </>
                             )
                         }
@@ -203,6 +202,6 @@ export const MyShoppingScreen = ():JSX.Element=>{
                 </View>
             </View>
         </>
-       
+
     )
 }

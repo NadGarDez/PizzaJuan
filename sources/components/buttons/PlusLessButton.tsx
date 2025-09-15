@@ -56,32 +56,29 @@ const styles = StyleSheet.create(
 
 type props = {
     onChange: (value: number) => void,
-    initialValue: number,
+    value: number,
     readonly?: boolean,
     limit: number
 }
 
 export const PlusLessButton = (props: props): JSX.Element => {
-    const { onChange, initialValue, readonly = false, limit } = props;
+    const { onChange, value, readonly = false, limit } = props;
 
     const [counter, setCounter] = useState<number>(
-        initialValue
+        value
     )
 
-    const addCounter = () => { if (counter < limit) setCounter(counter + 1) }
+    const addCounter = () => { if (counter < limit) onChange(counter + 1) }
     const restCounter = () => {
-        if (counter > 0) setCounter(counter - 1)
+        if (counter > 0) onChange(counter - 1)
     }
 
-    useEffect(
+   useEffect(
         () => {
-            if (counter !== initialValue) {
-                onChange(counter)
-            }
+            setCounter(value);
         },
-        [counter, onChange]
+        [value]
     )
-
 
     return (
         <View style={styles.buttonContainer}>

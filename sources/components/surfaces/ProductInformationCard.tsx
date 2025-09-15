@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { HeartIconFilled } from "../icons/HeartIconFilled"
 import { PlusLessButton } from "../buttons/PlusLessButton"
@@ -174,6 +174,14 @@ export const ProductInformationCard = (props: baseProduct & props) => {
 
     const onCloseModal = () => setShowModal(false);
 
+
+    useEffect(
+        () => {
+            setProductAmount(0);
+        },
+        [activeVariant]
+    )
+
     return (
         <>
             <View style={styles.informationContainer}>
@@ -241,7 +249,7 @@ export const ProductInformationCard = (props: baseProduct & props) => {
                             </Text>
                         </View>
                         <View style={styles.orderContiner}>
-                            <PlusLessButton onChange={plusLessManager} initialValue={0} limit={variants[activeVariant].disponibility} />
+                            <PlusLessButton onChange={plusLessManager} value={productAmount} limit={variants[activeVariant].disponibility} />
                         </View>
                     </View>
                     <View style={styles.buttonAddContainer}>
