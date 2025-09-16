@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 import { colors } from "../../styles/colors";
-import { OutlinedButton } from "../buttons/OutlinedButton";
 import { CheckIcon } from "../icons/CheckIcon";
 
 const styles = StyleSheet.create({
@@ -87,7 +86,7 @@ export const NotificationModal = (props:props):JSX.Element => {
 
 
     return (
-        <Modal isVisible={visible} animationIn='pulse' animationOut='fadeOutDown' >
+        <Modal isVisible={visible} animationIn='pulse' animationOut='zoomOut'>
             <View style={styles.windowErrorContainer}>
                 <View style={styles.titleContainer}>
                     <CheckIcon 
