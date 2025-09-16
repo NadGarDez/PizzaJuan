@@ -191,7 +191,7 @@ export const CarItem = (props:props):JSX.Element=>{
                     }>
                         <View style={styles.flexRowStyles}>
                             <View style={styles.imageContainer}>
-                                <Image source={{uri:BASE_URL + principal_image, cache: 'force-cache'}} style={styles.imageStyles} resizeMode='contain'/>
+                                <Image source={{uri:principal_image, cache: 'force-cache'}} style={styles.imageStyles} resizeMode='contain'/>
                             </View>
                             <View style={styles.informationContainer}>
                                     
@@ -232,7 +232,8 @@ export const CarItem = (props:props):JSX.Element=>{
                                                 onChange={
                                                     onChangeItemNumber
                                                 }
-                                                initialValue={numberOfItems}
+                                                value={numberOfItems}
+                                                limit={numberOfItems}
                                             /> 
                                         </View>
                                     </View>

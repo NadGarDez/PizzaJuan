@@ -35,6 +35,7 @@
 		D90C120A2B52B55B002A340A /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D90C11F72B52B55B002A340A /* FontAwesome6_Brands.ttf */; };
 		D90C120B2B52B55B002A340A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D90C11F82B52B55B002A340A /* MaterialIcons.ttf */; };
 		D942F8702C7141F40074B069 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D942F86F2C7141F40074B069 /* LaunchScreen.storyboard */; };
+		38E41D700D29410C905797D8 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDDEDFB9E743D3B2A31EAC /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 		D90C11F82B52B55B002A340A /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		D942F86F2C7141F40074B069 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		7FBDDEDFB9E743D3B2A31EAC /* Config.xcconfig */ = {isa = PBXFileReference; name = "Config.xcconfig"; path = "Config.xcconfig"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.xcconfig; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				7FBDDEDFB9E743D3B2A31EAC /* Config.xcconfig */,
 				D942F86F2C7141F40074B069 /* LaunchScreen.storyboard */,
 				D90C11E52B52B55B002A340A /* Fonts */,
 				13B07FAE1A68108700A75B9A /* PizzaJuan */,
@@ -339,6 +342,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38E41D700D29410C905797D8 /* Config.xcconfig in Resources */,
 				D90C12042B52B55B002A340A /* FontAwesome5_Regular.ttf in Resources */,
 				D90C11F92B52B55B002A340A /* Fontisto.ttf in Resources */,
 				D90C11FE2B52B55B002A340A /* FontAwesome5_Brands.ttf in Resources */,
@@ -752,6 +756,7 @@
 				USE_HERMES = true;
 			};
 			name = Debug;
+			baseConfigurationReference = 7FBDDEDFB9E743D3B2A31EAC /* Config.xcconfig */;
 		};
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -821,6 +826,7 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
+			baseConfigurationReference = 7FBDDEDFB9E743D3B2A31EAC /* Config.xcconfig */;
 		};
 /* End XCBuildConfiguration section */
 

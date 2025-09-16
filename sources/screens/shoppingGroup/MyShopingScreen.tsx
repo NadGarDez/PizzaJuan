@@ -95,8 +95,6 @@ const styles = StyleSheet.create(
             fontWeight: "200",
             color: colors.seconday_text,
         },
-
-
     }
 );
 
@@ -107,48 +105,46 @@ const voidList = () => (
 )
 
 export const MyShoppingScreen = (): JSX.Element => {
-
     const token = useAppSelector(sessionTokenSelector);
-
     const [filter, setFilter] = useState<string>('all');
-
     const { refetch, responseObject, clear, reducerStatus, loadMore } = useListLocalRequest<Order>(getOrderInformation);
 
     const onChange = (code: string) => {
         setFilter(code);
     }
 
-    useEffect(
-        () => {
-            refetch(
-                {
-                    token: token ?? '',
-                    filter
-                }
-            )
-        },
-        [filter]
-    )
-
     const clearAndRefetch = () => {
+        if (reducerStatus === 'LOADING') return;
         clear();
-        refetch(
-            {
-                token: token ?? '',
-                filter
-            }
-        )
+        refetch({
+            token: token ?? '',
+            filter
+        });
     }
+
+    useEffect(() => {
+        refetch({
+            token: token ?? '',
+            filter
+        });
+    }, [filter]);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            clearAndRefetch();
+        }, 90000); 
+
+        return () => clearInterval(intervalId);
+    }, [clearAndRefetch]);
 
     const onReachEnd = () => {
-        // if(reducerStatus !== 'LOADING' &&  !!responseObject?.data.next) {
-        //     loadMore({
-        //         token: token ?? '',
-        //         url: responseObject.data.next
-        //     })
-        // }
+        if (reducerStatus !== 'LOADING' && !!responseObject?.data.next) {
+            loadMore({
+                token: token ?? '',
+                url: responseObject.data.next
+            });
+        }
     }
-
 
     const onRefresh = () => {
         setFilter('all');
@@ -162,11 +158,7 @@ export const MyShoppingScreen = (): JSX.Element => {
                 <View style={styles.card}>
                     <OrderFilterSelect
                         onChange={onChange}
-
-                        onReload={
-                            clearAndRefetch
-                        }
-
+                        onReload={clearAndRefetch}
                     />
                     <FlatList
                         data={responseObject?.data.results ?? []}
@@ -175,9 +167,7 @@ export const MyShoppingScreen = (): JSX.Element => {
                         renderItem={({ item }) => (
                             <ShoppingItem {...item} />
                         )}
-
                         onEndReached={onReachEnd}
-
                         ListFooterComponent={
                             (
                                 <>
@@ -191,17 +181,14 @@ export const MyShoppingScreen = (): JSX.Element => {
                                             </View>
                                         )
                                     }
-
                                 </>
                             )
                         }
                     />
                     <View style={styles.bottomLine}>
-
                     </View>
                 </View>
             </View>
         </>
-
     )
 }
