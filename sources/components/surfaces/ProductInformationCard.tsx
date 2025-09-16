@@ -145,7 +145,7 @@ type props = {
 export const ProductInformationCard = (props: baseProduct & props) => {
 
     const { name, description, recomendations_count, compressed, variants } = props;
-    const [productAmount, setProductAmount] = useState<number>(0);
+    const [productAmount, setProductAmount] = useState<number>(1);
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const activeVariant = useAppSelector(activeVariantSeelector);
@@ -177,7 +177,7 @@ export const ProductInformationCard = (props: baseProduct & props) => {
 
     useEffect(
         () => {
-            setProductAmount(0);
+            setProductAmount(1);
         },
         [activeVariant]
     )
