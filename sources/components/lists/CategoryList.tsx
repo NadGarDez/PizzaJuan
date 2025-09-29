@@ -31,6 +31,7 @@ const allCategory = {
 
 export const CategoryList = ():JSX.Element=> {
 
+
     const [selectedItem, setSelectedItem] = useState<number>(0);
 
     const dispatch = useAppDispatch();
@@ -43,7 +44,7 @@ export const CategoryList = ():JSX.Element=> {
         setSelectedItem(pk);
         dispatch({
             type: 'REQUEST_PRODUCTS',
-            payload:pk
+            payload:{ category: pk !== 0 ? `${pk}` : undefined }
         })
     };
 

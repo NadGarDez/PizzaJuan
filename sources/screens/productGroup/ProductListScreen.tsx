@@ -52,9 +52,11 @@ export const ProductListScreen = ({navigation}:ProductListScreenPropType): JSX.E
                 type: 'REQUEST_CATEGORIES',
             })
             dispatch({
-                type: 'REQUEST_PRODUCTS'
+                type: 'REQUEST_PRODUCTS',
+                payload:{q: undefined}
             })
         },
+        []
     )
 
     return (

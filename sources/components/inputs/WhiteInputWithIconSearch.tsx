@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
@@ -41,16 +41,53 @@ const styles = StyleSheet.create(
             flexDirection: 'row'
         }
     }
-)
+);
 
 export const WhiteInputWithSearchIcon = ():JSX.Element=> {
 
     const dispatch = useAppDispatch();
+    
+    const [searchText, setSearchText] = useState<string>('');
+    
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+    const DEBOUNCE_DELAY = 500; 
+
+    const handleSearch = (text: string) => {
+        dispatch({
+            type: 'REQUEST_PRODUCTS',
+            payload: { q: text }
+        });
+    };
+    
+    useEffect(() => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+        }
+
+        if (searchText.trim() === "") {
+            handleSearch("");
+            return;
+        }
+
+        timerRef.current = setTimeout(() => {
+            handleSearch(searchText);
+        }, DEBOUNCE_DELAY);
+
+        return () => {
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+        };
+    }, [searchText]);
 
     const reload = ()=> {
+        setSearchText(""); 
+        
         dispatch({
-            type: 'REQUEST_PRODUCTS'
-        })
+            type: 'REQUEST_PRODUCTS',
+            payload: { q: undefined, category: undefined }
+        });
     }
 
     return (
@@ -65,6 +102,8 @@ export const WhiteInputWithSearchIcon = ():JSX.Element=> {
                     <TextInput 
                         style={styles.textInputStyles}
                         placeholder={PLACEHOLDER_TEXT_FOR_SEARCH_PRODUCT_INPUT}
+                        value={searchText}
+                        onChangeText={setSearchText}
                     />
                 </View>
             </View>

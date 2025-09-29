@@ -3,7 +3,7 @@ import { call, put, select, takeEvery } from "redux-saga/effects";
 import { sessionTokenSelector } from "../redux/SessionReducer";
 import { getNext, getProductList } from "../utils/apiRequests";
 import { defaultApiResponse } from "../types/api/defaultTypes";
-import { finishRequestSuccessfully, finishRequestWithError, productNextSelector, startRequest, startNRequest, finishNRequestSuccessfully } from "../redux/productsSlicer";
+import { finishRequestSuccessfully, finishRequestWithError, productNextSelector, startRequest, startNRequest, finishNRequestSuccessfully, setFiltersAndStartRequest } from "../redux/productsSlicer";
 
 interface data {
    results: any[],
@@ -12,13 +12,20 @@ interface data {
    previeus: string
 }
 
-function* requestProductSagas(action: PayloadAction<number>) {
-   const category =  action.payload > 0 ? action.payload : '';
+type FilterPayload = {
+    category?: string; 
+    q?: string;       
+};
+
+function* requestProductSagas(action: PayloadAction<FilterPayload>) {
    const token: null | string = yield select(sessionTokenSelector);
+   const currentFilter:FilterPayload = yield select((state:any) => state.products.currentFilter);
+   const combinedFilter = {...currentFilter, ...action.payload};
+   yield put(setFiltersAndStartRequest(combinedFilter));
    try {
       if(token!==null){
          yield put(startRequest())
-         const result: defaultApiResponse<data> = yield call(getProductList,`${category}`, token);
+         const result: defaultApiResponse<data> = yield call(getProductList,combinedFilter, token);
          if(result.status !== 200){
             yield put(finishRequestWithError(result))
          } else {

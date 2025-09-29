@@ -3,7 +3,15 @@ import { RootState } from "./reduxTypes";
 import { type defaultApiResponse } from "../types/api/defaultTypes";
 import { baseProduct } from "../types/api/productTypes";
 
-// state type
+type CurrentFilter = {
+    category: string | undefined;
+    q: string | undefined;
+};
+
+type FilterPayload = {
+    category?: string;
+    q?: string;
+};
 
 interface data {
     results: any[],
@@ -15,21 +23,29 @@ interface data {
 
 interface requestStatus  {
     reducerStatus: 'INITIAL' | 'LOADING' | 'N_LOADING' | 'SUCCESSED' | 'ERROR',
-    responseObject: defaultApiResponse<data> | null
+    responseObject: defaultApiResponse<data> | null,
+    currentFilter: CurrentFilter, 
 } 
 
-//initial state
 const initialState: requestStatus = {
     reducerStatus: 'INITIAL',
-    responseObject: null
+    responseObject: null,
+    currentFilter: {
+        category: undefined,
+        q: undefined,
+    },
 }
 
-//slice
 const productsSlice = createSlice(
     {
         name : "products",
         initialState: initialState,
         reducers : {
+            setFiltersAndStartRequest: (state, action: PayloadAction<FilterPayload>) => {
+                state.currentFilter.category = action.payload.category;
+                state.currentFilter.q = action.payload.q;
+            },
+            
             startRequest: (state) => {
                 state.reducerStatus = 'LOADING'
             },
@@ -64,7 +80,6 @@ const productsSlice = createSlice(
                 }>
             ) => {
                 if(state.responseObject) {
-
                     const currentList = [...state.responseObject.data.results];
                     const index = currentList.findIndex((prod)=> prod.pk === action.payload.id);
                     if(index === -1) return;
@@ -72,16 +87,19 @@ const productsSlice = createSlice(
                     state.responseObject.data.results = currentList;
                 }
             }   
-
         },
     }
 );
 
-//actions export
-
-export const {updateProductItemInList, startRequest, finishRequestSuccessfully, finishRequestWithError, startNRequest, finishNRequestSuccessfully} = productsSlice.actions;
-
-//selector export
+export const {
+    updateProductItemInList, 
+    startRequest, 
+    finishRequestSuccessfully, 
+    finishRequestWithError, 
+    startNRequest, 
+    finishNRequestSuccessfully,
+    setFiltersAndStartRequest 
+} = productsSlice.actions;
 
 export const productsSelector = (state:RootState): any[] | undefined  => {
     return state.products.responseObject?.data.results
@@ -91,5 +109,9 @@ export const productsErrorTextSelector  = (state:RootState) => state.products.re
 export const productGeneralReducerSelector = (state:RootState)=> state.products;
 export const productNextSelector = (state:RootState)=>state.products.responseObject?.data.next || null; 
 
-// reducer export
+export const currentFilterSelector = (state:RootState) => state.products.currentFilter;
+export const currentCategorySelector = (state:RootState) => state.products.currentFilter.category;
+export const currentQSelector = (state:RootState) => state.products.currentFilter.q;
+
+
 export default productsSlice.reducer;
