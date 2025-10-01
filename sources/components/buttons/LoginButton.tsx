@@ -2,6 +2,7 @@ import React from "react";
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
+import { LOGIN_BUTTON_TEXT } from "../../constants/strings";
 
 
 const styles = StyleSheet.create(
@@ -41,7 +42,7 @@ export const LoginButton = (props:props):JSX.Element=>{
                 ({pressed})=> (
                     <View style={pressedStyles(pressed)}>
                         <Text style={styles.textStyles}>
-                            Iniciar sesion
+                            {LOGIN_BUTTON_TEXT}
                         </Text>
                     </View>
                 )

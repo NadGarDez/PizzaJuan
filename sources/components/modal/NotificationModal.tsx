@@ -90,7 +90,7 @@ export const NotificationModal = (props:props):JSX.Element => {
             <View style={styles.windowErrorContainer}>
                 <View style={styles.titleContainer}>
                     <CheckIcon 
-                        color='#90EE90'
+                        color={colors.successColor}
                         size={50}
                     />
                 </View>

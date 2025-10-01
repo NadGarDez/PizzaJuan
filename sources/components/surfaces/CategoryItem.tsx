@@ -67,7 +67,7 @@ export const CategoryItem = ({active, name, index, pk, onPressItem}:props):JSX.E
                 ({pressed})=>(
                     <View style={
                         pressed ? {
-                            ...styles.baseContainer, backgroundColor: "#f4dcae"
+                            ...styles.baseContainer, backgroundColor: colors.categoryItemBackgroundPressed
                         } : {
                            ...styles.baseContainer, ...restContainerStyles
                         }

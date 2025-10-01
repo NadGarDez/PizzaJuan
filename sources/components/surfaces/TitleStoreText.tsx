@@ -74,7 +74,7 @@ export const TitleStoreText = ():JSX.Element=> {
                     </View>
                     
                     <LinearGradient style={styles.textContainer}
-                        colors={[colors.principal, "#00000000"]} 
+                        colors={[colors.principal, colors.blackCeroPercent]} 
                         start={{x: 0.2, y: 0.5}}
                         end={{x: 1, y: 1}}
                     >

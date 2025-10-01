@@ -4,6 +4,7 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { IconButton } from "../buttons/IconButton";
 import { DrawerActions } from "@react-navigation/native";
 import { MenuIcon } from "../icons/MenuIcon";
+import { colors } from "../../styles/colors";
 
 
 const styles  = StyleSheet.create(
@@ -15,7 +16,7 @@ const styles  = StyleSheet.create(
             }),
             paddingBottom:16,
             width:"100%",
-            backgroundColor:"#FFFFFF00",
+            backgroundColor:colors.transparent,
             display:"flex",
             flexDirection:"row",
             position: "absolute",
@@ -47,7 +48,7 @@ const styles  = StyleSheet.create(
             width: 40,
             height: 40,
             borderRadius: 20,
-            backgroundColor: "#FFFFFF90",
+            backgroundColor: colors.whiteNinePercent,
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",

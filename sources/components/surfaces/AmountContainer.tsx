@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     firstCircle: {
         position: "absolute",
         left: - (circleWidth/2),
-        backgroundColor: "#00000010"
+        backgroundColor: colors.blackTenPercent
     },
     secondCircle: {
         position: "absolute",
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         left: - (circleWidth/2),
         bottom:0,
-        backgroundColor: "#00000010"
+        backgroundColor: colors.blackTenPercent
     }
 })
 

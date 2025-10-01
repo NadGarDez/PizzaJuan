@@ -7,6 +7,7 @@ import { ModalForm } from "../modal/ModalForm";
 import { useAppDispatch } from "../../redux/hooks";
 import { activateWithoutValid, configure } from "../../redux/ModalFormReducer";
 import { ModalFormNames } from "../../types/forms/generalFormTypes";
+import { LOCATION_BUTTON_TEXT } from "../../constants/strings";
 
 
 const styles  = StyleSheet.create(
@@ -37,7 +38,7 @@ export const LocationButton = ()=> {
              <WhiteButton onPress={onPress} deepShadow={false}>
                 <View style={styles.locationContainer}>
                     <Text style={styles.textLocationStyles}>
-                                        Tu Ubicacion
+                        {LOCATION_BUTTON_TEXT}
                     </Text>
                     <LocationIcon size={20}/>
                 </View>

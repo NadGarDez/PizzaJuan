@@ -41,7 +41,7 @@ export const DeleteProductButton = (props:props):JSX.Element=>{
                 ({pressed})=>(
                     <View style={{
                         ...styles.semiTransparentCircle,
-                        backgroundColor: pressed ? "#00000020" : "transparent"
+                        backgroundColor: pressed ? colors.blackTwentyPercent : colors.transparent
                     }}>
                          <CloseIcon size={15} color={colors.seconday_text+50}/>
                     </View>

@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-nativ
 import { colors } from "../../styles/colors";
 import { shadows } from "../../styles/shadow";
 import { CarIcon } from "../icons/CarIcon";
+import { ADD_TO_CART_TEXT } from "../../constants/strings";
 
 const styles = StyleSheet.create(
     {
@@ -53,7 +54,7 @@ export const AddToCarButton = (props:props):JSX.Element=>{
                 ({pressed})=> (
                     <View style={pressedStyles(pressed, disabled)}>
                         <Text style={[styles.textStyles, disabled && styles.disabledText]}>
-                            Agregar al carrito
+                           {ADD_TO_CART_TEXT}
                         </Text>
                         <CarIcon color={disabled ? "rgba(255, 255, 255, 0.5)" : colors.text_contrast}/>
                     </View>

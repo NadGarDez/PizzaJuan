@@ -10,7 +10,15 @@ type colors_type = {
     hightLightPrincipal:string,
     formBackground:string,
     formBorder:string,
-    error: string
+    error: string,
+    transparent:string,
+    whiteNinePercent:string,
+    blackTwentyPercent:string,
+    blackTenPercent:string,
+    blackCeroPercent:string,   
+    successColor:string,
+    categoryItemBackgroundPressed?:string,
+
 }
 
 
@@ -18,6 +26,7 @@ export const colors : colors_type= {
     background_white:"#fcfcfc",
     principal: "#f2bc57",
     hightLightPrincipal:"#f9d95f",
+
     black:"#07090d",
     white_card:"#ffffff",
     black_thin:"#15130d",
@@ -26,5 +35,13 @@ export const colors : colors_type= {
     text_contrast:"#fafffa",
     formBackground:"#fafaf9",
     formBorder:"#eeeeee",
-    error: '#F44336'
+    error: '#F44336',
+    transparent:'transparent',
+    whiteNinePercent:"FFFFFF90",
+    blackTwentyPercent:"00000020",
+    blackTenPercent:"00000010",
+    blackCeroPercent:"00000000",
+    successColor:"90EE90",
+    categoryItemBackgroundPressed:"#f4dcae"
+
 }

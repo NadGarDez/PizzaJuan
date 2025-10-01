@@ -9,6 +9,7 @@ import { activeProductSelector, updateActiveRecommendedProduct } from "../../red
 import { updateProductRecommendation } from "../../utils/apiRequests";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
 import { updateProductItemInList } from "../../redux/productsSlicer";
+import { colors } from "../../styles/colors";
 
 
 const styles = StyleSheet.create(
@@ -20,7 +21,7 @@ const styles = StyleSheet.create(
             }),
             paddingBottom: 16,
             width: "100%",
-            backgroundColor: "#FFFFFF00",
+            backgroundColor: colors.transparent,
             display: "flex",
             flexDirection: "row",
             position: "absolute",
@@ -52,7 +53,7 @@ const styles = StyleSheet.create(
             width: 40,
             height: 40,
             borderRadius: 20,
-            backgroundColor: "#FFFFFF90",
+            backgroundColor: colors.whiteNinePercent,
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",

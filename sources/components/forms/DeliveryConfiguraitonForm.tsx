@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native"; 
+import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { deliveryConfigurationMetadata } from "../../constants/form/formConstants";
 import { useFormik } from "formik";
@@ -14,62 +14,63 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { sessionTokenSelector } from "../../redux/SessionReducer";
 import { deliveryLocationRequestSagasAction } from "../../sagas/deliveryLocationSagas";
 import { useLocalRequest } from "../../hooks/useLocalRequest";
+import { ADD_NEW_ADDRESS_TEXT, CANCEL_TEXT, SAVE_ADDRESS_TEXT } from "../../constants/strings";
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
-        minHeight:200,
+        flex: 1,
+        minHeight: 200,
     },
     inputContainer: {
-        marginBottom:8,
-        width:'100%',
+        marginBottom: 8,
+        width: '100%',
     },
     titleInputStyles: {
-        fontSize:14,
+        fontSize: 14,
         fontWeight: "400",
-        color:colors.principal,
+        color: colors.principal,
     },
     titleContainer: {
-        marginBottom:4
+        marginBottom: 4
     },
     textStyles: {
-        color:colors.white_card,
-        fontWeight:"400"
+        color: colors.white_card,
+        fontWeight: "400"
     },
     textContainer: {
-        height:24,
+        height: 24,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center"
     },
     inputList: {
-        display:"flex",
-        flexDirection:"column",
-        marginBottom:8
+        display: "flex",
+        flexDirection: "column",
+        marginBottom: 8
     },
     cancelTextStyles: {
         color: colors.seconday_text,
-        fontWeight:"400"
+        fontWeight: "400"
     },
     cancelContainer: {
-        marginTop:8
+        marginTop: 8
     },
     subtitleContainer: {
         width: "100%",
         marginBottom: 8
     },
     subtitleText: {
-        fontSize:20,
+        fontSize: 20,
         fontWeight: "200",
-        color:colors.seconday_text,
+        color: colors.seconday_text,
     }
 })
 
-const defaultValue : deliveryConfigurationSchemaType = {
-   name:'',
-   plus_code:'',
-   description:''
+const defaultValue: deliveryConfigurationSchemaType = {
+    name: '',
+    plus_code: '',
+    description: ''
 }
 
 type aditionalProps = {
@@ -79,61 +80,61 @@ type aditionalProps = {
 type props = tabViewSceneProps & aditionalProps;
 
 
-export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
+export const DeliveryConfigurationForm = (props: props): JSX.Element => {
 
     const token = useAppSelector(sessionTokenSelector);
     const dispatch = useAppDispatch();
-    const {jumpTo} = props;
+    const { jumpTo } = props;
 
-    const {refetch, reducerStatus, responseObject, clear} = useLocalRequest(createDeliveryLocationRequest)
+    const { refetch, reducerStatus, responseObject, clear } = useLocalRequest(createDeliveryLocationRequest)
 
     const { setFieldValue, handleSubmit, errors, setFieldTouched, touched, resetForm } = useFormik(
         {
             initialValues: defaultValue,
-            validationSchema:deliveryConfigurationSchema,
+            validationSchema: deliveryConfigurationSchema,
             onSubmit: async (values) => {
                 refetch({
                     token: token || '',
                     bodyObject: {
                         ...values,
-                        owner:7
+                        owner: 7
                     }
                 });
             },
         },
     );
 
-    const isItemTouched = (item:string) => {
+    const isItemTouched = (item: string) => {
         const touchedRecord = touched as Record<string, boolean>;
         return touchedRecord[item];
     }
 
-    const getItemError = (item:string) : string | string[] | undefined => {
+    const getItemError = (item: string): string | string[] | undefined => {
         const error = errors as Record<string, string | string[]>;
         return (isItemTouched(item) && !!error[item]) ? error[item] : undefined
     }
 
-    const handleTouch = async  (inputName:string) => {
+    const handleTouch = async (inputName: string) => {
         await setFieldTouched(inputName);
     }
 
-    const onPress= ()=> {
+    const onPress = () => {
         // const h = errors as Record<string, string | [string]> // we can use this form to get especific errors
         handleSubmit()
     }
 
-    const onPressCancel = ()=> {
+    const onPressCancel = () => {
         jumpTo('first');
     }
 
 
     useEffect(
         () => {
-            if(reducerStatus === 'SUCCESSED'){
-                    resetForm();
-                    clear();
-                    jumpTo('first');
-                    dispatch(deliveryLocationRequestSagasAction());
+            if (reducerStatus === 'SUCCESSED') {
+                resetForm();
+                clear();
+                jumpTo('first');
+                dispatch(deliveryLocationRequestSagasAction());
             }
         },
         [reducerStatus]
@@ -143,17 +144,17 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
         <KeyboardAwareScrollView
             style={styles.container}
         >
-                <View style={styles.subtitleContainer}>
-                    <Text style={styles.subtitleText}>
-                        Agrega una nueva direccion
-                    </Text>
-                </View>
-                <View style={styles.inputList}>
-                    {
-                        reducerStatus !== 'SUCCESSED' ?
+            <View style={styles.subtitleContainer}>
+                <Text style={styles.subtitleText}>
+                    {ADD_NEW_ADDRESS_TEXT}
+                </Text>
+            </View>
+            <View style={styles.inputList}>
+                {
+                    reducerStatus !== 'SUCCESSED' ?
                         Object.keys(defaultValue).map(
                             (item, index) => {
-                                const {placeholder = '', inputType, name, aditionalData = {}} = deliveryConfigurationMetadata[item as keyof deliveryConfigurationSchemaType];
+                                const { placeholder = '', inputType, name, aditionalData = {} } = deliveryConfigurationMetadata[item as keyof deliveryConfigurationSchemaType];
                                 return (
                                     <View style={styles.inputContainer} key={`input-${item}-${index}`}>
                                         <View style={styles.titleContainer}>
@@ -164,12 +165,12 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
                                         {
                                             inputSelector[inputType]({
                                                 placeholder,
-                                                onChangeCallback: async (text:string)=> {
+                                                onChangeCallback: async (text: string) => {
                                                     await setFieldValue(item, text);
                                                     await setFieldTouched(item, true, true)
                                                 },
-                                                inputName:item,
-                                                error: getItemError(item) ,
+                                                inputName: item,
+                                                error: getItemError(item),
                                                 handleTouch,
                                                 ...aditionalData,
                                             })
@@ -177,26 +178,26 @@ export const DeliveryConfigurationForm = (props:props): JSX.Element=> {
                                     </View>
                                 )
                             }
-                        ): null
-                    }
+                        ) : null
+                }
+            </View>
+            <PrincipalButton onPress={onPress} radius={5}>
+                <View style={styles.textContainer}>
+                    <Text style={styles.textStyles}>
+                        {SAVE_ADDRESS_TEXT}
+                    </Text>
                 </View>
-                <PrincipalButton onPress={onPress} radius={5}>
+            </PrincipalButton>
+
+            <View style={styles.cancelContainer}>
+                <OutlinedButton onPress={onPressCancel} radius={5}>
                     <View style={styles.textContainer}>
-                        <Text style={styles.textStyles}>
-                            Guardar Direccion
+                        <Text style={styles.cancelTextStyles}>
+                            {CANCEL_TEXT}
                         </Text>
                     </View>
-                </PrincipalButton>
-                
-                <View style={styles.cancelContainer}>
-                    <OutlinedButton onPress={onPressCancel} radius={5}>
-                        <View style={styles.textContainer}>
-                            <Text style={styles.cancelTextStyles}>
-                                Cancelelar
-                            </Text>
-                        </View>
-                    </OutlinedButton>
-                </View>
+                </OutlinedButton>
+            </View>
         </KeyboardAwareScrollView>
     )
 }

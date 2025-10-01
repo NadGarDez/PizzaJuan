@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         height:30,
         width: "100%",
         borderRadius:5,
-        backgroundColor:"#ffffff",
+        backgroundColor:colors.white_card,
         ...shadows.principalShadow
     },
     iconContainer : {

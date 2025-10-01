@@ -153,7 +153,7 @@ export const ShoppingItem = (props: Order): JSX.Element => {
                                     </View>
 
                                     <IconWithTextElement
-                                        color="#00000020"
+                                        color={colors.blackTwentyPercent}
                                         icon={<LocationIcon color={colors.white_card} size={14}/>}
                                         text={`${delivery_location.name}. ${delivery_location.description}\n#${delivery_location.plus_code}`}
                                     />

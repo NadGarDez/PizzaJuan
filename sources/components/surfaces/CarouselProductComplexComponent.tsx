@@ -137,12 +137,6 @@ export const CarouselProductComplexComponent = (props:props):JSX.Element=> {
         
                 
                 <View style={styles.colorLimit} />
-                {/* <LinearGradient
-                    colors={['#ffffff00','#F5F5F530','#F5F5F5', '#dddddd']}
-                    locations={[0.85,0.88,0.90, 1]}
-                    style={styles.colorLimit2}
-                >
-                </LinearGradient> */}
             </View>
             <VariantSelector 
                 visible={availablePan}

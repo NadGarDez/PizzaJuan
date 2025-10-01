@@ -29,7 +29,7 @@ const styles = StyleSheet.create(
             width: Dimensions.get("screen").width * 2,
             height: Dimensions.get("screen").width * 2,
             borderRadius: Dimensions.get("screen").width,
-            backgroundColor:"#00000010",
+            backgroundColor:colors.blackTenPercent,
            
         },
         circle2: {

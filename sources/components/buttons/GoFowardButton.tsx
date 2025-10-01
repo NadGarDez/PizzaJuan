@@ -42,7 +42,7 @@ export const GoFowardButton = (props:props):JSX.Element=>{
                 ({pressed})=>(
                     <View style={{
                         ...styles.semiTransparentCircle,
-                        backgroundColor: pressed ? "#00000020" : "transparent"
+                        backgroundColor: pressed ? colors.blackTwentyPercent : colors.transparent
                     }}>
                         <GoFoward size={30} color={colors.seconday_text}/>
                     </View>
