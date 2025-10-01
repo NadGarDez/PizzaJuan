@@ -1,8 +1,8 @@
-export const PLATFORM_TITLE:string = "Pizza Juan";
+export const PLATFORM_TITLE:string = "911 Grill";
 export const MORNING_GREATING:string = "Buenos Dias";
 export const AFTERNOON_GREATING:string= "Buenas Tardes";
 export const NIGHT_GREATING:string = "Buenas Noches";
-export const SLOGAN:string = "Disfruta de la mejor pizza sin salir de casa"
+export const SLOGAN:string = "911 Grill: Tu Antojo, ¡Entregado!"
 export const PLACEHOLDER_TEXT_FOR_SEARCH_PRODUCT_INPUT:string= "Buscar por nombre de producto";
 export const ADD_TO_CART_TEXT:string= "Agregar al carrito";
 export const LOCATION_BUTTON_TEXT:string= "Tu Ubicacion";

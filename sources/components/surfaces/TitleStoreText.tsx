@@ -2,10 +2,10 @@ import React from "react"
 import { StyleSheet, Text, View, Image } from "react-native"
 import { useAppSelector } from "../../redux/hooks"
 import { sessionObjectSelector } from "../../redux/SessionReducer"
-import { PLATFORM_TITLE } from "../../constants/strings"
+import { PLATFORM_TITLE, SLOGAN } from "../../constants/strings"
 import { colors } from "../../styles/colors"
 import LinearGradient from "react-native-linear-gradient"
-import image from "../../../static/images/imageTitle.jpeg";
+import image from "../../../static/images/ImageTitle.png";
 
 const styles = StyleSheet.create(
     {
@@ -79,10 +79,10 @@ export const TitleStoreText = ():JSX.Element=> {
                         end={{x: 1, y: 1}}
                     >
                         <Text style={styles.platformTitleText}>
-                            {`${PLATFORM_TITLE}!`}
+                            {`${PLATFORM_TITLE}`}
                         </Text>
                         <Text style={styles.sloganText}>
-                            {`Disfruta de la ${"\n"}mejor pizza sin salir de casa`}
+                            {SLOGAN}
                         </Text>
                     </LinearGradient>
             

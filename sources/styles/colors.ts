@@ -23,8 +23,8 @@ type colors_type = {
 
 
 export const colors : colors_type= {
-    background_white:"#fcfcfc",
-    principal: "#f2bc57",
+    background_white:"#ab683cff",
+    principal: "#E23700",
     hightLightPrincipal:"#f9d95f",
 
     black:"#07090d",
@@ -37,11 +37,11 @@ export const colors : colors_type= {
     formBorder:"#eeeeee",
     error: '#F44336',
     transparent:'transparent',
-    whiteNinePercent:"FFFFFF90",
-    blackTwentyPercent:"00000020",
-    blackTenPercent:"00000010",
-    blackCeroPercent:"00000000",
-    successColor:"90EE90",
+    whiteNinePercent:"#FFFFFF90",
+    blackTwentyPercent:"#00000020",
+    blackTenPercent:"#00000010",
+    blackCeroPercent:"#00000000",
+    successColor:"#90EE90",
     categoryItemBackgroundPressed:"#f4dcae"
 
 }
